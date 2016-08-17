@@ -67,16 +67,16 @@
 				$xy.openFrameGroupNavOrFoot(function(ret, err) {
 					selectIndex(ret.index);
 				}, 'groupName', [{
-					name : 'test_body',
+					name : 'main_index',
 					url : './main/main_index.html',
 					bounces : false
 				}, {
-					name : 'new_file',
-					url : './me/me_index.html',
+					name : 'order_index',
+					url : './order/order_index.html',
 					bounces : true
 				}, {
-					name : 'switch_list',
-					url : './order/order_index.html',
+					name : 'me_index',
+					url : './me/me_index.html',
 					bounces : false
 				}], 0, '#index_header', 'footer');
 				//退出app
