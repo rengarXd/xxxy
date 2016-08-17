@@ -57,6 +57,9 @@
 				index : 0,
 				preload : 1
 			},
+			closeWidget_CONFIG : {
+				silent : false
+			},
 		},
 		isArray : function(arr) {
 			return (toString.apply(arr) === '[object Array]') || arr instanceof NodeList;
@@ -81,6 +84,10 @@
 		},
 		isNumber : function(str) {
 			return !isNaN(str);
+		},
+		isBoolean : function(obj) {
+			var that = this;
+			return that.isTargetType(obj, "boolean");
 		},
 		cloneObj : function(oldObj) {
 			var that = this;
@@ -353,7 +360,6 @@
 		openFrameGroupNavOrFoot : function(callback, groupName, frames, index, headerSelector, footerSelector, options) {
 			var that = this;
 			var footerOffset = that.offset(footerSelector);
-			//			alert(that.winHeight - offset.h - footerOffset.h);
 			that.fixStatusBar(function(offset) {
 				options = options || {};
 				options.rect = {
@@ -390,7 +396,7 @@
 			o.frames = _frames;
 
 			options = options || {};
-			alert(JSON.stringify(o));
+
 			var opt = that.extendObj(that.DEFAULT_CONFIG.openFrameGroup_CONFIG, o, options);
 
 			api.openFrameGroup(opt, function(ret, err) {
@@ -398,6 +404,45 @@
 					callback(ret, err);
 				}
 			});
+		},
+		toast : function(callback, msg, duration, location, global) {
+			var that = this;
+			if ((!that.isFunction(arguments[0])) && (arguments[0])) {
+				msg = arguments[0];
+			}
+
+			msg = that.isObject(msg) ? (JSON.stringify(msg)) : msg;
+			duration = Math.abs(that.isNumber(duration) ? Number(duration) : 2000);
+			global = that.isBoolean(global) ? global : false;
+
+			var locationArr = ["top", "middle", "bottom"];
+			location = location ? location : "bottom";
+			location = locationArr.indexOf(location) > -1 ? location : "bottom";
+			api.toast({
+				msg : msg,
+				duration : duration,
+				location : location,
+				global : global
+			});
+			if (that.isFunction(callback)) {
+				setTimeout(function() {
+					callback();
+				}, duration);
+			}
+		},
+		closeWidget : function(wgtID, returnData, options) {
+			var that = this;
+			var o = {};
+			if (wgtID) {
+				o.id = wgtID;
+			}
+			if (that.isObject(returnData)) {
+				o.retData = returnData;
+			}
+
+			options = options || {};
+			var opt = that.extendObj(that.DEFAULT_CONFIG.closeWidget_CONFIG, o, options);
+			api.closeWidget(opt);
 		},
 		// ######################### 自定义
 		returnElement : function(cssSelectorOrElement) {
@@ -421,6 +466,37 @@
 			parentSelectorOrElement = that.isString(parentSelectorOrElement) ? document.querySelector(parentSelectorOrElement) : parentSelectorOrElement;
 
 			return parentSelectorOrElement.querySelectorAll(cssSelectorOrElement);
+		},
+		//###################设备自有
+		keyback : function(callback) {
+			api.addEventListener({
+				name : 'keyback'
+			}, function(ret, err) {
+				callback(ret, err);
+			});
+		},
+		dblclickToCloseApp : function() {
+			var that = this;
+
+			var mkeyTime = new Date().getTime();
+			that.keyback(function(ret, err) {
+				if ((new Date().getTime() - mkeyTime) > 2000) {
+					mkeyTime = new Date().getTime();
+					api.toast({
+						msg : '再按一次退出' + api.appName
+					});
+					that.toast(null, '再按一次退出' + that.appName, 2000);
+				} else {
+					//					if (that.isFunction(callback)) {
+					//						callback();
+					//					}
+					setTimeout(function() {
+						that.closeWidget(null, null, {
+							silent : true
+						});
+					}, 300);
+				}
+			});
 		},
 	};
 	/*end*/
