@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/Hui.css"/>
+		<style>
+			.active {
+				color: #ffa977;
+				/*				border-bottom: 2px #1786FF solid;*/
+				/*border: 1px solid #ffa977;*/
+			}
+			.H_footer_bg {
+				color: #e5e5e5;
+			}
+			.H_footer_active {
+				background: #ffffff;
+				color: #09a4de;
+			}
+			.H_header_bg {
+				background: #09a4de
+			}
+		</style>
+	</head>
+	<body>
+		<header class="H-header H_header_bg" id="index_header">
+			<div class="H-header-title H-text-align-center H-theme-font-color-white H-center-all H-font-size-18" id="update">
+				首页 <!--<span id="update"></span>-->
+			</div>
+			<div class="H-header-title H-text-align-center H-theme-font-color-white H-center-all H-font-size-18" style="display: none">
+				订单
+			</div>
+			<div class="H-header-title H-text-align-center H-theme-font-color-white H-center-all H-font-size-18" style="display: none">
+				我的
+			</div>
+		</header>
+		<div></div>
+		<footer id="index_footer" style="bottom: 0" class="H-footer H-position-fixed H-flexbox-horizontal H-border-both H-theme-background-color-white">
+			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-touch-active H-font-size-16 active" style="border-width: 0 0 2px  0">
+				首页
+			</div>
+			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-touch-active H-font-size-16" style="border-width: 0 0 2px  0">
+				订单
+			</div>
+			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-touch-active H-font-size-16" style="border-width: 0 0 2px  0">
+				我的
+			</div>
+		</footer>
+		<script type="text/javascript" src="../script/xy.js"></script>
+		<script type="text/javascript" src="../script/zepto.min.js"></script>
+		<script type="text/javascript">
+			apiready = function() {
+				$xy.openFrameGroupNavOrFoot(function(ret, err) {
+					selectIndex(ret.index);
+				}, 'groupName', [{
+					name : 'test_body',
+					url : '../main/main_index.html',
+					bounces : false
+				}, {
+					name : 'new_file',
+					url : '../me/me_index.html',
+					bounces : true
+				}, {
+					name : 'switch_list',
+					url : '../order/order_index.html',
+					bounces : false
+				}], 0, '#index_header', 'footer');
+			}
+			Zepto(function($) {
+				$("#index_footer div").on("tap", function() {
+					//				console.log(111111);
+					var index = $(this).index();
+					selectIndex(index);
+					// 设置索引
+					api.setFrameGroupIndex({
+						name : 'groupName',
+						index : index,
+						scroll : true
+					});
+				});
+			});
+			function selectIndex(index) {
+				$("#index_footer div").eq(index).addClass('active').siblings().removeClass('active');
+				$("#index_header div").hide().eq(index).show();
+			}
+		</script>
+	</body>
+</html>
