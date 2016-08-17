@@ -28,6 +28,7 @@
 	</head>
 	<body>
 		<header class="H-header H_header_bg" id="index_header">
+			<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-10 H-z-index-100"><i class="iconfont icon-xiaoxi H-font-size-20"></i></span>
 			<div class="H-header-title H-text-align-center H-theme-font-color-white H-center-all H-font-size-18" id="update">
 				首页 <!--<span id="update"></span>-->
 			</div>
@@ -97,6 +98,21 @@
 			function selectIndex(index) {
 				$("#index_footer .switch-item").eq(index).addClass('active').siblings().removeClass('active');
 				$("#index_header .switch-item").hide().eq(index).show();
+			}
+
+			function openWin(name,url) {
+				var delay = 0;
+				if (api.systemType != 'ios') {
+					delay = 200;
+				}
+				api.openWin({
+					name : name,
+					url : url,
+					bounces : false,
+					delay : delay,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
+				});
 			}
 		</script>
 	</body>
