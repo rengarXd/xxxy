@@ -482,10 +482,11 @@
 			that.keyback(function(ret, err) {
 				if ((new Date().getTime() - mkeyTime) > 2000) {
 					mkeyTime = new Date().getTime();
-					api.toast({
-						msg : '再按一次退出' + api.appName
-					});
-					that.toast(null, '再按一次退出' + that.appName, 2000);
+					//					var appname = api.appName;
+					//					api.toast({
+					//						msg : '再按一次退出' + api.appName
+					//					});
+					that.toast(null, '再按一次退出' + api.appName, 2000);
 				} else {
 					//					if (that.isFunction(callback)) {
 					//						callback();
