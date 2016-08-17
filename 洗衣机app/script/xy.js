@@ -277,12 +277,12 @@
 				console.warn('没有找到DOM元素');
 			}
 
-			var strDM = that.systemType;
+			var strDM = api.systemType;
 			if (strDM == 'ios') {
-				var strSV = that.systemVersion;
+				var strSV = api.systemVersion;
 				var numSV = parseInt(strSV, 10);
-				var fullScreen = that.fullScreen;
-				var iOS7StatusBarAppearance = that.iOS7StatusBarAppearance;
+				var fullScreen = api.fullScreen;
+				var iOS7StatusBarAppearance = api.iOS7StatusBarAppearance;
 				if (numSV >= 7 && !fullScreen && iOS7StatusBarAppearance) {
 					element.style.paddingTop = '20px';
 				}
@@ -296,11 +296,11 @@
 				console.error('没有找到DOM元素');
 			}
 
-			var sysType = that.systemType;
+			var sysType = api.systemType;
 			if (sysType == 'ios') {
 				that.fixIos7Bar(element);
 			} else if (sysType == 'android') {
-				var ver = that.systemVersion;
+				var ver = api.systemVersion;
 				ver = parseFloat(ver);
 				if (ver >= 4.4) {
 					element.style.paddingTop = '25px';
