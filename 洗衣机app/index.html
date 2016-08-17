@@ -13,6 +13,34 @@
 			var systemtype = null;
 			apiready = function() {
 				systemtype = api.systemType;
+				var WelcomePage = api.require('welcomePage');
+				WelcomePage.openWelcomePage({
+					isFullscreen : true, //是否全屏(全屏不显示状态栏)  默认false
+					AnimationType : 'Default', //动画类型   'Default默认', 'DepthPage深入浅出', 'Cube立方体', 'Rotate旋转','Accordion左右折叠', 'InRightUp右上角进入' , 'InRightDown右下角进入', 'ZoomOutPage淡入淡出'
+					imgs : ['widget://launch/launch1080x1920.png', 'widget://launch/launch1080x1920.png', 'widget://launch/launch1080x1920.png'],
+					setting : {
+						isShow : true, // 是否显示页面点 默认不显示
+						//						SelectedImg : 'widget://image/Welcome/2.png',
+						//						NotSelectedImg : 'widget://image/Welcome/1.png',
+						ImgSize : 20, // 图片size
+						ImgSpacing : 20 // 图片之间的间隔
+					}
+				}, function(ret, err) {
+					//					alert(JSON.stringify(ret));
+					if (ret.Result) {
+						api.removeLaunchView({
+							animation : {
+								type : 'fade',
+								duration : 3000
+							}
+						});
+					} else {
+						api.removeLaunchView();
+					}
+					init();
+				});
+			}
+			function init() {
 				//判断沉浸式
 				if ("ios" == systemtype) {
 					api.setStatusBarStyle({
@@ -21,12 +49,22 @@
 					});
 					api.openWin({
 						name : 'main',
-						url : './html/main.html'
+						url : './html/main.html',
+						animation : {
+							type : "none", //动画类型（详见动画类型常量）
+							//subType : "from_right", //动画子类型（详见动画子类型常量）
+							duration : 100 //动画过渡时间，默认300毫秒
+						}
 					});
 				} else {
 					api.openWin({
 						name : 'main',
-						url : './html/main.html'
+						url : './html/main.html',
+						animation : {
+							type : "none", //动画类型（详见动画类型常量）
+							//subType : "from_right", //动画子类型（详见动画子类型常量）
+							duration : 100 //动画过渡时间，默认300毫秒
+						}
 					});
 				}
 			}
