@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>洗衣机分发index</title>
+		<!--<link rel="stylesheet" href="./css/Hui.css" />-->
+		<!--<script src="./script/H.js" type="text/javascript"></script>-->
+	</head>
+	<body>
+		<script type="text/javascript">
+			var systemtype = null;
+			apiready = function() {
+				systemtype = api.systemType;
+				//判断沉浸式
+				if ("ios" == systemtype) {
+					api.setStatusBarStyle({
+						style : 'light',
+						color : '#000000'
+					});
+					api.openWin({
+						name : 'main',
+						url : './html/main.html'
+					});
+				} else {
+					api.openWin({
+						name : 'main',
+						url : './html/main.html'
+					});
+				}
+			}
+		</script>
+	</body>
+</html>
