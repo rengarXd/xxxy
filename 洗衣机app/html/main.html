@@ -28,14 +28,14 @@
 	</head>
 	<body>
 		<header class="H-header H_header_bg" id="index_header">
-			<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-10 H-z-index-100"><i class="iconfont icon-xiaoxi H-font-size-20"></i></span>
-			<div class="H-header-title H-text-align-center H-theme-font-color-white H-center-all H-font-size-18" id="update">
-				首页 <!--<span id="update"></span>-->
+			<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-10 H-z-index-100"><i class="iconfont icon-xiaoxi H-font-size-26"></i></span>
+			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
+				首页
 			</div>
-			<div class="H-header-title H-text-align-center H-theme-font-color-white H-center-all H-font-size-18" style="display: none">
+			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				订单
 			</div>
-			<div class="H-header-title H-text-align-center H-theme-font-color-white H-center-all H-font-size-18" style="display: none">
+			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				我的
 			</div>
 		</header>
@@ -97,10 +97,10 @@
 			});
 			function selectIndex(index) {
 				$("#index_footer .switch-item").eq(index).addClass('active').siblings().removeClass('active');
-				$("#index_header .switch-item").hide().eq(index).show();
+				$("#index_header div").hide().eq(index).show();
 			}
 
-			function openWin(name,url) {
+			function openWin(name, url) {
 				var delay = 0;
 				if (api.systemType != 'ios') {
 					delay = 200;
