@@ -290,12 +290,10 @@
 		},
 		fixStatusBar : function(callback, cssSelectorOrElement) {
 			var that = this;
-
 			var element = that.returnElement(cssSelectorOrElement);
 			if (!that.isElement(element)) {
 				console.error('没有找到DOM元素');
 			}
-
 			var sysType = api.systemType;
 			if (sysType == 'ios') {
 				that.fixIos7Bar(element);
@@ -306,7 +304,6 @@
 					element.style.paddingTop = '25px';
 				}
 			}
-
 			var _offset = that.offset(element);
 			if (that.isFunction(callback)) {
 				callback(_offset);
