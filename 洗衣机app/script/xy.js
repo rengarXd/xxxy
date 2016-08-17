@@ -284,7 +284,7 @@
 				var fullScreen = that.fullScreen;
 				var iOS7StatusBarAppearance = that.iOS7StatusBarAppearance;
 				if (numSV >= 7 && !fullScreen && iOS7StatusBarAppearance) {
-					element.style.paddingTop = '20px';
+					element.style.paddingTop = '40px';
 				}
 			}
 		},
@@ -303,7 +303,7 @@
 				var ver = that.systemVersion;
 				ver = parseFloat(ver);
 				if (ver >= 4.4) {
-					element.style.paddingTop = '25px';
+					element.style.paddingTop = '44px';
 				}
 			}
 
