@@ -450,6 +450,7 @@
 				return that.D(cssSelectorOrElement);
 			}
 		},
+		//querySelector() 方法返回文档中匹配指定 CSS 选择器的一个元素。
 		D : function(cssSelectorOrElement, parentSelectorOrElement) {
 			var that = this;
 			parentSelectorOrElement = parentSelectorOrElement ? parentSelectorOrElement : document;
@@ -457,6 +458,7 @@
 
 			return parentSelectorOrElement.querySelector(cssSelectorOrElement);
 		},
+		//需要返回所有的元素，请使用 querySelectorAll() 方法替代。
 		Ds : function(cssSelectorOrElement, parentSelectorOrElement) {
 			var that = this;
 			parentSelectorOrElement = parentSelectorOrElement ? parentSelectorOrElement : document;
@@ -496,6 +498,37 @@
 				}
 			});
 		},
+		// 动态载入js，css，filetype类型就是js,css
+		loadJsOrCssFile : function(filename, filetype) {
+			if (filetype == "js") {
+				var fileref = document.createElement('script');
+				fileref.setAttribute("type", "text/javascript");
+				fileref.setAttribute("src", filename);
+			} else if (filetype == "css") {
+
+				var fileref = document.createElement('link');
+				fileref.setAttribute("rel", "stylesheet");
+				fileref.setAttribute("type", "text/css");
+				fileref.setAttribute("href", filename);
+			}
+			if ( typeof fileref != "undefined") {
+				document.getElementsByTagName("head")[0].appendChild(fileref);
+			}
+		},
+		// 异步载入Html
+		loadHtml : function(filename, callback) {
+			var that = this;
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					if (that.isFunction(callback)) {
+						callback(xmlHttp.responseText);
+					}
+				}
+			};
+			xmlHttp.open("get", filename, true);
+			xmlHttp.send(null);
+		}
 	};
 	/*end*/
 	window['$xy'] = u;
