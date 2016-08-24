@@ -270,6 +270,44 @@
 				}
 			});
 		},
+		userAjax : function(url) {
+			api.getPrefs({
+				key : 'userinfo'
+			}, function(ret, err) {
+				var user = eval('(' + ret.value + ')');
+				api.ajax({
+					url : window.serverUrl + url
+				}, function(ret, err) {
+					var systemType = api.systemType;
+					if (systemType == "ios") {
+						var rets = eval('(' + err.body + ')');
+						if ( typeof callback == 'function') {
+							if (rets) {
+								callback(rets);
+							} else {
+								api.refreshHeaderLoadDone();
+								//								console.log("无数据");
+								var html = '<div class="H-position-absolute H-position-center-all"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-jindu H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">连接失败，请检查网络配置</div><button class="H-margin-vertical-top-10 H-position-static H-outline-none H-theme-font-color-999 H-theme-border-color-transparent H-border-radius-3 H-theme-font-color1-click" style="min-width:90px;background-color:active:#787373" tapmode onclick="location.reload();">重&nbsp;&nbsp;试</button></div></div>';
+								//$('#progress_data_body').html(html);
+								document.getElementById(htmlId).innerHTML = html;
+							}
+						}
+					} else {
+						if ( typeof callback == 'function') {
+							if (ret) {
+								callback(ret);
+							} else {
+								api.refreshHeaderLoadDone();
+								//								console.log("无数据");
+								var html = '<div class="H-position-absolute H-position-center-all"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-jindu H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">连接失败，请检查网络配置</div><button class="H-margin-vertical-top-10 H-position-static H-outline-none H-theme-font-color-999 H-theme-border-color-transparent H-border-radius-3 H-theme-font-color1-click" style="min-width:90px;background-color:active:#787373" tapmode onclick="location.reload();">重&nbsp;&nbsp;试</button></div></div>';
+								//$('#progress_data_body').html(html);
+								document.getElementById(htmlId).innerHTML = html;
+							}
+						}
+					}
+				});
+			});
+		},
 		fixIos7Bar : function(cssSelectorOrElement) {
 			var that = this;
 			var element = that.returnElement(cssSelectorOrElement);
