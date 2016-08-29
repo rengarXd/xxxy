@@ -58,7 +58,12 @@
 				preload : 1
 			},
 			closeWidget_CONFIG : {
-				silent : false
+				silent : true,
+				animation : {
+					type : 'flip',
+					subType : 'from_bottom',
+					duration : 500
+				}
 			},
 		},
 		isArray : function(arr) {
@@ -523,14 +528,16 @@
 					//					api.toast({
 					//						msg : '再按一次退出' + api.appName
 					//					});
-					that.toast(null, '再按一次退出' + api.appName, 2000);
+					//that.toast(null, '再按一次退出' + api.appName, 2000);
+					api.toast({
+						msg : '再按一次返回键退出' + api.appName,
+						duration : 2000,
+						location : 'bottom'
+					});
 				} else {
-					//					if (that.isFunction(callback)) {
-					//						callback();
-					//					}
 					setTimeout(function() {
-						that.closeWidget(null, null, {
-							silent : true
+						that.closeWidget(api.appId, {
+							name : 'closeWidget'
 						});
 					}, 300);
 				}
