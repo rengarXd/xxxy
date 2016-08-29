@@ -1,23 +1,124 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-    <title>title</title>
-    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-    <style>
-    	body{
-    		
-    	}
-    </style>
-</head>
-<body>
-	首页内容
-</body>
-<script type="text/javascript" src="../../script/api.js"></script>
-<script type="text/javascript">
-	apiready = function(){
-		
-	};
-</script>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/Hui.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/fonts/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			.toast_top {
+				background-color: #ffffcc;
+				color: #ff6600;
+			}
+			/*.options {
+				height: 120px;
+			}*/
+			.border-radius {
+				border-radius: 70px;
+				-webkit-border-radius: 15px;
+			}
+			.xyjd {
+				background-color: #ff8bc8;
+			}
+			.smzf {
+				background-color: #a0d468;
+			}
+			.yhhd {
+				background-color: #59dbdb;
+			}
+			.xyzt {
+				color: #ff6600;
+			}
+			.iconfont {
+				color: #b8b8b8;
+			}
+			.kongxian {
+				color: #03aafe;
+			}
+			.beizhanyong {
+				color: #999999;
+			}
+			.xy_border {
+				border-bottom: 1px solid #f0f0f0;
+				margin-left: 37px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle">
+			<span class="H-icon H-display-block H-padding-horizontal-left-5"></span>
+			<div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">
+				您正在使用的西三宿舍三楼西01机，大约15分钟后结束
+			</div>
+			<!--<span class="H-icon H-padding-horizontal-right-5 H-display-block"><i class="H-iconfont H-icon-arrow-right H-theme-font-color-white H-font-size-12 H-vertical-middle"></i></span>-->
+		</div>
+		<div class="H-flexbox-horizontal H-theme-background-color-white H-padding-vertical-both-20">
+			<!--<div class="H-flex-item H-center-all options">
+			<span class="border-radius H-icon H-display-block H-margin-horizontal-left-10 H-theme-font-color-white H-theme-background-color6 H-center-all" style="height: 70px; width: 70px;"><i class="iconfont icon-gerenxinxi H-font-size-20 H-vertical-middle wx_10aeff"></i></span>
+			<strong class="H-font-size-12 H-display-block H-font-weight-normal H-margin-vertical-top-3">扫码支付</strong>
+			</div>-->
+			<div class="H-text-align-center H-flex-item H-padding-10">
+				<span class="smzf H-icon H-center-all H-border-radius-circle H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 59px; width: 59px; line-height:20px;"><img src="../../image/saoerweima.png" style="width: 30px;height: 30px;"/></span>
+				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 xy_font_color">扫二维码</label>
+			</div>
+			<div class="H-text-align-center H-flex-item H-padding-10">
+				<span class="xyjd H-icon H-center-all  H-border-radius-circle H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 59px; width: 59px; line-height:20px;"><img src="../../image/xyprogress.png" style="width: 30px;height: 30px;"/></span>
+				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 H-theme-font-color-666">洗衣进度</label>
+			</div>
+			<div class="H-text-align-center H-flex-item H-padding-10">
+				<span class="yhhd H-icon H-center-all H-border-radius-circle H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 59px; width: 59px; line-height:20px;"><img src="../../image/liwu.png" style="width: 30px;height: 30px;"/></span>
+				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 H-theme-font-color-666">优惠活动</label>
+			</div>
+		</div>
+		<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-3" style="padding-left: 30px;">
+			您曾使用过的洗衣机
+		</div>
+		<div id="">
+			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
+				<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
+					<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+					<div class="H-flex-item xy_font_color">
+						<span>三楼东01机</span><span class="H-float-right xyzt">我要洗衣</span>
+						<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
+							空闲
+						</div>
+					</div>
+					<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+				</div>
+				<div class="xy_border"></div>
+				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-5" style="padding-left: 37px;">
+					郑州大学 <span>西三宿舍</span>
+					<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
+				</div>
+			</div>
+			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
+				<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
+					<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+					<div class="H-flex-item xy_font_color">
+						<span>三楼东02机</span><span class="H-float-right xyzt">空闲提醒</span>
+						<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
+							被占用 <span class="H-float-right">预计32分钟后结束</span>
+						</div>
+					</div>
+					<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+				</div>
+				<div class="xy_border"></div>
+				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-5" style="padding-left: 37px;">
+					郑州大学 <span>西三宿舍</span>
+					<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
+				</div>
+			</div>
+		</div>
+		<div class="H-text-align-center H-font-size-14 H-theme-font-color-999">
+			查找更多洗衣机
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/Zepto.min.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			api.parseTapmode();
+		};
+	</script>
 </html>

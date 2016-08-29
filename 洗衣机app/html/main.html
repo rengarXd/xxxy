@@ -7,30 +7,44 @@
 		<title>导航栏</title>
 		<link rel="stylesheet" type="text/css" href="../css/Hui.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/fonts/iconfont.css"/>
+		<link rel="stylesheet" href="../css/style.css" />
 		<style>
 			.active {
-				color: #ffa977 !important;
-			}
-			.H_footer_bg {
-				color: #e5e5e5;
+				color: #fff !important;
+				background-color: #21aaf2 !important;
+				border-width: 0 !important;
 			}
 			.H_footer_active {
 				background: #ffffff;
-				color: #09a4de;
-			}
-			.H_header_bg {
-				background: #09a4de
+				/*color: #555555;*/
 			}
 			.switch-item {
-				color: #999;
+				color: #555555;
+			}
+			.brige {
+				display: inline-block;
+				position: absolute;
+				top: 10px;
+				left: 29%;
+				z-index: 100;
+				background: red;
+				border-radius: 50%;
+				-webkit-border-radius: 50%;
+				font-size: 9px;
+				height: 8px;
+				line-height: 12px;
+				text-align: center;
+				min-width: 8px;
+				color: #fff;
+				font-style: normal;
 			}
 		</style>
 	</head>
 	<body class="H-flexbox-vertical">
-		<header class="H-header H_header_bg" id="index_header">
-			<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-10 H-z-index-100"><i class="iconfont icon-xiaoxi H-font-size-26"></i></span>
+		<header class="H-header b_header_bg" id="index_header">
+			<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-15 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
-				首页
+				小宛洗衣
 			</div>
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent" style="display: none">
 				订单
@@ -39,20 +53,20 @@
 				我的
 			</div>
 		</header>
-		<footer id="index_footer" style="bottom: 0" class="H-footer H-position-fixed H-flexbox-horizontal H-border-both H-theme-background-color-white">
-			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-touch-active switch-item active" style="border-width: 0 0 2px  0">
+		<footer id="index_footer" style="bottom: 0" class="H-footer H-position-fixed H-flexbox-horizontal H-theme-background-color-white">
+			<div class="H-flex-item  H-center-all H-padding-vertical-both-10 H-theme-border-color-white switch-item active" style="border-width: 0 0 2px  0">
 				<div class="">
 					<span class="H-icon H-display-block H-line-height-normal" style="margin-left: 1px;"><i class="iconfont icon-shouye-copy H-font-size-20"></i></span>
 					<strong class="H-font-size-12 H-display-block H-font-weight-normal H-margin-vertical-top-3">首页</strong>
 				</div>
 			</div>
-			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-touch-active switch-item" style="border-width: 0 0 2px  0">
+			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white  switch-item" style="border-width: 0 0 2px  0">
 				<div class="">
 					<span class="H-icon H-display-block H-line-height-normal"  style="margin-left: 1px;"><i class="iconfont icon-dingdan H-font-size-20"></i></span>
 					<strong class="H-font-size-12 H-display-block H-font-weight-normal H-margin-vertical-top-3">订单</strong>
 				</div>
 			</div>
-			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-touch-active switch-item" style="border-width: 0 0 2px  0">
+			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white  switch-item" style="border-width: 0 0 2px  0">
 				<div class="">
 					<span class="H-icon H-display-block H-line-height-normal"  style="margin-left: 1px;"><i class="iconfont icon-gerenxinxi H-font-size-20"></i></span>
 					<strong class="H-font-size-12 H-display-block H-font-weight-normal H-margin-vertical-top-3">我的</strong>
