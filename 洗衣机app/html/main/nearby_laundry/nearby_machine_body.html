@@ -64,6 +64,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="H-text-align-center H-font-size-14 H-theme-font-color-999" tapmode="H-touch-active" onclick="openLaundry();">
+			附近其他洗衣点
+		</div>
 	</body>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
 	<script type="text/javascript">
@@ -75,6 +78,15 @@
 				name : 'option_head',
 				url : '../product/option_head.html'
 			});
+		}
+
+		//查找更多洗衣点
+		function openLaundry() {
+			api.openWin({
+				name : 'nearby_laundry_head',
+				url : 'nearby_laundry_head.html'
+			});
+			setTimeout("api.closeWin();", 2000);
 		}
 	</script>
 </html>
