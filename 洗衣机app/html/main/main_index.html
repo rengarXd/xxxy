@@ -59,7 +59,7 @@
 			<span class="border-radius H-icon H-display-block H-margin-horizontal-left-10 H-theme-font-color-white H-theme-background-color6 H-center-all" style="height: 70px; width: 70px;"><i class="iconfont icon-gerenxinxi H-font-size-20 H-vertical-middle wx_10aeff"></i></span>
 			<strong class="H-font-size-12 H-display-block H-font-weight-normal H-margin-vertical-top-3">扫码支付</strong>
 			</div>-->
-			<div class="H-text-align-center H-flex-item H-padding-10">
+			<div class="H-text-align-center H-flex-item H-padding-10" tapmode onclick="scanner();">
 				<span class="smzf H-icon H-center-all H-border-radius-circle H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 59px; width: 59px; line-height:20px;"><img src="../../image/saoerweima.png" style="width: 30px;height: 30px;"/></span>
 				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 xy_font_color">扫二维码</label>
 			</div>
@@ -119,11 +119,24 @@
 	<script type="text/javascript">
 		apiready = function() {
 			api.parseTapmode();
+			initmodel();
 		};
 		function openWin() {
 			api.openWin({
 				name : 'option_head',
 				url : './product/option_head.html'
+			});
+		}
+
+		function initmodel() {
+			FNScanner = api.require('FNScanner');
+		}
+
+		function scanner() {
+			FNScanner.openScanner(function(ret, err) {
+				if (ret.content) {
+					alert(ret.content);
+				}
 			});
 		}
 	</script>
