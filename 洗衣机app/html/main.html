@@ -46,13 +46,31 @@
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				小宛洗衣
 			</div>
-			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent" style="display: none">
+		</header>
+		<header class="H-header H-header-title b_header_bg H-display-none" id="massages_header">
+			<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-15 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
+			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				订单
 			</div>
-			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent" style="display: none">
+		</header>
+		<header class="H-header H-header-title me_header_bg H-display-none" id="setting_header">
+			<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-15 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
+			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				我的
 			</div>
 		</header>
+		<!--	<header class="H-header b_header_bg" id="index_header">
+		<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-15 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
+		<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
+		小宛洗衣
+		</div>
+		<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent" style="display: none">
+		订单
+		</div>
+		<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent" style="display: none">
+		我的
+		</div>
+		</header>-->
 		<footer id="index_footer" style="bottom: 0" class="H-footer H-position-fixed H-flexbox-horizontal H-theme-background-color-white">
 			<div class="H-flex-item  H-center-all H-padding-vertical-both-10 H-theme-border-color-white switch-item active" style="border-width: 0 0 2px  0">
 				<div class="">
@@ -73,47 +91,73 @@
 				</div>
 			</div>
 		</footer>
-		<script type="text/javascript" src="../script/xy.js"></script>
+		<script type="text/javascript" src="../script/H.js"></script>
 		<script type="text/javascript" src="../script/zepto.min.js"></script>
 		<script type="text/javascript">
 			var FNScanner = null;
-			apiready = function() {
-				$xy.openFrameGroupNavOrFoot(function(ret, err) {
-					selectIndex(ret.index);
-				}, 'groupName', [{
+			H.ready(function() {
+				//1.3页面初始化函数
+				pageInit();
+				//1.4连按两次退出APP
+				H.dblclickToCloseApp();
+			});
+			//			apiready = function() {
+			//				$xy.openFrameGroupNavOrFoot(function(ret, err) {
+			//					selectIndex(ret.index);
+			//				}, 'groupName', [{
+			//					name : 'main_index',
+			//					url : './main/main_index.html',
+			//					bounces : false
+			//				}, {
+			//					name : 'order_index',
+			//					url : './order/order_index.html',
+			//					bounces : true
+			//				}, {
+			//					name : 'me_index',
+			//					url : './me/me_index.html',
+			//					bounces : false
+			//				}], 0, '#index_header', 'footer');
+			//				//退出app
+			//				$xy.dblclickToCloseApp();
+			//			}
+			Zepto(function($) {
+				//				$("#index_footer .switch-item").on("tap", function() {
+				//					//				console.log(111111);
+				//					var index = $(this).index();
+				//					selectIndex(index);
+				//					// 设置索引
+				//					api.setFrameGroupIndex({
+				//						name : 'groupName',
+				//						index : index,
+				//						scroll : true
+				//					});
+				//				});
+			});
+			//页面初始化函数
+			function pageInit() {
+				//1.2打开沉浸式页面
+				H.openFrameIndexByClick([{
 					name : 'main_index',
 					url : './main/main_index.html',
+					header : '#index_header',
 					bounces : false
 				}, {
 					name : 'order_index',
 					url : './order/order_index.html',
+					header : '#massages_header',
 					bounces : true
 				}, {
 					name : 'me_index',
 					url : './me/me_index.html',
+					header : '#setting_header',
 					bounces : false
-				}], 0, '#index_header', 'footer');
-				//退出app
-				$xy.dblclickToCloseApp();
-			}
-			Zepto(function($) {
-				$("#index_footer .switch-item").on("tap", function() {
-					//				console.log(111111);
-					var index = $(this).index();
-					selectIndex(index);
-					// 设置索引
-					api.setFrameGroupIndex({
-						name : 'groupName',
-						index : index,
-						scroll : true
-					});
-				});
-			});
-			function selectIndex(index) {
-				$("#index_footer .switch-item").eq(index).addClass('active').siblings().removeClass('active');
-				$("#index_header div").hide().eq(index).show();
+				}], 'H-display-none', '#index_footer', '.switch-item', 'active', 0);
 			}
 
+			//			function selectIndex(index) {
+			//				$("#index_footer .switch-item").eq(index).addClass('active').siblings().removeClass('active');
+			//				$("header").hide().eq(index).show();
+			//			}
 			function openWin(name, url) {
 				var delay = 0;
 				if (api.systemType != 'ios') {
