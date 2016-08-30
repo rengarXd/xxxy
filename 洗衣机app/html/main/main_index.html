@@ -13,8 +13,8 @@
 				color: #ff6600;
 			}
 			/*.options {
-				height: 120px;
-			}*/
+			 height: 120px;
+			 }*/
 			.border-radius {
 				border-radius: 70px;
 				-webkit-border-radius: 15px;
@@ -77,7 +77,7 @@
 		</div>
 		<div id="">
 			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
-				<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
+				<div class="H-flexbox-horizontal  H-padding-vertical-top-10 " tapmode="H-touch-active" onclick="openWin();">
 					<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
 					<div class="H-flex-item xy_font_color">
 						<span>三楼东01机</span><span class="H-float-right xyzt">我要洗衣</span>
@@ -88,7 +88,7 @@
 					<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
 				</div>
 				<div class="xy_border"></div>
-				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-5" style="padding-left: 37px;">
+				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
 					郑州大学 <span>西三宿舍</span>
 					<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
 				</div>
@@ -105,14 +105,14 @@
 					<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
 				</div>
 				<div class="xy_border"></div>
-				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-5" style="padding-left: 37px;">
+				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
 					郑州大学 <span>西三宿舍</span>
 					<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
 				</div>
 			</div>
 		</div>
-		<div class="H-text-align-center H-font-size-14 H-theme-font-color-999">
-			查找更多洗衣机
+		<div class="H-text-align-center H-font-size-14 H-theme-font-color-999" onclick="">
+			查找更多洗衣点
 		</div>
 	</body>
 	<script type="text/javascript" src="../../script/Zepto.min.js"></script>
@@ -120,5 +120,11 @@
 		apiready = function() {
 			api.parseTapmode();
 		};
+		function openWin() {
+			api.openWin({
+				name : 'option_head',
+				url : './product/option_head.html'
+			});
+		}
 	</script>
 </html>
