@@ -95,8 +95,6 @@
 				}], 0, '#index_header', 'footer');
 				//退出app
 				$xy.dblclickToCloseApp();
-				//初始化模块
-				initmodel();
 			}
 			Zepto(function($) {
 				$("#index_footer .switch-item").on("tap", function() {
@@ -128,17 +126,6 @@
 					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false
-				});
-			}
-
-			function initmodel() {
-				FNScanner = api.require('FNScanner');
-				FNScanner.open(function(ret, err) {
-					if (ret) {
-						alert(JSON.stringify(ret));
-					} else {
-						alert(JSON.stringify(err));
-					}
 				});
 			}
 		</script>
