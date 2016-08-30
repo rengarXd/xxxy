@@ -15,7 +15,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
+		<div class="H-theme-background-color-white H-margin-vertical-bottom-5" tapmode onclick="openWin('nearby_machine_head', 'nearby_machine_head.html');">
 			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
 				<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
 				<div class="H-flex-item xy_font_color">
@@ -50,6 +50,21 @@
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script type="text/javascript">
 		apiready = function() {
+			api.parseTapmode();
 		};
+		function openWin(name, url) {
+			var delay = 0;
+			if (api.systemType != 'ios') {
+				delay = 200;
+			}
+			api.openWin({
+				name : name,
+				url : url,
+				bounces : false,
+				delay : delay,
+				slidBackEnabled : true,
+				vScrollBarEnabled : false
+			});
+		}
 	</script>
 </html>
