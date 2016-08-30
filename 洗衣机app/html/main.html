@@ -76,6 +76,7 @@
 		<script type="text/javascript" src="../script/xy.js"></script>
 		<script type="text/javascript" src="../script/zepto.min.js"></script>
 		<script type="text/javascript">
+			var FNScanner = null;
 			apiready = function() {
 				$xy.openFrameGroupNavOrFoot(function(ret, err) {
 					selectIndex(ret.index);
@@ -94,6 +95,8 @@
 				}], 0, '#index_header', 'footer');
 				//退出app
 				$xy.dblclickToCloseApp();
+				//初始化模块
+				initmodel();
 			}
 			Zepto(function($) {
 				$("#index_footer .switch-item").on("tap", function() {
@@ -125,6 +128,17 @@
 					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false
+				});
+			}
+
+			function initmodel() {
+				FNScanner = api.require('FNScanner');
+				FNScanner.open(function(ret, err) {
+					if (ret) {
+						alert(JSON.stringify(ret));
+					} else {
+						alert(JSON.stringify(err));
+					}
 				});
 			}
 		</script>
