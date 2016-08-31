@@ -101,9 +101,11 @@
 			api.getPrefs({
 				key : 'userinfo'
 			}, function(ret, err) {
-				var user = eval('(' + ret.value + ')');
 				//alert(JSON.stringify(user));
-				$("$userTel").html(user[0].phone_number);
+				if (ret && ret.value) {
+					var user = eval('(' + ret.value + ')');
+					$("#userTel").html(user[0].phone_number);
+				}
 			});
 		}
 
@@ -125,9 +127,20 @@
 
 		//退出登录
 		function exit_login() {
-			api.removePrefs({
-				key : 'userinfo'
+			api.confirm({
+				title : '温馨提示',
+				msg : '您确定要退出登录吗？'
+			}, function(ret, err) {
+				if (ret.buttonIndex == 1) {
+					api.removePrefs({
+						key : 'userinfo'
+					});
+				}
 			});
+		}
+		
+		function reload(){
+			location.reload();
 		}
 	</script>
 </html>
