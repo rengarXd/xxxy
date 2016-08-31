@@ -16,16 +16,14 @@
 			}
 			.hu {
 				height: 110px;
-				width: 100px;
+				margin-left: 120px;
+				margin-right: 120px;
 			}
 		</style>
 	</head>
 	<body>
 		<div class="back">
-			<!--<div class="H-text-align-center">
-			<img src="../../../image/runner.png" width="80px" height="80px" />
-			</div>-->
-			<div class="hu"></div>
+			<div class="hu" tapmode onclick="openWin('login_body','../login/login_body.html');"></div>
 			<div class="H-padding-2 H-text-align-center H-font-size-16">
 				<span class="H-theme-font-color-white H-font-weight-bold">15639733150</span>
 			</div>
@@ -87,6 +85,21 @@
 	<script type="text/javascript" src="../script/api.js"></script>
 	<script type="text/javascript">
 		apiready = function() {
+			api.parseTapmode();
 		};
+		function openWin(name, url) {
+			var delay = 0;
+			if (api.systemType != 'ios') {
+				delay = 200;
+			}
+			api.openWin({
+				name : name,
+				url : url,
+				bounces : false,
+				delay : delay,
+				slidBackEnabled : true,
+				vScrollBarEnabled : false
+			});
+		}
 	</script>
 </html>
