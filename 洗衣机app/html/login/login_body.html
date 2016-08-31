@@ -70,32 +70,35 @@
 					title : '获取中',
 					text : '请稍等....'
 				});
-				api.ajax({
-					url : window.serverUrl + 'getSMS/phone/' + tel
-				}, function(ret, err) {
+				$xy.ajax(function(ret, err) {
 					api.hideProgress();
 					if (ret) {
-						$("#nonetwork").hide();
-						//发送验证码成功
-						switch(ret.retCode) {
-							case 0:
-								$('#sendVerify').removeAttr('onclick');
-								$('#sendVerify').html('<span id="getVerify">120</span>s');
-								time = 120;
-								isinerval = setInterval("CountDown()", 1000);
-								break;
-							case 1:
-								api.toast({
-									msg : '很抱歉，短信获取失败，请稍后再试！'
-								});
-								break;
-						}
+						alert(JSON.stringify(ret));
 					} else {
-						if (err && err.code == 0) {
-							$("#nonetwork").show();
-						}
+						alert(JSON.stringify(err));
 					}
-				});
+					//					if (ret) {
+					//						$("#nonetwork").hide();
+					//						//发送验证码成功
+					//						switch(ret.retCode) {
+					//							case 0:
+					//								$('#sendVerify').removeAttr('onclick');
+					//								$('#sendVerify').html('<span id="getVerify">120</span>s');
+					//								time = 120;
+					//								isinerval = setInterval("CountDown()", 1000);
+					//								break;
+					//							case 1:
+					//								api.toast({
+					//									msg : '很抱歉，短信获取失败，请稍后再试！'
+					//								});
+					//								break;
+					//						}
+					//					} else {
+					//						if (err && err.code == 0) {
+					//							$("#nonetwork").show();
+					//						}
+					//					}
+				}, 'sendtplValue&funid=wash_user&phone_number=' + tel);
 			}
 		}
 
@@ -141,9 +144,7 @@
 			api.showProgress({
 				title : "登录中"
 			});
-			$xy.ajax({
-				url : window.serverUrl + 'userLogin/mobile/' + tel + '/validate_code/' + code
-			}, function(ret, err) {
+			$xy.ajax(function(ret, err) {
 				api.hideProgress();
 				if (ret) {
 					$("#nonetwork").hide();
@@ -199,7 +200,7 @@
 						$("#nonetwork").show();
 					}
 				}
-			});
+			}, 'appRegister&funid=wash_user&phone_number=' + tel + '&verify=' + code);
 		}
 	</script>
 </html>
