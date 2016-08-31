@@ -4,9 +4,9 @@
  * 作者：徐达
  */
 ;! function(window) {
-	//	window.serverUrl = "http://218.28.41.134:8081/etax/fileAction.do?pagetype=grid&nousercheck=1&eventcode=";
-	//	window.ImgWebUrl = 'http://218.28.41.134:8081/etax/fileAction.do';
-	//	window.selectUrl = "&funid=app_remote";
+	window.serverUrl = "http://218.29.85.98:8080/etax/fileAction.do?pagetype=grid&nousercheck=1&eventcode=";
+	window.ImgWebUrl = 'http://218.29.85.98:8080/etax/fileAction.do';
+	window.selectUrl = "&funid=app_remote";
 	//	var isAndroid = (/android/gi).test(navigator.appVersion);
 	//	var uzStorage = function() {
 	//		var ls = window.localStorage;
@@ -159,36 +159,11 @@
 					if (systemType == "ios") {
 						var rets = eval('(' + err.body + ')');
 						if ( typeof callback == 'function') {
-							if (rets) {
-								if (rets.success) {
-									callback(rets);
-								} else {
-									api.toast({
-										msg : rets.message
-									});
-								}
-							} else {
-								api.toast({
-									msg : '连接错误，请检查网络配置'
-								});
-							}
-
+							callback(rets, err);
 						}
 					} else {
 						if ( typeof callback == 'function') {
-							if (ret) {
-								if (ret.success) {
-									callback(ret);
-								} else {
-									api.toast({
-										msg : ret.message
-									});
-								}
-							} else {
-								api.toast({
-									msg : '连接错误，请检查网络配置'
-								});
-							}
+							callback(ret, err);
 						}
 					}
 				});
