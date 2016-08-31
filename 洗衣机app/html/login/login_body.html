@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
@@ -8,20 +7,17 @@
 		<link rel="stylesheet" type="text/css" href="../../css/Hui.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/fonts/iconfont.css" />
 		<style>
-			html,
-			body {
+			html, body {
 				background-image: url('../../image/login_bg.png');
 				background-size: cover;
-				background-position: center;
 			}
-						.active {
+			.active {
 				color: #49b1f4;
 				/*				border-bottom: 2px #1786FF solid;*/
 				border: 1px solid #49b1f4;
 			}
 		</style>
 	</head>
-
 	<body>
 		<!--无网络登录和获取验证码优化-->
 		<div id="nonetwork" style="display: none;" tapmode="" onclick="openWifi();">
@@ -34,52 +30,46 @@
 				<span class="H-icon H-padding-horizontal-right-5 H-display-block"><i class="iconfont icon-zhankai H-theme-font-color-white H-font-size-12 H-vertical-middle"></i></span>
 			</div>
 		</div>
-		<div style="margin-top: 200px;">
-		<div id="tab" class="H-flexbox-horizontal" >
-			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-touch-active H-font-size-12 active" style="border-width: 0 0 2px  0">
-				验证码快捷登录
+		<div style="height: 240px;"></div>
+		<div>
+			<div id="tab" class="H-flexbox-horizontal" >
+				<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-touch-active H-font-size-12 active" style="border-width: 0 0 2px  0">
+					验证码快捷登录
+				</div>
+				<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-touch-active H-font-size-12" style="border-width: 0 0 2px  0">
+					密码登录
+				</div>
 			</div>
-
-			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-touch-active H-font-size-12" style="border-width: 0 0 2px  0">
-				密码登录
-			</div>
-		</div>
-		
 			<div id="content">
-				<div class="switvh H-font-size-14 H-margin-vertical-top-2">
+				<div class="switvh H-font-size-14 H-padding-vertical-top-2">
 					<div>
-					
-					<input type="text" class=" H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入手机号码">
-
-					<input type="text" class="H-margin-vertical-top-2 H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12"style="color:#49b1f4;"  placeholder="请输入验证码">
-
+						<input type="text" class=" H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入手机号码">
+						<input type="text" class="H-margin-vertical-top-2 H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12"style="color:#49b1f4;"  placeholder="请输入验证码">
 					</div>
 					<div class="H-margin-horizontal-both-20 H-padding-vertical-both-15">
 						<button tapmode="" onclick="login();" class="H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent H-border-radius-15 H-theme-border-color9-click H-theme-font-color-white " style="background-color: #0c9fff;">
-					登&nbsp;&nbsp;&nbsp;录
-				</button>
+							登&nbsp;&nbsp;&nbsp;录
+						</button>
 					</div>
-				
 				</div>
 				<div style="display: none;" class="switvh H-font-size-14">
-					没有屏蔽的跑男
-					<input id="tel" type="number" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" placeholder="请输入手机号码">
-
+					<div>
+						<input type="text" class=" H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入手机号码">
+						<input type="text" class="H-margin-vertical-top-2 H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12"style="color:#49b1f4;"  placeholder="请输入验证码">
+					</div>
+					<div class="H-margin-horizontal-both-20 H-padding-vertical-both-15">
+						<button tapmode="" onclick="login();" class="H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent H-border-radius-15 H-theme-border-color9-click H-theme-font-color-white " style="background-color: #0c9fff;">
+							登&nbsp;&nbsp;&nbsp;录
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
-
-
-
 	</body>
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript" src="../../script/xy.js"></script>
 	<script type="text/javascript">
-		var jpush = null,
-			tel = null,
-			time = null,
-			jpush = null,
-			systemtype = null;
+		var jpush = null, tel = null, time = null, jpush = null, systemtype = null;
 		apiready = function() {
 			api.parseTapmode();
 			init();
@@ -90,27 +80,27 @@
 			jpush = api.require('ajpush');
 			systemtype = api.systemType;
 		}
-Zepto(function($) {
+
+		Zepto(function($) {
 			$("#tab div").click(function() {
 				console.log(111111);
 				$("#tab div").eq($(this).index()).addClass('active').siblings().removeClass('active');
 				$("#content .switvh").hide().eq($(this).index()).show();
 			});
 		});
-
 		//监听网络状态
 		function listener() {
 			api.addEventListener({
-				name: 'offline'
+				name : 'offline'
 			}, function(ret, err) {
 				$("#nonetwork").show();
 			});
 			api.addEventListener({
-				name: 'online'
+				name : 'online'
 			}, function(ret, err) {
 				$("#nonetwork").hide();
 				api.toast({
-					msg: '已连接到网络'
+					msg : '已连接到网络'
 				});
 			});
 		}
@@ -121,17 +111,17 @@ Zepto(function($) {
 			// 手机号的正则
 			var a = /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/;
 			// 判断手机号
-			if(tel.length != 11 || !tel.match(a)) {
+			if (tel.length != 11 || !tel.match(a)) {
 				// 如果不是正确的手机号
 				alert("请输入正确的手机号！");
 			} else {
 				api.showProgress({
-					title: '获取中',
-					text: '请稍等....'
+					title : '获取中',
+					text : '请稍等....'
 				});
 				$xy.ajax(function(ret, err) {
 					api.hideProgress();
-					if(ret) {
+					if (ret) {
 						alert(JSON.stringify(ret));
 					} else {
 						alert(JSON.stringify(err));
@@ -163,7 +153,7 @@ Zepto(function($) {
 
 		//时间递减处理
 		function CountDown() {
-			if(time < 1) {
+			if (time < 1) {
 				//              var sendVerify = document.getElementById('sendVerify');
 				$('#sendVerify').attr('onclick', 'getVerify()');
 				//$('#sendVerify').attr( 'status', '0');
@@ -184,46 +174,46 @@ Zepto(function($) {
 			// 手机号的正则
 			var a = /^((\(\d{3}\))|(\d{3}\-))?13\d{9}|14[57]\d{8}|15\d{9}|18\d{9}$/;
 			// 判断手机号
-			if(tel.length != 11 || !tel.match(a)) {
+			if (tel.length != 11 || !tel.match(a)) {
 				// 如果不是正确的手机号
 				api.alert({
-					title: '温馨提示',
-					msg: '请输入正确的手机号！',
+					title : '温馨提示',
+					msg : '请输入正确的手机号！',
 				}, function(ret, err) {
-					if(ret && ret.buttonIndex == 1) {
+					if (ret && ret.buttonIndex == 1) {
 						$("#tel").focus();
 					}
 				});
 				return;
 			}
-			if(code.length !== 4) {
+			if (code.length !== 4) {
 				alert("抱歉验证码格式错误");
 				return;
 			}
 			api.showProgress({
-				title: "登录中"
+				title : "登录中"
 			});
 			$xy.ajax(function(ret, err) {
 				api.hideProgress();
-				if(ret) {
+				if (ret) {
 					$("#nonetwork").hide();
 					switch(ret.retCode) {
 						//登录成功
 						case 0:
 							//存储用户数据
 							api.setPrefs({
-								key: 'userinfo',
-								value: JSON.stringify(ret.retValue)
+								key : 'userinfo',
+								value : JSON.stringify(ret.retValue)
 							});
 							//延时关闭窗口
 							setTimeout(function() {
 								api.closeWin();
 							}, 2000);
 							//初始化推送
-							if(systemtype != "ios") {
+							if (systemtype != "ios") {
 								//初始化android推送
 								jpush.init(function(ret) {
-									if(ret && ret.status) {
+									if (ret && ret.status) {
 										//注册设备
 										jpush.getRegistrationId(function(ret) {
 											var registrationId = ret.id;
@@ -255,12 +245,11 @@ Zepto(function($) {
 							break;
 					}
 				} else {
-					if(err && err.code == 0) {
+					if (err && err.code == 0) {
 						$("#nonetwork").show();
 					}
 				}
 			}, 'appRegister&funid=wash_user&phone_number=' + tel + '&verify=' + code);
 		}
 	</script>
-
 </html>
