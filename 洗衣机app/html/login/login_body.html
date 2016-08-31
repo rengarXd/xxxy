@@ -53,16 +53,14 @@
 			<div id="content">
 				<div class="switvh H-font-size-14 ">
 					<div class="H-flexbox-horizontal">
-						<input type="text" class=" H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入手机号码">
+						<input type="text" id="tel" class=" H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入手机号码">
 						<div class="H-padding-10">
-							<button class="H-font-size-14 H-theme-background-color-transparent  H-theme-font-color1 H-theme-border-color1 H-theme-border-color1-click H-theme-background-color1-click H-theme-font-color1-click border-dx H-padding-horizontal-both-15 H-padding-vertical-both-3">
-								获取验证码
-							</button>
+							<span tapmode onclick="getVerify();" id="sendVerify" class="H-font-size-14 H-theme-background-color-transparent  H-theme-font-color1 H-theme-border-color1 H-theme-border-color1-click H-theme-background-color1-click H-theme-font-color1-click border-dx H-padding-horizontal-both-15 H-padding-vertical-both-5"> 获取验证码 </span>
 						</div>
 					</div>
 					<div class="xy_border"></div>
 					<div>
-						<input type="text" class="H-margin-vertical-top-2 H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入验证码">
+						<input type="text" id="code" class="H-margin-vertical-top-2 H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入验证码">
 					</div>
 					<div class="xy_border"></div>
 					<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-14 H-padding-vertical-both-5 H-padding-horizontal-left-25">
@@ -70,7 +68,7 @@
 						<span>同意《用户协议》</span>
 					</div>
 					<div class="H-margin-horizontal-both-20 H-padding-vertical-both-15">
-						<button tapmode="" onclick="login();" class="H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent H-border-radius-15 H-theme-border-color9-click H-theme-font-color-white " style="background-color: #0c9fff;">
+						<button tapmode="" onclick="login_btn();" class="H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent H-border-radius-15 H-theme-border-color9-click H-theme-font-color-white " style="background-color: #0c9fff;">
 							登&nbsp;&nbsp;&nbsp;录
 						</button>
 					</div>
@@ -85,7 +83,7 @@
 					</div>
 					<div class="xy_border"></div>
 					<div class="H-margin-horizontal-both-20 H-padding-vertical-both-15">
-						<button tapmode="" onclick="login();" class="H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent H-border-radius-15 H-theme-border-color9-click H-theme-font-color-white border-dl" style="background-color: #0c9fff;">
+						<button tapmode="" onclick="login_btn();" class="H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent H-border-radius-15 H-theme-border-color9-click H-theme-font-color-white border-dl" style="background-color: #0c9fff;">
 							登&nbsp;&nbsp;&nbsp;录
 						</button>
 					</div>
@@ -138,9 +136,16 @@
 			// 手机号的正则
 			var a = /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/;
 			// 判断手机号
-			if (tel.length != 11 || !tel.match(a)) {
+			if (!tel.match(a)) {
 				// 如果不是正确的手机号
-				alert("请输入正确的手机号！");
+				api.alert({
+					title : '温馨提示',
+					msg : '请输入正确的手机号！',
+				}, function(ret, err) {
+					if (ret && ret.buttonIndex == 1) {
+						$("#tel").focus();
+					}
+				});
 			} else {
 				api.showProgress({
 					title : '获取中',
@@ -149,31 +154,20 @@
 				$xy.ajax(function(ret, err) {
 					api.hideProgress();
 					if (ret) {
-						alert(JSON.stringify(ret));
+						//$("#nonetwork").hide();
+						if (ret.success) {
+							$('#sendVerify').removeAttr('onclick');
+							$('#sendVerify').html('<span id="getVerify">120</span>s');
+							time = 120;
+							isinerval = setInterval("CountDown()", 1000);
+						} else {
+							api.toast({
+								msg : '很抱歉，短信获取失败，请稍后再试！'
+							});
+						}
 					} else {
-						alert(JSON.stringify(err));
+						$("#nonetwork").show();
 					}
-					//					if (ret) {
-					//						$("#nonetwork").hide();
-					//						//发送验证码成功
-					//						switch(ret.retCode) {
-					//							case 0:
-					//								$('#sendVerify').removeAttr('onclick');
-					//								$('#sendVerify').html('<span id="getVerify">120</span>s');
-					//								time = 120;
-					//								isinerval = setInterval("CountDown()", 1000);
-					//								break;
-					//							case 1:
-					//								api.toast({
-					//									msg : '很抱歉，短信获取失败，请稍后再试！'
-					//								});
-					//								break;
-					//						}
-					//					} else {
-					//						if (err && err.code == 0) {
-					//							$("#nonetwork").show();
-					//						}
-					//					}
 				}, 'sendtplValue&funid=wash_user&phone_number=' + tel);
 			}
 		}
@@ -196,12 +190,14 @@
 		//登录按钮
 		function login_btn() {
 			var tel = $("#tel").val();
+			// 手机号的正则
+			var a = /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/;
 			//获取验证码
 			var code = $("#code").val();
-			// 手机号的正则
-			var a = /^((\(\d{3}\))|(\d{3}\-))?13\d{9}|14[57]\d{8}|15\d{9}|18\d{9}$/;
+			//验证码正则
+			var b = /^[0-9]{4}$/;
 			// 判断手机号
-			if (tel.length != 11 || !tel.match(a)) {
+			if (!tel.match(a)) {
 				// 如果不是正确的手机号
 				api.alert({
 					title : '温馨提示',
@@ -213,8 +209,16 @@
 				});
 				return;
 			}
-			if (code.length !== 4) {
-				alert("抱歉验证码格式错误");
+			if (!code.match(b)) {
+				// 如果不是正确的手机号
+				api.alert({
+					title : '温馨提示',
+					msg : '抱歉验证码格式错误',
+				}, function(ret, err) {
+					if (ret && ret.buttonIndex == 1) {
+						$("#code").focus();
+					}
+				});
 				return;
 			}
 			api.showProgress({
@@ -223,58 +227,46 @@
 			$xy.ajax(function(ret, err) {
 				api.hideProgress();
 				if (ret) {
-					$("#nonetwork").hide();
-					switch(ret.retCode) {
-						//登录成功
-						case 0:
-							//存储用户数据
-							api.setPrefs({
-								key : 'userinfo',
-								value : JSON.stringify(ret.retValue)
-							});
-							//延时关闭窗口
-							setTimeout(function() {
-								api.closeWin();
-							}, 2000);
-							//初始化推送
-							//							if (systemtype != "ios") {
-							//								//初始化android推送
-							//								jpush.init(function(ret) {
-							//									if (ret && ret.status) {
-							//										//注册设备
-							//										jpush.getRegistrationId(function(ret) {
-							//											var registrationId = ret.id;
-							//											$xy.ajax(function(ret, err) {
-							//												//                                  console.log("绑定成功！");
-							//											}, '...' + registrationId);
-							//										});
-							//									}
-							//								});
-							//							} else {
-							//								//适配ios推送
-							//								//注册设备
-							//								jpush.getRegistrationId(function(ret) {
-							//									var registrationId = ret.id;
-							//									$xy.ajax(function(ret, err) {
-							//										//                                  console.log("绑定成功！");
-							//									}, '...' + registrationId);
-							//								});
-							//							}
-							break;
-						case 1:
-							alert(ret.retDesc);
-							break;
-						case 2:
-							alert(ret.retDesc);
-							break;
-						case 3:
-							alert(ret.retDesc);
-							break;
+					//$("#nonetwork").hide();
+					if (ret.success) {
+						//存储用户数据
+						api.setPrefs({
+							key : 'userinfo',
+							value : JSON.stringify(ret.data)
+						});
+						//延时关闭窗口
+						setTimeout(function() {
+							api.closeWin();
+						}, 2000);
+						//初始化推送
+						//							if (systemtype != "ios") {
+						//								//初始化android推送
+						//								jpush.init(function(ret) {
+						//									if (ret && ret.status) {
+						//										//注册设备
+						//										jpush.getRegistrationId(function(ret) {
+						//											var registrationId = ret.id;
+						//											$xy.ajax(function(ret, err) {
+						//												//                                  console.log("绑定成功！");
+						//											}, '...' + registrationId);
+						//										});
+						//									}
+						//								});
+						//							} else {
+						//								//适配ios推送
+						//								//注册设备
+						//								jpush.getRegistrationId(function(ret) {
+						//									var registrationId = ret.id;
+						//									$xy.ajax(function(ret, err) {
+						//										//                                  console.log("绑定成功！");
+						//									}, '...' + registrationId);
+						//								});
+						//							}
+					} else {
+						alert(ret.message);
 					}
 				} else {
-					if (err && err.code == 0) {
-						$("#nonetwork").show();
-					}
+					$("#nonetwork").show();
 				}
 			}, 'appRegister&funid=wash_user&phone_number=' + tel + '&verify=' + code);
 		}
