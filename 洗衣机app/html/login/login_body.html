@@ -234,6 +234,11 @@
 							key : 'userinfo',
 							value : JSON.stringify(ret.data)
 						});
+						api.execScript({
+							name : 'main',
+							frameName : 'me_index',
+							script : 'reload();'
+						});
 						//延时关闭窗口
 						setTimeout(function() {
 							api.closeWin();
