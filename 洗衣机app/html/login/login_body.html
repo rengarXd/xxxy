@@ -229,6 +229,9 @@
 				if (ret) {
 					//$("#nonetwork").hide();
 					if (ret.success) {
+						api.toast({
+							msg : '登录成功'
+						});
 						//存储用户数据
 						api.setPrefs({
 							key : 'userinfo',
