@@ -19,7 +19,7 @@
 	</head>
 	<body>
 		<div class="H-theme-background-color-white H-margin-vertical-bottom-5" tapmode onclick="openWin('nearby_machine_head', 'nearby_machine_head.html');">
-			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
+			<div class="H-flexbox-horizontal H-padding-vertical-top-10 ">
 				<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
 				<div class="H-flex-item xy_font_color">
 					<span>东区1号宿舍楼</span>
@@ -52,10 +52,12 @@
 	</body>
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script type="text/javascript">
+		var longitude = null, latitude = null;
 		apiready = function() {
 			api.parseTapmode();
+			getlocation();
 		};
-		function openWin(name, url) {
+		function openWin(name, url, washid) {
 			var delay = 0;
 			if (api.systemType != 'ios') {
 				delay = 200;
@@ -63,11 +65,63 @@
 			api.openWin({
 				name : name,
 				url : url,
+				pageParam : {
+					washid : washid
+				},
 				bounces : false,
 				delay : delay,
 				slidBackEnabled : true,
 				vScrollBarEnabled : false
 			});
+		}
+
+		//获取位置信息
+		function getlocation() {
+			var systemType = api.systemType;
+			if (systemType == "ios") {
+				api.startLocation({
+					accuracy : '10m',
+					filter : 1,
+					autoStop : true
+				}, function(ret, err) {
+					if (ret.status) {
+						api.toast({
+							msg : '获取位置成功'
+						});
+						//经度
+						longitude = ret.longitude;
+						//纬度
+						latitude = ret.latitude;
+					} else {
+						api.toast({
+							msg : '获取位置失败'
+						});
+					}
+				});
+			} else {
+				//初始化百度定位模块
+				var baiduLocation = api.require('baiduLocation');
+				//开始定位
+				baiduLocation.startLocation({
+					accuracy : '10m',
+					filter : 1,
+					autoStop : true
+				}, function(ret, err) {
+					if (ret.status) {
+						api.toast({
+							msg : '获取位置成功'
+						});
+						//经度
+						longitude = ret.longitude;
+						//纬度
+						latitude = ret.latitude;
+					} else {
+						api.toast({
+							msg : '获取位置失败'
+						});
+					}
+				});
+			}
 		}
 	</script>
 </html>
