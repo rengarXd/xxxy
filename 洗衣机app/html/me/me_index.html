@@ -116,47 +116,44 @@
 		//打开个人中心或登录页
 		function openUser() {
 			if (userType == 1) {
-				var delay = 0;
-				if (api.systemType != 'ios') {
-					delay = 200;
-				}
 				api.openWin({
 					name : 'user_set_head',
 					url : 'user_set_head.html',
 					bounces : false,
-					delay : delay,
+					delay : 0,
 					slidBackEnabled : true,
-					vScrollBarEnabled : false
+					vScrollBarEnabled : false,
+					hScrollBarEnabled : false
 				});
 			} else if (userType == 2) {
-				var delay = 0;
-				if (api.systemType != 'ios') {
-					delay = 200;
-				}
 				api.openWin({
 					name : 'login_head',
 					url : '../login/login_head.html',
 					bounces : false,
-					delay : delay,
+					delay : 0,
+					softInputMode : resize,
 					slidBackEnabled : true,
-					vScrollBarEnabled : false
+					vScrollBarEnabled : false,
+					hScrollBarEnabled : false
 				});
 			}
 		}
 
 		//打开窗口
 		function openWin(name, url) {
-			var delay = 0;
-			if (api.systemType != 'ios') {
-				delay = 200;
-			}
 			api.openWin({
 				name : name,
 				url : url,
 				bounces : false,
-				delay : delay,
+				delay : 0,
 				slidBackEnabled : true,
-				vScrollBarEnabled : false
+				vScrollBarEnabled : false,
+				hScrollBarEnabled : false,
+				animation : {
+					type : "none", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 0 //动画过渡时间，默认300毫秒
+				}
 			});
 		}
 
