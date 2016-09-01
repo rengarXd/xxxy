@@ -121,6 +121,18 @@
 			api.parseTapmode();
 			//获取位置信息
 			getlocation();
+			//下拉刷新
+			api.setRefreshHeaderInfo({
+				visible : true,
+				bgColor : '#fff',
+				textColor : '#666666',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...',
+				showTime : true
+			}, function(ret, err) {
+				location.reload();
+				api.refreshHeaderLoadDone();
+			});
 		};
 		//打开商品选项
 		function openProduct() {
