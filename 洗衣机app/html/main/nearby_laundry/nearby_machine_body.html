@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<title>title</title>
 		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
@@ -22,49 +22,59 @@
 		</style>
 	</head>
 	<body>
-		<div id="">
+		<div id="machine_list"></div>
+		<script id="machine_list_item" type="text/html">
+			{{# for(var i=0,l=d.length;i<l;i++){ }}
 			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
-				<div class="H-flexbox-horizontal H-padding-vertical-top-10 " tapmode="H-touch-active" onclick="openProduct();">
-					<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
-					<div class="H-flex-item xy_font_color">
-						<span>三楼东01机</span><span class="H-float-right xyzt">我要洗衣</span>
-						<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
-							空闲
-						</div>
-					</div>
-					<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
-				</div>
-				<div class="xy_border"></div>
-				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
-					郑州大学 <span>西三宿舍</span>
-					<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
-				</div>
+			<div class="H-flexbox-horizontal H-padding-vertical-top-10 " tapmode="H-touch-active" onclick="openProduct();">
+			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+			<div class="H-flex-item xy_font_color">
+			<span>{{ d[i].device_iname }}</span><span class="H-float-right xyzt">我要洗衣</span>
+			<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
+			{{ d[i].ustatus }}
 			</div>
-			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
-				<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
-					<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
-					<div class="H-flex-item xy_font_color">
-						<span>三楼东02机</span><span class="H-float-right xyzt">空闲提醒</span>
-						<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
-							被占用 <span class="H-float-right">预计32分钟后结束</span>
-						</div>
-					</div>
-					<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
-				</div>
-				<div class="xy_border"></div>
-				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
-					郑州大学 <span>西三宿舍</span>
-					<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
-				</div>
 			</div>
+			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+			</div>
+			<div class="xy_border"></div>
+			<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
+			{{ d[i].washloca_name }}				
+			<!-- <span>西三宿舍</span>-->
+			<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
+			</div>
+			{{# } }}
+		</script>
+		<!--<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
+		<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
+		<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+		<div class="H-flex-item xy_font_color">
+		<span>三楼东02机</span><spasn class="H-float-right xyzt">空闲提醒</span>
+		<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
+		被占用 <span class="H-float-right">预计32分钟后结束</span>
 		</div>
+		</div>
+		<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+		</div>
+		<div class="xy_border"></div>
+		<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
+		郑州大学 <span>西三宿舍</span>
+		<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
+		</div>
+		</div>
+		</div>-->
 		<div class="H-text-align-center H-font-size-14 H-theme-font-color-999" tapmode="H-touch-active" onclick="openLaundry();">
-			附近其他洗衣点
+			其他附近洗衣点
 		</div>
-	</body>
+
+	<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
 	<script type="text/javascript">
 		apiready = function() {
+			//api.pageParam.washloca_id
+			//			api.toast({
+			//				msg: api.pageParam.washloca_id
+			//			});
+		initPage();
 		};
 		//打开商品选项
 		function openProduct() {
@@ -82,5 +92,36 @@
 			});
 			setTimeout("api.closeWin();", 2000);
 		}
+
+		  function initPage() {
+            $xy.ajax(function(ret, err) {
+				//api.hideProgress();
+				if (ret) {
+					//$("#nonetwork").hide();
+					if (ret.success) {
+						console.log("获取成功");
+						console.log(JSON.stringify(ret));
+
+							var tpl = document.getElementById('machine_list_item').innerHTML;
+							//读取模版
+							//方式一：异步渲染（推荐）
+							laytpl(tpl).render(ret.data, function(render) {
+								api.hideProgress();
+								document.getElementById('machine_list').innerHTML = render;
+							});
+					
+					} else {
+						console.log(JSON.stringify(ret));
+						api.toast({
+							msg : '很抱歉，附近没有洗衣点！'
+						});
+					}
+				} else {
+					$("#nonetwork").show();
+				}
+			}, 'appDeviceList&funid=wash_location&washloca_id=' + api.pageParam.washloca_id);
+        }
+
 	</script>
+		</body>
 </html>
