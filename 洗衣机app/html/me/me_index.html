@@ -129,17 +129,19 @@
 		function exit_login() {
 			api.confirm({
 				title : '温馨提示',
-				msg : '您确定要退出登录吗？'
+				msg : '您确定要退出登录吗？',
+				buttons : ['确定', '取消']
 			}, function(ret, err) {
 				if (ret.buttonIndex == 1) {
 					api.removePrefs({
 						key : 'userinfo'
 					});
+					location.reload();
 				}
 			});
 		}
-		
-		function reload(){
+
+		function reload() {
 			location.reload();
 		}
 	</script>

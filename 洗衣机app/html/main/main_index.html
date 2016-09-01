@@ -117,6 +117,7 @@
 	</body>
 	<script type="text/javascript" src="../../script/Zepto.min.js"></script>
 	<script type="text/javascript">
+		var timestamp = null, longitude = null, latitude = null;
 		apiready = function() {
 			api.parseTapmode();
 			//获取位置信息
@@ -159,7 +160,21 @@
 					filter : 1,
 					autoStop : true
 				}, function(ret, err) {
-					alert(JSON.stringify(ret));
+					if (ret.status) {
+						api.toast({
+							msg : '获取位置成功'
+						});
+						//时间戳
+						timestamp = ret.timestamp;
+						//经度
+						longitude = ret.longitude;
+						//纬度
+						latitude = ret.latitude;
+					} else {
+						api.toast({
+							msg : '获取位置失败'
+						});
+					}
 				});
 			} else {
 				//初始化百度定位模块
@@ -171,9 +186,19 @@
 					autoStop : true
 				}, function(ret, err) {
 					if (ret.status) {
-						alert(JSON.stringify(ret));
+						api.toast({
+							msg : '获取位置成功'
+						});
+						//时间戳
+						timestamp = ret.timestamp;
+						//经度
+						longitude = ret.longitude;
+						//纬度
+						latitude = ret.latitude;
 					} else {
-						alert(JSON.stringify(err));
+						api.toast({
+							msg : '获取位置失败'
+						});
 					}
 				});
 			}
