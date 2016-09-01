@@ -120,6 +120,8 @@
 		apiready = function() {
 			api.parseTapmode();
 			initmodel();
+			//获取位置信息
+			getlocation();
 		};
 		//打开商品选项
 		function openProduct() {
@@ -137,11 +139,40 @@
 			});
 		}
 
+		//初始化模块
 		function initmodel() {
 			FNScanner = api.require('FNScanner');
 		}
 
+		//获取位置信息
+		function getlocation() {
+			var systemType = api.systemType;
+			if (systemType == "ios") {
+				api.startLocation({
+					accuracy : '10m',
+					filter : 1,
+					autoStop : true
+				}, function(ret, err) {
+					alert(JSON.stringify(ret));
+				});
+			} else {
+				var baiduLocation = api.require('baiduLocation');
+				baiduLocation.startLocation({
+					accuracy : '10m',
+					filter : 1,
+					autoStop : true
+				}, function(ret, err) {
+					if (ret.status) {
+						alert(JSON.stringify(ret));
+					} else {
+						alert(JSON.stringify(err));
+					}
+				});
+			}
+		}
+
 		function scanner() {
+			//打开二维码扫描器
 			FNScanner.openScanner(function(ret, err) {
 				if (ret.content) {
 					alert(ret.content);
