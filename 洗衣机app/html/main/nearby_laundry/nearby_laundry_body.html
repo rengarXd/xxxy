@@ -31,7 +31,7 @@
 		<div id="nearby_laundry"></div>
 		<script id="nearby_laundry_list_item" type="text/html">
 			{{# for(var i=0,l=d.length;i<l;i++){ }}
-			<div class="H-theme-background-color-white H-margin-vertical-bottom-5 animated fadeIn" tapmode="H-touch-active" onclick="open_nearby_machine('{{ d[i].washloca_id }}');">
+			<div class="H-theme-background-color-white H-margin-vertical-bottom-5 animated fadeIn" tapmode="H-touch-active" onclick="open_nearby_machine('{{ d[i].washloca_id }}','{{ d[i].distance }}');">
 			<div class="H-flexbox-horizontal H-padding-vertical-top-10 ">
 			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
 			<div class="H-flex-item xy_font_color">
@@ -155,8 +155,8 @@
 					if (ret) {
 						//$("#nonetwork").hide();
 						if (ret.success) {
-							console.log("获取成功");
-							console.log(JSON.stringify(ret));
+							//console.log("获取成功");
+							//console.log(JSON.stringify(ret));
 							var tpl = document.getElementById('nearby_laundry_list_item').innerHTML;
 							//读取模版
 							//方式一：异步渲染（推荐）
@@ -165,7 +165,7 @@
 								document.getElementById('nearby_laundry').innerHTML = render;
 							});
 						} else {
-							console.log(JSON.stringify(ret));
+							//console.log(JSON.stringify(ret));
 							api.toast({
 								msg : '很抱歉，附近没有洗衣点！'
 							});
@@ -177,12 +177,13 @@
 			}
 
 			//打开该洗衣点下的洗衣机
-			function open_nearby_machine(id) {
+			function open_nearby_machine(id, distance_id) {
 				api.openWin({
 					name : 'nearby_machine_head',
 					url : './nearby_machine_head.html',
 					pageParam : {
 						washloca_id : id,
+						distance : distance_id
 					},
 					delay : 0,
 					slidBackEnabled : true,
