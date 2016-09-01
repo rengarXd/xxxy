@@ -108,7 +108,7 @@
 			附近的洗衣点
 			</div>
 			{{# for(var i = 0, len = 3; i < len; i++) { }}
-			<div class="H-theme-background-color-white H-margin-vertical-bottom-5 animated fadeIn" tapmode onclick="">
+			<div class="H-theme-background-color-white H-margin-vertical-bottom-5 animated fadeIn" tapmode="H-touch-active" onclick="openXyj('{{ d[i].washloca_id }}');">
 			<div class="H-flexbox-horizontal H-padding-vertical-top-10 ">
 			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
 			<div class="H-flex-item xy_font_color">
@@ -207,6 +207,21 @@
 				laytpl(tpl).render(renderData, function(render) {
 					document.getElementById(tplDataId).innerHTML = render;
 					callback();
+				});
+			}
+
+			//打开洗衣点下的洗衣机
+			function openXyj(washloca_id) {
+				api.openWin({
+					name : 'nearby_machine_head',
+					url : './nearby_laundry/nearby_machine_head.html',
+					pageParam : {
+						washloca_id : washloca_id
+					},
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false,
+					hScrollBarEnabled : false
 				});
 			}
 
