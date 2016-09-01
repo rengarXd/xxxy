@@ -28,7 +28,11 @@
 				<span class="H-icon H-padding-horizontal-right-5 H-display-block"><i class="iconfont icon-zhankai H-theme-font-color-white H-font-size-12 H-vertical-middle"></i></span>
 			</div>
 		</div>
-		<div id="nearby_laundry"></div>
+		<div id="nearby_laundry">
+			<div class="H-center-all H-padding-20">
+				<img src="../../../image/loading_more.gif" width="30" />
+			</div>
+		</div>
 		<script id="nearby_laundry_list_item" type="text/html">
 			{{# for(var i=0,l=d.length;i<l;i++){ }}
 			<div class="H-theme-background-color-white H-margin-vertical-bottom-5" tapmode onclick="openWin('nearby_machine_head', 'nearby_machine_head.html');">
@@ -62,129 +66,124 @@
 		<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
 		</div>
 		</div>-->
-		<div class="H-text-align-center H-font-size-14 H-theme-font-color-999">
-			查找附近的洗衣点
-		</div>
-
-	<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
-	<script type="text/javascript" src="../../script/api.js"></script>
-	<script type="text/javascript" src="../../../script/xy.js"></script>
-	<script type="text/javascript">
-		var longitude = null, latitude = null;
-		apiready = function() {
-			api.parseTapmode();
-			getlocation();
-		};
-		function openWin(name, url, washid) {
-			var delay = 0;
-			if (api.systemType != 'ios') {
-				delay = 200;
-			}
-			api.openWin({
-				name : name,
-				url : url,
-				pageParam : {
-					washid : washid
-				},
-				bounces : false,
-				delay : delay,
-				slidBackEnabled : true,
-				vScrollBarEnabled : false
-			});
-		}
-
-		//获取位置信息
-		function getlocation() {
-			var systemType = api.systemType;
-			if (systemType == "ios") {
-				api.startLocation({
-					accuracy : '10m',
-					filter : 1,
-					autoStop : true
-				}, function(ret, err) {
-					if (ret.status) {
-						api.toast({
-							msg : '获取位置成功ios'
-						});
-						//经度
-						longitude = ret.longitude;
-						//纬度
-						latitude = ret.latitude;
-						////获取附近10公里范围内的洗衣点
-						api.toast({
-							msg : '开始获取位置'
-						});
-						get_nearby_laundry(longitude, latitude);
-					} else {
-						api.toast({
-							msg : '获取位置失败'
-						});
-					}
-				});
-			} else {
-				//初始化百度定位模块
-				var baiduLocation = api.require('baiduLocation');
-				//开始定位
-				baiduLocation.startLocation({
-					accuracy : '10m',
-					filter : 1,
-					autoStop : true
-				}, function(ret, err) {
-					if (ret.status) {
-						//						api.toast({
-						//							msg : '获取位置成功2'
-						//						});
-						//经度
-						longitude = ret.longitude;
-						//纬度
-						latitude = ret.latitude;
-						console.log(latitude);
-						//获取附近10公里范围内的洗衣点
-						get_nearby_laundry(longitude, latitude);
-						//						$xy.ajax(function(ret, err) {
-						//							//api.hideProgress();
-						//							if(ret) {
-						//								//$("#nonetwork").hide();
-						//								if(ret.success) {
-						//									console.log("获取成功");
-						//									console.log(JSON.stringify(ret));
-						//
-						//
-						//
-						//
-						//
-						//
-						//								} else {
-						//									console.log(JSON.stringify(ret));
-						//									api.toast({
-						//										msg: '很抱歉，附近没有洗衣点！'
-						//									});
-						//								}
-						//							} else {
-						//								$("#nonetwork").show();
-						//							}
-						//						}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
-					} else {
-						api.toast({
-							msg : '获取位置失败'
-						});
-					}
+		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../../script/xy.js"></script>
+		<script type="text/javascript">
+			var longitude = null, latitude = null;
+			apiready = function() {
+				api.parseTapmode();
+				getlocation();
+			};
+			function openWin(name, url, washid) {
+				var delay = 0;
+				if (api.systemType != 'ios') {
+					delay = 200;
+				}
+				api.openWin({
+					name : name,
+					url : url,
+					pageParam : {
+						washid : washid
+					},
+					bounces : false,
+					delay : delay,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
 				});
 			}
-		}
 
-		//获取附近10公里范围内的洗衣点
-		function get_nearby_laundry(longitude, latitude) {
-			longitude = longitude;
-			latitude = latitude;
-			$xy.ajax(function(ret, err) {
-				//api.hideProgress();
-				if (ret) {
-					//$("#nonetwork").hide();
-					if (ret.success) {
-						console.log("获取成功");
-						console.log(JSON.stringify(ret));
+			//获取位置信息
+			function getlocation() {
+				var systemType = api.systemType;
+				if (systemType == "ios") {
+					api.startLocation({
+						accuracy : '10m',
+						filter : 1,
+						autoStop : true
+					}, function(ret, err) {
+						if (ret.status) {
+							api.toast({
+								msg : '获取位置成功ios'
+							});
+							//经度
+							longitude = ret.longitude;
+							//纬度
+							latitude = ret.latitude;
+							////获取附近10公里范围内的洗衣点
+							api.toast({
+								msg : '开始获取位置'
+							});
+							get_nearby_laundry(longitude, latitude);
+						} else {
+							api.toast({
+								msg : '获取位置失败'
+							});
+						}
+					});
+				} else {
+					//初始化百度定位模块
+					var baiduLocation = api.require('baiduLocation');
+					//开始定位
+					baiduLocation.startLocation({
+						accuracy : '10m',
+						filter : 1,
+						autoStop : true
+					}, function(ret, err) {
+						if (ret.status) {
+							//						api.toast({
+							//							msg : '获取位置成功2'
+							//						});
+							//经度
+							longitude = ret.longitude;
+							//纬度
+							latitude = ret.latitude;
+							console.log(latitude);
+							//获取附近10公里范围内的洗衣点
+							get_nearby_laundry(longitude, latitude);
+							//						$xy.ajax(function(ret, err) {
+							//							//api.hideProgress();
+							//							if(ret) {
+							//								//$("#nonetwork").hide();
+							//								if(ret.success) {
+							//									console.log("获取成功");
+							//									console.log(JSON.stringify(ret));
+							//
+							//
+							//
+							//
+							//
+							//
+							//								} else {
+							//									console.log(JSON.stringify(ret));
+							//									api.toast({
+							//										msg: '很抱歉，附近没有洗衣点！'
+							//									});
+							//								}
+							//							} else {
+							//								$("#nonetwork").show();
+							//							}
+							//						}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
+						} else {
+							api.toast({
+								msg : '获取位置失败'
+							});
+						}
+					});
+				}
+			}
 
+			//获取附近10公里范围内的洗衣点
+			function get_nearby_laundry(longitude, latitude) {
+				longitude = longitude;
+				latitude = latitude;
+				$xy.ajax(function(ret, err) {
+					//api.hideProgress();
+					if (ret) {
+						//$("#nonetwork").hide();
+						if (ret.success) {
+							console.log("获取成功");
+							console.log(JSON.stringify(ret));
 							var tpl = document.getElementById('nearby_laundry_list_item').innerHTML;
 							//读取模版
 							//方式一：异步渲染（推荐）
@@ -192,18 +191,17 @@
 								api.hideProgress();
 								document.getElementById('nearby_laundry').innerHTML = render;
 							});
-					
+						} else {
+							console.log(JSON.stringify(ret));
+							api.toast({
+								msg : '很抱歉，附近没有洗衣点！'
+							});
+						}
 					} else {
-						console.log(JSON.stringify(ret));
-						api.toast({
-							msg : '很抱歉，附近没有洗衣点！'
-						});
+						$("#nonetwork").show();
 					}
-				} else {
-					$("#nonetwork").show();
-				}
-			}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
-		}
-	</script>
-		</body>
+				}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
+			}
+		</script>
+	</body>
 </html>

@@ -28,11 +28,9 @@
 			.yhhd {
 				background-color: #59dbdb;
 			}
-
 			.iconfont {
 				color: #b8b8b8;
 			}
-
 			.beizhanyong {
 				color: #999999;
 			}
@@ -68,8 +66,12 @@
 				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 H-theme-font-color-666">优惠活动</label>
 			</div>
 		</div>
-		<div id="xyj_html"></div>
-		<div style="height: 50px;"></div>
+		<div id="xyj_html">
+			<div class="H-center-all H-padding-20">
+				<img src="../../image/loading_more.gif" width="30" />
+			</div>
+		</div>
+		</div> <div style="height: 50px;"></div>
 		<script type="text/html" id="xyj_data">
 			<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-3" style="padding-left: 30px;">
 			您曾使用过的洗衣机
@@ -159,7 +161,7 @@
 											_tpl('xyd_data', ret.data, 'xyj_html', function() {
 											});
 										} else {
-											$("#xyj_html").html('<div class="H-center-all H-padding-vertical-top-15 xy_font_color H-font-size-14">' + ret.message + '</div>');
+											$("#xyj_html").html('<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">' + ret.message + '</div></div></div>')
 										}
 									}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
 								} else {
@@ -179,7 +181,7 @@
 									_tpl('xyd_data', ret.data, 'xyj_html', function() {
 									});
 								} else {
-									$("#xyj_html").html('<div class="H-center-all">' + ret.message + '</div>');
+									$("#xyj_html").html('<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">' + ret.message + '</div></div></div>')
 								}
 							} else {
 								api.toast({
