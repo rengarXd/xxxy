@@ -34,9 +34,7 @@
 			.iconfont {
 				color: #b8b8b8;
 			}
-			.kongxian {
-				color: #03aafe;
-			}
+
 			.beizhanyong {
 				color: #999999;
 			}
@@ -72,142 +70,220 @@
 				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 H-theme-font-color-666">优惠活动</label>
 			</div>
 		</div>
-		<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-3" style="padding-left: 30px;">
+		<div id="xyj_html"></div>
+		<div style="height: 50px;"></div>
+		<script type="text/html" id="xyj_data">
+			<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-3" style="padding-left: 30px;">
 			您曾使用过的洗衣机
-		</div>
-		<div id="">
-			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
-				<div class="H-flexbox-horizontal  H-padding-vertical-top-10 " tapmode="H-touch-active" onclick="openProduct();">
-					<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
-					<div class="H-flex-item xy_font_color">
-						<span>三楼东01机</span><span class="H-float-right xyzt">我要洗衣</span>
-						<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
-							空闲
-						</div>
-					</div>
-					<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
-				</div>
-				<div class="xy_border"></div>
-				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
-					郑州大学 <span>西三宿舍</span>
-					<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
-				</div>
 			</div>
+			{{# for(var i = 0, len = d.length; i < len; i++) { }}
 			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
-				<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
-					<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
-					<div class="H-flex-item xy_font_color">
-						<span>三楼东02机</span><span class="H-float-right xyzt">空闲提醒</span>
-						<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
-							被占用 <span class="H-float-right">预计32分钟后结束</span>
-						</div>
-					</div>
-					<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
-				</div>
-				<div class="xy_border"></div>
-				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
-					郑州大学 <span>西三宿舍</span>
-					<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
-				</div>
+			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 " tapmode="H-touch-active" onclick="openProduct();">
+			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+			<div class="H-flex-item xy_font_color">
+			<span>三楼东01机</span><span class="H-float-right xyzt">我要洗衣</span>
+			<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
+			空闲
 			</div>
-		</div>
-		<div class="H-text-align-center H-font-size-14 H-theme-font-color-999" tapmode="H-touch-active" onclick="openLaundry();">
+			</div>
+			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+			</div>
+			<div class="xy_border"></div>
+			<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
+			郑州大学 <span>西三宿舍</span>
+			<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
+			</div>
+			</div>
+			{{# } }}
+			<div class="H-text-align-center H-font-size-14 H-theme-font-color-999" tapmode="H-touch-active" onclick="openLaundry();">
 			查找更多洗衣点
-		</div>
-	</body>
-	<script type="text/javascript" src="../../script/Zepto.min.js"></script>
-	<script type="text/javascript">
-		var longitude = null, latitude = null;
-		apiready = function() {
-			api.parseTapmode();
-			//获取位置信息
-			getlocation();
-			//下拉刷新
-			api.setRefreshHeaderInfo({
-				visible : true,
-				bgColor : '#fff',
-				textColor : '#666666',
-				textDown : '下拉刷新...',
-				textUp : '松开刷新...',
-				showTime : true
-			}, function(ret, err) {
-				location.reload();
-				api.refreshHeaderLoadDone();
-			});
-		};
-		//打开商品选项
-		function openProduct() {
-			api.openWin({
-				name : 'option_head',
-				url : './product/option_head.html'
-			});
-		}
-
-		//查找更多洗衣点
-		function openLaundry() {
-			api.openWin({
-				name : 'nearby_laundry_head',
-				url : './nearby_laundry/nearby_laundry_head.html'
-			});
-		}
-
-		//获取位置信息
-		function getlocation() {
-			var systemType = api.systemType;
-			if (systemType == "ios") {
-				api.startLocation({
-					accuracy : '10m',
-					filter : 1,
-					autoStop : true
+			</div>
+		</script>
+		<script type="text/html" id="xyd_data">
+			<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-3" style="padding-left: 30px;">
+			附近的洗衣点
+			</div>
+			{{# for(var i = 0, len = 3; i < len; i++) { }}
+			<div class="H-theme-background-color-white H-margin-vertical-bottom-5" tapmode onclick="">
+			<div class="H-flexbox-horizontal H-padding-vertical-top-10 ">
+			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+			<div class="H-flex-item xy_font_color">
+			<span>{{ d[i].washloca_name }}</span>
+			</div>
+			<span class="H-theme-font-color-999 H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+			</div>
+			<div class="xy_border"></div>
+			<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-5" style="padding-left: 37px;">
+			{{ d[i].washloca_address }} <span class="lanse">2台</span><span class="kongxian">空闲</span>
+			<span class=" H-padding-horizontal-right-20 H-float-right">{{ d[i].distance }}米</span>
+			</div>
+			</div>
+			{{# } }}
+			<div class="H-text-align-center H-font-size-14 H-theme-font-color-999" tapmode="H-touch-active" onclick="openLaundry();">
+			查找更多洗衣点
+			</div>
+		</script>
+		<script type="text/javascript" src="../../script/xy.js"></script>
+		<script type="text/javascript" src="../../script/Zepto.min.js"></script>
+		<script type="text/javascript" src="../../script/tools/laytpl.js"></script>
+		<script type="text/javascript">
+			var longitude = null, latitude = null;
+			apiready = function() {
+				api.parseTapmode();
+				//获取位置信息
+				getlocation();
+				//下拉刷新
+				api.setRefreshHeaderInfo({
+					visible : true,
+					bgColor : '#fff',
+					textColor : '#666666',
+					textDown : '下拉刷新...',
+					textUp : '松开刷新...',
+					showTime : true
 				}, function(ret, err) {
-					if (ret.status) {
-						api.toast({
-							msg : '获取位置成功'
-						});
-						//经度
-						longitude = ret.longitude;
-						//纬度
-						latitude = ret.latitude;
-					} else {
-						api.toast({
-							msg : '获取位置失败'
-						});
-					}
+					location.reload();
+					api.refreshHeaderLoadDone();
 				});
-			} else {
-				//初始化百度定位模块
-				var baiduLocation = api.require('baiduLocation');
-				//开始定位
-				baiduLocation.startLocation({
-					accuracy : '10m',
-					filter : 1,
-					autoStop : true
+			};
+			//初始化数据方法
+			function initData(longitude, latitude) {
+				api.getPrefs({
+					key : 'userinfo'
 				}, function(ret, err) {
-					if (ret.status) {
-						api.toast({
-							msg : '获取位置成功'
-						});
-						//经度
-						longitude = ret.longitude;
-						//纬度
-						latitude = ret.latitude;
+					//alert(JSON.stringify(user));
+					if (ret && ret.value) {
+						var user = eval('(' + ret.value + ')');
+						$xy.ajax(function(ret, err) {
+							if (ret.success) {
+								if (ret.data.length == 0) {
+									$xy.ajax(function(ret, err) {
+										if (ret.success) {
+											_tpl('xyd_data', ret.data, 'xyj_html', function() {
+											});
+										} else {
+											$("#xyj_html").html('<div class="H-center-all H-padding-vertical-top-15 xy_font_color H-font-size-14">' + ret.message + '</div>');
+										}
+									}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
+								} else {
+									_tpl('xyj_data', ret.data, 'xyj_html', function() {
+									});
+								}
+							} else {
+								api.toast({
+									msg : ret.message
+								});
+							}
+						}, 'appUDeviceList&funid=wash_device&user_id=' + user[0].user_id + '&uuid=' + user[0].uuid + '&gps_longitude=' + +longitude + '&gps_latitude=' + latitude);
 					} else {
-						api.toast({
-							msg : '获取位置失败'
-						});
+						$xy.ajax(function(ret, err) {
+							if (ret) {
+								if (ret.success) {
+									_tpl('xyd_data', ret.data, 'xyj_html', function() {
+									});
+								} else {
+									$("#xyj_html").html('<div class="H-center-all">' + ret.message + '</div>');
+								}
+							} else {
+								api.toast({
+									msg : '连接失败，请检查网络'
+								});
+							}
+						}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
 					}
 				});
 			}
-		}
 
-		function scanner() {
-			var FNScanner = api.require('FNScanner');
-			//打开二维码扫描器
-			FNScanner.openScanner(function(ret, err) {
-				if (ret.content) {
-					alert(ret.content);
+			//模板渲染
+			//@tplId 模板循环部分DOM id 【string】
+			//@renderData 模板部分数据 【JSON对象】
+			//@tplDataId 模板被渲染部分DOM id 【string】
+			//@callback 回调函数 【匿名函数】
+			function _tpl(tplId, renderData, tplDataId, callback) {
+				var tpl = document.getElementById(tplId).innerHTML;
+				laytpl(tpl).render(renderData, function(render) {
+					document.getElementById(tplDataId).innerHTML = render;
+					callback();
+				});
+			}
+
+			//打开商品选项
+			function openProduct() {
+				api.openWin({
+					name : 'option_head',
+					url : './product/option_head.html'
+				});
+			}
+
+			//查找更多洗衣点
+			function openLaundry() {
+				api.openWin({
+					name : 'nearby_laundry_head',
+					url : './nearby_laundry/nearby_laundry_head.html'
+				});
+			}
+
+			//获取位置信息
+			function getlocation() {
+				var systemType = api.systemType;
+				if (systemType == "ios") {
+					api.startLocation({
+						accuracy : '10m',
+						filter : 1,
+						autoStop : true
+					}, function(ret, err) {
+						if (ret.status) {
+							api.toast({
+								msg : '获取位置成功'
+							});
+							//经度
+							longitude = ret.longitude;
+							//纬度
+							latitude = ret.latitude;
+							//初始化数据
+							initData();
+						} else {
+							api.toast({
+								msg : '获取位置失败'
+							});
+						}
+					});
+				} else {
+					//初始化百度定位模块
+					var baiduLocation = api.require('baiduLocation');
+					//开始定位
+					baiduLocation.startLocation({
+						accuracy : '10m',
+						filter : 1,
+						autoStop : true
+					}, function(ret, err) {
+						if (ret.status) {
+							api.toast({
+								msg : '获取位置成功'
+							});
+							//经度
+							longitude = ret.longitude;
+							//纬度
+							latitude = ret.latitude;
+							//初始化数据
+							initData(longitude, latitude);
+						} else {
+							api.toast({
+								msg : '获取位置失败'
+							});
+						}
+					});
 				}
-			});
-		}
-	</script>
+			}
+
+			function scanner() {
+				var FNScanner = api.require('FNScanner');
+				//打开二维码扫描器
+				FNScanner.openScanner(function(ret, err) {
+					if (ret.content) {
+						alert(ret.content);
+					}
+				});
+			}
+		</script>
+	</body>
 </html>
