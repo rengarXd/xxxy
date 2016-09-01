@@ -117,7 +117,7 @@
 	</body>
 	<script type="text/javascript" src="../../script/Zepto.min.js"></script>
 	<script type="text/javascript">
-		var timestamp = null, longitude = null, latitude = null;
+		var longitude = null, latitude = null;
 		apiready = function() {
 			api.parseTapmode();
 			//获取位置信息
@@ -164,8 +164,6 @@
 						api.toast({
 							msg : '获取位置成功'
 						});
-						//时间戳
-						timestamp = ret.timestamp;
 						//经度
 						longitude = ret.longitude;
 						//纬度
@@ -189,8 +187,6 @@
 						api.toast({
 							msg : '获取位置成功'
 						});
-						//时间戳
-						timestamp = ret.timestamp;
 						//经度
 						longitude = ret.longitude;
 						//纬度
