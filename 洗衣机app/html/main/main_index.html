@@ -119,7 +119,6 @@
 	<script type="text/javascript">
 		apiready = function() {
 			api.parseTapmode();
-			initmodel();
 			//获取位置信息
 			getlocation();
 		};
@@ -139,11 +138,6 @@
 			});
 		}
 
-		//初始化模块
-		function initmodel() {
-			FNScanner = api.require('FNScanner');
-		}
-
 		//获取位置信息
 		function getlocation() {
 			var systemType = api.systemType;
@@ -156,7 +150,9 @@
 					alert(JSON.stringify(ret));
 				});
 			} else {
+				//初始化百度定位模块
 				var baiduLocation = api.require('baiduLocation');
+				//开始定位
 				baiduLocation.startLocation({
 					accuracy : '10m',
 					filter : 1,
@@ -172,6 +168,7 @@
 		}
 
 		function scanner() {
+			var FNScanner = api.require('FNScanner');
 			//打开二维码扫描器
 			FNScanner.openScanner(function(ret, err) {
 				if (ret.content) {
