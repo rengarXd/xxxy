@@ -134,32 +134,9 @@
 							longitude = ret.longitude;
 							//纬度
 							latitude = ret.latitude;
-							console.log(latitude);
+							//console.log(latitude);
 							//获取附近10公里范围内的洗衣点
 							get_nearby_laundry(longitude, latitude);
-							//						$xy.ajax(function(ret, err) {
-							//							//api.hideProgress();
-							//							if(ret) {
-							//								//$("#nonetwork").hide();
-							//								if(ret.success) {
-							//									console.log("获取成功");
-							//									console.log(JSON.stringify(ret));
-							//
-							//
-							//
-							//
-							//
-							//
-							//								} else {
-							//									console.log(JSON.stringify(ret));
-							//									api.toast({
-							//										msg: '很抱歉，附近没有洗衣点！'
-							//									});
-							//								}
-							//							} else {
-							//								$("#nonetwork").show();
-							//							}
-							//						}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
 						} else {
 							api.toast({
 								msg : '获取位置失败'
