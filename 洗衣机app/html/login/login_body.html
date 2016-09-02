@@ -227,9 +227,6 @@
 				if (ret) {
 					//$("#nonetwork").hide();
 					if (ret.success) {
-						api.toast({
-							msg : '登录成功'
-						});
 						//存储用户数据
 						api.setPrefs({
 							key : 'userinfo',
@@ -240,10 +237,13 @@
 							frameName : 'me_index',
 							script : 'reload();'
 						});
+						api.toast({
+							msg : '登录成功'
+						});
 						//延时关闭窗口
 						setTimeout(function() {
 							api.closeWin();
-						}, 2000);
+						}, 1000);
 						//初始化推送
 						//							if (systemtype != "ios") {
 						//								//初始化android推送
