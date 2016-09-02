@@ -74,9 +74,9 @@
 			<span class="H-icon H-padding-horizontal-right-5 H-display-block"><i class="H-iconfont H-icon-arrow-right H-theme-font-color-ccc H-font-size-14 H-vertical-middle"></i></span>
 		</div>
 		<footer class="H-footer H-padding-15 ">
-			<button onclick="exit();" tapmode="H-touch-active" class="xy_btn H-margin-vertical-top-10 H-position-static H-button H-width-100-percent  H-font-size-15 H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+			<div onclick="exit();" tapmode="H-touch-active" class="xy_btn H-margin-vertical-top-10 H-width-100-percent  H-font-size-15 H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
 				退出登录
-			</button>
+			</div>
 		</footer>
 		<script type="text/javascript" src="../../script/xy.js"></script>
 		<script type="text/javascript" src="../../script/zepto.min.js"></script>
@@ -101,6 +101,8 @@
 			}
 
 			function openPick() {
+				var date = new Date();
+				var year = date.getFullYear()+'级';
 				api.actionSheet({
 					title : '年级',
 					cancelTitle : '取消',
