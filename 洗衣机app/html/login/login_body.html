@@ -240,10 +240,7 @@
 						api.toast({
 							msg : '登录成功'
 						});
-						//延时关闭窗口
-						setTimeout(function() {
-							api.closeWin();
-						}, 1000);
+						alertLog();
 						//初始化推送
 						//							if (systemtype != "ios") {
 						//								//初始化android推送
@@ -275,6 +272,73 @@
 					$("#nonetwork").show();
 				}
 			}, 'appRegister&funid=wash_user&phone_number=' + tel + '&verify=' + code);
+		}
+
+		//dialog对话框
+		function alertLog() {
+			var dialogBox = api.require('dialogBox');
+			dialogBox.webView({
+				tapClose : false,
+				path : './alert.html',
+				texts : {
+					title : '接单提醒',
+					leftBtnTitle : '看主页',
+					rightBtnTitle : '继续接单'
+				},
+				styles : {
+					bg : '#fff',
+					corner : 2,
+					w : 300,
+					h : 280,
+					title : {
+						h : 44,
+						size : 14,
+						color : '#000'
+					},
+					upDividingLine : {
+						width : 0.5,
+						color : '#696969'
+					},
+					webView : {
+						h : 192,
+						bg : '#fff',
+					},
+					downDividingLine : {
+						width : 0.5,
+						color : '#696969'
+					},
+					left : {
+						bg : 'rgba(0,0,0,0)',
+						color : '#007FFF',
+						size : 12
+					},
+					right : {
+						bg : 'rgba(0,0,0,0)',
+						color : '#007FFF',
+						size : 12
+					}
+				}
+			}, function(ret) {
+				api.alert({
+					msg : JSON.stringify(ret)
+				});
+				if (ret.eventType == 'left') {
+					var dialogBox = api.require('dialogBox');
+					dialogBox.close({
+						dialogName : 'webView'
+					});
+					//延时关闭窗口
+					api.closeWin();
+				} else {
+					api.openWin({
+						name : 'user_set_head',
+						url : '../me/user_set_head.html'
+					});
+					setTimeout(function() {
+						api.closeWin();
+					}, 1000);
+				}
+			});
 		}
 	</script>
 </html>

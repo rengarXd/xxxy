@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>设置密码body</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
+		<link rel="stylesheet" href="../../../css/style.css" />
+		<style>
+			.border-dx {
+				border-radius: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="H-center-all H-padding-vertical-top-25">
+			<img src="../../../image/mimasuo.png" width="100" />
+		</div>
+		<div id="first"  >
+			<div class="H-font-size-15 xy_font_color H-padding-horizontal-left-20 H-padding-vertical-bottom-10">
+				1、获取<span id="phone"></span>的验证码
+			</div>
+			<div class="H-flexbox-horizontal H-border-vertical-both-after H-theme-background-color-white">
+				<input style="color:#49b1f4;" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12 H-padding-horizontal-left-25" placeholder="请输入验证码...">
+				<span tapmode onclick="getVerify();" id="sendVerify" style="line-height: 30px;" class="H-font-size-12 H-width-100 H-text-align-center H-theme-background-color-transparent  H-theme-font-color1 H-theme-border-color1 H-theme-border-color1-click H-theme-background-color1-click H-theme-font-color1-click border-dx H-margin-horizontal-both-15 H-margin-vertical-both-10"> 获取验证码 </span>
+			</div>
+			<div class="H-padding-20">
+				<button onclick="login_btn();" class="xy_login_btn H-margin-vertical-top-10 H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+					下一步
+				</button>
+			</div>
+		</div>
+		<div id="second" style="display: none">
+			<div class="H-flexbox-horizontal H-border-vertical-both-after H-theme-background-color-white">
+				<input style="color:#49b1f4;" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12 H-padding-horizontal-left-25" placeholder="请输入新密码...">
+			</div>
+			<div class="H-flexbox-horizontal H-border-vertical-bottom-after H-theme-background-color-white">
+				<input style="color:#49b1f4;" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12 H-padding-horizontal-left-25" placeholder="请再输入一次...">
+			</div>
+			<div class="H-padding-20">
+				<button onclick="checkCode();" class="xy_login_btn H-margin-vertical-top-10 H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+					设置密码
+				</button>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../script/xy.js"></script>
+	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
+	<script type="text/javascript">
+		var aj_tel = null, aj_code = null, user = null;
+		apiready = function() {
+			initPage();
+		};
+		// 初始化页面
+		function initPage() {
+			api.getPrefs({
+				key : 'userinfo'
+			}, function(ret, err) {
+				user = eval('(' + ret.value + ')');
+				//字符串截取
+				var str = user.phone_number;
+				$("#phone").html(str.substring(0, 3) + 'xxxxxxx' + str.substring(9, 11));
+			});
+		}
+
+		//点击获取验证码
+		function getVerify() {
+			api.showProgress({
+				title : '获取中',
+				text : '请稍等....'
+			});
+			$xy.ajax(function(ret, err) {
+				api.hideProgress();
+				if (ret) {
+					//$("#nonetwork").hide();
+					if (ret.success) {
+						$('#sendVerify').removeAttr('onclick');
+						$('#sendVerify').html('<span id="getVerify">120</span>s');
+						time = 120;
+						isinerval = setInterval("CountDown()", 1000);
+					} else {
+						api.toast({
+							msg : '很抱歉，短信获取失败，请稍后再试！'
+						});
+					}
+				} else {
+					$("#nonetwork").show();
+				}
+			}, 'sendtplValue&funid=wash_user&phone_number=' + user[0].phone_number);
+		}
+
+		//时间递减处理
+		function CountDown() {
+			if (time < 1) {
+				//              var sendVerify = document.getElementById('sendVerify');
+				$('#sendVerify').attr('onclick', 'getVerify()');
+				//$('#sendVerify').attr( 'status', '0');
+				$('#sendVerify').html('重新获取');
+				clearInterval(isinerval);
+				return;
+			}
+			//          var getVerify = document.getElementById('getVerify');
+			$('#getVerify').html('' + time + '');
+			time--;
+		}
+
+		//二次登录
+		function login_btn() {
+			//获取验证码
+			var code = $("#code").val();
+			//验证码正则
+			var b = /^[0-9]{4}$/;
+			if (!code.match(b)) {
+				// 如果不是正确的手机号
+				api.alert({
+					title : '温馨提示',
+					msg : '抱歉验证码格式错误',
+				}, function(ret, err) {
+					if (ret && ret.buttonIndex == 1) {
+						$("#code").focus();
+					}
+				});
+				return;
+			}
+			api.showProgress({
+				title : "登录中"
+			});
+			$xy.ajax(function(ret, err) {
+				api.hideProgress();
+				if (ret) {
+					//$("#nonetwork").hide();
+					if (ret.success) {
+						//存储用户数据
+						api.setPrefs({
+							key : 'userinfo',
+							value : JSON.stringify(ret.data)
+						});
+						$("#first").hide();
+						$("#second").show();
+					} else {
+						alert(ret.message);
+					}
+				} else {
+					$("#nonetwork").show();
+				}
+			}, 'appRegister&funid=wash_user&phone_number=' + user[0].phone_number + '&verify=' + code);
+		}
+
+		//修改密码操作
+		function checkCode() {
+			api.showProgress({
+				title : "登录中"
+			});
+			$xy.ajax(function(ret, err) {
+				api.hideProgress();
+				if (ret) {
+					//$("#nonetwork").hide();
+					if (ret.success) {
+						//存储用户数据
+					} else {
+						alert(ret.message);
+					}
+				} else {
+					$("#nonetwork").show();
+				}
+			}, 'appRegister&funid=wash_user&phone_number=' + user[0].phone_number + '&verify=' + code);
+		}
+	</script>
+</html>
