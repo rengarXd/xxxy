@@ -29,7 +29,7 @@
 
 			<span>{{ d[i].device_name }}</span>
 			{{# 	if (d[i].ustatus=="空闲"){ }}
-			<span class="H-float-right xyzt">我要洗衣</span>
+			<span class="H-float-right xyzt " tapmode="H-touch-active" onclick="openProduct('{{ d[i].device_name }}');">我要洗衣</span>
 			<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
 			{{ d[i].ustatus }} 
 			</div>
@@ -62,10 +62,13 @@
 				initPage();
 			};
 			//打开商品选项
-			function openProduct() {
+			function openProduct(name) {
 				api.openWin({
 					name : 'option_head',
-					url : '../product/option_head.html'
+					url : '../product/option_head.html',
+					pageParam : {
+						device_name : name
+					}
 				});
 			}
 
