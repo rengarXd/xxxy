@@ -47,8 +47,9 @@
 		<script type="text/javascript">
 			var distance = null;
 			apiready = function() {
+				//从洗衣点传来的距离
 				distance = api.pageParam.distance;
-				//console.log(distance);
+				//初始化加载页面
 				initPage();
 			};
 			//打开商品选项
