@@ -18,7 +18,21 @@
 .beizhanyong {
 	color: #999999;
 }
-			.xy_btn {
-				background-color: #0c9fff;
-				border-radius: 50px;
-			}
+.xy_login_btn {
+	background-color: #0c9fff !important;
+	background-size: cover;
+	border-radius: 50px !important;
+	-webkit-border-radius: 50px !important;
+}
+.xy_login_btn:active {
+	background-color: #408CBB !important;
+}
+.xy_confirm_btn {
+	background-color: #ff6600 !important;
+	background-size: cover;
+	border-radius: 50px !important;
+	-webkit-border-radius: 50px !important;
+}
+.xy_confirm_btn:active {
+	background-color: #eb6912 !important;
+}
