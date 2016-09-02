@@ -277,59 +277,58 @@
 		//dialog对话框
 		function alertLog() {
 			var dialogBox = api.require('dialogBox');
-			dialogBox.webView({
-				tapClose : false,
-				path : './alert.html',
+			dialogBox.alert({
 				texts : {
-					title : '接单提醒',
-					leftBtnTitle : '看主页',
-					rightBtnTitle : '继续接单'
+					title : '登录成功',
+					content : '想要继续完善您的信息吗？',
+					leftBtnTitle : '不用了',
+					rightBtnTitle : '继续'
 				},
 				styles : {
 					bg : '#fff',
-					corner : 2,
 					w : 300,
-					h : 280,
+					corner : 5,
 					title : {
-						h : 44,
-						size : 14,
-						color : '#000'
+						marginT : 30,
+						titleSize : 18,
+						titleColor : '#119ed1'
 					},
-					upDividingLine : {
-						width : 0.5,
-						color : '#696969'
-					},
-					webView : {
-						h : 192,
-						bg : '#fff',
-					},
-					downDividingLine : {
-						width : 0.5,
-						color : '#696969'
+					content : {
+						color : '#555555',
+						marginT : 30,
+						marginB : 50,
+						size : 16
 					},
 					left : {
-						bg : 'rgba(0,0,0,0)',
-						color : '#007FFF',
-						size : 12
+						marginB : 0,
+						marginL : 0,
+						w : 150,
+						h : 50,
+						bg : '#fff',
+						color : '#cacaca',
+						size : 15
 					},
 					right : {
-						bg : 'rgba(0,0,0,0)',
-						color : '#007FFF',
-						size : 12
+						marginB : 0,
+						marginL : 0,
+						w : 150,
+						h : 50,
+						bg : '#119ed1',
+						color : '#fff',
+						size : 15
 					}
 				}
 			}, function(ret) {
-				api.alert({
-					msg : JSON.stringify(ret)
-				});
 				if (ret.eventType == 'left') {
 					var dialogBox = api.require('dialogBox');
 					dialogBox.close({
-						dialogName : 'webView'
+						dialogName : 'alert'
 					});
-					//延时关闭窗口
-					api.closeWin();
 				} else {
+					var dialogBox = api.require('dialogBox');
+					dialogBox.close({
+						dialogName : 'alert'
+					});
 					api.openWin({
 						name : 'user_set_head',
 						url : '../me/user_set_head.html'
