@@ -53,7 +53,7 @@
 			<span class="H-badge H-display-block H-margin-horizontal-right-5">郑州大学</span>
 			<span class="H-icon H-padding-horizontal-right-5 H-display-block"><i class="H-iconfont H-icon-arrow-right H-theme-font-color-ccc H-font-size-14 H-vertical-middle"></i></span>
 		</div>
-		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active">
+		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="openPick();">
 			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-16 H-padding-vertical-both-12">
 				年级
 			</div>
@@ -96,6 +96,21 @@
 					if (ret && ret.value) {
 						var user = eval('(' + ret.value + ')');
 						$("#userTel").html(user[0].phone_number);
+					}
+				});
+			}
+
+			function openPick() {
+				api.actionSheet({
+					title : '年级',
+					cancelTitle : '取消',
+					buttons : ['2011级', '2012级', '2013级', '2014级', '2015级']
+				}, function(ret, err) {
+					var index = ret.buttonIndex;
+					switch(index) {
+						case 1:
+							alert('2011级');
+							break;
 					}
 				});
 			}
