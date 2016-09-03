@@ -19,7 +19,7 @@
 		</div>
 		<div id="first" class="H-padding-vertical-both-10">
 			<div class="H-font-size-15 H-theme-font-color-999 H-padding-horizontal-left-20 H-padding-vertical-bottom-5">
-				1、获取<span id="phone"></span>的验证码
+				获取<span id="phone"></span>的验证码
 			</div>
 			<div class="H-flexbox-horizontal H-border-vertical-both-after H-theme-background-color-white">
 				<input style="color:#49b1f4;" id="code" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12 H-padding-horizontal-left-25" placeholder="请输入验证码...">
@@ -27,33 +27,33 @@
 					<span tapmode onclick="getVerify();" id="sendVerify" class="H-font-size-14 H-theme-background-color-transparent  H-theme-font-color1 H-theme-border-color1 H-theme-border-color1-click H-theme-background-color1-click H-theme-font-color1-click border-dx H-padding-horizontal-both-15 H-padding-vertical-both-5"> 获取验证码 </span>
 				</div>
 			</div>
-			<div class="H-padding-20">
-				<button onclick="login_btn();" class="xy_login_btn H-margin-vertical-top-10 H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
-					下一步
-				</button>
-			</div>
-		</div>
-		<div id="second" class="H-padding-vertical-both-10" style="display: none" >
-			<div  class="H-font-size-15 H-theme-font-color-999 H-padding-horizontal-left-20 H-padding-vertical-bottom-5">
-				2、设置密码
-			</div>
-			<div class="H-flexbox-horizontal H-border-vertical-both-after H-theme-background-color-white">
-				<input style="color:#49b1f4;" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12 H-padding-horizontal-left-25" placeholder="请输入新密码...">
+			<div class="H-flexbox-horizontal H-border-vertical-bottom-after H-theme-background-color-white">
+				<input id="pwd_1" style="color:#49b1f4;" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12 H-padding-horizontal-left-25" placeholder="请输入新密码...">
 			</div>
 			<div class="H-flexbox-horizontal H-border-vertical-bottom-after H-theme-background-color-white">
-				<input style="color:#49b1f4;" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12 H-padding-horizontal-left-25" placeholder="请再输入一次...">
+				<input id="pwd_2" style="color:#49b1f4;" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12 H-padding-horizontal-left-25" placeholder="请再输入一次...">
 			</div>
 			<div class="H-padding-20">
 				<button onclick="checkCode();" class="xy_login_btn H-margin-vertical-top-10 H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
 					设置密码
 				</button>
 			</div>
+			<!--<div class="H-padding-20">
+			<button onclick="login_btn();" class="xy_login_btn H-margin-vertical-top-10 H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+			下一步
+			</button>
+			</div>-->
 		</div>
+		<!--<div id="second" class="H-padding-vertical-both-10" style="display: none" >
+		<div  class="H-font-size-15 H-theme-font-color-999 H-padding-horizontal-left-20 H-padding-vertical-bottom-5">
+		2、设置密码
+		</div>
+		</div>-->
 	</body>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
 	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
 	<script type="text/javascript">
-		var aj_tel = null, aj_code = null, user = null, time = null;
+		var aj_tel = null, aj_code = null, user = null, time = null, code = null;
 		apiready = function() {
 			initPage();
 		};
@@ -80,9 +80,9 @@
 				if (ret) {
 					//$("#nonetwork").hide();
 					if (ret.success) {
+						time = 120;
 						$('#sendVerify').removeAttr('onclick');
 						$('#sendVerify').html('<span id="Verifytime">120</span>s');
-						time = 120;
 						isinerval = setInterval("CountDown()", 1000);
 					} else {
 						api.toast({
@@ -113,6 +113,46 @@
 		//二次登录
 		function login_btn() {
 			//获取验证码
+			code = $("#code").val();
+			//验证码正则
+			var b = /^[0-9]{4}$/;
+			if (!code.match(b)) {
+				// 如果不是正确的手机号
+				api.alert({
+					title : '温馨提示',
+					msg : '抱歉验证码格式错误',
+				}, function(ret, err) {
+					if (ret && ret.buttonIndex == 1) {
+						$("#code").focus();
+					}
+				});
+				return;
+			}
+			$("#first").hide();
+			$("#second").show();
+			//			api.showProgress({
+			//				title : "校验中"
+			//			});
+			//			$xy.ajax(function(ret, err) {
+			//				api.hideProgress();
+			//				if (ret) {
+			//					//$("#nonetwork").hide();
+			//					if (ret.success) {
+			//						//存储用户数据
+			//						$xy.userlogInfo(ret.data);
+			//
+			//					} else {
+			//						alert(ret.message);
+			//					}
+			//				} else {
+			//					$("#nonetwork").show();
+			//				}
+			//			}, 'appRegister&funid=wash_user&phone_number=' + user[0].phone_number + '&verify=' + code);
+		}
+
+		//修改密码操作
+		function checkCode() {
+			//获取验证码
 			var code = $("#code").val();
 			//验证码正则
 			var b = /^[0-9]{4}$/;
@@ -128,46 +168,30 @@
 				});
 				return;
 			}
-			api.showProgress({
-				title : "校验中"
-			});
-			$xy.ajax(function(ret, err) {
-				api.hideProgress();
-				if (ret) {
-					//$("#nonetwork").hide();
-					if (ret.success) {
-						//存储用户数据
-						$xy.userlogInfo(ret.data);
-						$("#first").hide();
-						$("#second").show();
+			if ($("#pwd_1").val() == $("#pwd_2").val()) {
+				var service_password = $("#pwd_2").val()
+				api.showProgress({
+					title : "修改中"
+				});
+				$xy.ajax(function(ret, err) {
+					api.hideProgress();
+					if (ret) {
+						//$("#nonetwork").hide();
+						if (ret.success) {
+							//存储用户数据
+							$("#first").hide();
+						} else {
+							alert(ret.message);
+						}
 					} else {
-						alert(ret.message);
+						$("#nonetwork").show();
 					}
-				} else {
-					$("#nonetwork").show();
-				}
-			}, 'appRegister&funid=wash_user&phone_number=' + user[0].phone_number + '&verify=' + code);
-		}
-
-		//修改密码操作
-		function checkCode() {
-			api.showProgress({
-				title : "修改中"
-			});
-			$xy.ajax(function(ret, err) {
-				api.hideProgress();
-				if (ret) {
-					//$("#nonetwork").hide();
-					if (ret.success) {
-						//存储用户数据
-						$("#first").hide();
-					} else {
-						alert(ret.message);
-					}
-				} else {
-					$("#nonetwork").show();
-				}
-			}, 'appRegister&funid=wash_user&phone_number=' + user[0].phone_number + '&verify=' + code);
+				}, 'setPassword&funid=wash_user&phone_number=' + user[0].phone_number + '&verify=' + code + '&user_id=' + user[0].user_id + '&uuid=' + user[0].uuid + '&service_password=' + service_password);
+			} else {
+				api.toast({
+					msg : '您输入两个的密码不一致'
+				});
+			}
 		}
 	</script>
 </html>
