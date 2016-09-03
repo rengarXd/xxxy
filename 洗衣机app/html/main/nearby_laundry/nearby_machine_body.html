@@ -28,7 +28,7 @@
 			<div class="H-flex-item xy_font_color">
 			<span>{{ d[i].device_name }}</span>
 			{{# if (d[i].ustatus=="空闲"){ }}
-			<span class="H-float-right xyzt " tapmode="H-touch-active" onclick="openProduct('{{ d[i].device_name }}');">我要洗衣</span>
+			<span class="H-float-right xyzt " tapmode="H-touch-active" onclick="openProduct('{{ d[i].device_name }}','{{ d[i].washloca_name }}');">我要洗衣</span>
 			<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
 			{{ d[i].ustatus }}
 			</div>
@@ -58,15 +58,29 @@
 				distance = api.pageParam.distance;
 				//初始化加载页面
 				initPage();
+				api.setRefreshHeaderInfo({
+					visible : true,
+					bgColor : '#fff',
+					textColor : '#666666',
+					textDown : '下拉刷新...',
+					textUp : '松开刷新...',
+					showTime : true
+				}, function(ret, err) {
+					location.reload();
+					api.refreshHeaderLoadDone();
+				});
 			};
 			//打开商品选项
-			function openProduct(name) {
+			function openProduct(device_name,washloca_name) {
 				api.openWin({
 					name : 'option_head',
 					url : '../product/option_head.html',
+					bounces : false,
 					pageParam : {
-						device_name : name
-					}
+						washloca_id : device_name,
+						washloca_name:washloca_name,
+						distance : distance
+					},
 				});
 			}
 
