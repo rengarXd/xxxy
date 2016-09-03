@@ -27,6 +27,12 @@
 			.tip-message-money {
 				color: #ff6600;
 			}
+			.xiadan_btnn {
+				border: 1px solid #49b1f4;
+				background-color: white;
+				border-radius: 50px;
+				color: #49b1f4;
+			}
 		</style>
 	</head>
 	<body>
@@ -98,7 +104,7 @@
 			<span class="H-icon H-padding-horizontal-right-5 H-display-block "><img src="../../../image/yuding.png" class="H-float-right yuding"/></span>
 		</div>
 		<div class="H-padding-vertical-bottom-3"></div>
-		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active">
+		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle">
 			<span class="H-icon H-display-block"><img src="../../../image/666.png" class="img-icon"/></span>
 			<div class="H-flex-item H-padding-horizontal-right-5 H-font-size-15 xy_font_color ">
 				<span>标准＋加热＋消毒 </span><span class="tip-message H-font-size-12 H-float-right">40分钟<span class="H-padding-horizontal-left-5 tip-message-money">4.00</span>元</span>
@@ -106,13 +112,43 @@
 					标准程序，一般衣物均可洗涤
 				</div>
 			</div>
-			<span class="H-icon H-padding-horizontal-right-5 H-display-block "><img src="../../../image/yuding.png" class="H-float-right yuding"/></span>
+			<span class="H-icon H-display-block H-padding-horizontal-left-5"><img src="../../../image/shuxian.png" style="height: 68px;"/></span>
+			<span class="H-icon H-padding-horizontal-both-10 H-display-block">
+				<button class=" H-touch-active H-font-size-14 H-border-none xiadan_btnn H-padding-horizontal-both-10 H-padding-vertical-both-3">
+					下单
+				</button> </span>
 		</div>
+		<script type="text/html" id="option_data">
+			{{# for(var i = 0,len=d.length;i<len;i++) { }}
+			<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle">
+			<span class="H-icon H-display-block"><img src="../../../image/666.png" class="img-icon"/></span>
+			<div class="H-flex-item H-padding-horizontal-right-5 H-font-size-15 xy_font_color ">
+			<span>标准＋加热＋消毒 </span><span class="tip-message H-font-size-12 H-float-right">40分钟<span class="H-padding-horizontal-left-5 tip-message-money">4.00</span>元</span>
+			<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-top-5">
+			标准程序，一般衣物均可洗涤
+			</div>
+			</div>
+			<span class="H-icon H-display-block H-padding-horizontal-left-5"><img src="../../../image/shuxian.png" style="height: 68px;"/></span>
+			<span class="H-icon H-padding-horizontal-both-10 H-display-block">
+			<button tapmode="H-touch-active" class="H-touch-active H-font-size-14 H-border-none xiadan_btnn H-padding-horizontal-both-10 H-padding-vertical-both-3">
+			下单
+			</button></span>
+			</div>
+			{{# } }}
+		</script>
 	</body>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
 	<script type="text/javascript">
 		apiready = function() {
-			api.parseTapmode();
+			//
+			xiyi_id = api.pageParam.xiyi_idl;
+			initPage();
 		};
+		function initPage() {
+			api.getPrefs({
+				key : 'userinfo'
+			}, function(ret, err) {
+			});
+		}
 	</script>
 </html>
