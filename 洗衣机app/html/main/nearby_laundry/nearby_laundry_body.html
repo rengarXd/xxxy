@@ -70,7 +70,18 @@
 			apiready = function() {
 				api.parseTapmode();
 				getlocation();
-
+				//下拉刷新
+				api.setRefreshHeaderInfo({
+					visible : true,
+					bgColor : '#fff',
+					textColor : '#666666',
+					textDown : '下拉刷新...',
+					textUp : '松开刷新...',
+					showTime : true
+				}, function(ret, err) {
+					location.reload();
+					api.refreshHeaderLoadDone();
+				});
 			};
 			function openWin(name, url, washid) {
 				var delay = 0;
