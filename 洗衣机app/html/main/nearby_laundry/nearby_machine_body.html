@@ -70,15 +70,6 @@
 				});
 			}
 
-			//查找更多洗衣点
-			function openLaundry() {
-				api.openWin({
-					name : 'nearby_laundry_head',
-					url : 'nearby_laundry_head.html'
-				});
-				setTimeout("api.closeWin();", 2000);
-			}
-
 			function initPage() {
 				$xy.ajax(function(ret, err) {
 					//api.hideProgress();
