@@ -232,15 +232,7 @@
 					//$("#nonetwork").hide();
 					if (ret.success) {
 						//存储用户数据
-						api.setPrefs({
-							key : 'userinfo',
-							value : JSON.stringify(ret.data)
-						});
-						api.execScript({
-							name : 'main',
-							frameName : 'me_index',
-							script : 'reload();'
-						});
+						$xy.userlogInfo(ret.data);
 						api.toast({
 							msg : '登录成功'
 						});
