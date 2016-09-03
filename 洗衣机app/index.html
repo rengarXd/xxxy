@@ -44,22 +44,24 @@
 							api.openWin({
 								name : 'main',
 								url : './html/main.html',
+								bounces : false,
 								animation : {
 									type : "none", //动画类型（详见动画类型常量）
 									//subType : "from_right", //动画子类型（详见动画子类型常量）
 									duration : 100 //动画过渡时间，默认300毫秒
 								}
 							});
-//							api.removeLaunchView({
-//								animation : {
-//									type : 'none',
-//									duration : 2000
-//								}
-//							});
+							//							api.removeLaunchView({
+							//								animation : {
+							//									type : 'none',
+							//									duration : 2000
+							//								}
+							//							});
 						} else {
 							api.openWin({
 								name : 'main',
 								url : './html/main.html',
+								bounces : false,
 								animation : {
 									type : "none", //动画类型（详见动画类型常量）
 									//subType : "from_right", //动画子类型（详见动画子类型常量）
@@ -83,30 +85,32 @@
 						api.openWin({
 							name : 'main',
 							url : './html/main.html',
+							bounces : false,
 							animation : {
 								type : "none", //动画类型（详见动画类型常量）
 								//subType : "from_right", //动画子类型（详见动画子类型常量）
 								duration : 100 //动画过渡时间，默认300毫秒
 							}
 						});
-//						api.removeLaunchView({
-//							animation : {
-//								type : 'none',
-//								duration : 2000
-//							}
-//						});
+						//						api.removeLaunchView({
+						//							animation : {
+						//								type : 'none',
+						//								duration : 2000
+						//							}
+						//						});
 					} else {
 						//如果没有了（launch）偏好设置
 						api.openWin({
 							name : 'launch',
 							url : './html/launch.html',
+							bounces : false,
 							animation : {
 								type : "none", //动画类型（详见动画类型常量）
 								//subType : "from_right", //动画子类型（详见动画子类型常量）
 								duration : 100 //动画过渡时间，默认300毫秒
 							}
 						});
-//						api.removeLaunchView();
+						//						api.removeLaunchView();
 					}
 				});
 			}
