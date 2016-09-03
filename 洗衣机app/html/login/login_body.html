@@ -233,9 +233,6 @@
 					if (ret.success) {
 						//存储用户数据
 						$xy.userlogInfo(ret.data);
-						api.toast({
-							msg : '登录成功'
-						});
 						alertLog();
 						//初始化推送
 						//							if (systemtype != "ios") {
@@ -262,7 +259,9 @@
 						//								});
 						//							}
 					} else {
-						alert(ret.message);
+						api.toast({
+							msg : ret.message
+						});
 					}
 				} else {
 					$("#nonetwork").show();
@@ -318,13 +317,13 @@
 						//console.log(JSON.stringify(1));
 						//存储用户数据
 						$xy.userlogInfo(ret.data);
-						api.toast({
-							msg : '登录成功'
-						});
+						//登录成功对话框
 						alertLog();
 					} else {
 						//console.log(JSON.stringify(2));
-						alert(ret.message);
+						api.toast({
+							msg : ret.message
+						});
 					}
 				} else {
 					$("#nonetwork").show();

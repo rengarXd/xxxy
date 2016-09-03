@@ -144,6 +144,18 @@
 			//
 			xiyi_id = api.pageParam.xiyi_idl;
 			initPage();
+			//下拉刷新
+			api.setRefreshHeaderInfo({
+				visible : true,
+				bgColor : '#fff',
+				textColor : '#666666',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...',
+				showTime : true
+			}, function(ret, err) {
+				location.reload();
+				api.refreshHeaderLoadDone();
+			});
 		};
 		function initPage() {
 			api.getPrefs({
