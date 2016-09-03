@@ -183,10 +183,10 @@
 			$xy.ajax(function(ret, err) {
 				api.hideProgress();
 				if (ret) {
-					console.log(JSON.stringify(ret));
+					//console.log(JSON.stringify(ret));
 					//$("#nonetwork").hide();
 					if (ret.success) {
-						console.log(JSON.stringify(1));
+						//console.log(JSON.stringify(1));
 						var tpl = document.getElementById('option_data').innerHTML;
 						//读取模版
 						//方式一：异步渲染（推荐）
@@ -195,7 +195,7 @@
 							document.getElementById('option_list').innerHTML = render;
 						});
 					} else {
-						console.log(JSON.stringify(2));
+						//console.log(JSON.stringify(2));
 						alert(ret.message);
 					}
 				} else {
