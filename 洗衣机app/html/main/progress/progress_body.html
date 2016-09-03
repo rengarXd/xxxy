@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>body</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
+		<link rel="stylesheet" href="../../../css/style.css" />
+		<style>
+			.bg_title {
+				background-image: url('../../../image/daojishi.png');
+				background-size: contain;
+				background-position: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="bg_title" style="height: 226px;">
+			<div class="H-theme-font-color-white H-text-align-center" style="padding-top: 72px;">
+				剩余时间
+				<div class="H-text-align-center">
+					12:00
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../script/xy.js"></script>
+	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			initPage();
+			arcProgress();
+		};
+		// 初始化页面
+		function initPage() {
+		}
+
+		//进度条
+		function arcProgress() {
+			var arcProgress = api.require('arcProgress');
+			arcProgress.open({
+				type : 0,
+				centerX : api.frameWidth / 6 * (2 * 1 + 1),
+				centerY : 106,
+				radius : api.frameWidth / 6,
+				bgColor : '#ffffff',
+				pgColor : '#0d90c9',
+				fixedOn : api.frameName
+			}, function(ret, err) {
+				setValue({
+					id : ret.id,
+					value : 0
+				})
+			});
+			function setValue(obj) {
+				if (obj.value == 100) {
+					obj.value = 0;
+				}
+				setTimeout(function() {
+					arcProgress.setValue({
+						id : obj.id,
+						value : ++obj.value
+					});
+					setValue(obj)
+				}, 100);
+			}
+
+		}
+	</script>
+</html>
