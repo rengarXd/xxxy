@@ -69,6 +69,7 @@
 			var longitude = null, latitude = null;
 			apiready = function() {
 				api.parseTapmode();
+				//获取位置
 				getlocation();
 				//下拉刷新
 				api.setRefreshHeaderInfo({
