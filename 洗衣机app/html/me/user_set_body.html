@@ -71,7 +71,7 @@
 			<span class="H-icon H-padding-horizontal-right-5 H-display-block"><i class="H-iconfont H-icon-arrow-right H-theme-font-color-ccc H-font-size-14 H-vertical-middle"></i></span>
 		</div>
 		<footer class="H-footer H-padding-15 ">
-			<button onclick="exit();" class="xy_login_btn H-margin-vertical-top-10 H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+			<button tapmode="H-touch-active" onclick="exit();" class="xy_login_btn H-margin-vertical-top-10 H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
 				退出登录
 			</button>
 		</footer>
@@ -188,9 +188,9 @@
 				api.confirm({
 					title : '温馨提示',
 					msg : '您确定要退出登录吗？',
-					buttons : ['确定', '取消']
+					buttons : ['取消', '确定']
 				}, function(ret, err) {
-					if (ret.buttonIndex == 1) {
+					if (ret.buttonIndex == 2) {
 						api.removePrefs({
 							key : 'userinfo'
 						});
@@ -200,9 +200,7 @@
 							script : 'reload();'
 						});
 						//延时关闭窗口
-						setTimeout(function() {
-							api.closeWin();
-						}, 1000);
+						api.closeWin();
 					}
 				});
 			}
