@@ -17,13 +17,15 @@
 		<div class="H-center-all H-padding-vertical-top-25">
 			<img src="../../../image/mimasuo.png" width="100" />
 		</div>
-		<div id="first"  >
-			<div class="H-font-size-15 xy_font_color H-padding-horizontal-left-20 H-padding-vertical-bottom-10">
+		<div id="first" class="H-padding-vertical-both-10">
+			<div class="H-font-size-15 H-theme-font-color-999 H-padding-horizontal-left-20 H-padding-vertical-bottom-5">
 				1、获取<span id="phone"></span>的验证码
 			</div>
 			<div class="H-flexbox-horizontal H-border-vertical-both-after H-theme-background-color-white">
-				<input style="color:#49b1f4;" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12 H-padding-horizontal-left-25" placeholder="请输入验证码...">
-				<span tapmode onclick="getVerify();" id="sendVerify" style="line-height: 20px; width: 120px;" class="H-font-size-12 H-text-align-center H-theme-background-color-transparent  H-theme-font-color1 H-theme-border-color1 H-theme-border-color1-click H-theme-background-color1-click H-theme-font-color1-click border-dx H-margin-horizontal-both-15 H-margin-vertical-both-10"> 获取验证码 </span>
+				<input style="color:#49b1f4;" id="code" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12 H-padding-horizontal-left-25" placeholder="请输入验证码...">
+				<div class="H-padding-10">
+					<span tapmode onclick="getVerify();" id="sendVerify" class="H-font-size-14 H-theme-background-color-transparent  H-theme-font-color1 H-theme-border-color1 H-theme-border-color1-click H-theme-background-color1-click H-theme-font-color1-click border-dx H-padding-horizontal-both-15 H-padding-vertical-both-5"> 获取验证码 </span>
+				</div>
 			</div>
 			<div class="H-padding-20">
 				<button onclick="login_btn();" class="xy_login_btn H-margin-vertical-top-10 H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
@@ -31,7 +33,10 @@
 				</button>
 			</div>
 		</div>
-		<div id="second" style="display: none">
+		<div id="second" class="H-padding-vertical-both-10" style="display: none" >
+			<div  class="H-font-size-15 H-theme-font-color-999 H-padding-horizontal-left-20 H-padding-vertical-bottom-5">
+				2、设置密码
+			</div>
 			<div class="H-flexbox-horizontal H-border-vertical-both-after H-theme-background-color-white">
 				<input style="color:#49b1f4;" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12 H-padding-horizontal-left-25" placeholder="请输入新密码...">
 			</div>
@@ -59,7 +64,7 @@
 			}, function(ret, err) {
 				user = eval('(' + ret.value + ')');
 				//字符串截取
-				var str = user.phone_number;
+				var str = user[0].phone_number;
 				$("#phone").html(str.substring(0, 3) + 'xxxxxxx' + str.substring(9, 11));
 			});
 		}
@@ -107,6 +112,22 @@
 
 		//二次登录
 		function login_btn() {
+			//获取验证码
+			var code = $("#code").val();
+			//验证码正则
+			var b = /^[0-9]{4}$/;
+			if (!code.match(b)) {
+				// 如果不是正确的手机号
+				api.alert({
+					title : '温馨提示',
+					msg : '抱歉验证码格式错误',
+				}, function(ret, err) {
+					if (ret && ret.buttonIndex == 1) {
+						$("#code").focus();
+					}
+				});
+				return;
+			}
 			api.showProgress({
 				title : "校验中"
 			});
@@ -131,7 +152,7 @@
 		//修改密码操作
 		function checkCode() {
 			api.showProgress({
-				title : "登录中"
+				title : "修改中"
 			});
 			$xy.ajax(function(ret, err) {
 				api.hideProgress();
