@@ -420,6 +420,17 @@
 				}
 			});
 		},
+		userlogInfo : function(data) {
+			api.setPrefs({
+				key : 'userinfo',
+				value : JSON.stringify(data)
+			});
+			api.execScript({
+				name : 'main',
+				frameName : 'me_index',
+				script : 'reload();'
+			});
+		},
 		toast : function(callback, msg, duration, location, global) {
 			var that = this;
 			if ((!that.isFunction(arguments[0])) && (arguments[0])) {
