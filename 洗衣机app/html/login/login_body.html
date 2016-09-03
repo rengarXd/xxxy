@@ -73,11 +73,13 @@
 				</div>
 				<div style="display: none;" class="switvh H-font-size-14">
 					<div>
-						<input type="text" class=" H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入手机号码">
+						<input type="text" id="pw_tel"  class=" H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入手机号码">
 					</div>
 					<div class="xy_border"></div>
 					<div>
-						<input type="password" class="H-margin-vertical-top-2 H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入密码">
+
+						<input type="password"   id="pw_password" class="H-margin-vertical-top-2 H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入密码">
+
 					</div>
 					<div class="xy_border"></div>
 					<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-14 H-padding-vertical-both-5 H-padding-horizontal-left-25">
@@ -85,7 +87,7 @@
 						<span tapmode="H-touch-active" onclick="openTermsService();">同意《用户协议》</span>
 					</div>
 					<div class="H-margin-horizontal-both-20 H-padding-vertical-both-15">
-						<button tapmode="" onclick="login_btn();" class="xy_login_btn H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent   H-theme-font-color-white">
+						<button tapmode="" onclick="password_login();" class="xy_login_btn H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent   H-theme-font-color-white">
 							登&nbsp;&nbsp;&nbsp;录
 						</button>
 					</div>
@@ -268,6 +270,68 @@
 					$("#nonetwork").show();
 				}
 			}, 'appRegister&funid=wash_user&phone_number=' + tel + '&verify=' + code);
+		}
+
+		//服务密码登录
+		function password_login() {
+			var tel = $("#pw_tel").val();
+			// 手机号的正则
+			var a = /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/;
+			//获取密码
+			var password = $("#pw_password").val();
+			
+			// 判断手机号
+			if (!tel.match(a)) {
+				// 如果不是正确的手机号
+				api.alert({
+					title : '温馨提示',
+					msg : '请输入正确的手机号！',
+				}, function(ret, err) {
+					if (ret && ret.buttonIndex == 1) {
+						$("#pw_tel").focus();
+					}
+				});
+				return;
+			}
+			if (password.length == 0) {
+				// 如果不是正确的手机号
+				api.alert({
+					title : '温馨提示',
+					msg : '请输入密码',
+				}, function(ret, err) {
+					if (ret && ret.buttonIndex == 1) {
+						$("#code").focus();
+					}
+				});
+				return;
+			}
+			api.showProgress({
+				title : "登录中"
+			});
+			console.log(JSON.stringify(tel));
+			console.log(JSON.stringify(password));
+			
+			$xy.ajax(function(ret, err) {
+				api.hideProgress();
+				if (ret) {
+					console.log(JSON.stringify(ret));
+					//$("#nonetwork").hide();
+					if (ret.success) {
+						console.log(JSON.stringify(1));
+						//存储用户数据
+						$xy.userlogInfo(ret.data);
+						api.toast({
+							msg : '登录成功'
+						});
+						alertLog();
+					} else {
+						console.log(JSON.stringify(2));
+						alert(ret.message);
+					}
+				} else {
+					$("#nonetwork").show();
+				}
+			}, 'serverRegister&funid=wash_user&phone_number=' + tel + '&service_password=' + password);
 		}
 
 		//打开服务条款
