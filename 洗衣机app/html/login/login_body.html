@@ -96,7 +96,7 @@
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript" src="../../script/xy.js"></script>
 	<script type="text/javascript">
-		var jpush = null, tel = null, time = null, jpush = null, systemtype = null, time = null;
+		var jpush = null, tel = null, jpush = null, systemtype = null;
 		apiready = function() {
 			api.parseTapmode();
 			init();
@@ -159,8 +159,8 @@
 						//$("#nonetwork").hide();
 						if (ret.success) {
 							$('#sendVerify').removeAttr('onclick');
-							$('#sendVerify').html('<span id="Verifytime">120</span>s');
-							time = 120;
+							$('#sendVerify').html('<span id="Verifytime">60</span>s');
+							time = 60;
 							isinerval = setInterval("CountDown()", 1000);
 						} else {
 							api.toast({
