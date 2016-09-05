@@ -163,6 +163,17 @@
 			initPage();
 			//渲染商品列表
 			getWashComList();
+			//下拉刷新
+			api.setRefreshHeaderInfo({
+				visible : true,
+				bgColor : '#fff',
+				textColor : '#666666',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...',
+				showTime : true
+			}, function(ret, err) {
+				getWashComList();
+			});
 		};
 		//DOM头部信息
 		function domInfo() {
@@ -182,6 +193,7 @@
 			var device_id = "jxstar788201";
 			$xy.ajax(function(ret, err) {
 				api.hideProgress();
+				api.refreshHeaderLoadDone();
 				if (ret) {
 					//console.log(JSON.stringify(ret));
 					//$("#nonetwork").hide();
