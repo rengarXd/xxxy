@@ -59,45 +59,32 @@
 		<script type="text/javascript">
 			apiready = function() {
 				initPage();
-				//				$(function() {
-				//					var i = 1000;
-				//					$('#retroclockbox1').flipcountdown();
-				//					var i = 1;
-				//					$('#retroclockbox_counter').flipcountdown({
-				//						tick : function() {
-				//							return i++;
-				//						}
-				//					});
-				//					$('#retroclockbox2').flipcountdown({
-				//						showHour : false,
-				//						showMinute : false,
-				//						showSecond : true
-				//					});
-				//					$('#retroclockbox3').flipcountdown({
-				//						tzoneOffset : 3,
-				//						showSecond : false
-				//					});
-				//					$('#retroclockbox4').flipcountdown({
-				//						am : true
-				//					});
-				//					$('#retroclockbox5').flipcountdown({
-				//						speedFlip : 50
-				//					});
-				//					$('#retroclockbox6').flipcountdown({
-				//						tick : function() {
-				//							return new Date('5/10/2012 12:34:23');
-				//						}
-				//					});
-				//				})
 			};
 			// 初始化页面
 			function initPage() {
-				var i = 300;
+				time = 300;
+				isinerval = setInterval("CountDown()", 1000);
+			}
+
+			//时间递减处理
+			function CountDown() {
+				if (time < 1) {
+					//              var sendVerify = document.getElementById('sendVerify');
+					clearInterval(isinerval);
+					return;
+				}
+				//          var getVerify = document.getElementById('getVerify');
 				$('#retroclockbox').flipcountdown({
 					tick : function() {
-						return i--;
+						var nol = function(h) {
+							return h > 9 ? h : '0' + h;
+						};
+						var minutes = parseInt(time / 60);
+						var seconds = parseInt(time % 60);
+						return nol(minutes) + ':' + nol(seconds);
 					}
 				});
+				time--;
 			}
 		</script>
 	</body>
