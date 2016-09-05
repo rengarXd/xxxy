@@ -62,8 +62,8 @@
 					</div>
 					<div class="xy_border"></div>
 					<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-14 H-padding-vertical-both-5 H-padding-horizontal-left-25">
-						<input type="checkbox" class="H-checkbox H-checkbox-null H-vertical-align-middle H-font-size-18 H-theme-font-color1 H-border-radius-circle H-padding-horizontal-right-5">
-						<span tapmode="H-touch-active" onclick="openTermsService();">同意《用户协议》</span>
+						<input type="checkbox" id="checkbox-1" class="H-checkbox H-checkbox-null H-vertical-align-middle H-font-size-18 H-theme-font-color1 H-border-radius-circle H-padding-horizontal-right-5">
+						<span   tapmode="H-touch-active" onclick="openTermsService();">同意《用户协议》</span>
 					</div>
 					<div class="H-margin-horizontal-both-20 H-padding-vertical-both-15">
 						<button tapmode="" onclick="login_btn();" class="xy_login_btn H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent   H-theme-font-color-white">
@@ -81,7 +81,7 @@
 					</div>
 					<div class="xy_border"></div>
 					<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-14 H-padding-vertical-both-5 H-padding-horizontal-left-25">
-						<input type="checkbox" class="H-checkbox H-checkbox-null H-vertical-align-middle H-font-size-18 H-theme-font-color1 H-border-radius-circle H-padding-horizontal-right-5">
+						<input type="checkbox" id="checkbox-2" class="H-checkbox H-checkbox-null H-vertical-align-middle H-font-size-18 H-theme-font-color1 H-border-radius-circle H-padding-horizontal-right-5">
 						<span tapmode="H-touch-active" onclick="openTermsService();">同意《用户协议》</span>
 					</div>
 					<div class="H-margin-horizontal-both-20 H-padding-vertical-both-15">
@@ -222,7 +222,14 @@
 					}
 				});
 				return;
+			} 
+			if ($("#checkbox-1").attr("checked") == false) {
+				api.toast({
+					msg : '请您同意《用户协议》'
+				});
+				return;
 			}
+			
 			api.showProgress({
 				title : "登录中"
 			});
@@ -300,6 +307,12 @@
 					if (ret && ret.buttonIndex == 1) {
 						$("#pw_password").focus();
 					}
+				});
+				return;
+			}
+			if ($("#checkbox-2").attr("checked") == false) {
+				api.toast({
+					msg : '请您同意《用户协议》'
 				});
 				return;
 			}
