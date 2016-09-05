@@ -62,6 +62,7 @@
 			};
 			// 初始化页面
 			function initPage() {
+				// 初始化时间递减
 				time = 300;
 				isinerval = setInterval("CountDown()", 1000);
 			}
@@ -69,13 +70,13 @@
 			//时间递减处理
 			function CountDown() {
 				if (time < 1) {
-					//              var sendVerify = document.getElementById('sendVerify');
+					//结束时间递减
 					clearInterval(isinerval);
 					return;
 				}
-				//          var getVerify = document.getElementById('getVerify');
 				$('#retroclockbox').flipcountdown({
 					tick : function() {
+						//倒计时方法
 						var nol = function(h) {
 							return h > 9 ? h : '0' + h;
 						};
