@@ -46,7 +46,7 @@
 			<div class=" H-text-show-row-1  H-font-size-14 H-padding-10  ziti" style="width:40%;">
 				通用余额
 			</div>
-			<div class="H-padding-10" style="line-height: 21px;">
+			<div class="H-padding-10" style="line-height: 21px;" onclick="openDiscountRecharge();">
 				<button class="H-font-size-14 H-border-none chongzhi_btnn">
 					&nbsp;充&nbsp;值&nbsp;
 				</button>
@@ -127,6 +127,21 @@
 				url : './help_center_text/help_center_text_head.html',
 				bounces : false,
 				delay : 0,
+			});
+		}
+
+		function openDiscountRecharge() {
+			api.openWin({
+				name : 'wallet_recharge_head',
+				url : '../../order/discount/wallet_recharge_head.html',
+				//				pageParam: {
+				//					washloca_id: id,
+				//					distance: distance_id
+				//				},
+				bounces : false,
+				delay : 0,
+				slidBackEnabled : true,
+				vScrollBarEnabled : false
 			});
 		}
 	</script>
