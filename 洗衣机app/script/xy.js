@@ -162,17 +162,13 @@
 			options = options || {};
 			var opt = that.extendObj(that.DEFAULT_CONFIG.ajax_CONFIG, o, options);
 			if ( typeof callback == 'function') {
-				api.ajax(o, function(ret, err) {
+				api.ajax(opt, function(ret, err) {
 					var systemType = api.systemType;
 					if (systemType == "ios") {
 						var rets = eval('(' + err.body + ')');
-						if ( typeof callback == 'function') {
-							callback(rets, err);
-						}
+						callback(rets, err);
 					} else {
-						if ( typeof callback == 'function') {
-							callback(ret, err);
-						}
+						callback(ret, err);
 					}
 				});
 			}
