@@ -111,11 +111,11 @@
 
 			function openPick() {
 				var date = new Date();
-				var year = date.getFullYear() + '级';
+				var year = date.getFullYear() ;
 				api.actionSheet({
 					title : '年级',
 					cancelTitle : '取消',
-					buttons : ['2011级', '2012级', '2013级', '2014级', '2015级']
+					buttons : [year-4+ '级', year-3+ '级', year-2+ '级', year-1+ '级', year+ '级']
 				}, function(ret, err) {
 					var index = ret.buttonIndex;
 					switch(index) {
