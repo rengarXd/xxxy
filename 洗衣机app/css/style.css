@@ -36,3 +36,15 @@
 .xy_confirm_btn:active {
 	background-color: #eb6912 !important;
 }
+.zhifubao-bg-color {
+	background-color: #119ed1;
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+}
+.weixin-bg-color {
+	background-color: #29c210;
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+}
