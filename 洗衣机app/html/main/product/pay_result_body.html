@@ -7,16 +7,20 @@
 		<title>body</title>
 		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
 		<link rel="stylesheet" href="../../../css/style.css" />
+		<link rel="stylesheet" href="../../../css/jquery.flipcountdown.css" />
+		<script type="text/javascript" src="../../../script/xy.js"></script>
+		<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../script/tools/jquery.flipcountdown.js"></script>
 	</head>
 	<body>
 		<div class="H-padding-vertical-both-5"></div>
 		<div class="H-padding-vertical-top-20 H-padding-vertical-bottom-15 H-theme-background-color-white H-text-align-center">
-			<span class="H-theme-font-color-333">支付成功</span>
+			<span class="H-theme-font-color-333 H-font-size-26">支付成功</span>
 			<div class="H-theme-font-color-999 H-font-size-13">
 				抓紧时间把待洗的衣物放进洗衣机理
 			</div>
 			<div class="H-padding-vertical-both-8">
-				04:59
+				<div id="retroclockbox"></div>
 			</div>
 			<div class="H-theme-font-color-999 H-font-size-13">
 				后开始洗衣
@@ -52,15 +56,49 @@
 				洗衣模式：<span>桃园西三宿舍01号机</span>
 			</div>
 		</div>
+		<script type="text/javascript">
+			apiready = function() {
+				initPage();
+				//				$(function() {
+				//					var i = 1000;
+				//					$('#retroclockbox1').flipcountdown();
+				//					var i = 1;
+				//					$('#retroclockbox_counter').flipcountdown({
+				//						tick : function() {
+				//							return i++;
+				//						}
+				//					});
+				//					$('#retroclockbox2').flipcountdown({
+				//						showHour : false,
+				//						showMinute : false,
+				//						showSecond : true
+				//					});
+				//					$('#retroclockbox3').flipcountdown({
+				//						tzoneOffset : 3,
+				//						showSecond : false
+				//					});
+				//					$('#retroclockbox4').flipcountdown({
+				//						am : true
+				//					});
+				//					$('#retroclockbox5').flipcountdown({
+				//						speedFlip : 50
+				//					});
+				//					$('#retroclockbox6').flipcountdown({
+				//						tick : function() {
+				//							return new Date('5/10/2012 12:34:23');
+				//						}
+				//					});
+				//				})
+			};
+			// 初始化页面
+			function initPage() {
+				var i = 300;
+				$('#retroclockbox').flipcountdown({
+					tick : function() {
+						return i--;
+					}
+				});
+			}
+		</script>
 	</body>
-	<script type="text/javascript" src="../../../script/xy.js"></script>
-	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
-	<script type="text/javascript">
-		apiready = function() {
-			initPage();
-		};
-		// 初始化页面
-		function initPage() {
-		}
-	</script>
 </html>
