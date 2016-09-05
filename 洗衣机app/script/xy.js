@@ -153,6 +153,7 @@
 			}
 		},
 		ajax : function(callback, url, method, data, options) {
+			var that = this;
 			var o = {};
 			o.url = window.serverUrl + url;
 			o.method = method ? method : "get";
