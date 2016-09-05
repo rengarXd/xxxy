@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
@@ -9,30 +10,97 @@
 		<link rel="stylesheet" href="../../../css/style.css" />
 		<style>
 			.xy_border {
-				border-bottom: 1px solid #f0f0f0;
+				border-bottom: 1px solid #d8d8d8;
 				margin-left: 10px;
 				margin-right: 10px;
 			}
+			
 			.img-icon {
 				width: 60px;
 				height: 60px;
 			}
-			html, body {
+			
+			.chongzhitubiaobeijing {
+				background-image: url('../../../image/chongzhitubiaobeijing.gif');
+				background-size: cover;
+			}
+			
+			html,
+			body {
 				background-color: #119fd1
+			}
+			
+			.tubiaobeijing {
+				background-color: #f4f4f4;
+			}
+			
+			.chongzhishu {
+				color: white;
+				/*position: absolute;
+				top: 10px;*/
+				left: 7%;
+				z-index: 100;
+			}
+			
+			.chongsongshu {
+				color: #ffde00;
+				/*position: absolute;*/
+				top: 40px;
+				left: 10%;
+				z-index: 100;
 			}
 		</style>
 	</head>
+
 	<body>
-		<div id="" class="H-padding-10">
-			<div class="H-flexbox-horizontal H-theme-background-color-white ">
-				<div class="H-padding-5 "><img class="img-icon" src="../../../image/chongzhitubiao.gif" id="nopic" />
+
+		<div id="" style="position:relative;" class=" H-padding-10 H-padding-vertical-bottom-2" onclick="openDiscountRecharge();">
+			<div class="H-flexbox-horizontal tubiaobeijing ">
+				<div class="H-padding-2"></div>
+				<div class="H-padding-5">
+					<div style="position:absolute;" class="H-padding-5 chongzhishu  H-flexbox-horizontal">
+						<div style="font-size: 12px;padding-top:5px ;">充</div>
+						<div style="font-size: 18px; ">100</div>
+					</div>
+					<div style="position:absolute;" class="H-padding-5 chongsongshu H-flexbox-horizontal">
+						<div style="font-size: 12px;padding-top:5px ;">送</div>
+						<div style="font-size: 18px; ">10</div>
+					</div>
+					<img class="img-icon" src="../../../image/chongzhitubiaobeijing.gif" id="nopic" />
 				</div>
-				<div class=" H-flexbox-vertical H-theme-background-color-white ">
+				<div class=" H-flexbox-vertical ">
 					<div class="H-padding-vertical-both-5 H-channel-text H-theme-font-color4 H-flex-item H-font-size-16 H-theme-font-color-black H-padding-10 H-text-show-row-1s">
 						充100送20,新学期打折季
 					</div>
 					<div class="xy_border"></div>
-					<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-5 H-padding-10" >
+					<div class=" H-theme-font-color-999 H-font-size-13  H-padding-10">
+						<div>
+							河南教育学院 <span>2016.08.30</span> ---- <span>2016.09.30</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="" style="position:relative;" class=" H-padding-10 H-padding-vertical-bottom-2">
+			<div class="H-flexbox-horizontal tubiaobeijing ">
+				<div class="H-padding-2"></div>
+				<div class="H-padding-5">
+					<div style="position:absolute;" class="H-padding-5 chongzhishu  H-flexbox-horizontal">
+						<div style="font-size: 12px;padding-top:5px ;">充</div>
+						<div style="font-size: 18px; ">100</div>
+					</div>
+					<div style="position:absolute;" class="H-padding-5 chongsongshu H-flexbox-horizontal">
+						<div style="font-size: 12px;padding-top:5px ;">送</div>
+						<div style="font-size: 18px; ">10</div>
+					</div>
+					<img class="img-icon" src="../../../image/chongzhitubiaobeijing.gif" id="nopic" />
+				</div>
+				<div class=" H-flexbox-vertical ">
+					<div class="H-padding-vertical-both-5 H-channel-text H-theme-font-color4 H-flex-item H-font-size-16 H-theme-font-color-black H-padding-10 H-text-show-row-1s">
+						充100送20,新学期打折季
+					</div>
+					<div class="xy_border"></div>
+					<div class=" H-theme-font-color-999 H-font-size-13  H-padding-10">
 						<div>
 							河南教育学院 <span>2016.08.30</span> ---- <span>2016.09.30</span>
 						</div>
@@ -48,7 +116,22 @@
 			initPage();
 		};
 		// 初始化页面
-		function initPage() {
+		function initPage() {}
+
+		function openDiscountRecharge() {
+			api.openWin({
+				name: 'discount_recharge_head',
+				url: './discount_recharge_head.html',
+//				pageParam: {
+//					washloca_id: id,
+//					distance: distance_id
+//				},
+				bounces: false,
+				delay: 0,
+				slidBackEnabled: true,
+				vScrollBarEnabled: false
+			});
 		}
 	</script>
+
 </html>
