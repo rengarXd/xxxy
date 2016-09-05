@@ -81,7 +81,6 @@
 					showTime : true
 				}, function(ret, err) {
 					location.reload();
-					api.refreshHeaderLoadDone();
 				});
 			};
 			function openWin(name, url, washid) {
@@ -166,6 +165,7 @@
 				$xy.ajax(function(ret, err) {
 					//api.hideProgress();
 					if (ret) {
+						api.refreshHeaderLoadDone();
 						//$("#nonetwork").hide();
 						if (ret.success) {
 							//console.log("获取成功");

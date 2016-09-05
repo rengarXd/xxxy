@@ -142,8 +142,7 @@
 					textUp : '松开刷新...',
 					showTime : true
 				}, function(ret, err) {
-					location.reload();
-					api.refreshHeaderLoadDone();
+					getlocation();
 				});
 			};
 			//初始化数据方法
@@ -155,9 +154,11 @@
 					if (ret && ret.value) {
 						var user = eval('(' + ret.value + ')');
 						$xy.ajax(function(ret, err) {
+							api.refreshHeaderLoadDone();
 							if (ret.success) {
 								if (ret.data.length == 0) {
 									$xy.ajax(function(ret, err) {
+										api.refreshHeaderLoadDone();
 										if (ret.success) {
 											_tpl('xyd_data', ret.data, 'xyj_html', function() {
 											});
@@ -170,6 +171,7 @@
 									});
 								}
 							} else {
+								api.refreshHeaderLoadDone();
 								api.toast({
 									msg : ret.message
 								});
@@ -177,6 +179,7 @@
 						}, 'appUDeviceList&funid=wash_device&user_id=' + user[0].user_id + '&uuid=' + user[0].uuid + '&gps_longitude=' + +longitude + '&gps_latitude=' + latitude);
 					} else {
 						$xy.ajax(function(ret, err) {
+							api.refreshHeaderLoadDone();
 							if (ret) {
 								if (ret.success) {
 									_tpl('xyd_data', ret.data, 'xyj_html', function() {
