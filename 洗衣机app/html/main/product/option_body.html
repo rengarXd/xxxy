@@ -136,7 +136,7 @@
 			</div>
 			<span class="H-icon H-display-block H-padding-horizontal-left-5"><img src="../../../image/shuxian.png" style="height: 68px;"/></span>
 			<span class="H-icon H-padding-horizontal-both-10 H-display-block">
-			<button tapmode="H-touch-active" class="H-touch-active H-font-size-14 H-border-none xiadan_btnn H-padding-horizontal-both-10 H-padding-vertical-both-3">
+			<button tapmode="H-touch-active" onclick="openPayWin();" class="H-touch-active H-font-size-14 H-border-none xiadan_btnn H-padding-horizontal-both-10 H-padding-vertical-both-3">
 			下单
 			</button></span>
 			</div>
@@ -182,6 +182,7 @@
 			document.getElementById('address').innerHTML = washloca_name;
 		}
 
+		//初始化偏好值
 		function initPage() {
 			api.getPrefs({
 				key : 'userinfo'
@@ -189,6 +190,19 @@
 			});
 		}
 
+		//打开支付页
+		function openPayWin() {
+			api.openWin({
+				name : 'pay_head',
+				url : 'pay_head.html',
+				bounces : false,
+				delay : 0,
+				slidBackEnabled : true,
+				vScrollBarEnabled : false
+			});
+		}
+
+		//页面渲染
 		function getWashComList() {
 			var device_id = "jxstar788201";
 			$xy.ajax(function(ret, err) {
