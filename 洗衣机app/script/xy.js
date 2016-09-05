@@ -65,6 +65,13 @@
 					duration : 500
 				}
 			},
+			ajax_CONFIG : {
+				cache : false,
+				timeout : 6,
+				dataType : "json",
+				report : true,
+				returnAll : false
+			}
 		},
 		isArray : function(arr) {
 			return (toString.apply(arr) === '[object Array]') || arr instanceof NodeList;
@@ -145,14 +152,15 @@
 				};
 			}
 		},
-		ajax : function(callback, url, method, data) {
+		ajax : function(callback, url, method, data, options) {
 			var o = {};
 			o.url = window.serverUrl + url;
 			o.method = method ? method : "get";
-			o.timeout = 6;
 			if (o.method == "post") {
 				o.data = data;
 			}
+			options = options || {};
+			var opt = that.extendObj(that.DEFAULT_CONFIG.ajax_CONFIG, o, options);
 			if ( typeof callback == 'function') {
 				api.ajax(o, function(ret, err) {
 					var systemType = api.systemType;
