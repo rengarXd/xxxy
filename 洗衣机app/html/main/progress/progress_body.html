@@ -72,14 +72,13 @@
 		<script type="text/javascript" src="../../../script/xy.js"></script>
 		<!--<script type="text/javascript" src="../../../script/zepto.min.js"></script>-->
 		<script type="text/javascript">
+			var times = null, timeall = null;
 			apiready = function() {
 				timeall = 300;
 				// 初始化页面
 				initPage();
 				//进度条
 				arcProgress();
-				//倒计时提醒
-				//alarmNo();
 			};
 			// 初始化页面
 			function initPage() {
@@ -96,6 +95,13 @@
 						times = timeall - ((now.getTime() - parseInt(time)) / 1000);
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
+						api.execScript({
+							name : 'main',
+							frameName : 'main_index',
+							script : 'listener();'
+						});
+						//倒计时提醒
+						alarmNo(times);
 					} else {
 						//初始化所用时间
 						times = timeall;
@@ -107,6 +113,11 @@
 						});
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
+						api.execScript({
+							name : 'main',
+							frameName : 'main_index',
+							script : 'listener();'
+						});
 					}
 				});
 			}
@@ -172,7 +183,7 @@
 			}
 
 			//倒计时时钟提醒模块
-			function alarmNo() {
+			function alarmNo(times) {
 				var alarmNotification = api.require('alarmNotification');
 				alarmNotification.setAlarm({
 					interval : times,
