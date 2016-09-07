@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
@@ -14,33 +13,27 @@
 				margin-left: 10px;
 				margin-right: 10px;
 			}
-			
 			.img-icon {
 				width: 60px;
 				height: 60px;
 			}
-			
 			.chongzhitubiaobeijing {
 				background-image: url('../../../image/chongzhitubiaobeijing.gif');
 				background-size: cover;
 			}
-			
-			head,html,body {
+			head, html, body {
 				background-color: #119fd1
 			}
-			
 			.tubiaobeijing {
 				background-color: #f4f4f4;
 			}
-			
 			.chongzhishu {
 				color: white;
 				/*position: absolute;
-				top: 10px;*/
+				 top: 10px;*/
 				left: 7%;
 				z-index: 100;
 			}
-			
 			.chongsongshu {
 				color: #ffde00;
 				/*position: absolute;*/
@@ -50,87 +43,212 @@
 			}
 		</style>
 	</head>
-
 	<body>
+		<div id="nearby_preferential"></div>
+		<script id="nearby_preferential_list_item" type="text/html">
+			{{# for(var i=0,l=d.length;i<l;i++){ }}
+			<div id="" style="position:relative;" class=" H-padding-10 H-padding-vertical-bottom-2" onclick="openDiscountRecharge();">
+			<div class="H-flexbox-horizontal tubiaobeijing ">
+			<div class="H-padding-2"></div>
+			<div class="H-padding-5">
+			<div style="position:absolute;" class="H-padding-5 chongzhishu  H-flexbox-horizontal">
+			<div style="font-size: 12px;padding-top:5px ;">充</div>
+			<div style="font-size: 18px; "> {{ d[i].recharge_pay }} </div>
+			</div>
+			<div style="position:absolute;" class="H-padding-5 chongsongshu H-flexbox-horizontal">
+			<div style="font-size: 12px;padding-top:5px ;">送</div>
+			<div style="font-size: 18px; "> {{ d[i].presentation_pay }} </div>
+			</div>
+			<img class="img-icon" src="../../../image/chongzhitubiaobeijing.gif" id="nopic" />
+			</div>
+			<div class=" H-flexbox-vertical ">
+			<div class="H-padding-vertical-both-5 H-channel-text H-theme-font-color4 H-flex-item H-font-size-16 H-theme-font-color-black H-padding-10 H-text-show-row-1s">
+			{{ d[i].acctive_notes }}
+			</div>
+			<div class="xy_border"></div>
+			<div class=" H-theme-font-color-999 H-font-size-13  H-padding-10">
+			<div>
+			{{ d[i].dept_name }} <span> {{ d[i].activity_start }} </span> ---- <span>{{ d[i].activity_end }}</span>
+			</div>
+			</div>
+			</div>
+			</div>
+			</div>
+			{{# } }}
+		</script>
+		<!--<div id="" style="position:relative;" class=" H-padding-10 H-padding-vertical-bottom-2">
+		<div class="H-flexbox-horizontal tubiaobeijing ">
+		<div class="H-padding-2"></div>
+		<div class="H-padding-5">
+		<div style="position:absolute;" class="H-padding-5 chongzhishu  H-flexbox-horizontal">
+		<div style="font-size: 12px;padding-top:5px ;">充</div>
+		<div style="font-size: 18px; ">100</div>
+		</div>
+		<div style="position:absolute;" class="H-padding-5 chongsongshu H-flexbox-horizontal">
+		<div style="font-size: 12px;padding-top:5px ;">送</div>
+		<div style="font-size: 18px; ">10</div>
+		</div>
+		<img class="img-icon" src="../../../image/chongzhitubiaobeijing.gif" id="nopic" />
+		</div>
+		<div class=" H-flexbox-vertical ">
+		<div class="H-padding-vertical-both-5 H-channel-text H-theme-font-color4 H-flex-item H-font-size-16 H-theme-font-color-black H-padding-10 H-text-show-row-1s">
+		充100送20,新学期打折季
+		</div>
+		<div class="xy_border"></div>
+		<div class=" H-theme-font-color-999 H-font-size-13  H-padding-10">
+		<div>
+		河南教育学院 <span>2016.08.30</span> ---- <span>2016.09.30</span>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>-->
+		<script type="text/javascript" src="../../../script/xy.js"></script>
+		<script type="text/javascript" src="../../../script/zepto.min.js"></script>
+		<script type="text/javascript" src="../../../script/H.js"></script>
+		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
+		<script type="text/javascript">
+			var longitude = null;
+			var latitude = null;
+			apiready = function() {
+				api.parseTapmode();
+				//获取位置
+				getlocation();
+				//下拉刷新
+				api.setRefreshHeaderInfo({
+					visible : true,
+					bgColor : '#fff',
+					textColor : '#666666',
+					textDown : '下拉刷新...',
+					textUp : '松开刷新...',
+					showTime : true
+				}, function(ret, err) {
+					location.reload();
+				});
+			};
+			function openWin(name, url, washid) {
+				var delay = 0;
+				if (api.systemType != 'ios') {
+					delay = 200;
+				}
+				api.openWin({
+					name : name,
+					url : url,
+					pageParam : {
+						washid : washid
+					},
+					bounces : false,
+					delay : delay,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
+				});
+			}
 
-		<div id="" style="position:relative;" class=" H-padding-10 H-padding-vertical-bottom-2" onclick="openDiscountRecharge();">
-			<div class="H-flexbox-horizontal tubiaobeijing ">
-				<div class="H-padding-2"></div>
-				<div class="H-padding-5">
-					<div style="position:absolute;" class="H-padding-5 chongzhishu  H-flexbox-horizontal">
-						<div style="font-size: 12px;padding-top:5px ;">充</div>
-						<div style="font-size: 18px; ">100</div>
-					</div>
-					<div style="position:absolute;" class="H-padding-5 chongsongshu H-flexbox-horizontal">
-						<div style="font-size: 12px;padding-top:5px ;">送</div>
-						<div style="font-size: 18px; ">10</div>
-					</div>
-					<img class="img-icon" src="../../../image/chongzhitubiaobeijing.gif" id="nopic" />
-				</div>
-				<div class=" H-flexbox-vertical ">
-					<div class="H-padding-vertical-both-5 H-channel-text H-theme-font-color4 H-flex-item H-font-size-16 H-theme-font-color-black H-padding-10 H-text-show-row-1s">
-						充100送20,新学期打折季
-					</div>
-					<div class="xy_border"></div>
-					<div class=" H-theme-font-color-999 H-font-size-13  H-padding-10">
-						<div>
-							河南教育学院 <span>2016.08.30</span> ---- <span>2016.09.30</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="" style="position:relative;" class=" H-padding-10 H-padding-vertical-bottom-2">
-			<div class="H-flexbox-horizontal tubiaobeijing ">
-				<div class="H-padding-2"></div>
-				<div class="H-padding-5">
-					<div style="position:absolute;" class="H-padding-5 chongzhishu  H-flexbox-horizontal">
-						<div style="font-size: 12px;padding-top:5px ;">充</div>
-						<div style="font-size: 18px; ">100</div>
-					</div>
-					<div style="position:absolute;" class="H-padding-5 chongsongshu H-flexbox-horizontal">
-						<div style="font-size: 12px;padding-top:5px ;">送</div>
-						<div style="font-size: 18px; ">10</div>
-					</div>
-					<img class="img-icon" src="../../../image/chongzhitubiaobeijing.gif" id="nopic" />
-				</div>
-				<div class=" H-flexbox-vertical ">
-					<div class="H-padding-vertical-both-5 H-channel-text H-theme-font-color4 H-flex-item H-font-size-16 H-theme-font-color-black H-padding-10 H-text-show-row-1s">
-						充100送20,新学期打折季
-					</div>
-					<div class="xy_border"></div>
-					<div class=" H-theme-font-color-999 H-font-size-13  H-padding-10">
-						<div>
-							河南教育学院 <span>2016.08.30</span> ---- <span>2016.09.30</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+			//获取位置信息
+			function getlocation() {
+				var systemType = api.systemType;
+				if (systemType == "ios") {
+					api.startLocation({
+						accuracy : '10m',
+						filter : 1,
+						autoStop : true
+					}, function(ret, err) {
+						if (ret.status) {
+							api.toast({
+								msg : '获取位置成功ios'
+							});
+							//经度
+							longitude = ret.longitude;
+							//纬度
+							latitude = ret.latitude;
+							////获取附近10公里范围内的洗衣点
+							api.toast({
+								msg : '开始获取位置'
+							});
+							get_nearby_laundry(longitude, latitude);
+						} else {
+							api.toast({
+								msg : '获取位置失败'
+							});
+						}
+					});
+				} else {
+					//初始化百度定位模块
+					var baiduLocation = api.require('baiduLocation');
+					//开始定位
+					baiduLocation.startLocation({
+						accuracy : '10m',
+						filter : 1,
+						autoStop : true
+					}, function(ret, err) {
+						if (ret.status) {
+							//						api.toast({
+							//							msg : '获取位置成功2'
+							//						});
+							//经度
+							longitude = ret.longitude;
+							//纬度
+							latitude = ret.latitude;
+							//console.log(latitude);
+							//获取附近10公里范围内的洗衣点
+							get_nearby_preferential(longitude, latitude);
+						} else {
+							api.toast({
+								msg : '获取位置失败'
+							});
+						}
+					});
+				}
+			}
+
+			//获取附近10公里范围内的洗衣点
+			function get_nearby_preferential(longitude, latitude) {
+				longitude = longitude;
+				latitude = latitude;
+				console.log(latitude);
+				console.log(longitude);
+				$xy.ajax(function(ret, err) {
+					//api.hideProgress();
+					if (ret) {
+						api.refreshHeaderLoadDone();
+						//$("#nonetwork").hide();
+						if (ret.success) {
+							console.log("获取成功");
+							console.log(JSON.stringify(ret));
+							var tpl = document.getElementById('nearby_preferential_list_item').innerHTML;
+							//读取模版
+							//方式一：异步渲染（推荐）
+							laytpl(tpl).render(ret.data, function(render) {
+								api.hideProgress();
+								document.getElementById('nearby_preferential').innerHTML = render;
+							});
+						} else {
+							//console.log(JSON.stringify(ret));
+							api.toast({
+								msg : '很抱歉，附近没有优惠充值活动！'
+							});
+						}
+					} else {
+						$("#nonetwork").show();
+					}
+				}, 'appOrient&funid=wash_orient_activity&gps_lng=' + 113.608274 + '&gps_lat=' + 34.801564);
+			}
+
+			//打开优惠充值页面
+			function openDiscountRecharge() {
+				api.openWin({
+					name : 'discount_recharge_head',
+					url : './discount_recharge_head.html',
+					//				pageParam: {
+					//					washloca_id: id,
+					//					distance: distance_id
+					//				},
+					bounces : false,
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
+				});
+			}
+		</script>
 	</body>
-	<script type="text/javascript" src="../../../script/xy.js"></script>
-	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
-	<script type="text/javascript">
-		apiready = function() {
-			initPage();
-		};
-		// 初始化页面
-		function initPage() {}
-
-		function openDiscountRecharge() {
-			api.openWin({
-				name: 'discount_recharge_head',
-				url: './discount_recharge_head.html',
-//				pageParam: {
-//					washloca_id: id,
-//					distance: distance_id
-//				},
-				bounces: false,
-				delay: 0,
-				slidBackEnabled: true,
-				vScrollBarEnabled: false
-			});
-		}
-	</script>
-
 </html>
