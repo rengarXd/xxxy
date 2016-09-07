@@ -131,7 +131,7 @@
 			<div class="H-flex-item H-padding-horizontal-right-5 H-font-size-15 xy_font_color ">
 			<span>{{ d[i].title }}</span><span class="tip-message H-font-size-12 H-float-right">{{ d[i].turn_around_date }}分钟<span class="H-padding-horizontal-left-5 tip-message-money">{{ d[i].movement_money }}</span>元</span>
 			<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-top-5">
-			{{ d[i].mome }}
+			{{ d[i].memo }}
 			</div>
 			</div>
 			<span class="H-icon H-display-block H-padding-horizontal-left-5"><img src="../../../image/shuxian.png" style="height: 68px;"/></span>
@@ -209,10 +209,10 @@
 				api.hideProgress();
 				api.refreshHeaderLoadDone();
 				if (ret) {
-					//console.log(JSON.stringify(ret));
+					console.log(JSON.stringify(device_id));
 					//$("#nonetwork").hide();
 					if (ret.success) {
-						//console.log(JSON.stringify(1));
+						console.log(JSON.stringify(ret));
 						var tpl = document.getElementById('option_data').innerHTML;
 						//读取模版
 						//方式一：异步渲染（推荐）
