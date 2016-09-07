@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
@@ -12,16 +13,63 @@
 			.iconfont {
 				color: #b8b8b8;
 			}
+			
 			.xy_border {
 				border-bottom: 1px solid #f0f0f0;
 				margin-left: 37px;
 			}
 		</style>
 	</head>
+
 	<body>
-		<div id="machine_list"></div>
+
+		<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
+			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
+				<span class="H-padding-horizontal-both-10"><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+				<div class="H-flex-item xy_font_color">
+					<span>二楼东01机</span>
+
+					<span class="H-float-right xyzt " tapmode="H-touch-active" onclick="openProduct();">我要洗衣</span>
+
+					<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
+						空闲
+					</div>
+
+				</div>
+				<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+			</div>
+			<div class="xy_border"></div>
+			<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
+				郑州大学桃花源 西三宿舍
+				<span class="H-padding-horizontal-right-25 H-float-right">200米</span>
+			</div>
+		</div>
+
+		<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
+			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
+				<span class="H-padding-horizontal-both-10"><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+				<div class="H-flex-item xy_font_color">
+					<span>二楼东02机</span>
+
+					<span class="H-float-right xyzt " tapmode="H-touch-active" onclick="openProduct();">空闲提醒</span>
+
+					<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
+						被占用
+					</div>
+
+				</div>
+				<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+			</div>
+			<div class="xy_border"></div>
+			<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
+				郑州大学桃花源 西三宿舍
+				<span class="H-padding-horizontal-right-25 H-float-right">200米</span>
+			</div>
+		</div>
+
+		<!--<div id="machine_list"></div>
 		<script id="machine_list_item" type="text/html">
-			{{# for(var i=0,l=d.length;i<l;i++){ }}
+			
 			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
 			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
 			<span class="H-padding-horizontal-both-10"><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
@@ -48,50 +96,58 @@
 			</div>
 			</div>
 			{{# } }}
-		</script>
+		</script>-->
 		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
 		<script type="text/javascript" src="../../../script/xy.js"></script>
 		<script type="text/javascript">
 			var distance = null;
 			apiready = function() {
-				//从洗衣点传来的距离
-				distance = api.pageParam.distance;
-				//初始化加载页面
-				initPage();
-				//下拉刷新
-				api.setRefreshHeaderInfo({
-					visible : true,
-					bgColor : '#fff',
-					textColor : '#666666',
-					textDown : '下拉刷新...',
-					textUp : '松开刷新...',
-					showTime : true
-				}, function(ret, err) {
-					initPage();
-				});
+//				//从洗衣点传来的距离
+//				distance = api.pageParam.distance;
+//				//初始化加载页面
+//				initPage();
+//				//下拉刷新
+//				api.setRefreshHeaderInfo({
+//					visible: true,
+//					bgColor: '#fff',
+//					textColor: '#666666',
+//					textDown: '下拉刷新...',
+//					textUp: '松开刷新...',
+//					showTime: true
+//				}, function(ret, err) {
+//					initPage();
+//				});
 			};
 			//打开商品选项
-			function openProduct(device_name, washloca_name) {
+			//			function openProduct(device_name, washloca_name) {
+			//				api.openWin({
+			//					name: 'option_head',
+			//					url: '../product/option_head.html',
+			//					bounces: false,
+			//					pageParam: {
+			//						device_name: device_name,
+			//						washloca_name: washloca_name,
+			//						distance: distance
+			//					},
+			//				});
+			//			}
+			function openProduct() {
 				api.openWin({
-					name : 'option_head',
-					url : '../product/option_head.html',
-					bounces : false,
-					pageParam : {
-						device_name : device_name,
-						washloca_name : washloca_name,
-						distance : distance
-					},
+					name: 'option_head',
+					url: '../product/option_head.html',
+					bounces: false,
+
 				});
 			}
 
 			function initPage() {
 				$xy.ajax(function(ret, err) {
 					//api.hideProgress();
-					if (ret) {
+					if(ret) {
 						//$("#nonetwork").hide();
 						api.refreshHeaderLoadDone();
-						if (ret.success) {
-							if (ret.data.length == 0) {
+						if(ret.success) {
+							if(ret.data.length == 0) {
 								//当洗衣机数量为空时的处理
 								var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无洗衣机</div></div></div>';
 								document.getElementById('machine_list').innerHTML = htmls;
@@ -106,14 +162,14 @@
 								});
 								//渲染距离
 								var dis = document.getElementsByClassName('distance');
-								for (var i = 0; i < dis.length; i++) {
+								for(var i = 0; i < dis.length; i++) {
 									dis[i].innerHTML = distance;
 								}
 							}
 						} else {
 							//console.log(JSON.stringify(ret));
 							api.toast({
-								msg : '很抱歉，附近没有洗衣点！'
+								msg: '很抱歉，附近没有洗衣点！'
 							});
 						}
 					} else {
@@ -124,4 +180,5 @@
 			}
 		</script>
 	</body>
+
 </html>
