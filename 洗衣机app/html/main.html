@@ -38,6 +38,10 @@
 				color: #fff;
 				font-style: normal;
 			}
+			.toast_top {
+				background-color: #ffffcc;
+				color: #ff6600;
+			}
 		</style>
 	</head>
 	<body class="H-flexbox-vertical">
@@ -89,7 +93,7 @@
 			</div>
 		</footer>
 		<script type="text/javascript" src="../script/H.js"></script>
-		<script type="text/javascript" src="../script/zepto.min.js"></script>
+		<!--<script type="text/javascript" src="../script/zepto.min.js"></script>-->
 		<script type="text/javascript">
 			var FNScanner = null;
 			H.ready(function() {
@@ -117,19 +121,6 @@
 			//				//退出app
 			//				$xy.dblclickToCloseApp();
 			//			}
-			Zepto(function($) {
-				//				$("#index_footer .switch-item").on("tap", function() {
-				//					//				console.log(111111);
-				//					var index = $(this).index();
-				//					selectIndex(index);
-				//					// 设置索引
-				//					api.setFrameGroupIndex({
-				//						name : 'groupName',
-				//						index : index,
-				//						scroll : true
-				//					});
-				//				});
-			});
 			//页面初始化函数
 			function pageInit() {
 				//1.2打开沉浸式页面
