@@ -20,7 +20,7 @@
 				<div id="retroclockbox"></div>
 			</div>
 			<div class="H-theme-font-color-999 H-font-size-13">
-				后开始洗衣
+				后自动开始洗衣
 			</div>
 		</div>
 		<div class="H-padding-horizontal-both-25 H-padding-vertical-top-15 H-padding-vertical-bottom-25">
@@ -62,7 +62,7 @@
 			};
 			// 初始化页面
 			function initPage() {
-				timeall = 120;
+				timeall = 300;
 				// 初始化时间递减
 				api.getPrefs({
 					key : 'washtime'
