@@ -8,9 +8,6 @@
 		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
 		<link rel="stylesheet" href="../../../css/style.css" />
 		<link rel="stylesheet" href="../../../css/jquery.flipcountdown.css" />
-		<script type="text/javascript" src="../../../script/xy.js"></script>
-		<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>
-		<script type="text/javascript" src="../../../script/tools/jquery.flipcountdown.js"></script>
 	</head>
 	<body>
 		<div class="H-padding-vertical-both-5"></div>
@@ -27,7 +24,7 @@
 			</div>
 		</div>
 		<div class="H-padding-horizontal-both-25 H-padding-vertical-top-15 H-padding-vertical-bottom-25">
-			<button onclick="" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+			<button onclick="start();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
 				开始洗衣
 			</button>
 		</div>
@@ -56,36 +53,89 @@
 				洗衣模式：<span>桃园西三宿舍01号机</span>
 			</div>
 		</div>
+		<script type="text/javascript" src="../../../script/xy.js"></script>
+		<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../script/tools/jquery.flipcountdown.js"></script>
 		<script type="text/javascript">
 			apiready = function() {
 				initPage();
 			};
 			// 初始化页面
 			function initPage() {
+				timeall = 120;
 				// 初始化时间递减
-				time = 300;
-				isinerval = setInterval("CountDown()", 1000);
+				api.getPrefs({
+					key : 'washtime'
+				}, function(ret, err) {
+					if (ret && ret.value) {
+						//获取之前开始的时间
+						var time = eval('(' + ret.value + ')');
+						//获取当前时间
+						var now = new Date();
+						//计算剩余时间
+						times = timeall - ((now.getTime() - parseInt(time)) / 1000);
+						//调用倒计时方法
+						isinerval = setInterval("CountDown()", 1000);
+					} else {
+						//初始化所用时间
+						times = timeall;
+						var date = new Date();
+						//记录当前时间
+						api.setPrefs({
+							key : 'washtime',
+							value : "'" + date.getTime() + "'"
+						});
+						//调用倒计时方法
+						isinerval = setInterval("CountDown()", 1000);
+					}
+				});
 			}
 
 			//时间递减处理
 			function CountDown() {
-				if (time < 1) {
-					//结束时间递减
-					clearInterval(isinerval);
-					return;
-				}
 				$('#retroclockbox').flipcountdown({
 					tick : function() {
-						//倒计时方法
+						//倒计时展示
 						var nol = function(h) {
 							return h > 9 ? h : '0' + h;
 						};
-						var minutes = parseInt(time / 60);
-						var seconds = parseInt(time % 60);
+						var minutes = parseInt(times / 60);
+						var seconds = parseInt(times % 60);
 						return nol(minutes) + ':' + nol(seconds);
 					}
 				});
-				time--;
+				if (times < 1) {
+					//结束时间递减
+					clearInterval(isinerval);
+					api.removePrefs({
+						key : 'washtime'
+					});
+					api.openWin({
+						name : 'progress_head',
+						url : '../progress/progress_head.html',
+						bounces : false,
+						delay : 0,
+						slidBackEnabled : true,
+						vScrollBarEnabled : false
+					});
+					return;
+				}
+				times--;
+			}
+
+			//开始计时
+			function start() {
+				api.removePrefs({
+					key : 'washtime'
+				});
+				api.openWin({
+					name : 'progress_head',
+					url : '../progress/progress_head.html',
+					bounces : false,
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
+				});
 			}
 		</script>
 	</body>
