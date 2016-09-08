@@ -39,14 +39,17 @@
 		</div>
 		<div style="height: 240px;"></div>
 		<div>
-			<div id="tab" class="H-flexbox-horizontal">
-				<div  class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-font-size-12 active" style="border-width: 0 0 2px  0">
-					验证码快捷登录
-				</div>
-				<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-font-size-12 " style="border-width: 0 0 2px  0">
-					密码登录
-				</div>
+			<div  class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-font-size-12 " style="border-width: 0 0 2px  0;color: #49b1f4;">
+				验证码快捷登录
 			</div>
+			<!--<div id="tab" class="H-flexbox-horizontal">
+			<div  class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-font-size-12 active" style="border-width: 0 0 2px  0">
+			验证码快捷登录
+			</div>
+			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white H-font-size-12 " style="border-width: 0 0 2px  0">
+			密码登录
+			</div>
+			</div>-->
 			<div class="xy_border"></div>
 			<div id="content">
 				<div class="switvh H-font-size-14 ">
@@ -109,11 +112,10 @@
 		}
 
 		Zepto(function($) {
-			$("#tab div").on("tap", function() {
-				//console.log(111111);
-				$("#tab div").eq($(this).index()).addClass('active').siblings().removeClass('active');
-				$("#content .switvh").hide().eq($(this).index()).show();
-			});
+			//			$("#tab div").on("tap", function() {
+			//				$("#tab div").eq($(this).index()).addClass('active').siblings().removeClass('active');
+			//				$("#content .switvh").hide().eq($(this).index()).show();
+			//			});
 		});
 		//监听网络状态
 		function listener() {
@@ -222,14 +224,13 @@
 					}
 				});
 				return;
-			} 
+			}
 			if ($("#checkbox-1").attr("checked") == false) {
 				api.toast({
 					msg : '请您同意《用户协议》'
 				});
 				return;
 			}
-			
 			api.showProgress({
 				title : "登录中"
 			});
