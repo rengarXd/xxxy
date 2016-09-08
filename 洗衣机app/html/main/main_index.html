@@ -150,21 +150,21 @@
 			var longitude = null, latitude = null, isinerval = null;
 			apiready = function() {
 				api.parseTapmode();
-				//获取位置信息
-				getlocation();
-				//下拉刷新
-				api.setRefreshHeaderInfo({
-					visible : true,
-					bgColor : '#fff',
-					textColor : '#666666',
-					textDown : '下拉刷新...',
-					textUp : '松开刷新...',
-					showTime : true
-				}, function(ret, err) {
-					getlocation();
-				});
-				//监听事件
-				listener();
+//				//获取位置信息
+//				getlocation();
+//				//下拉刷新
+//				api.setRefreshHeaderInfo({
+//					visible : true,
+//					bgColor : '#fff',
+//					textColor : '#666666',
+//					textDown : '下拉刷新...',
+//					textUp : '松开刷新...',
+//					showTime : true
+//				}, function(ret, err) {
+//					getlocation();
+//				});
+//				//监听事件
+//				listener();
 			};
 			//初始化数据方法
 			function initData(longitude, latitude) {
