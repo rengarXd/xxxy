@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>body</title>
+		<link rel="stylesheet" type="text/css" href="../../css/Hui.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/fonts/iconfont.css" />
+		<style>
+			.lanse {
+				color: #03aafe;
+			}
+			.icon-zhankai {
+				color: #b8b8b8;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="H-padding-vertical-both-5">
+			请选择您之前使用过的洗衣机
+		</div>
+		<div id="ids">
+			<div class="H-theme-background-color-white H-margin-vertical-bottom-5" tapmode="H-touch-active" onclick="open_nearby_machine();">
+				<div class="H-flexbox-horizontal  H-padding-vertical-top-10 " >
+					<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+					<div class="H-flex-item xy_font_color">
+						<span>洗衣机01号</span>
+					</div>
+					<span class="H-theme-font-color-999 H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+				</div>
+				<div class="xy_border"></div>
+				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-bottom-8" style="padding-left: 37px;">
+					<span id="ids"></span>
+				</div>
+			</div>
+			<div class="H-theme-background-color-white H-margin-vertical-bottom-5" tapmode="H-touch-active" onclick="open_nearby_machine();">
+				<div class="H-flexbox-horizontal  H-padding-vertical-top-10 " >
+					<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+					<div class="H-flex-item xy_font_color">
+						<span>洗衣机02号</span>
+					</div>
+					<span class="H-theme-font-color-999 H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+				</div>
+				<div class="xy_border"></div>
+				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-bottom-8" style="padding-left: 37px;">
+					<span>东区2号宿舍楼</span>
+				</div>
+			</div>
+			<div class="H-theme-background-color-white H-margin-vertical-bottom-5" tapmode="H-touch-active" onclick="open_nearby_machine();">
+				<div class="H-flexbox-horizontal  H-padding-vertical-top-10 " >
+					<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+					<div class="H-flex-item xy_font_color">
+						<span>洗衣机023号</span>
+					</div>
+					<span class="H-theme-font-color-999 H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+				</div>
+				<div class="xy_border"></div>
+				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-bottom-8" style="padding-left: 37px;">
+					<span>东区2号宿舍楼</span>
+				</div>
+			</div>
+		</div>
+		<div class="H-padding-20">
+			<button onclick="" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+				校&nbsp;&nbsp;&nbsp;验
+			</button>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/xy.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript">
+		var datas = null, arr = [];
+		apiready = function() {
+			//datas = api.pageParam.data;
+			initPage();
+		};
+		// 初始化页面
+		function initPage() {
+			var srr = document.getElementsByClassName('H-margin-vertical-bottom-5');
+			for (var i = 0, l = srr.length; i < l; i++) {
+				arr.push(srr[i]);
+			}
+			arr.sort(function() {
+				return Math.random() > 0.5 ? -1 : 1;
+			});
+		}
+	</script>
+</html>

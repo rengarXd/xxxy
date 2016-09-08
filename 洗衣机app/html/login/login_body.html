@@ -329,10 +329,22 @@
 					//$("#nonetwork").hide();
 					if (ret.success) {
 						//console.log(JSON.stringify(1));
-						//存储用户数据
-						$xy.userlogInfo(ret.data);
-						//登录成功对话框
-						alertLog();
+						if (ret.data[0].user_id) {
+							//存储用户数据
+							$xy.userlogInfo(ret.data);
+							//登录成功对话框
+							alertLog();
+						} else {
+							api.openWin({
+								name : 'check_login_head',
+								url : 'check_login_head.html',
+								pageParam : {
+									data : ret.data
+								},
+								bounces : false,
+								delay : 0,
+							});
+						}
 					} else {
 						//console.log(JSON.stringify(2));
 						api.toast({
