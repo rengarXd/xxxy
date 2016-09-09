@@ -78,6 +78,8 @@
 		};
 		// 初始化页面
 		function initPage() {
+			$xy.ajax(function(ret, err) {
+			}, 'verifyDevicdId&funid=wash_user' + '&phone_number=' + tel + '&device_id_result=' + code);
 			var srr = document.getElementsByClassName('H-margin-vertical-bottom-5');
 			for (var i = 0, l = srr.length; i < l; i++) {
 				arr.push(srr[i]);

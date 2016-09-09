@@ -111,20 +111,20 @@
 			var longitude = null;
 			var latitude = null;
 			apiready = function() {
-//				api.parseTapmode();
-//				//获取位置
-//				getlocation();
-//				//下拉刷新
-//				api.setRefreshHeaderInfo({
-//					visible : true,
-//					bgColor : '#fff',
-//					textColor : '#666666',
-//					textDown : '下拉刷新...',
-//					textUp : '松开刷新...',
-//					showTime : true
-//				}, function(ret, err) {
-//					location.reload();
-//				});
+				api.parseTapmode();
+				//获取位置
+				getlocation();
+				//下拉刷新
+				api.setRefreshHeaderInfo({
+					visible : true,
+					bgColor : '#fff',
+					textColor : '#666666',
+					textDown : '下拉刷新...',
+					textUp : '松开刷新...',
+					showTime : true
+				}, function(ret, err) {
+					location.reload();
+				});
 			};
 			function openWin(name, url, washid) {
 				var delay = 0;
