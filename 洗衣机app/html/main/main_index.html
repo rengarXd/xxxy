@@ -185,7 +185,7 @@
 									msg : ret.message
 								});
 							}
-						}, 'appUDeviceList&funid=wash_device&user_id=' + user[0].user_id + '&uuid=' + user[0].uuid + '&gps_longitude=' + +longitude + '&gps_latitude=' + latitude);
+						}, 'appUDeviceList&funid=wash_device&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&gps_longitude=' + +longitude + '&gps_latitude=' + latitude);
 					} else {
 						$xy.ajax(function(ret, err) {
 							api.refreshHeaderLoadDone();

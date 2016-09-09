@@ -380,8 +380,12 @@
 					//$("#nonetwork").hide();
 					if (ret.success) {
 						//console.log(JSON.stringify(1));
+<<<<<<< .mine
+						if (ret.data[0].wash_user_id) {
+=======
 						retInfo = ret.data;
 						if (ret.data[0].user_id) {
+>>>>>>> .r211
 							//存储用户数据
 							$xy.userlogInfo(retInfo);
 							//登录成功对话框

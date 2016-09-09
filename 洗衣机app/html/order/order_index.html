@@ -21,18 +21,31 @@
 		<div id="order_list"></div>
 		<script id="order_list_item" type="text/html">
 			{{# for(var i = 0, len = d.length; i< len; i++) {  }}
+				
+			{{# if(i==0){   }}
+			{{# var str = d[i].reader_time; }}
+			{{# var month = str.substring(5, 7);   }}			
 			<div id="monthnumber" style="" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
+			{{ month}}月订单
+			</div>
+			{{#     }  }}	
+			
+			{{# if(i>0){   }}
 			{{# var str1 = d[i].reader_time; }}
 			{{# var monthnow = str1.substring(5, 7);   }}
-			{{# if(i>0){   }}
-			{{# var str2 = d[i - 1].reader_time; }}
-			{{# var monthprevious = str2.substring(5, 7);   }}
+			{{# var str2 = d[i-1].reader_time; }}
+			{{# var monthprevious = str2.substring(5, 7);   }}			
 			{{# if(monthnow == monthprevious) {     }}
-			{{#	document.getElementById("monthnumber").style.display="none";}}
-			{{#     }  }}
-			{{# }  }}
+			<div style="" class="H-margin-vertical-bottom-2">			
+			</div>
+			{{#     }  }}			
+			{{# if(monthnow != monthprevious) {     }}
+			<div id="monthnumber" style="" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
 			{{ monthnow }}月订单
 			</div>
+			{{# }  }}
+			
+			{{# }  }}
 			<div class="H-theme-font-color-999 H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active  H-margin-vertical-bottom-2">
 			<div class=" H-flexbox-vertical H-margin-horizontal-left-15  H-font-size-15 ">
 			<span class=" H-font-size-16 H-center-all">今天</span><span class="tip-message H-font-size-12 H-float-right H-center-all">12:00</span>
@@ -157,12 +170,11 @@
 		</div>
 		</div>-->
 	</body>
-	
 	<script type="text/javascript" src="../../script/xy.js"></script>
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript" src="../../script/tools/laytpl.js"></script>
 	<script type="text/javascript">
-		var user_id = "jxstar240451";
+		var wash_user_id = "jxstar240451";
 		var uuid = "8d1d121a-629e-40cc-87f1-967ba24c13ab";
 		apiready = function() {
 			//获取当前日期
@@ -217,13 +229,12 @@
 					//					api.refreshHeaderLoadDone();
 					//					$("#nonetwork").show();
 				}
-			}, 'appOrderList&funid=wash_order&user_id=' + user_id + '&uuid=' + uuid);
+			}, 'appOrderList&funid=wash_order&wash_user_id=' + wash_user_id + '&uuid=' + uuid);
 		}
 
 		//		function Date() {
 		//			var myDate = new Date();
 		//			myDate.getMonth();
 		//		}
-
 	</script>
 </html>
