@@ -20,7 +20,7 @@
 	<body>
 		<div id="order_list"></div>
 		<script id="order_list_item" type="text/html">
-			<div  tapmode="H-touch-active" onclick="open_nearby_machine('{{ d[i].washloca_id }}','{{ d[i].distance }}');">
+			<div  tapmode="H-touch-active" onclick="open_order_details();">
 			{{# for(var i=0,len=d.length; i<len;i++) { }}
 			{{# if(i==0){ }}
 			{{# var str=d [i].reader_time; }}
@@ -246,5 +246,22 @@
 		//			myDate.getMonth();
 		//		}
 		//当前时间格式化
+		
+		//打开订单详情
+		function open_order_details() {
+				api.openWin({
+					name : 'order_details_head',
+					url : './order_details/order_details_head.html',
+//					pageParam : {
+//						washloca_id : washloca_id,
+//						distance : distance
+//					},
+					bounces : false,
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
+				});
+			}
+		
 	</script>
 </html>
