@@ -221,28 +221,28 @@
 		var washloca_name = null;
 		apiready = function() {
 			//洗衣机距离
-			//distance = api.pageParam.distance;
+			distance = api.pageParam.distance;
 			//名称
-			//device_name = api.pageParam.device_name;
+			device_name = api.pageParam.device_name;
 			//地址
-			//washloca_name = api.pageParam.washloca_name;
+			washloca_name = api.pageParam.washloca_name;
 			//DOM渲染
-			//domInfo();
+			domInfo();
 			//初始化页面
-			//initPage();
+			initPage();
 			//渲染商品列表
-			//getWashComList();
+			getWashComList();
 			//下拉刷新
-			//			api.setRefreshHeaderInfo({
-			//				visible : true,
-			//				bgColor : '#fff',
-			//				textColor : '#666666',
-			//				textDown : '下拉刷新...',
-			//				textUp : '松开刷新...',
-			//				showTime : true
-			//			}, function(ret, err) {
-			//				getWashComList();
-			//			});
+			api.setRefreshHeaderInfo({
+				visible : true,
+				bgColor : '#fff',
+				textColor : '#666666',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...',
+				showTime : true
+			}, function(ret, err) {
+				getWashComList();
+			});
 		};
 		//DOM头部信息
 		function domInfo() {

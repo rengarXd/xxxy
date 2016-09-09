@@ -225,7 +225,7 @@
 				});
 				return;
 			}
-			if ($("#checkbox-1").attr("checked") == false) {
+			if (!$("#checkbox-1").attr("checked")) {
 				api.toast({
 					msg : '请您同意《用户协议》'
 				});
@@ -240,8 +240,59 @@
 					//$("#nonetwork").hide();
 					if (ret.success) {
 						//存储用户数据
-						$xy.userlogInfo(ret.data);
-						alertLog();
+						retInfo = ret.data;
+						if (ret.data[0].user_id) {
+							//存储用户数据
+							$xy.userlogInfo(retInfo);
+							//登录成功对话框
+							alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
+								if (ret.eventType == 'left') {
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+										dialogName : 'alert'
+									});
+									api.closeWin();
+								} else {
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+										dialogName : 'alert'
+									});
+									api.openWin({
+										name : 'user_set_head',
+										url : '../me/user_set_head.html',
+										bounces : false,
+										delay : 0,
+									});
+									setTimeout(function() {
+										api.closeWin();
+									}, 1000);
+								}
+							});
+						} else {
+							//登录成功对话框
+							alertLog('登录失败', '由于您长时间未登录须进行身份验证', '取消', '继续', function(ret) {
+								if (ret.eventType == 'left') {
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+										dialogName : 'alert'
+									});
+								} else {
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+										dialogName : 'alert'
+									});
+									api.openWin({
+										name : 'check_login_head',
+										url : 'check_login_head.html',
+										pageParam : {
+											data : retInfo
+										},
+										bounces : false,
+										delay : 0,
+									});
+								}
+							});
+						}
 						//初始化推送
 						//							if (systemtype != "ios") {
 						//								//初始化android推送
@@ -311,9 +362,9 @@
 				});
 				return;
 			}
-			if ($("#checkbox-2").attr("checked") == false) {
+			if (!$("#checkbox-2").attr("checked")) {
 				api.toast({
-					msg : '请您同意《用户协议》'
+					msg : '请您选择同意《用户协议》'
 				});
 				return;
 			}
@@ -329,20 +380,61 @@
 					//$("#nonetwork").hide();
 					if (ret.success) {
 						//console.log(JSON.stringify(1));
+						retInfo = ret.data;
 						if (ret.data[0].user_id) {
 							//存储用户数据
-							$xy.userlogInfo(ret.data);
+							$xy.userlogInfo(retInfo);
 							//登录成功对话框
-							alertLog();
+							alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
+								if (ret.eventType == 'left') {
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+										dialogName : 'alert'
+									});
+									api.closeWin();
+								} else {
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+										dialogName : 'alert'
+									});
+									api.openWin({
+										name : 'user_set_head',
+										url : '../me/user_set_head.html',
+										bounces : false,
+										delay : 0,
+									});
+									setTimeout(function() {
+										api.closeWin();
+									}, 1000);
+								}
+							});
 						} else {
-							api.openWin({
-								name : 'check_login_head',
-								url : 'check_login_head.html',
-								pageParam : {
-									data : ret.data
-								},
-								bounces : false,
-								delay : 0,
+							//登录成功对话框
+							alertLog('登录失败', '由于您长时间未登录将进行身份验证，选择‘不用了’则将原账号情况并重新创建一个新账号，选择‘继续’则进行身份验证', '不用了', '继续', function(ret) {
+								if (ret.eventType == 'left') {
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+										dialogName : 'alert'
+									});
+									api.closeWin();
+								} else {
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+										dialogName : 'alert'
+									});
+									api.openWin({
+										name : 'check_login_head',
+										url : 'check_login_head.html',
+										pageParam : {
+											data : retInfo
+										},
+										bounces : false,
+										delay : 0,
+									});
+									setTimeout(function() {
+										api.closeWin();
+									}, 1000);
+								}
 							});
 						}
 					} else {
@@ -368,14 +460,14 @@
 		}
 
 		//dialog对话框
-		function alertLog() {
+		function alertLog(title, content, leftBtnTitle, rightBtnTitle, callback) {
 			var dialogBox = api.require('dialogBox');
 			dialogBox.alert({
 				texts : {
-					title : '登录成功',
-					content : '想要继续完善您的信息吗？',
-					leftBtnTitle : '不用了',
-					rightBtnTitle : '继续'
+					title : title,
+					content : content,
+					leftBtnTitle : leftBtnTitle,
+					rightBtnTitle : rightBtnTitle
 				},
 				styles : {
 					bg : '#fff',
@@ -412,25 +504,7 @@
 					}
 				}
 			}, function(ret) {
-				if (ret.eventType == 'left') {
-					var dialogBox = api.require('dialogBox');
-					dialogBox.close({
-						dialogName : 'alert'
-					});
-					api.closeWin();
-				} else {
-					var dialogBox = api.require('dialogBox');
-					dialogBox.close({
-						dialogName : 'alert'
-					});
-					api.openWin({
-						name : 'user_set_head',
-						url : '../me/user_set_head.html'
-					});
-					setTimeout(function() {
-						api.closeWin();
-					}, 1000);
-				}
+				callback(ret);
 			});
 		}
 	</script>
