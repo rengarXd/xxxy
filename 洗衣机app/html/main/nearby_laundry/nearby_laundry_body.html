@@ -218,24 +218,14 @@
 			}
 
 			//打开该洗衣点下的洗衣机
-			//			function open_nearby_machine(id, distance_id) {
-			//				api.openWin({
-			//					name : 'nearby_machine_head',
-			//					url : './nearby_machine_head.html',
-			//					pageParam : {
-			//						washloca_id : id,
-			//						distance : distance_id
-			//					},
-			//					bounces : false,
-			//					delay : 0,
-			//					slidBackEnabled : true,
-			//					vScrollBarEnabled : false
-			//				});
-			//			}
-			function open_nearby_machine() {
+			function open_nearby_machine(washloca_id, distance) {
 				api.openWin({
 					name : 'nearby_machine_head',
 					url : './nearby_machine_head.html',
+					pageParam : {
+						washloca_id : washloca_id,
+						distance : distance
+					},
 					bounces : false,
 					delay : 0,
 					slidBackEnabled : true,

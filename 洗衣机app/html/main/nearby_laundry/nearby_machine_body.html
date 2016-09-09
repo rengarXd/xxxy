@@ -62,7 +62,7 @@
 			<div class="H-flex-item xy_font_color">
 			<span>{{ d[i].device_name }}</span>
 			{{# if (d[i].ustatus=="空闲"){ }}
-			<span class="H-float-right xyzt " tapmode="H-touch-active" onclick="openProduct('{{ d[i].device_name }}','{{ d[i].washloca_name }}');">我要洗衣</span>
+			<span class="H-float-right xyzt " tapmode="H-touch-active" onclick="openProduct('{{ i }}');">我要洗衣</span>
 			<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
 			{{ d[i].ustatus }}
 			</div>
@@ -105,15 +105,15 @@
 				});
 			};
 			//打开商品选项
-			function openProduct(device_name, washloca_name) {
+			function openProduct(i) {
+				var data = xyjdata[parseInt(i)];
+				data.distance = distance;
 				api.openWin({
 					name : 'option_head',
 					url : '../product/option_head.html',
 					bounces : false,
 					pageParam : {
-						device_name : device_name,
-						washloca_name : washloca_name,
-						distance : distance
+						data : xyjdata[parseInt(i)]
 					},
 				});
 			}
@@ -138,10 +138,11 @@
 								document.getElementById('machine_list').innerHTML = htmls;
 							} else {
 								//console.log(JSON.stringify(ret));
+								xyjdata = ret.data;
 								var tpl = document.getElementById('machine_list_item').innerHTML;
 								//读取模版
 								//方式一：异步渲染（推荐）
-								laytpl(tpl).render(ret.data, function(render) {
+								laytpl(tpl).render(xyjdata, function(render) {
 									api.hideProgress();
 									document.getElementById('machine_list').innerHTML = render;
 								});
