@@ -20,10 +20,12 @@
 	<body>
 		<div id="order_list"></div>
 		<script id="order_list_item" type="text/html">
+			<div  tapmode="H-touch-active" onclick="open_nearby_machine('{{ d[i].washloca_id }}','{{ d[i].distance }}');">
 			{{# for(var i=0,len=d.length; i<len;i++) { }}
 			{{# if(i==0){ }}
 			{{# var str=d [i].reader_time; }}
 			{{# var month=str.substring(5, 7); }}
+			
 			<div id="monthnumber" style="" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
 			{{ month }}月订单
 			</div>
@@ -55,26 +57,28 @@
 			<span class=" H-font-size-16 H-center-all">{{ readerMonth }}-{{ readerDay }}</span><span class="tip-message H-font-size-12 H-float-right H-center-all">{{ readerTime }}</span>
 			{{# }  }}
 			</div>
-			<div class="H-icon H-display-block"><img src="../../image/yifu.gif" class="H-center-all img-icon H-padding-10" />
+			<div class="H-icon H-display-block"><img src="../../image/yifu.gif" style="padding-right: 10px"  class="H-center-all img-icon H-padding-10" />
 			</div>
 			<div class="H-flex-item H-padding-horizontal-right-5 H-font-size-15  H-flexbox-vertical">
+			
 			<div class="H-flexbox-horizontal">
-			<div class="H-font-size-12 ">
+			<div class="H-font-size-14 ">
 			{{ d[i].pay_num }}
 			</div>
-			<div class="tip-message H-font-size-12 H-margin-horizontal-left-10">
+			<div class="tip-message H-font-size-14 H-margin-horizontal-left-10">
 			{{ d[i].title }}
 			</div>
-			<div class="H-text-show-row-1  H-font-size-12 H-margin-horizontal-left-5">
+			<div class="H-text-show-row-1  H-font-size-14 H-margin-horizontal-left-5">
 			{{ d[i].pay_way }}
 			</div>
 			</div>
-			<div class="H-flexbox-horizontal H-font-size-12 H-margin-vertical-both-3">
-			{{ d[i].dept_name }}{{ d[i].device_name }}
+			<div class="H-flexbox-horizontal H-font-size-14 H-margin-vertical-both-3">
+			{{ d[i].washloca_name }}{{ d[i].device_name }}
 			</div>
 			</div>
 			</div>
 			{{# } }}
+			</div>
 		</script>
 		<!--<div id="" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
 		本月订单
