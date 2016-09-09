@@ -55,6 +55,7 @@
 		</div>-->
 		<div id="machine_list"></div>
 		<script id="machine_list_item" type="text/html">
+			{{# for(var i=0,l=d.length;i<l;i++){ }}
 			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
 			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
 			<span class="H-padding-horizontal-both-10"><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
@@ -65,7 +66,7 @@
 			<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
 			{{ d[i].ustatus }}
 			</div>
-			{{#  } else{  }}
+			{{# }else{ }}
 			<span class="H-float-right xyzt">空闲提醒</span>
 			<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
 			{{ d[i].ustatus }} <span class="H-float-right">预计{{ d[i].hold_ending }}分钟后结束</span>
