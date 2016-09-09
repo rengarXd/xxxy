@@ -77,20 +77,28 @@
 			</div>
 			{{# for(var i = 0, len = d.length; i < len; i++) { }}
 			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
-			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 " tapmode="H-touch-active" onclick="openWin('option_head','./product/option_head.html');">
+			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
 			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
 			<div class="H-flex-item xy_font_color">
-			<span>三楼东01机</span><span class="H-float-right xyzt">我要洗衣</span>
+			<span>{{ d[i].device_name }}</span>
+			{{# if(d[i].ustatus == "空闲") { }}
+			<span class="H-float-right xyzt"  tapmode="H-touch-active" onclick="openProduct('{{ i }}');">我要洗衣</span>
 			<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
 			空闲
 			</div>
+			{{# }else{ }}
+			<span class="H-float-right xyzt">空闲提醒</span>
+			<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
+			被占用
+			</div>
+			{{# } }}
 			</div>
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
 			</div>
 			<div class="xy_border"></div>
 			<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
-			郑州大学 <span>西三宿舍</span>
-			<span class="H-padding-horizontal-right-20 H-float-right">200米</span>
+			{{ d[i].washloca_name }}
+			<span class="H-padding-horizontal-right-20 H-float-right">{{ d[i].distance }}米</span>
 			</div>
 			</div>
 			{{# } }}
@@ -126,7 +134,7 @@
 		<script type="text/javascript" src="../../script/Zepto.min.js"></script>
 		<script type="text/javascript" src="../../script/tools/laytpl.js"></script>
 		<script type="text/javascript">
-			var longitude = null, latitude = null, isinerval = null;
+			var longitude = null, latitude = null, isinerval = null, xyjdata = null;
 			apiready = function() {
 				api.parseTapmode();
 				//获取位置信息
@@ -167,7 +175,8 @@
 										}
 									}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
 								} else {
-									_tpl('xyj_data', ret.data, 'xyj_html', function() {
+									xyjdata = ret.data;
+									_tpl('xyj_data', xyjdata, 'xyj_html', function() {
 									});
 								}
 							} else {
@@ -241,16 +250,20 @@
 			}
 
 			//打开商品选项
-			//			function openProduct() {
-			//				api.openWin({
-			//					name : 'option_head',
-			//					url : './product/option_head.html',
-			//					delay : 0,
-			//					slidBackEnabled : true,
-			//					vScrollBarEnabled : false,
-			//					hScrollBarEnabled : false
-			//				});
-			//			}
+			function openProduct(i) {
+				api.openWin({
+					name : 'option_head',
+					url : './product/option_head.html',
+					pageParam : {
+						data : xyjdata[parseInt(i)]
+					},
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false,
+					hScrollBarEnabled : false
+				});
+			}
+
 			//查找更多洗衣点
 			//			function openLaundry() {
 			//				api.openWin({
