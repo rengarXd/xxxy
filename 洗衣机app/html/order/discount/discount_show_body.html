@@ -44,7 +44,7 @@
 		</style>
 	</head>
 	<body>
-		<!--<div id="nearby_preferential"></div>
+		<div id="nearby_preferential"></div>
 		<script id="nearby_preferential_list_item" type="text/html">
 			{{# for(var i=0,l=d.length;i<l;i++){ }}
 			<div id="" style="position:relative;" class=" H-padding-10 H-padding-vertical-bottom-2" onclick="openDiscountRecharge();">
@@ -75,8 +75,8 @@
 			</div>
 			</div>
 			{{# } }}
-		</script>-->
-		<div id="" style="position:relative;" class=" H-padding-10 H-padding-vertical-bottom-2" onclick="openDiscountRecharge();">
+		</script>
+		<!--<div id="" style="position:relative;" class=" H-padding-10 H-padding-vertical-bottom-2" onclick="openDiscountRecharge();">
 		<div class="H-flexbox-horizontal tubiaobeijing ">
 		<div class="H-padding-2"></div>
 		<div class="H-padding-5">
@@ -102,10 +102,9 @@
 		</div>
 		</div>
 		</div>
-		</div>
+		</div>-->
 		<script type="text/javascript" src="../../../script/xy.js"></script>
 		<script type="text/javascript" src="../../../script/zepto.min.js"></script>
-		<script type="text/javascript" src="../../../script/H.js"></script>
 		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
 		<script type="text/javascript">
 			var longitude = null;
@@ -205,8 +204,8 @@
 			function get_nearby_preferential(longitude, latitude) {
 				longitude = longitude;
 				latitude = latitude;
-				console.log(latitude);
-				console.log(longitude);
+				//console.log(latitude);
+				//console.log(longitude);
 				$xy.ajax(function(ret, err) {
 					//api.hideProgress();
 					if (ret) {
