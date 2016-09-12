@@ -59,7 +59,7 @@
 		</div>
 		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this);">
 			<div class="H-flex-item H-padding-horizontal-both-15  H-padding-vertical-both-12">
-				<span class="color-22a5f9 H-font-size-18">0.00元</span>
+				<span class="color-22a5f9 H-font-size-18" id="ptye">0.00元</span>
 			</div>
 			<div class="H-flex-item H-padding-horizontal-both-10  H-padding-vertical-both-12">
 				<span class="H-font-size-13 color-888">普通余额</span>
@@ -83,7 +83,7 @@
 			{{ d[i].orientact_name }}
 			</div>
 			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888  H-padding-vertical-both-12"></div>
-			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i payway="4" orientact_id="{{ d[i].orientact_id }}" class="iconfont payway  H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
+			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i payway="4" orientact_id="{{ d[i].orientact_id }}" uorientoverage_id="{{ d[i].uorientoverage_id }}" class="iconfont payway  H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
 			</div>
 			{{# } }}
 		</script>
@@ -99,7 +99,8 @@
 			//orientact_id 定向余额活动id（当支付方式为定向余额时必填）（string）
 			//pay_num 支付金额（必填）（string）
 			//origin_type 来源类型（必填）（string）（1、支付宝扫码；2、微信扫码；3、app扫码；4、app在线；5、投币；6、刷卡）
-			var order_id = null, orientact_id = null, device_id = null, commodity_id = null, pay_way = null, orientact_id = null, pay_num = null, origin_type = null;
+			//uorientoverage_id 用户定向余额Id
+			var order_id = null, uorientoverage_id = null, orientact_id = null, device_id = null, commodity_id = null, pay_way = null, orientact_id = null, pay_num = null, origin_type = null;
 			apiready = function() {
 				//商品信息
 				product = api.pageParam;
@@ -131,6 +132,16 @@
 						$xy.ajax(function(ret, err) {
 							if (ret.success) {
 								_tpl('dxye_data', ret.data, 'dxye_html', function() {
+									$xy.ajax(function(ret, err) {
+										if (ret) {
+											//alert(JSON.stringify(ret));
+											document.getElementById('ptye').innerHTML = ret.data[0].account_overage + '元';
+										} else {
+											api.toast({
+												msg : '请检查网络并刷新该页面'
+											});
+										}
+									}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
 								});
 							} else {
 								api.toast({
@@ -172,15 +183,12 @@
 
 			//对应选项判断
 			function check(obj) {
-				//$(".icon-duihao").eq($(obj).index()).show().siblings().hide();
-				//	$("#tab div").eq($(this).index()).addClass('active').siblings().removeClass('active');
 				$(".payway").removeClass('icon-duihao');
 				$(obj).find(".payway").addClass('icon-duihao');
 				pay_way = $(obj).find(".icon-duihao").attr("payway");
-				//alert(pay_way);
 				if ($(obj).find(".icon-duihao").attr("orientact_id")) {
 					orientact_id = $(obj).find(".icon-duihao").attr("orientact_id");
-					//alert(orientact_id);
+					uorientoverage_id = $(obj).find(".icon-duihao").attr("uorientoverage_id");
 				}
 			}
 
@@ -190,17 +198,7 @@
 						msg : '请先选择支付方式'
 					});
 					return;
-				}
-				//				switch (pay_way) {
-				//					case 1:
-				//						break;
-				//					case 2:
-				//						break;
-				//					case 3:
-				//						break;
-				//					case 4:
-				//						break;
-				//				}
+				};
 				if (pay_way == 1) {
 					//					var obj = api.require('aliPay');
 					//					obj.config({
@@ -215,7 +213,7 @@
 					//								subject : '商品支付',
 					//								body : '商品支付',
 					//								amount : orders.real_amount,
-					//								tradeNO : order_id
+					//								tradeNO : "A" + order_id
 					//							}, function(ret, err) {
 					//								//1.0 如果支付宝提示付款成功！
 					//								if (ret && ret.statusCode == 9000) {
@@ -235,46 +233,101 @@
 					//					});
 				} else if (pay_way == 2) {
 				} else if (pay_way == 3) {
+					doPay({
+						wash_user_id : user[0].wash_user_id,
+						uuid : user[0].uuid,
+						device_id : product.device_id, //洗衣机id  （必填）（string）
+						commodity_id : product.commodity_id, //商品id（必填）（string）
+						pay_way : pay_way, //支付方式
+						pay_num : product.movement_money, //支付金额
+						origin_type : '4', //来源
+						order_id : "P" + order_id//订单号
+					}, function(ret, err) {
+						//打开支付成功页;
+						openResult(ret.data);
+					});
 				} else if (pay_way == 4) {
-					api.showProgress({
-						title : '付款中'
+					doPay({
+						wash_user_id : user[0].wash_user_id,
+						uuid : user[0].uuid,
+						device_id : product.device_id, //洗衣机id  （必填）（string）
+						commodity_id : product.commodity_id, //商品id（必填）（string）
+						pay_way : pay_way, //支付方式
+						pay_num : product.movement_money, //支付金额
+						orientact_id : orientact_id, //定向余额活动id（当支付方式为定向余额时必填）（string）
+						uorientoverage_id : uorientoverage_id, //用户定向余额Id
+						origin_type : '4', //来源
+						order_id : "D" + order_id//订单号
+					}, function(ret, err) {
+						//打开支付成功页;
+						openResult(ret.data);
 					});
-					//					api.ajax({
-					//	                    url:''
-					//                  },function(ret,err){
-					//                  	//coding...
-					//                  });
-					$xy.Ajax(function(ret, err) {
-						api.hideProgress();
-						if (ret) {
-							alert("ret===" + JSON.stringify(ret));
-							openResult(ret.data);
-						} else {
-							alert("err====" + JSON.stringify(err));
-						}
-						//						if (ret) {
-						//							//打开支付成功页
-						//							openResult(result);
-						//							//openResult(ret.data);
-						//						} else {
-						//							api.toast({
-						//								msg : ret.message
-						//							});
-						//						}
-					}, 'addOrder&funid=wash_order', 'post', {
-						values : {
-							wash_user_id : user[0].wash_user_id,
-							uuid : user[0].uuid,
-							device_id : product.device_id,
-							commodity_id : product.commodity_id,
-							pay_way : pay_way,
-							orientact_id : orientact_id,
-							pay_num : product.movement_money,
-							origin_type : '4',
-							order_id : order_id
-						}
-					});
+					//					api.getPrefs({
+					//						key : 'washtime'
+					//					}, function(ret, err) {
+					//						if (ret && ret.value) {
+					//							api.showProgress({
+					//								title : '付款中'
+					//							});
+					//							$xy.Ajax(function(ret, err) {
+					//								api.hideProgress();
+					//								if (ret) {
+					//									//打开支付成功页;
+					//									openResult(ret.data);
+					//								} else {
+					//									alert("err====" + err.message);
+					//								}
+					//							}, 'addOrder&funid=wash_order', 'post', {
+					//								values : {
+					//									wash_user_id : user[0].wash_user_id,
+					//									uuid : user[0].uuid,
+					//									device_id : product.device_id, //洗衣机id  （必填）（string）
+					//									commodity_id : product.commodity_id, //商品id（必填）（string）
+					//									pay_way : pay_way, //支付方式
+					//									orientact_id : orientact_id, //定向余额活动id（当支付方式为定向余额时必填）（string）
+					//									pay_num : product.movement_money, //支付金额
+					//									origin_type : '4', //来源
+					//									order_id : order_id//订单号
+					//								}
+					//							});
+					//						} else {
+					//							//初始化所用时间
+					//							api.toast({
+					//								msg : '您已经在洗衣服了，请耐心等待洗衣结束'
+					//							});
+					//						}
+					//					});
 				}
+			}
+
+			//支付方法
+			function doPay(datas, callback) {
+				api.getPrefs({
+					key : 'washtime'
+				}, function(ret, err) {
+					if (ret && ret.value) {
+						api.showProgress({
+							title : '付款中'
+						});
+						$xy.Pajax(function(ret, err) {
+							api.hideProgress();
+							if (ret) {
+								//打开支付成功页;
+								callback(ret, err);
+								//openResult(ret.data);
+							} else {
+								alert("err====" + err.message);
+							}
+						}, 'addOrder&funid=wash_order', 'post', {
+							values : datas
+						});
+					} else {
+						//初始化所用时间
+						api.toast({
+							msg : '您已经在洗衣服了，请耐心等待洗衣结束'
+						});
+					}
+				});
 			}
 
 			function openResult(result) {
@@ -316,7 +369,7 @@
 				if (seconds >= 0 && seconds <= 9) {
 					seconds = "0" + seconds;
 				}
-				var currentdate = "A" + year + month + strDate + hour + minutes + seconds + parseInt((Math.random()) * 10000);
+				var currentdate = year + month + strDate + hour + minutes + seconds + parseInt((Math.random()) * 10000);
 				order_id = currentdate;
 				//alert(currentdate);
 			}
