@@ -32,5 +32,8 @@
   <feature name="ajpush"> 
     <param name="app_key" value="318b8d1bc3c9086e12d78c03"/>  
     <param name="channel" value="developer-xixixiyi"/> 
+  </feature>  
+  <feature name="aliPay"> 
+    <param name="urlScheme" value="AliPayA6926955799619"/> 
   </feature> 
 </widget>
