@@ -28,7 +28,16 @@
 				<span class="H-icon H-padding-horizontal-right-5 H-display-block"><i class="iconfont icon-zhankai H-theme-font-color-white H-font-size-12 H-vertical-middle"></i></span>
 			</div>
 		</div>
-		<div id="nearby_laundry"></div>
+		<div id="nearby_laundry">
+			<div class="H-position-absolute H-position-center-all" id="statuss">
+				<div class="H-font-size-14 H-text-align-center">
+					<i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i>
+					<div class="H-theme-font-color-999">
+						加载中..
+					</div>
+				</div>
+			</div>
+		</div>
 		<script id="nearby_laundry_list_item" type="text/html">
 			{{# for(var i=0,l=d.length;i<l;i++){ }}
 			<div class="H-theme-background-color-white H-margin-vertical-bottom-5 animated fadeIn" tapmode="H-touch-active" onclick="open_nearby_machine('{{ d[i].washloca_id }}','{{ d[i].distance }}');">
