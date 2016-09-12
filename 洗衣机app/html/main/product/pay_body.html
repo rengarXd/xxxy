@@ -33,6 +33,7 @@
 		<div class="H-padding-horizontal-left-10 H-padding-vertical-both-3 H-font-size-12 color-888">
 			使用以下支付方式
 		</div>
+		<div id="dxye_html"></div>
 		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active">
 			<div class="color-22a5f9 H-flex-item H-padding-horizontal-both-10 H-font-size-18 H-padding-vertical-both-12">
 				18.00元
@@ -43,57 +44,149 @@
 			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888  H-padding-vertical-both-12"></div>
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-duihao H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
 		</div>
-		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active">
-			<div class="color-22a5f9 H-flex-item H-padding-horizontal-both-10 H-font-size-18 H-padding-vertical-both-12">
-				18.00元
-			</div>
-			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888 H-padding-vertical-both-12">
-				郑大南校定向余额
-			</div>
-			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888  H-padding-vertical-both-12"></div>
-			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-duihao H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
-		</div>
-		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active">
+		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this);">
 			<span class="zhifubao-bg-color H-icon H-center-all H-display-block H-margin-horizontal-left-10"><i class="iconfont icon-zhifubao H-font-size-18 H-vertical-middle H-theme-font-color-white"></i></span>
-			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-16 H-padding-vertical-both-12">
+			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-16 H-theme-font-color-333 H-padding-vertical-both-12">
 				支付宝
 			</div>
-			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-duihao H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
+			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i style="display: none" alipay="1" class="iconfont icon-duihao H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
 		</div>
 		<div class="H-padding-20">
 			<button onclick="openCf();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
 				确认支付
 			</button>
 		</div>
+		<script type="text/html" id="dxye_data">
+			{{# for(var i = 0, len = d.length;i<len;i++) { }}
+			<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this);">
+			<div class="color-22a5f9 H-flex-item H-padding-horizontal-both-10 H-font-size-18 H-padding-vertical-both-12">
+			{{ d[i].user_sum }}元
+			</div>
+			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888 H-padding-vertical-both-12">
+			{{ d[i].orientact_name }}
+			</div>
+			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888  H-padding-vertical-both-12"></div>
+			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i style="display: none" orientact_id="{{ d[i].orientact_id }}" class="iconfont icon-duihao H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
+			</div>
+			{{# } }}
+		</script>
 	</body>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
 	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
 	<script type="text/javascript">
+		//	wash_user_id 用户id（必填）（string）
+		//uuid  uuid（必填）（string）
+		//device_id  洗衣机id  （必填）（string）
+		//commodity_id 商品id（必填）（string）
+		//pay_way 支付方式（必填）（string）（1、支付宝，2微信，3账户余额，4定向余额，5投币，6刷卡）
+		//orientact_id 定向余额活动id（当支付方式为定向余额时必填）（string）
+		//pay_num 支付金额（必填）（string）
+		//origin_type 来源类型（必填）（string）（1、支付宝扫码；2、微信扫码；3、app扫码；4、app在线；5、投币；6、刷卡）
+		var orientact_id = null, device_id = null, commodity_id = null, pay_way = null, orientact_id = null, pay_num = null, origin_type = null;
 		apiready = function() {
 			product = api.pageParam;
 			//console.log(JSON.stringify(product));
 			initPage();
 		};
+		Zepto(function($) {
+		});
 		// 初始化页面
 		function initPage() {
 			api.getPrefs({
 				key : 'userinfo'
 			}, function(ret, err) {
 				user = eval('(' + ret.value + ')');
-				$xy.ajax(function(ret, err) {
-					alert(JSON.stringify(ret));
-				}, 'appOverage&funid=wash_user_dxye' + '&user_id=' + user[0].user_id + '&uuid=' + user[0].uuid + '&device_id=' + product.device_id);
+				if (ret & ret.value) {
+					$xy.ajax(function(ret, err) {
+						if (ret.success) {
+							_tpl('dxye_data', ret.data, 'dxye_html', function() {
+							});
+						} else {
+							api.toast({
+								msg : ret.message
+							});
+						}
+					}, 'appOverage&funid=wash_user_dxye' + '&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&device_id=' + product.device_id);
+				} else {
+					api.alert({
+						title : '温馨提示',
+						msg : '进行该操作前请先登录',
+					}, function(ret, err) {
+						if (ret.buttonIndex == 1) {
+							api.openWin({
+								name : 'login_body',
+								url : '../../login/login_body.html'
+							});
+							setTimeout(function() {
+								api.closeWin();
+							}, 1000);
+						}
+					});
+				}
 			});
 		}
 
+		//模板渲染
+		//@tplId 模板循环部分DOM id 【string】
+		//@renderData 模板部分数据 【JSON对象】
+		//@tplDataId 模板被渲染部分DOM id 【string】
+		//@callback 回调函数 【匿名函数】
+		function _tpl(tplId, renderData, tplDataId, callback) {
+			var tpl = document.getElementById(tplId).innerHTML;
+			laytpl(tpl).render(renderData, function(render) {
+				document.getElementById(tplDataId).innerHTML = render;
+				callback();
+			});
+		}
+
+		//对应选项判断
+		function check(obj) {
+			$(".icon-duihao").hide().eq($(obj).index()).show();
+			if ($(obj).find(".icon-duihao").attr("orientact_id")) {
+				orientact_id = $(obj).find(".icon-duihao").attr("orientact_id");
+				pay_way = '4';
+			} else if ($(obj).find(".icon-duihao").attr("alipay")) {
+				pay_way = $(obj).find(".icon-duihao").attr("alipay");
+			}
+		}
+
 		function openCf() {
-			api.openWin({
-				name : 'pay_result_head',
-				url : 'pay_result_head.html',
-				bounces : false,
-				delay : 0,
-				slidBackEnabled : true,
-				vScrollBarEnabled : false
+			if (!orientact_id || !pay_way) {
+				api.toast({
+					msg : '请先选择支付方式'
+				});
+				return;
+			}
+			$xy.ajax(function(ret, err) {
+				if (ret.success) {
+					api.openWin({
+						name : 'pay_result_head',
+						url : 'pay_result_head.html',
+						pageParam : {
+							data : ret.data
+						},
+						bounces : false,
+						delay : 0,
+						slidBackEnabled : true,
+						vScrollBarEnabled : false
+					});
+				} else {
+					api.toast({
+						msg : ret.message
+					});
+				}
+			}, 'addOrder&funid=wash_order', 'post', {
+				values : {
+					wash_user_id : user[0].wash_user_id,
+					uuid : user[0].uuid,
+					device_id : product.device_id,
+					commodity_id : product.commodity_id,
+					pay_way : pay_way,
+					orientact_id : orientact_id,
+					pay_num : product.pay_num,
+					origin_type : '4'
+				}
 			});
 		}
 	</script>
