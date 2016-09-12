@@ -58,11 +58,11 @@
 		<script type="text/javascript" src="../../../script/tools/jquery.flipcountdown.js"></script>
 		<script type="text/javascript">
 			apiready = function() {
+				data = api.pageParam.data;
 				initPage();
 			};
 			// 初始化页面
 			function initPage() {
-				timeall = 300;
 				// 初始化时间递减
 				api.getPrefs({
 					key : 'washtime'
@@ -73,17 +73,20 @@
 						//获取当前时间
 						var now = new Date();
 						//计算剩余时间
-						times = timeall - ((now.getTime() - parseInt(time)) / 1000);
+						times = 300 - ((now.getTime() - parseInt(time)) / 1000);
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
 					} else {
 						//初始化所用时间
-						times = timeall;
-						var date = new Date();
+						var stringTime = data[0].reader_time;
+						var timestamp2 = Date.parse(new Date(stringTime));
+						var now = new Date();
+						//计算剩余时间
+						times = 300 - ((now.getTime() - parseInt(timestamp2)) / 1000);
 						//记录当前时间
 						api.setPrefs({
 							key : 'washtime',
-							value : "'" + date.getTime() + "'"
+							value : "'" + now.getTime() + "'"
 						});
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);

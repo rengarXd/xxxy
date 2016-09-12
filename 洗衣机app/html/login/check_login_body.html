@@ -79,8 +79,10 @@
 			apiready = function() {
 				//从上个页面传来的数据
 				datas = api.pageParam.data;
+				console.log(JSON.stringify(datas));
 				//正确的洗衣机ID
 				ret_id = datas[0].device_id;
+				console.log(ret_id);
 				//手机号
 				tel = api.pageParam.tel;
 				//初始化页面
@@ -88,11 +90,16 @@
 			};
 			// 初始化页面
 			function initPage() {
-				var srr = datas
-				srr.sort(function() {
-					return Math.random() > 0.5 ? -1 : 1;
-				});
-				_tpl('check_data', srr, 'check_html', function() {
+				api.alert({
+					title : '这是帮您找回原账号的验证，请慎重选择',
+					msg : '请选择您之前使用过的洗衣机，如果您是新用户请随意选择'
+				}, function(ret, err) {
+					var srr = datas;
+					srr.sort(function() {
+						return Math.random() > 0.5 ? -1 : 1;
+					});
+					_tpl('check_data', srr, 'check_html', function() {
+					});
 				});
 			}
 
@@ -116,17 +123,28 @@
 
 			function check_login() {
 				if (!device_id) {
-					alert('请选择您之前使用过的洗衣机，如果没有请随意选择（这是帮您找回原账号的验证）');
+					api.toast({
+						msg : '请选择您认为正确的选项'
+					});
 					return;
 				}
 				if (device_id && device_id == ret_id) {
+					api.toast({
+						msg : '恭喜您验证成功'
+					});
 					$xy.ajax(function(ret, err) {
-						api.closeWin();
+						$xy.userlogInfo(ret.data);
 						api.closeWin({
 							name : 'login_body'
 						});
+						setTimeout(function() {
+							api.closeWin();
+						}, 1000);
 					}, 'verifyDevicdId&funid=wash_user' + '&phone_number=' + tel + '&device_id_result=' + 1);
 				} else {
+					api.toast({
+						msg : '很遗憾验证失败，系统将重新创建账户'
+					});
 					$xy.ajax(function(ret, err) {
 						api.closeWin();
 					}, 'verifyDevicdId&funid=wash_user' + '&phone_number=' + tel + '&device_id_result=' + 2);
