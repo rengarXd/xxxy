@@ -257,7 +257,7 @@
 		//打开支付页
 		function openPayWin(i) {
 			var result = $xy.extendObj(datas, product[parseInt(i)]);
-			console.log('打开支付product===' + JSON.stringify(result));
+			//console.log('打开支付product===' + JSON.stringify(result));
 			api.openWin({
 				name : 'pay_head',
 				url : 'pay_head.html',

@@ -152,6 +152,28 @@
 				};
 			}
 		},
+		Ajax : function(callback, url, method, data, options) {
+			var that = this;
+			var o = {};
+			o.url = window.serverUrl + url;
+			o.method = method ? method : "get";
+			if (o.method == "post") {
+				o.data = data;
+			}
+			options = options || {};
+			var opt = that.extendObj(that.DEFAULT_CONFIG.ajax_CONFIG, o, options);
+			if ( typeof callback == 'function') {
+				api.ajax(opt, function(ret, err) {
+					var systemType = api.systemType;
+					if (systemType == "ios") {
+						var rets = eval('(' + err.body + ')');
+						callback(rets, err);
+					} else {
+						callback(ret.body, err);
+					}
+				});
+			}
+		},
 		ajax : function(callback, url, method, data, options) {
 			var that = this;
 			var o = {};
