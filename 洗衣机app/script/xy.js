@@ -435,6 +435,9 @@
 				frameName : 'me_index',
 				script : 'reload();'
 			});
+			api.sendEvent({
+				name : 'userlogin'
+			});
 		},
 		toast : function(callback, msg, duration, location, global) {
 			var that = this;
