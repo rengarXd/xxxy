@@ -20,12 +20,10 @@
 	<body>
 		<div id="order_list"></div>
 		<script id="order_list_item" type="text/html">
-			<div  tapmode="H-touch-active" onclick="open_order_details();">
-			{{# for(var i=0,len=d.length; i<len;i++) { }}
+			{{# for(var i=0,len=d.length;i<len;i++) { }}
 			{{# if(i==0){ }}
 			{{# var str=d [i].reader_time; }}
 			{{# var month=str.substring(5, 7); }}
-			
 			<div id="monthnumber" style="" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
 			{{ month }}月订单
 			</div>
@@ -45,7 +43,7 @@
 			</div>
 			{{# } }}
 			{{# } }}
-			<div class="H-theme-font-color-999 H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active  H-margin-vertical-bottom-2">
+			<div class="H-theme-font-color-999 H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active  H-margin-vertical-bottom-2"  tapmode="H-touch-active" onclick="open_order_details('{{ d[i].order_id }}');">
 			<div class=" H-flexbox-vertical H-margin-horizontal-left-15  H-font-size-15 ">
 			{{# var myDate = new Date(); var thisYear=myDate.getFullYear(); var thisMonth=myDate.getMonth()+1; var thisDay=myDate.getDate(); var previousDay=thisDay-1;}}
 			{{# var strtime = d[i].reader_time;  var readerYear = strtime.substring(0,4);   var readerMonth = strtime.substring(5,7);  var readerDay = strtime.substring(8,10); var readerTime = strtime.substring(11,16);  }}
@@ -60,7 +58,6 @@
 			<div class="H-icon H-display-block"><img src="../../image/yifu.gif" style="padding-right: 10px"  class="H-center-all img-icon H-padding-10" />
 			</div>
 			<div class="H-flex-item H-padding-horizontal-right-5 H-font-size-15  H-flexbox-vertical">
-			
 			<div class="H-flexbox-horizontal">
 			<div class="H-font-size-14 ">
 			{{ d[i].pay_num }}
@@ -78,7 +75,6 @@
 			</div>
 			</div>
 			{{# } }}
-			</div>
 		</script>
 		<!--<div id="" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
 		本月订单
@@ -208,11 +204,11 @@
 			$xy.ajax(function(ret, err) {
 				//api.hideProgress();
 				if (ret) {
-					console.log(JSON.stringify(ret));
+					//					console.log(JSON.stringify(ret));
 					//$("#nonetwork").hide();
 					api.refreshHeaderLoadDone();
 					if (ret.success) {
-						console.log(JSON.stringify(ret));
+						//console.log(JSON.stringify(ret));
 						if (ret.data.length == 0) {
 							//当洗衣机数量为空时的处理
 							var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无订单</div></div></div>';
@@ -246,22 +242,22 @@
 		//			myDate.getMonth();
 		//		}
 		//当前时间格式化
-		
 		//打开订单详情
-		function open_order_details() {
-				api.openWin({
-					name : 'order_details_head',
-					url : './order_details/order_details_head.html',
-//					pageParam : {
-//						washloca_id : washloca_id,
-//						distance : distance
-//					},
-					bounces : false,
-					delay : 0,
-					slidBackEnabled : true,
-					vScrollBarEnabled : false
-				});
-			}
-		
+		function open_order_details(order_id) {
+			//								console.log(JSON.stringify(dept_id));
+			api.openWin({
+				name : 'order_details_head',
+				url : './order_details/order_details_head.html',
+				pageParam : {
+					wash_user_id : wash_user_id,
+					uuid : uuid,
+					order_id : order_id
+				},
+				bounces : false,
+				delay : 0,
+				slidBackEnabled : true,
+				vScrollBarEnabled : false
+			});
+		}
 	</script>
 </html>
