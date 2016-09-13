@@ -210,35 +210,33 @@
 						origin_type : '4', //来源
 						order_id : "A" + order_id//订单号
 					}, function(ret, err) {
-						//order_no = ret.data;
+						order_no = ret.data;
 						if (ret.success) {
 							var obj = api.require('aliPay');
-							obj.pay({
-								subject : product.title, //订单名
-								body : product.memo, //订单描述
-								amount : product.movement_money, //金额
-								tradeNO : "A" + order_id//订单号
+							obj.config({
+								partner : '2088421786244385',
+								seller : 'jiyou360@126.com',
+								rsaPriKey : 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMnRFvabENOHewFvPz4zTLVRG/7hyq8oDcsa+Qw2Wve7bHhSQP/jZPb7gRjiilEKUUtADXqZq1WcllEebVrSapcQrpX3kYlhhdGiSGhGyZRy018UieG3dqvQGXa/3ktqbBKcD3Uqr/1W+5pyNa1g4ABCYWG7/NA8PLMgrjgN/bXZAgMBAAECgYAH6HGF6D2YjE59l+ZagZgX4r2+FwriIieoNb5chCS8YFO3w0FYxYhHRUOhvf69fjIBSNk+XJciG6ioNRED5grXHrJPIfcCIQYOpX0JEb0NhG/jpyOaCHxXKNGjij9qhJFUnmAH6At28N9YX02HZJBZPgx8P1UaOfvlmUxHFrmXIQJBAO73n8/gjFGg0i3lh9tjU/0cb7bdxrgSVovW+nFdMqRGQuNbKbTjjTUQ3PCZ8l5oYUcFI9JaZ/BJyEyhpFsO8ZMCQQDYM5bTV0JxLAJKjH2mmin7KCwSx+bAjQqVhqL/QZ5bsg302fLt4t6NwFknsvz+gWjpPoFR+S4rcCromOZXJs5jAkApxLBzRj1geyqhiRARAbCJejHwlZ0JSXNFKANIU1Dps7o3QRTuICPrVZI4n7/kTnxKTJSxTMoEDvFqq4otvFPvAkBoQliVihrsYICqWp2tXeKoz3KRi/znFhzohojL92Taaz73uLLBrQoN6ZgU4OfIA7gH4rCSS0vMfsbya+mIVZppAkEA5rhmaQ9RCbpcPcd+3jqLpIQtbXrKhsc3YRKtWpH06l2BKG8dDjey9ecLCp/UYWCObSLSvWhNg/1gxaVlAgRUDQ==',
+								rsaPubKey : 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJ0Rb2mxDTh3sBbz8+M0y1URv+4cqvKA3LGvkMNlr3u2x4UkD/42T2+4EY4opRClFLQA16matVnJZRHm1a0mqXEK6V95GJYYXRokhoRsmUctNfFInht3ar0Bl2v95LamwSnA91Kq/9VvuacjWtYOAAQmFhu/zQPDyzIK44Df212QIDAQAB',
+								notifyURL : 'http://218.29.85.98:8080/wash/fileAction.do?eventcode=afterPayment&funid=wash_order&pagetype=grid&nousercheck=1',
 							}, function(ret, err) {
-								//1.0 如果支付宝提示付款成功！
-								if (ret && ret.statusCode == 9000) {
-									//打开支付成功页
-									//alert("成功==" + JSON.stringify(ret));
-									//打开支付成功页;
-									openResult(ret.data);
-									setTimeout(function() {
-										api.closeWin();
-									}, 800);
-								} else {
-									alert("失败==" + JSON.stringify(ret));
-									//打开支付成功页
-									//								openResult();
-									api.toast({
-										msg : '支付失败'
+								if (ret.status)
+									obj.pay({
+										subject : product.title,
+										body : product.memo,
+										amount : product.movement_money,
+										tradeNO : "A" + order_id
+									}, function(ret, err) {
+										//1.0 如果支付宝提示付款成功！
+										if (ret && ret.statusCode == 9000) {
+											openResult(order_no);
+										} else {
+											alert(JSON.stringify(ret));
+											setTimeout(function() {
+												api.closeWin();
+											}, 800);
+										}
 									});
-									setTimeout(function() {
-										api.closeWin();
-									}, 800);
-								}
 							});
 						} else {
 							api.toast({
@@ -247,6 +245,7 @@
 						}
 					});
 				} else if (pay_way == 2) {
+					order_no = ret.data;
 					//打开支付成功页;
 					doPay({
 						wash_user_id : user[0].wash_user_id,
@@ -268,10 +267,7 @@
 								if (ret.status) {
 									alert(ret.result);
 									//打开支付成功页;
-									openResult(ret.data);
-									setTimeout(function() {
-										api.closeWin();
-									}, 800);
+									openResult(order_no);
 								} else {
 									alert(err.code);
 								}
@@ -356,6 +352,9 @@
 					slidBackEnabled : true,
 					vScrollBarEnabled : false
 				});
+				setTimeout(function() {
+					api.closeWin();
+				}, 800);
 			}
 
 			//生成随机订单号
