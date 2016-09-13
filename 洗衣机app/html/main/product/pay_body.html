@@ -350,32 +350,33 @@
 
 			//支付方法
 			function doPay(datas, callback) {
-				api.getPrefs({
-					key : 'washtime'
-				}, function(ret, err) {
-					if (ret && ret.value) {
-						api.showProgress({
-							title : '付款中'
-						});
-						$xy.Pajax(function(ret, err) {
-							api.hideProgress();
-							if (ret) {
-								//打开支付成功页;
-								callback(ret, err);
-								//openResult(ret.data);
-							} else {
-								alert("err====" + err.message);
-							}
-						}, 'addOrder&funid=wash_order', 'post', {
-							values : datas
-						});
-					} else {
-						//初始化所用时间
-						api.toast({
-							msg : '您已经在洗衣服了，请耐心等待洗衣结束'
-						});
-					}
+				api.showProgress({
+					title : '付款中'
 				});
+				$xy.Pajax(function(ret, err) {
+					api.hideProgress();
+					if (ret) {
+						//打开支付成功页;
+						callback(ret, err);
+						//openResult(ret.data);
+					} else {
+						alert("err====" + err.message);
+					}
+				}, 'addOrder&funid=wash_order', 'post', {
+					values : datas
+				});
+				//				api.getPrefs({
+				//					key : 'washtime'
+				//				}, function(ret, err) {
+				//					if (ret && ret.value) {
+				//
+				//					} else {
+				//						//初始化所用时间
+				//						api.toast({
+				//							msg : '您已经在洗衣服了，请耐心等待洗衣结束'
+				//						});
+				//					}
+				//				});
 			}
 
 			function openResult(result) {
