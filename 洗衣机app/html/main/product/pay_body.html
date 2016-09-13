@@ -100,7 +100,7 @@
 			//pay_num 支付金额（必填）（string）
 			//origin_type 来源类型（必填）（string）（1、支付宝扫码；2、微信扫码；3、app扫码；4、app在线；5、投币；6、刷卡）
 			//uorientoverage_id 用户定向余额Id
-			var order_id = null, uorientoverage_id = null, orientact_id = null, device_id = null, commodity_id = null, pay_way = null, orientact_id = null, pay_num = null, origin_type = null;
+			var order_id = null, user = null, uorientoverage_id = null, orientact_id = null, device_id = null, commodity_id = null, pay_way = null, orientact_id = null, pay_num = null, origin_type = null;
 			apiready = function() {
 				//商品信息
 				product = api.pageParam;
@@ -127,8 +127,8 @@
 				api.getPrefs({
 					key : 'userinfo'
 				}, function(ret, err) {
-					user = eval('(' + ret.value + ')');
 					if (ret && ret.value) {
+						user = eval('(' + ret.value + ')');
 						$xy.ajax(function(ret, err) {
 							if (ret.success) {
 								_tpl('dxye_data', ret.data, 'dxye_html', function() {
