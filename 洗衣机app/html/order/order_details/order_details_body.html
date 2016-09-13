@@ -16,7 +16,6 @@
 			请稍后...
 		</div>
 		<div id="xiangqing" style="display:none;">
-
 			<div class="H-padding-vertical-both-5"></div>
 			<div class="H-text-list H-flexbox-horizontal  H-border-vertical-bottom-after H-vertical-middle H-touch-active">
 				<div class="xy_font_color H-flex-item H-padding-horizontal-both-15 H-font-size-14 H-padding-vertical-both-12">
@@ -59,7 +58,6 @@
 					订单编号：<span id="order_id"></span>
 				</div>
 			</div>
-
 			<div id="fankui" class=" xy_font_color H-font-size-13 H-padding-vertical-bottom-25 H-padding-vertical-top-5" style="padding-left: 37px;">
 				<div class="H-float-right">
 					<span>故障反馈</span>
@@ -68,20 +66,19 @@
 			</div>
 			<div id="chakanjingdu" style="display:none;" class="H-padding-20">
 				<button onclick="open_progress();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
-				查看进度
-			</button>
+					查看进度
+				</button>
 			</div>
 			<div id="kaishixiyi" style="display:none;" class="H-padding-20">
-				<button onclick="openCf();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
-				开始洗衣
-			</button>
+				<button onclick="open_pay_result();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+					开始洗衣
+				</button>
 			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
 	<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>
-	<script type="text/javascript" src="../../../script/tools/jquery.flipcountdown.js"></script>
-	<script type="text/javascript">
+		<script type="text/javascript">
 		var data = null;
 		var wash_user_id = wash_user_id,
 			uuid = uuid,
@@ -129,8 +126,7 @@
 						//1.显示 订单状态
 						order_condition = ret.data[0].order_condition;
 						$("#order_condition").html(order_condition);
-						//						if(order_condition == "使用中") {
-						if(order_condition == "已完成") {
+						if(order_condition == "使用中") {
 							$("#order_condition").css("color", "#FF6600");
 							$("#chakanjingdu").css("display", "block");
 						}
@@ -138,7 +134,6 @@
 							$("#order_condition").css("color", "#FF6600");
 							$("#kaishixiyi").css("display", "block");
 						}
-
 						//2.显示 订单金额
 						pay_num = ret.data[0].pay_num;
 						$("#pay_num").html(pay_num);
@@ -185,6 +180,21 @@
 			api.openWin({
 				name: 'progress_head.html',
 				url: '../../main/progress/progress_head.html',
+				pageParam: {
+					data: data
+				},
+				bounces: false,
+				delay: 0,
+				slidBackEnabled: true,
+				vScrollBarEnabled: false
+			});
+		}
+
+		function open_pay_result() {
+			//								console.log(JSON.stringify(dept_id));
+			api.openWin({
+				name: 'pay_result_head.html',
+				url: '../../main/product/pay_result_head.html',
 				pageParam: {
 					data: data
 				},
