@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
@@ -9,11 +10,13 @@
 		<link rel="stylesheet" href="../../../css/style.css" />
 		<link rel="stylesheet" href="../../../css/jquery.flipcountdown.css" />
 	</head>
+
 	<body>
 		<div id="dengdai" class="H-center-all H-font-size-12 H-theme-font-color-999">
 			请稍后...
 		</div>
 		<div id="xiangqing" style="display:none;">
+
 			<div class="H-padding-vertical-both-5"></div>
 			<div class="H-text-list H-flexbox-horizontal  H-border-vertical-bottom-after H-vertical-middle H-touch-active">
 				<div class="xy_font_color H-flex-item H-padding-horizontal-both-15 H-font-size-14 H-padding-vertical-both-12">
@@ -56,96 +59,141 @@
 					订单编号：<span id="order_id"></span>
 				</div>
 			</div>
-			<div class="xy_font_color H-font-size-13 H-padding-vertical-bottom-25 H-padding-vertical-top-5" style="padding-left: 37px;">
+
+			<div id="fankui" class=" xy_font_color H-font-size-13 H-padding-vertical-bottom-25 H-padding-vertical-top-5" style="padding-left: 37px;">
 				<div class="H-float-right">
 					<span>故障反馈</span>
 					<span class="H-margin-horizontal-left-25 H-padding-horizontal-right-15">联系客服</span>
 				</div>
 			</div>
+			<div id="chakanjingdu" style="display:none;" class="H-padding-20">
+				<button onclick="open_progress();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+				查看进度
+			</button>
+			</div>
+			<div id="kaishixiyi" style="display:none;" class="H-padding-20">
+				<button onclick="openCf();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+				开始洗衣
+			</button>
+			</div>
 		</div>
-		<script type="text/javascript" src="../../../script/xy.js"></script>
-		<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>
-		<script type="text/javascript" src="../../../script/tools/jquery.flipcountdown.js"></script>
-		<script type="text/javascript">
-			var wash_user_id = wash_user_id, uuid = uuid, order_id = order_id;
-			var order_condition = null, pay_num = null, pay_way = null, device_name = null, washloca_name = null, title = null, reader_time = null, order_id = null;
-			apiready = function() {
-				//接收从订单列表传来的用户id uid 订单id
-				wash_user_id = api.pageParam.wash_user_id;
-				uuid = api.pageParam.uuid;
-				order_id = api.pageParam.order_id;
-				console.log(JSON.stringify("wash_user_id:" + wash_user_id));
-				console.log(JSON.stringify("uuid:" + uuid));
-				console.log(JSON.stringify("order_id:" + order_id));
-				api.setRefreshHeaderInfo({
-					visible : true,
-					bgColor : '#fff',
-					textColor : '#666666',
-					textDown : '下拉刷新...',
-					textUp : '松开刷新...',
-					showTime : true
-				}, function(ret, err) {
-					location.reload();
-					api.refreshHeaderLoadDone();
-				});
-				initPage();
-			};
-			// 初始化页面
-			function initPage() {
-				$xy.ajax(function(ret, err) {
-					//api.hideProgress();
-					if (ret) {
-						//console.log(JSON.stringify(ret));
-						//$("#nonetwork").hide();
-						api.refreshHeaderLoadDone();
-						if (ret.success) {
-							console.log(JSON.stringify(ret));
-							//1.显示 订单状态
-							order_condition = ret.data[0].order_condition;
-							$("#order_condition").html(order_condition);
-							if (order_condition == "使用中") {
-								$("#order_condition").css("color", "#FF6600");
-							}
-							//2.显示 订单金额
-							pay_num = ret.data[0].pay_num;
-							$("#pay_num").html(pay_num);
-							//3.显示 支付方式
-							pay_way = ret.data[0].pay_way;
-							$("#pay_way").html(pay_way);
-							//4.显示 选用机器
-							device_name = ret.data[0].device_name;
-							$("#device_name").html(device_name);
-							//5.显示 洗衣地点
-							washloca_name = ret.data[0].washloca_name;
-							$("#washloca_name").html(washloca_name);
-							//6.显示 商品名称
-							title = ret.data[0].title;
-							$("#title").html(title);
-							//6.显示 下单时间
-							reader_time = ret.data[0].reader_time;
-							$("#reader_time").html(reader_time);
-							//7.显示 订单编号
-							order_id = ret.data[0].order_id;
-							$("#order_id").html(order_id);
-							$("#dengdai").css("display", "none");
-							$("#xiangqing").css("display", "block");
-							//							console.log('str==' + str);
-							//							goods_type_text = str;
-							//							document.getElementById("goods_type").style.fontSize = "14px";
-							//							document.getElementById("goods_type").style.color = "#000000";
-						} else {
-							//console.log(JSON.stringify(ret));
-							api.toast({
-								msg : '很抱歉，您可能没有订单！'
-							});
-						}
-					} else {
-						console.log(JSON.stringify("false"));
-						//					api.refreshHeaderLoadDone();
-						//					$("#nonetwork").show();
-					}
-				}, 'appOrderInfo&funid=wash_order&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&order_id=' + order_id);
-			}
-		</script>
 	</body>
+	<script type="text/javascript" src="../../../script/xy.js"></script>
+	<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../script/tools/jquery.flipcountdown.js"></script>
+	<script type="text/javascript">
+		var data = null;
+		var wash_user_id = wash_user_id,
+			uuid = uuid,
+			order_id = order_id;
+		var order_condition = null,
+			pay_num = null,
+			pay_way = null,
+			device_name = null,
+			washloca_name = null,
+			title = null,
+			reader_time = null,
+			order_id = null;
+		apiready = function() {
+			//接收从订单列表传来的用户id uid 订单id
+			wash_user_id = api.pageParam.wash_user_id;
+			uuid = api.pageParam.uuid;
+			order_id = api.pageParam.order_id;
+			console.log(JSON.stringify("wash_user_id:" + wash_user_id));
+			console.log(JSON.stringify("uuid:" + uuid));
+			console.log(JSON.stringify("order_id:" + order_id));
+			api.setRefreshHeaderInfo({
+				visible: true,
+				bgColor: '#fff',
+				textColor: '#666666',
+				textDown: '下拉刷新...',
+				textUp: '松开刷新...',
+				showTime: true
+			}, function(ret, err) {
+				location.reload();
+				api.refreshHeaderLoadDone();
+			});
+			initPage();
+		};
+		// 初始化页面
+		function initPage() {
+			$xy.ajax(function(ret, err) {
+				//api.hideProgress();
+				if(ret) {
+					//console.log(JSON.stringify(ret));
+					//$("#nonetwork").hide();
+					api.refreshHeaderLoadDone();
+					if(ret.success) {
+						console.log(JSON.stringify(ret));
+						data = ret.data[0];
+						//1.显示 订单状态
+						order_condition = ret.data[0].order_condition;
+						$("#order_condition").html(order_condition);
+						//						if(order_condition == "使用中") {
+						if(order_condition == "已完成") {
+							$("#order_condition").css("color", "#FF6600");
+							$("#chakanjingdu").css("display", "block");
+						}
+						if(order_condition == "待开始") {
+							$("#order_condition").css("color", "#FF6600");
+							$("#kaishixiyi").css("display", "block");
+						}
+
+						//2.显示 订单金额
+						pay_num = ret.data[0].pay_num;
+						$("#pay_num").html(pay_num);
+						//3.显示 支付方式
+						pay_way = ret.data[0].pay_way;
+						$("#pay_way").html(pay_way);
+						//4.显示 选用机器
+						device_name = ret.data[0].device_name;
+						$("#device_name").html(device_name);
+						//5.显示 洗衣地点
+						washloca_name = ret.data[0].washloca_name;
+						$("#washloca_name").html(washloca_name);
+						//6.显示 商品名称
+						title = ret.data[0].title;
+						$("#title").html(title);
+						//6.显示 下单时间
+						reader_time = ret.data[0].reader_time;
+						$("#reader_time").html(reader_time);
+						//7.显示 订单编号
+						order_id = ret.data[0].order_id;
+						$("#order_id").html(order_id);
+						$("#dengdai").css("display", "none");
+						$("#xiangqing").css("display", "block");
+						//							console.log('str==' + str);
+						//							goods_type_text = str;
+						//							document.getElementById("goods_type").style.fontSize = "14px";
+						//							document.getElementById("goods_type").style.color = "#000000";
+					} else {
+						//console.log(JSON.stringify(ret));
+						api.toast({
+							msg: '很抱歉，您可能没有订单！'
+						});
+					}
+				} else {
+					console.log(JSON.stringify("false"));
+					//					api.refreshHeaderLoadDone();
+					//					$("#nonetwork").show();
+				}
+			}, 'appOrderInfo&funid=wash_order&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&order_id=' + order_id);
+		}
+
+		function open_progress() {
+			//								console.log(JSON.stringify(dept_id));
+			api.openWin({
+				name: 'progress_head.html',
+				url: '../../main/progress/progress_head.html',
+				pageParam: {
+					data: data
+				},
+				bounces: false,
+				delay: 0,
+				slidBackEnabled: true,
+				vScrollBarEnabled: false
+			});
+		}
+	</script>
+
 </html>
