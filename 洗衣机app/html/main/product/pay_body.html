@@ -200,43 +200,42 @@
 					return;
 				};
 				if (pay_way == 1) {
-					doPay({
-						wash_user_id : user[0].wash_user_id,
-						uuid : user[0].uuid,
-						device_id : product.device_id, //洗衣机id  （必填）（string）
-						commodity_id : product.commodity_id, //商品id（必填）（string）
-						pay_way : pay_way, //支付方式
-						pay_num : product.movement_money, //支付金额
-						origin_type : '4', //来源
-						order_id : "A" + order_id//订单号
+					var obj = api.require('aliPay');
+					obj.pay({
+						subject : '商品测试', //订单名
+						body : '商品测试使用', //订单描述
+						amount : product.movement_money, //金额
+						tradeNO : "A" + order_id//订单号
 					}, function(ret, err) {
-						order_no = ret.data;
-						//打开支付成功页;
-						//alert(JSON.stringify(order_no));
-						var obj = api.require('aliPay');
-						obj.pay({
-							subject : order_no[0].title, //订单名
-							body : order_no[0].origin_type, //订单描述
-							amount : order_no[0].real_amount, //金额
-							tradeNO : "A" + order_id//订单号
-						}, function(ret, err) {
-							//1.0 如果支付宝提示付款成功！
-							if (ret && ret.statusCode == 9000) {
-								//打开支付成功页
-								alert("成功==" + JSON.stringify(ret));
+						//1.0 如果支付宝提示付款成功！
+						if (ret && ret.statusCode == 9000) {
+							//打开支付成功页
+							alert("成功==" + JSON.stringify(ret));
+							doPay({
+								wash_user_id : user[0].wash_user_id,
+								uuid : user[0].uuid,
+								device_id : product.device_id, //洗衣机id  （必填）（string）
+								commodity_id : product.commodity_id, //商品id（必填）（string）
+								pay_way : pay_way, //支付方式
+								pay_num : product.movement_money, //支付金额
+								origin_type : '4', //来源
+								order_id : "A" + order_id//订单号
+							}, function(ret, err) {
+								//order_no = ret.data;
+								//打开支付成功页;
 								openResult();
 								setTimeout(function() {
 									api.closeWin();
 								}, 800);
-							} else {
-								alert("失败==" + JSON.stringify(ret));
-								//打开支付成功页
-								//								openResult();
-								setTimeout(function() {
-									api.closeWin();
-								}, 800);
-							}
-						});
+							});
+						} else {
+							alert("失败==" + JSON.stringify(ret));
+							//打开支付成功页
+							//								openResult();
+							setTimeout(function() {
+								api.closeWin();
+							}, 800);
+						}
 					});
 				} else if (pay_way == 2) {
 					doPay({
