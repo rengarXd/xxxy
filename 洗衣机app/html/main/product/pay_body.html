@@ -208,7 +208,7 @@
 						pay_way : pay_way, //支付方式
 						pay_num : product.movement_money, //支付金额
 						origin_type : '4', //来源
-						order_id : "P" + order_id//订单号
+						order_id : "A" + order_id//订单号
 					}, function(ret, err) {
 						order_no = ret.data;
 						//打开支付成功页;
@@ -228,7 +228,7 @@
 									api.closeWin();
 								}, 800);
 							} else {
-								alert("失败==" + JSON.stringify(err));
+								alert("失败==" + JSON.stringify(ret));
 								//打开支付成功页
 								//								openResult();
 								setTimeout(function() {
@@ -246,7 +246,7 @@
 						pay_way : pay_way, //支付方式
 						pay_num : product.movement_money, //支付金额
 						origin_type : '4', //来源
-						order_id : "P" + order_id//订单号
+						order_id : "W" + order_id//订单号
 					}, function(ret, err) {
 						if (ret.success) {
 							//打开支付成功页;
