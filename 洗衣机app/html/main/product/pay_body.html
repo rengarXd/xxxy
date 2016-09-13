@@ -212,11 +212,12 @@
 					}, function(ret, err) {
 						order_no = ret.data;
 						//打开支付成功页;
+						//alert(JSON.stringify(order_no));
 						var obj = api.require('aliPay');
 						obj.pay({
-							subject : order_no.title, //订单名
-							body : order_no.origin_type, //订单描述
-							amount : order_no.real_amount, //金额
+							subject : order_no[0].title, //订单名
+							body : order_no[0].origin_type, //订单描述
+							amount : order_no[0].real_amount, //金额
 							tradeNO : "A" + order_id//订单号
 						}, function(ret, err) {
 							//1.0 如果支付宝提示付款成功！
