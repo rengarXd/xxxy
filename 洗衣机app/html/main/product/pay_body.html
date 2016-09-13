@@ -223,17 +223,17 @@
 							if (ret && ret.statusCode == 9000) {
 								//打开支付成功页
 								alert("成功==" + JSON.stringify(ret));
-								//								openResult();
-								//								setTimeout(function() {
-								//									api.closeWin();
-								//								}, 800);
+								openResult();
+								setTimeout(function() {
+									api.closeWin();
+								}, 800);
 							} else {
 								alert("失败==" + JSON.stringify(err));
 								//打开支付成功页
 								//								openResult();
-								//								setTimeout(function() {
-								//									api.closeWin();
-								//								}, 800);
+								setTimeout(function() {
+									api.closeWin();
+								}, 800);
 							}
 						});
 					});
