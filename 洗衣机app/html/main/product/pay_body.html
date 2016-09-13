@@ -267,6 +267,11 @@
 							}, function(ret, err) {
 								if (ret.status) {
 									alert(ret.result);
+									//打开支付成功页;
+									openResult(ret.data);
+									setTimeout(function() {
+										api.closeWin();
+									}, 800);
 								} else {
 									alert(err.code);
 								}
