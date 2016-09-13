@@ -200,72 +200,81 @@
 					return;
 				};
 				if (pay_way == 1) {
-					var obj = api.require('aliPay');
-					obj.pay({
-						subject : product.title, //订单名
-						body : product.memo, //订单描述
-						amount : product.movement_money, //金额
-						tradeNO : "A" + order_id//订单号
+					doPay({
+						wash_user_id : user[0].wash_user_id,
+						uuid : user[0].uuid,
+						device_id : product.device_id, //洗衣机id  （必填）（string）
+						commodity_id : product.commodity_id, //商品id（必填）（string）
+						pay_way : pay_way, //支付方式
+						pay_num : product.movement_money, //支付金额
+						origin_type : '4', //来源
+						order_id : "A" + order_id//订单号
 					}, function(ret, err) {
-						//1.0 如果支付宝提示付款成功！
-						if (ret && ret.statusCode == 9000) {
-							//打开支付成功页
-							//alert("成功==" + JSON.stringify(ret));
-							doPay({
-								wash_user_id : user[0].wash_user_id,
-								uuid : user[0].uuid,
-								device_id : product.device_id, //洗衣机id  （必填）（string）
-								commodity_id : product.commodity_id, //商品id（必填）（string）
-								pay_way : pay_way, //支付方式
-								pay_num : product.movement_money, //支付金额
-								origin_type : '4', //来源
-								order_id : "A" + order_id//订单号
+						//order_no = ret.data;
+						if (ret.success) {
+							var obj = api.require('aliPay');
+							obj.pay({
+								subject : product.title, //订单名
+								body : product.memo, //订单描述
+								amount : product.movement_money, //金额
+								tradeNO : "A" + order_id//订单号
 							}, function(ret, err) {
-								//order_no = ret.data;
-								//打开支付成功页;
-								openResult(ret.data);
-								setTimeout(function() {
-									api.closeWin();
-								}, 800);
+								//1.0 如果支付宝提示付款成功！
+								if (ret && ret.statusCode == 9000) {
+									//打开支付成功页
+									//alert("成功==" + JSON.stringify(ret));
+									//打开支付成功页;
+									openResult(ret.data);
+									setTimeout(function() {
+										api.closeWin();
+									}, 800);
+								} else {
+									alert("失败==" + JSON.stringify(ret));
+									//打开支付成功页
+									//								openResult();
+									api.toast({
+										msg : '支付失败'
+									});
+									setTimeout(function() {
+										api.closeWin();
+									}, 800);
+								}
 							});
 						} else {
-							alert("失败==" + JSON.stringify(ret));
-							//打开支付成功页
-							//								openResult();
-							setTimeout(function() {
-								api.closeWin();
-							}, 800);
+							api.toast({
+								msg : '服务器未响应，支付失败'
+							});
 						}
 					});
 				} else if (pay_way == 2) {
 					//打开支付成功页;
-					var wxPay = api.require('wxPay');
-					wxPay.pay({
-						description : product.title,
-						totalFee : product.movement_money,
-						tradeNo : "W" + order_id
+					doPay({
+						wash_user_id : user[0].wash_user_id,
+						uuid : user[0].uuid,
+						device_id : product.device_id, //洗衣机id  （必填）（string）
+						commodity_id : product.commodity_id, //商品id（必填）（string）
+						pay_way : pay_way, //支付方式
+						pay_num : product.movement_money, //支付金额
+						origin_type : '4', //来源
+						order_id : "W" + order_id//订单号
 					}, function(ret, err) {
-						if (ret.status) {
-							alert(ret.result);
-							doPay({
-								wash_user_id : user[0].wash_user_id,
-								uuid : user[0].uuid,
-								device_id : product.device_id, //洗衣机id  （必填）（string）
-								commodity_id : product.commodity_id, //商品id（必填）（string）
-								pay_way : pay_way, //支付方式
-								pay_num : product.movement_money, //支付金额
-								origin_type : '4', //来源
-								order_id : "W" + order_id//订单号
+						if (ret.success) {
+							var wxPay = api.require('wxPay');
+							wxPay.pay({
+								description : product.title,
+								totalFee : product.movement_money,
+								tradeNo : "W" + order_id
 							}, function(ret, err) {
-								if (ret.success) {
+								if (ret.status) {
+									alert(ret.result);
 								} else {
-									api.toast({
-										msg : '抱歉，支付失败'
-									});
+									alert(err.code);
 								}
 							});
 						} else {
-							alert(err.code);
+							api.toast({
+								msg : '抱歉，支付失败'
+							});
 						}
 					});
 				} else if (pay_way == 3) {
