@@ -64,11 +64,11 @@
 			// 初始化页面
 			function initPage() {
 				//页面渲染
-				document.getElementById('no').innerHTML = data.order_id;
-				document.getElementById('time').innerHTML = data.reader_time;
-				document.getElementById('money').innerHTML = data.pay_num;
-				document.getElementById('machine').innerHTML = data.device_name;
-				document.getElementById('model').innerHTML = data.title;
+				document.getElementById('no').innerHTML = data[0].order_id;
+				document.getElementById('time').innerHTML = data[0].reader_time;
+				document.getElementById('money').innerHTML = data[0].pay_num;
+				document.getElementById('machine').innerHTML = data[0].device_name;
+				document.getElementById('model').innerHTML = data[0].title;
 				// 初始化时间递减
 				api.getPrefs({
 					key : 'washtime'

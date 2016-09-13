@@ -210,7 +210,7 @@
 						//1.0 如果支付宝提示付款成功！
 						if (ret && ret.statusCode == 9000) {
 							//打开支付成功页
-							alert("成功==" + JSON.stringify(ret));
+							//alert("成功==" + JSON.stringify(ret));
 							doPay({
 								wash_user_id : user[0].wash_user_id,
 								uuid : user[0].uuid,
@@ -223,7 +223,7 @@
 							}, function(ret, err) {
 								//order_no = ret.data;
 								//打开支付成功页;
-								openResult();
+								openResult(ret.data);
 								setTimeout(function() {
 									api.closeWin();
 								}, 800);
