@@ -170,7 +170,10 @@
 							});
 						}
 					} else {
-						$("#nonetwork").show();
+						api.toast({
+							msg : '连接失败，请检查网络配置'
+						});
+						//$("#nonetwork").show();
 					}
 				}, 'sendtplValue&funid=wash_user&phone_number=' + tel);
 			}
@@ -325,132 +328,134 @@
 						});
 					}
 				} else {
-					$("#nonetwork").show();
+					api.toast({
+						msg : '连接失败，请检查网络配置'
+					});
+					//$("#nonetwork").show();
 				}
 			}, 'appRegister&funid=wash_user&phone_number=' + tel + '&verify=' + code);
 		}
 
 		//服务密码登录
-//		function password_login() {
-//			var tel = $("#pw_tel").val();
-//			// 手机号的正则
-//			var a = /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/;
-//			//获取密码
-//			var password = $("#pw_password").val();
-//			//密码正则
-//			var b = /^[\w\W]{6,18}$/;
-//			// 判断手机号
-//			if (!tel.match(a)) {
-//				// 如果不是正确的手机号
-//				api.alert({
-//					title : '温馨提示',
-//					msg : '请输入正确的手机号！',
-//				}, function(ret, err) {
-//					if (ret && ret.buttonIndex == 1) {
-//						$("#pw_tel").focus();
-//					}
-//				});
-//				return;
-//			}
-//			if (!password.match(b)) {
-//				// 如果不是正确的密码
-//				api.alert({
-//					title : '温馨提示',
-//					msg : '请输入6-18位任意字符的密码',
-//				}, function(ret, err) {
-//					if (ret && ret.buttonIndex == 1) {
-//						$("#pw_password").focus();
-//					}
-//				});
-//				return;
-//			}
-//			if (!$("#checkbox-2").attr("checked")) {
-//				api.toast({
-//					msg : '请您选择同意《用户协议》'
-//				});
-//				return;
-//			}
-//			api.showProgress({
-//				title : "登录中"
-//			});
-//			//console.log(JSON.stringify(tel));
-//			//console.log(JSON.stringify(password));
-//			$xy.ajax(function(ret, err) {
-//				api.hideProgress();
-//				if (ret) {
-//					//console.log(JSON.stringify(ret));
-//					//$("#nonetwork").hide();
-//					if (ret.success) {
-//						//console.log(JSON.stringify(1));
-//						retInfo = ret.data;
-//						if (ret.data[0].user_id) {
-//							//存储用户数据
-//							$xy.userlogInfo(retInfo);
-//							//登录成功对话框
-//							alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
-//								if (ret.eventType == 'left') {
-//									var dialogBox = api.require('dialogBox');
-//									dialogBox.close({
-//										dialogName : 'alert'
-//									});
-//									api.closeWin();
-//								} else {
-//									var dialogBox = api.require('dialogBox');
-//									dialogBox.close({
-//										dialogName : 'alert'
-//									});
-//									api.openWin({
-//										name : 'user_set_head',
-//										url : '../me/user_set_head.html',
-//										bounces : false,
-//										delay : 0,
-//									});
-//									setTimeout(function() {
-//										api.closeWin();
-//									}, 1000);
-//								}
-//							});
-//						} else {
-//							//登录成功对话框
-//							alertLog('登录失败', '由于您长时间未登录将进行身份验证，选择‘不用了’则将原账号情况并重新创建一个新账号，选择‘继续’则进行身份验证', '不用了', '继续', function(ret) {
-//								if (ret.eventType == 'left') {
-//									var dialogBox = api.require('dialogBox');
-//									dialogBox.close({
-//										dialogName : 'alert'
-//									});
-//									api.closeWin();
-//								} else {
-//									var dialogBox = api.require('dialogBox');
-//									dialogBox.close({
-//										dialogName : 'alert'
-//									});
-//									api.openWin({
-//										name : 'check_login_head',
-//										url : 'check_login_head.html',
-//										pageParam : {
-//											data : retInfo
-//										},
-//										bounces : false,
-//										delay : 0,
-//									});
-//									setTimeout(function() {
-//										api.closeWin();
-//									}, 1000);
-//								}
-//							});
-//						}
-//					} else {
-//						//console.log(JSON.stringify(2));
-//						api.toast({
-//							msg : ret.message
-//						});
-//					}
-//				} else {
-//					$("#nonetwork").show();
-//				}
-//			}, 'serverRegister&funid=wash_user&phone_number=' + tel + '&service_password=' + password);
-//		}
-
+		//		function password_login() {
+		//			var tel = $("#pw_tel").val();
+		//			// 手机号的正则
+		//			var a = /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/;
+		//			//获取密码
+		//			var password = $("#pw_password").val();
+		//			//密码正则
+		//			var b = /^[\w\W]{6,18}$/;
+		//			// 判断手机号
+		//			if (!tel.match(a)) {
+		//				// 如果不是正确的手机号
+		//				api.alert({
+		//					title : '温馨提示',
+		//					msg : '请输入正确的手机号！',
+		//				}, function(ret, err) {
+		//					if (ret && ret.buttonIndex == 1) {
+		//						$("#pw_tel").focus();
+		//					}
+		//				});
+		//				return;
+		//			}
+		//			if (!password.match(b)) {
+		//				// 如果不是正确的密码
+		//				api.alert({
+		//					title : '温馨提示',
+		//					msg : '请输入6-18位任意字符的密码',
+		//				}, function(ret, err) {
+		//					if (ret && ret.buttonIndex == 1) {
+		//						$("#pw_password").focus();
+		//					}
+		//				});
+		//				return;
+		//			}
+		//			if (!$("#checkbox-2").attr("checked")) {
+		//				api.toast({
+		//					msg : '请您选择同意《用户协议》'
+		//				});
+		//				return;
+		//			}
+		//			api.showProgress({
+		//				title : "登录中"
+		//			});
+		//			//console.log(JSON.stringify(tel));
+		//			//console.log(JSON.stringify(password));
+		//			$xy.ajax(function(ret, err) {
+		//				api.hideProgress();
+		//				if (ret) {
+		//					//console.log(JSON.stringify(ret));
+		//					//$("#nonetwork").hide();
+		//					if (ret.success) {
+		//						//console.log(JSON.stringify(1));
+		//						retInfo = ret.data;
+		//						if (ret.data[0].user_id) {
+		//							//存储用户数据
+		//							$xy.userlogInfo(retInfo);
+		//							//登录成功对话框
+		//							alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
+		//								if (ret.eventType == 'left') {
+		//									var dialogBox = api.require('dialogBox');
+		//									dialogBox.close({
+		//										dialogName : 'alert'
+		//									});
+		//									api.closeWin();
+		//								} else {
+		//									var dialogBox = api.require('dialogBox');
+		//									dialogBox.close({
+		//										dialogName : 'alert'
+		//									});
+		//									api.openWin({
+		//										name : 'user_set_head',
+		//										url : '../me/user_set_head.html',
+		//										bounces : false,
+		//										delay : 0,
+		//									});
+		//									setTimeout(function() {
+		//										api.closeWin();
+		//									}, 1000);
+		//								}
+		//							});
+		//						} else {
+		//							//登录成功对话框
+		//							alertLog('登录失败', '由于您长时间未登录将进行身份验证，选择‘不用了’则将原账号情况并重新创建一个新账号，选择‘继续’则进行身份验证', '不用了', '继续', function(ret) {
+		//								if (ret.eventType == 'left') {
+		//									var dialogBox = api.require('dialogBox');
+		//									dialogBox.close({
+		//										dialogName : 'alert'
+		//									});
+		//									api.closeWin();
+		//								} else {
+		//									var dialogBox = api.require('dialogBox');
+		//									dialogBox.close({
+		//										dialogName : 'alert'
+		//									});
+		//									api.openWin({
+		//										name : 'check_login_head',
+		//										url : 'check_login_head.html',
+		//										pageParam : {
+		//											data : retInfo
+		//										},
+		//										bounces : false,
+		//										delay : 0,
+		//									});
+		//									setTimeout(function() {
+		//										api.closeWin();
+		//									}, 1000);
+		//								}
+		//							});
+		//						}
+		//					} else {
+		//						//console.log(JSON.stringify(2));
+		//						api.toast({
+		//							msg : ret.message
+		//						});
+		//					}
+		//				} else {
+		//					$("#nonetwork").show();
+		//				}
+		//			}, 'serverRegister&funid=wash_user&phone_number=' + tel + '&service_password=' + password);
+		//		}
 		//打开服务条款
 		function openTermsService() {
 			api.openWin({
