@@ -57,6 +57,7 @@
 		<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>
 		<script type="text/javascript" src="../../../script/tools/jquery.flipcountdown.js"></script>
 		<script type="text/javascript">
+			var user = null, data = null;
 			apiready = function() {
 				data = api.pageParam.data;
 				initPage();
@@ -116,20 +117,7 @@
 				if (times < 1) {
 					//结束时间递减
 					clearInterval(isinerval);
-					api.removePrefs({
-						key : 'washtime'
-					});
-					api.openWin({
-						name : 'progress_head',
-						url : '../progress/progress_head.html',
-						pageParam : {
-							data : data
-						},
-						bounces : false,
-						delay : 0,
-						slidBackEnabled : true,
-						vScrollBarEnabled : false
-					});
+					start();
 					return;
 				}
 				times--;
@@ -137,19 +125,55 @@
 
 			//开始计时
 			function start() {
-				api.removePrefs({
-					key : 'washtime'
-				});
-				api.openWin({
-					name : 'progress_head',
-					url : '../progress/progress_head.html',
-					pageParam : {
-						data : data
-					},
-					bounces : false,
-					delay : 300,
-					slidBackEnabled : true,
-					vScrollBarEnabled : false
+				api.getPrefs({
+					key : 'userinfo'
+				}, function(ret, err) {
+					if (ret && ret.value) {
+						user = eval('(' + ret.value + ')');
+						$xy.ajax(function(ret, err) {
+							if (ret.success) {
+								api.toast({
+									msg : '开始洗衣'
+								});
+								api.removePrefs({
+									key : 'washtime'
+								});
+								api.openWin({
+									name : 'progress_head',
+									url : '../progress/progress_head.html',
+									pageParam : {
+										data : data[0]
+									},
+									bounces : false,
+									delay : 300,
+									slidBackEnabled : true,
+									vScrollBarEnabled : false
+								});
+								setTimeout(function() {
+									api.closeWin();
+								}, 800);
+							} else {
+								api.toast({
+									msg : ret.message
+								});
+							}
+						}, 'sendtplValue&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_id=' + data[0].order_id);
+					} else {
+						api.alert({
+							title : '温馨提示',
+							msg : '进行该操作前请先登录',
+						}, function(ret, err) {
+							if (ret.buttonIndex == 1) {
+								api.openWin({
+									name : 'login_body',
+									url : '../../login/login_body.html'
+								});
+								setTimeout(function() {
+									api.closeWin();
+								}, 1000);
+							}
+						});
+					}
 				});
 			}
 		</script>
