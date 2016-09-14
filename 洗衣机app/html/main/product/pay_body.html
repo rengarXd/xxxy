@@ -259,15 +259,27 @@
 					}, function(ret, err) {
 						if (ret.success) {
 							var wxPay = api.require('wxPay');
-							wxPay.pay({
-								description : product.title,
-								totalFee : product.movement_money,
-								tradeNo : "W" + order_id
+							wxPay.config({
+								apiKey : '',
+								mchId : '',
+								partnerKey : '',
+								notifyUrl : ''
 							}, function(ret, err) {
 								if (ret.status) {
-									alert(ret.result);
-									//打开支付成功页;
-									openResult(order_no);
+									alert('配置商户支付参数成功');
+									wxPay.pay({
+										description : product.title,
+										totalFee : product.movement_money,
+										tradeNo : "W" + order_id
+									}, function(ret, err) {
+										if (ret.status) {
+											alert(ret.result);
+											//打开支付成功页;
+											openResult(order_no);
+										} else {
+											alert(err.code);
+										}
+									});
 								} else {
 									alert(err.code);
 								}
