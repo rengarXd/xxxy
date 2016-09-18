@@ -231,7 +231,10 @@
 										if (ret && ret.statusCode == 9000) {
 											openResult(order_no);
 										} else {
-											alert(JSON.stringify(ret));
+											//											api.toast({
+											//	                                            msg:''
+											//                                          });
+											//											alert(JSON.stringify(ret));
 											setTimeout(function() {
 												api.closeWin();
 											}, 800);
@@ -302,7 +305,13 @@
 						order_id : "P" + order_id//订单号
 					}, function(ret, err) {
 						//打开支付成功页;
-						openResult(ret.data);
+						if (ret.success) {
+							openResult(ret.data);
+						} else {
+							api.toast({
+								msg : ret.message
+							});
+						}
 					});
 				} else if (pay_way == 4) {
 					doPay({
@@ -318,7 +327,13 @@
 						order_id : "D" + order_id//订单号
 					}, function(ret, err) {
 						//打开支付成功页;
-						openResult(ret.data);
+						if (ret.success) {
+							openResult(ret.data);
+						} else {
+							api.toast({
+								msg : ret.message
+							});
+						}
 					});
 				}
 			}

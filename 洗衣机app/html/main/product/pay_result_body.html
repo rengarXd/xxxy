@@ -60,6 +60,7 @@
 			var user = null, data = null;
 			apiready = function() {
 				data = api.pageParam.data;
+				console.log(JSON.stringify(data));
 				initPage();
 			};
 			// 初始化页面
@@ -132,26 +133,7 @@
 						user = eval('(' + ret.value + ')');
 						$xy.ajax(function(ret, err) {
 							if (ret.success) {
-								api.toast({
-									msg : '开始洗衣'
-								});
-								api.removePrefs({
-									key : 'washtime'
-								});
-								api.openWin({
-									name : 'progress_head',
-									url : '../progress/progress_head.html',
-									pageParam : {
-										data : data[0]
-									},
-									bounces : false,
-									delay : 300,
-									slidBackEnabled : true,
-									vScrollBarEnabled : false
-								});
-								setTimeout(function() {
-									api.closeWin();
-								}, 800);
+								startResult();
 							} else {
 								api.toast({
 									msg : ret.message
@@ -175,6 +157,29 @@
 						});
 					}
 				});
+			}
+
+			function startResult() {
+				api.toast({
+					msg : '开始洗衣'
+				});
+				api.removePrefs({
+					key : 'washtime'
+				});
+				api.openWin({
+					name : 'progress_head',
+					url : '../progress/progress_head.html',
+					pageParam : {
+						data : data[0]
+					},
+					bounces : false,
+					delay : 300,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
+				});
+				setTimeout(function() {
+					api.closeWin();
+				}, 800);
 			}
 		</script>
 	</body>
