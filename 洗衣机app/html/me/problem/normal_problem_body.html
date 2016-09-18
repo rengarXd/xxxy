@@ -7,6 +7,7 @@
 		<title>body</title>
 		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
 		<link rel="stylesheet" href="../../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/fonts/iconfont.css" />
 		<style>
 			html, body {
 				background-color: white;
@@ -14,24 +15,38 @@
 		</style>
 	</head>
 	<body>
-		<div class="H-text-align-center H-padding-15">
-			<img src="../../../image/xixixiyi_logo.png" width="33%" />
+		<div class="H-center-all H-margin-vertical-top-25">
+			<img src="../../../image/logo.png" width="280" />
 		</div>
-		<div class="H-text-align-center H-font-size-18">
-			咭咭洗衣
+		<div class="H-font-size-13 H-padding-25 H-text-indent H-theme-font-color-666">
+			<div class="H-padding-vertical-both-10">
+				咭咭洗衣是目前针对高校洗衣市场，最专业的、通用性最好的智能洗衣服务平台。该平台由集优信息科技股份有限公司开发，持续为在校大学生提供互联网洗衣、在线商超等服务。
+			</div>
+			<div class="H-margin-vertical-top-25 H-text-list H-border-vertical-bottom-after  H-flexbox-horizontal H-vertical-middle">
+				<div class="H-flex-item H-font-size-14 H-padding-vertical-both-12">
+					版本信息
+				</div>
+				<span class="H-theme-font-color-999 H-icon H-padding-horizontal-right-20 H-display-block" id="version">v1.0.0 </span>
+			</div>
 		</div>
-		<div class="H-font-size-14 H-padding-20 H-text-indent H-theme-font-color-666">
-			这是一个app的应用说明这是一个app的应用说明这是一个app的应用说明这是一个app的应用说明这是一个app的应用说明这是一个app的应用说明这是一个app的应用说明这是一个app的应用说明
+		<div style="height: 60px;"></div>
+		<div class="H-margin-vertical-top-25 H-text-align-center H-font-size-14 H-theme-font-color-999">
+			<span>Copyright&nbsp;&nbsp;@2016</span>
+			<br />
+			<span>集优信息科技股份有限公司</span>
 		</div>
 	</body>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
-	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
+	<!--<script type="text/javascript" src="../../../script/zepto.min.js"></script>-->
 	<script type="text/javascript">
 		apiready = function() {
 			initPage();
 		};
 		// 初始化页面
 		function initPage() {
+			var appVersion = api.appVersion;
+			document.getElementById('version').innerHTML = appVersion;
+//			$("#version").html();
 		}
 	</script>
 </html>
