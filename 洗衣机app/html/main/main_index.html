@@ -339,15 +339,15 @@
 				//				$api.fixStatusBar(header);
 				//				var headerPos = $api.offset(header);
 				//var body_h = $api.offset($api.dom('body')).h;
-				api.openFrame({
-					name : 'scanner',
-					url : 'scanner.html',
-					bounces : false
-				})
+				//				api.openFrame({
+				//					name : 'scanner',
+				//					url : 'scanner.html',
+				//					bounces : false
+				//				})
 			}
 
 			//监听事件
-			function listener() {
+			function listener(toltal) {
 				//结束时间递减
 				if (isinerval) {
 					clearInterval(isinerval);
@@ -362,7 +362,7 @@
 						//获取当前时间
 						var now = new Date();
 						//计算剩余时间
-						times = 300 - ((now.getTime() - parseInt(time)) / 1000);
+						times = parseInt(toltal) - ((now.getTime() - parseInt(time)) / 1000);
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
 					} else {

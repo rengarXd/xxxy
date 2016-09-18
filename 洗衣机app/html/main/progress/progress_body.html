@@ -85,9 +85,8 @@
 		<!--<script type="text/javascript" src="../../../script/zepto.min.js"></script>-->
 		<script type="text/javascript">
 			var times = null, timeall = null;
-			var data = null;
+			var data = null, isinerval = null;
 			apiready = function() {
-				//timeall = 300;
 				// 初始化页面
 				data = api.pageParam.data;
 				initPage();
@@ -133,6 +132,10 @@
 				$xy.ajax(function(ret, err) {
 					if (ret.success) {
 						_tpl('progress_data', ret.data, 'progress_html', function() {
+							if (isinerval) {
+								isinerval = null;
+								return;
+							}
 							var stringTime = ret.data[0].start_time;
 							var totalTime = ret.data[0].turn_around_date;
 							var start_time = Date.parse(new Date(stringTime));
@@ -145,13 +148,14 @@
 							var now = new Date();
 							//计算剩余时间
 							times = parseInt(totalTime) * 60 - ((now.getTime() - parseInt(start_time)) / 1000);
+							console.log('times==' + times);
 							//调用倒计时方法
 							isinerval = setInterval("CountDown()", 1000);
-							api.execScript({
-								name : 'main',
-								frameName : 'main_index',
-								script : 'listener();'
-							});
+							//							api.execScript({
+							//								name : 'main',
+							//								frameName : 'main_index',
+							//								script : 'listener(' + "'" + totalTime + "'" + ');'
+							//							});
 							//进度条
 							arcProgress();
 						});
@@ -208,13 +212,19 @@
 				document.getElementById('lasttime').innerHTML = lasttime;
 				if (times < 1) {
 					//结束时间递减
+					document.getElementById('lasttime').innerHTML = '00:00';
+					var arcProgress = api.require('arcProgress');
+					arcProgress.close({
+						id : 1
+					});
 					clearInterval(isinerval);
 					api.removePrefs({
 						key : 'washtime'
 					});
 					return;
+				} else {
+					times--;
 				}
-				times--;
 			}
 
 			//模板渲染
