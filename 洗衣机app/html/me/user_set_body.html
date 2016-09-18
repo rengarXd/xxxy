@@ -180,13 +180,16 @@
 					cancelTitle: '取消',
 					buttons: [year - 4 + '级', year - 3 + '级', year - 2 + '级', year - 1 + '级', year + '级']
 				}, function(ret, err) {
-					var index = ret.buttonIndex;
-					//console.log(index);
-					//alert(year - 5 + index + '级');
-					textname = year - 5 + index + '级';
-					document.getElementById('gradename').innerHTML = textname;
 
-					ajax(id, textname);
+					var index = ret.buttonIndex;
+					if(index <= 5) {
+						console.log(index);
+						//alert(year - 5 + index + '级');
+						textname = year - 5 + index + '级';
+						document.getElementById('gradename').innerHTML = textname;
+						ajax(id, textname);
+					}
+
 					//ajax(id, textname);
 					//					switch(index) {
 					//						case 1:
@@ -310,24 +313,24 @@
 							width: 0.5,
 							color: '#696969'
 						},
-						left : {
-						marginB : 0,
-						marginL : 0,
-						w : 150,
-						h : 200,
-						bg : '#fff',
-						color : '#cacaca',
-						size : 15
-					},
-					right : {
-						marginB : 0,
-						marginL : 0,
-						w : 150,
-						h : 200,
-						bg : '#119ed1',
-						color : '#fff',
-						size : 15
-					}
+						left: {
+							marginB: 0,
+							marginL: 0,
+							w: 150,
+							h: 200,
+							bg: '#fff',
+							color: '#cacaca',
+							size: 15
+						},
+						right: {
+							marginB: 0,
+							marginL: 0,
+							w: 150,
+							h: 200,
+							bg: '#119ed1',
+							color: '#fff',
+							size: 15
+						}
 					}
 				}, function(ret) {
 					if(ret.eventType == 'right') {
@@ -386,10 +389,10 @@
 								api.refreshHeaderLoadDone();
 								if(ret.success) {
 									//console.log(JSON.stringify(ret));
-//									api.alert({
-//										msg: JSON.stringify(ret)
-//
-//									});
+									//									api.alert({
+									//										msg: JSON.stringify(ret)
+									//
+									//									});
 
 								} else {
 									//console.log(JSON.stringify(ret));
