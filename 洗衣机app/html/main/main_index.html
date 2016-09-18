@@ -131,6 +131,7 @@
 			</div>
 		</script>
 		<script type="text/javascript" src="../../script/xy.js"></script>
+		<!--<script type="text/javascript" src="../../script/api.js"></script>-->
 		<script type="text/javascript" src="../../script/zepto.min.js"></script>
 		<script type="text/javascript" src="../../script/tools/laytpl.js"></script>
 		<script type="text/javascript">
@@ -334,6 +335,15 @@
 						alert(ret.content);
 					}
 				});
+				//				var header = $api.byId('header');
+				//				$api.fixStatusBar(header);
+				//				var headerPos = $api.offset(header);
+				//var body_h = $api.offset($api.dom('body')).h;
+				api.openFrame({
+					name : 'scanner',
+					url : 'scanner.html',
+					bounces : false
+				})
 			}
 
 			//监听事件
