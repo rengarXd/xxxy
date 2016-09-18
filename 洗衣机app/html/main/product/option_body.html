@@ -216,17 +216,14 @@
 	<script type="text/javascript" src="../../../script/xy.js"></script>
 	<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
 	<script type="text/javascript">
+		//洗衣机距离
 		var distance = null;
+		//名称
 		var device_name = null;
+		//地址
 		var washloca_name = null;
 		var product = null;
 		apiready = function() {
-			//			//洗衣机距离
-			//			distance = api.pageParam.distance;
-			//			//名称
-			//			device_name = api.pageParam.device_name;
-			//			//地址
-			//			washloca_name = api.pageParam.washloca_name;
 			datas = api.pageParam.data;
 			//alert(JSON.stringify(datas));
 			//DOM渲染
@@ -293,7 +290,9 @@
 						alert(ret.message);
 					}
 				} else {
-					$("#nonetwork").show();
+					api.toast({
+						msg : '连接失败，请检查网络配置'
+					});
 				}
 			}, 'getWashComList&funid=wash_commodity&device_id=' + device_id);
 		}
