@@ -200,6 +200,7 @@
 					return;
 				};
 				if (pay_way == 1) {
+					var orderid = "A" + order_id;
 					doPay({
 						wash_user_id : user[0].wash_user_id,
 						uuid : user[0].uuid,
@@ -208,7 +209,7 @@
 						pay_way : pay_way, //支付方式
 						pay_num : product.movement_money, //支付金额
 						origin_type : '4', //来源
-						order_id : "A" + order_id//订单号
+						order_id : orderid//订单号
 					}, function(ret, err) {
 						order_no = ret.data;
 						if (ret.success) {
@@ -231,13 +232,7 @@
 										if (ret && ret.statusCode == 9000) {
 											openResult(order_no);
 										} else {
-											//											api.toast({
-											//	                                            msg:''
-											//                                          });
-											//											alert(JSON.stringify(ret));
-											setTimeout(function() {
-												api.closeWin();
-											}, 800);
+											deleteOrder(orderid);
 										}
 									});
 							});
@@ -248,6 +243,7 @@
 						}
 					});
 				} else if (pay_way == 2) {
+					var orderid = "W" + order_id;
 					order_no = ret.data;
 					//打开支付成功页;
 					doPay({
@@ -258,7 +254,7 @@
 						pay_way : pay_way, //支付方式
 						pay_num : product.movement_money, //支付金额
 						origin_type : '4', //来源
-						order_id : "W" + order_id//订单号
+						order_id : orderid//订单号
 					}, function(ret, err) {
 						if (ret.success) {
 							var wxPay = api.require('wxPay');
@@ -294,6 +290,7 @@
 						}
 					});
 				} else if (pay_way == 3) {
+					var orderid = "P" + order_id
 					doPay({
 						wash_user_id : user[0].wash_user_id,
 						uuid : user[0].uuid,
@@ -302,18 +299,17 @@
 						pay_way : pay_way, //支付方式
 						pay_num : product.movement_money, //支付金额
 						origin_type : '4', //来源
-						order_id : "P" + order_id//订单号
+						order_id : orderid//订单号
 					}, function(ret, err) {
 						//打开支付成功页;
 						if (ret.success) {
 							openResult(ret.data);
 						} else {
-							api.toast({
-								msg : ret.message
-							});
+							deleteOrder(orderid);
 						}
 					});
 				} else if (pay_way == 4) {
+					var orderid = "D" + order_id;
 					doPay({
 						wash_user_id : user[0].wash_user_id,
 						uuid : user[0].uuid,
@@ -324,18 +320,31 @@
 						orientact_id : orientact_id, //定向余额活动id（当支付方式为定向余额时必填）（string）
 						uorientoverage_id : uorientoverage_id, //用户定向余额Id
 						origin_type : '4', //来源
-						order_id : "D" + order_id//订单号
+						order_id : orderid//订单号
 					}, function(ret, err) {
 						//打开支付成功页;
 						if (ret.success) {
 							openResult(ret.data);
 						} else {
-							api.toast({
-								msg : ret.message
-							});
+							deleteOrder(orderid);
 						}
 					});
 				}
+			}
+
+			//删除订单方法
+			function deleteOrder(orderid) {
+				$xy.ajax(function(ret, err) {
+					if (ret.success) {
+						api.toast({
+							msg : '已取消订单'
+						});
+					} else {
+						api.toast({
+							msg : ret.message
+						});
+					}
+				}, 'deleteOrder&funid=wash_order&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_id=' + orderid);
 			}
 
 			//支付方法
