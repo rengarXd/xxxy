@@ -7,6 +7,7 @@
 		<title>body</title>
 		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
 		<link rel="stylesheet" href="../../../css/style.css" />
+		<link rel="stylesheet" href="../../../css/fonts/iconfont.css" />
 		<style>
 			.bg_title {
 				background-image: url('../../../image/daojishi.png');
@@ -25,110 +26,179 @@
 		</style>
 	</head>
 	<body>
-		<div class="bg_title" style="height: 226px;">
-			<div class="H-theme-font-color-white H-text-align-center" style="padding-top: 72px;">
-				剩余时间
-				<div class="H-text-align-center" id="lasttime">
-					--:--
+		<div id="progress_html">
+			<div class="H-position-absolute H-position-center-all" id="statuss">
+				<div class="H-font-size-14 H-text-align-center">
+					<i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i>
+					<div class="H-theme-font-color-999" id="jiazai">
+						加载中...
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="H-padding-horizontal-both-15" style="line-height: 24px;">
-			<span class="H-font-size-12 H-theme-font-color-999"> 订单号：<span id="no">----------------------------- </span></span>
+		<script type="text/html" id="progress_data">
+			<div class="bg_title" style="height: 226px;">
+			<div class="H-theme-font-color-white H-text-align-center" style="padding-top: 72px;">
+			剩余时间
+			<div class="H-text-align-center" id="lasttime">
+			--:--
+			</div>
+			</div>
+			</div>
+			<div class="H-padding-horizontal-both-15" style="line-height: 24px;">
+			<span class="H-font-size-12 H-theme-font-color-999"> 订单号：<span id="no">{{ d[0].order_id }}</span></span>
 			<span class="H-float-right H-font-size-12 H-theme-font-color-999">运行中</span>
-		</div>
-		<div class="H-theme-background-color-white H-theme-font-color-999 H-margin-vertical-bottom-5 H-border-vertical-bottom-after">
+			</div>
+			<div class="H-theme-background-color-white H-theme-font-color-999 H-margin-vertical-bottom-5 H-border-vertical-bottom-after">
 			<div class=" H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle  H-margin-vertical-bottom-2">
-				<div class="H-flexbox-vertical H-margin-horizontal-left-15  H-font-size-15 ">
-					<span class=" H-font-size-16 H-center-all">今天 </span><span class="tip-message H-font-size-12 H-float-right H-center-all" id="time">12:00</span>
-				</div>
-				<div class="H-icon H-display-block"><img src="../../../image/yifu.gif" class="H-center-all img-icon H-padding-10" />
-				</div>
-				<div class="H-flex-item H-padding-horizontal-right-5 H-font-size-13  H-flexbox-vertical">
-					<div class="H-flexbox-horizontal ">
-						- <div id="money" class=""></div>
-						<div id="title" class="tip-message  H-margin-horizontal-left-10">
-							标准洗
-						</div>
-						<div id="pay_way" class="H-text-show-row-1 H-margin-horizontal-left-5">
-							郑大定向余额支付
-						</div>
-					</div>
-					<div id="washloca_name" class="H-flexbox-horizontal H-margin-vertical-both-3">
-						桃花源西三宿舍三楼东01机
-					</div>
-				</div>
+			<div class="H-flexbox-vertical H-margin-horizontal-left-15  H-font-size-15 ">
+			<span class=" H-font-size-16 H-center-all">今天 </span><span class="tip-message H-font-size-12 H-float-right H-center-all" id="time"></span>
+			</div>
+			<div class="H-icon H-display-block"><img src="../../../image/yifu.gif" class="H-center-all img-icon H-padding-10" />
+			</div>
+			<div class="H-flex-item H-padding-horizontal-right-5 H-font-size-13  H-flexbox-vertical">
+			<div class="H-flexbox-horizontal ">
+			- <div id="money" class="">{{ d[0].pay_num }}</div>
+			<div id="title" class="tip-message  H-margin-horizontal-left-10">
+			{{ d[0].title }}
+			</div>
+			<div id="pay_way" class="H-text-show-row-1 H-margin-horizontal-left-5">
+			{{ d[0].pay_way }}
+			</div>
+			</div>
+			<div id="washloca_name" class="H-flexbox-horizontal H-margin-vertical-both-3">
+			{{ d[0].washloca_name }}
+			</div>
+			</div>
 			</div>
 			<div class="xy_border"></div>
 			<div class="H-theme-background-color-white H-font-size-13 H-padding-vertical-bottom-25 H-padding-vertical-top-5" style="padding-left: 37px;">
-				<div class="H-float-right">
-					<span>故障反馈</span>
-					<span class="H-margin-horizontal-left-25 H-padding-horizontal-right-15">联系客服</span>
-				</div>
+			<div class="H-float-right">
+			<span>故障反馈</span>
+			<span class="H-margin-horizontal-left-25 H-padding-horizontal-right-15">联系客服</span>
 			</div>
-		</div>
+			</div>
+			</div>
+		</script>
 		<script type="text/javascript" src="../../../script/xy.js"></script>
+		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
 		<!--<script type="text/javascript" src="../../../script/zepto.min.js"></script>-->
 		<script type="text/javascript">
 			var times = null, timeall = null;
 			var data = null;
 			apiready = function() {
-				timeall = 300;
+				//timeall = 300;
 				// 初始化页面
 				data = api.pageParam.data;
 				initPage();
-				//进度条
-				arcProgress();
 			};
-			// 初始化页面
 			function initPage() {
-				//页面渲染
-//				document.getElementById('no').innerHTML = data.order_id;
-//				var strtime = data.reader_time;
-//				var thistime = strtime.substring(10, 16);
-//				document.getElementById('time').innerHTML = thistime;
-//				document.getElementById('money').innerHTML = data.pay_num;
-//				document.getElementById('pay_way').innerHTML = data.pay_way;
-//				document.getElementById('title').innerHTML = data.title;
-//				document.getElementById('washloca_name').innerHTML = data.washloca_name;
-				// 初始化时间递减
 				api.getPrefs({
-					key : 'washtime'
+					key : 'userinfo'
 				}, function(ret, err) {
 					if (ret && ret.value) {
-						//获取之前开始的时间
-						var time = eval('(' + ret.value + ')');
-						//获取当前时间
-						var now = new Date();
-						//计算剩余时间
-						times = timeall - ((now.getTime() - parseInt(time)) / 1000);
-						//调用倒计时方法
-						isinerval = setInterval("CountDown()", 1000);
-						api.execScript({
-							name : 'main',
-							frameName : 'main_index',
-							script : 'listener();'
-						});
-						//倒计时提醒
-						alarmNo(times);
+						user = eval('(' + ret.value + ')');
+						initTime();
 					} else {
-						//初始化所用时间
-						times = timeall;
-						var date = new Date();
-						//记录当前时间
-						api.setPrefs({
-							key : 'washtime',
-							value : "'" + date.getTime() + "'"
-						});
-						//调用倒计时方法
-						isinerval = setInterval("CountDown()", 1000);
-						api.execScript({
-							name : 'main',
-							frameName : 'main_index',
-							script : 'listener();'
+						api.alert({
+							title : '温馨提示',
+							msg : '进行该操作前请先登录',
+						}, function(ret, err) {
+							if (ret.buttonIndex == 1) {
+								api.openWin({
+									name : 'login_body',
+									url : '../../login/login_body.html'
+								});
+								setTimeout(function() {
+									api.closeWin();
+								}, 1000);
+							}
 						});
 					}
 				});
+			}
+
+			// 初始化页面
+			function initTime() {
+				//页面渲染
+				//				document.getElementById('no').innerHTML = data.order_id;
+				//				var strtime = data.reader_time;
+				//				var thistime = strtime.substring(10, 16);
+				//				document.getElementById('time').innerHTML = thistime;
+				//				document.getElementById('money').innerHTML = data.pay_num;
+				//				document.getElementById('pay_way').innerHTML = data.pay_way;
+				//				document.getElementById('title').innerHTML = data.title;
+				//				document.getElementById('washloca_name').innerHTML = data.washloca_name;
+				// 初始化时间递减
+				$xy.ajax(function(ret, err) {
+					if (ret.success) {
+						_tpl('progress_data', ret.data, 'progress_html', function() {
+							var stringTime = ret.data[0].start_time;
+							var totalTime = ret.data[0].turn_around_date;
+							var start_time = Date.parse(new Date(stringTime));
+							console.log('start_time==' + start_time);
+							api.setPrefs({
+								key : 'washtime',
+								value : "'" + start_time + "'"
+							});
+							//获取当前时间
+							var now = new Date();
+							//计算剩余时间
+							times = parseInt(totalTime) * 60 - ((now.getTime() - parseInt(start_time)) / 1000);
+							//调用倒计时方法
+							isinerval = setInterval("CountDown()", 1000);
+							api.execScript({
+								name : 'main',
+								frameName : 'main_index',
+								script : 'listener();'
+							});
+							//进度条
+							arcProgress();
+						});
+					} else {
+						api.toast({
+							msg : ret.message
+						});
+						document.getElementById('progress_html').innerHTML = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999" id="jiazai">' + ret.message + '</div></div></div>'
+					}
+				}, 'appOrderList&funid=wash_order' + '&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_condition=' + 1);
+				//				api.getPrefs({
+				//					key : 'washtime'
+				//				}, function(ret, err) {
+				//					if (ret && ret.value) {
+				//						//获取之前开始的时间
+				//						var time = eval('(' + ret.value + ')');
+				//						//获取当前时间
+				//						var now = new Date();
+				//						//计算剩余时间
+				//						times = timeall - ((now.getTime() - parseInt(time)) / 1000);
+				//						//调用倒计时方法
+				//						isinerval = setInterval("CountDown()", 1000);
+				//						api.execScript({
+				//							name : 'main',
+				//							frameName : 'main_index',
+				//							script : 'listener();'
+				//						});
+				//						//倒计时提醒
+				//						alarmNo(times);
+				//					} else {
+				//						//初始化所用时间
+				//						times = timeall;
+				//						var date = new Date();
+				//						//记录当前时间
+				//						api.setPrefs({
+				//							key : 'washtime',
+				//							value : "'" + date.getTime() + "'"
+				//						});
+				//						//调用倒计时方法
+				//						isinerval = setInterval("CountDown()", 1000);
+				//						api.execScript({
+				//							name : 'main',
+				//							frameName : 'main_index',
+				//							script : 'listener();'
+				//						});
+				//					}
+				//				});
 			}
 
 			//时间递减处理
@@ -145,6 +215,19 @@
 					return;
 				}
 				times--;
+			}
+
+			//模板渲染
+			//@tplId 模板循环部分DOM id 【string】
+			//@renderData 模板部分数据 【JSON对象】
+			//@tplDataId 模板被渲染部分DOM id 【string】
+			//@callback 回调函数 【匿名函数】
+			function _tpl(tplId, renderData, tplDataId, callback) {
+				var tpl = document.getElementById(tplId).innerHTML;
+				laytpl(tpl).render(renderData, function(render) {
+					document.getElementById(tplDataId).innerHTML = render;
+					callback();
+				});
 			}
 
 			//处理倒计时格式方法
