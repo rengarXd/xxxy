@@ -131,21 +131,21 @@
 						user = eval('(' + ret.value + ')');
 						$xy.ajax(function(ret, err) {
 							if (ret.success) {
-								_tpl('dxye_data', ret.data, 'dxye_html', function() {
-									$xy.ajax(function(ret, err) {
-										if (ret) {
-											//alert(JSON.stringify(ret));
-											if (parseFloat(ret.data[0].account_overage) >= parseFloat(product.movement_money)) {
-												document.getElementById('ptye').innerHTML = ret.data[0].account_overage + '元';
-											} else {
-												document.getElementById('ptye_html').style.display = "none";
-											}
+								$xy.ajax(function(ret, err) {
+									if (ret) {
+										//alert(JSON.stringify(ret));
+										if (parseFloat(ret.data[0].account_overage) >= parseFloat(product.movement_money)) {
+											document.getElementById('ptye').innerHTML = ret.data[0].account_overage + '元';
 										} else {
-											api.toast({
-												msg : '请检查网络并刷新该页面'
-											});
+											document.getElementById('ptye_html').style.display = "none";
 										}
-									}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
+									} else {
+										api.toast({
+											msg : '请检查网络并刷新该页面'
+										});
+									}
+								}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
+								_tpl('dxye_data', ret.data, 'dxye_html', function() {
 								});
 							} else {
 								api.toast({

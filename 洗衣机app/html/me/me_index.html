@@ -36,13 +36,13 @@
 				<span class="H-theme-font-color-white H-font-weight-bold" id="userTel">未登录</span>
 			</div>
 			<div class="H-padding-2 H-text-align-center H-font-size-13">
-				<span class="H-theme-font-color-white">共洗衣0次</span>
+				<span class="H-theme-font-color-white">共洗衣<span id="nums">0</span>次</span>
 			</div>
 			<div class="H-flexbox-horizontal">
 				<div class="H-flex-item" tapmode="font-active" onclick="openWin('my_wallet_head','./my_wallet/my_wallet_head.html');">
 					<div class="H-padding-vertical-bottom-8"></div>
 					<div>
-						<div class="H-font-size-18 H-theme-font-color-white H-horizontal-center">
+						<div class="H-font-size-18 H-theme-font-color-white H-horizontal-center" id="pu">
 							￥0.00
 						</div>
 						<div class="H-font-size-12 H-theme-font-color-white H-horizontal-center">
@@ -52,7 +52,7 @@
 				</div>
 				<div class="H-flex-item" tapmode="font-active" onclick="openWin('my_wallet_head','./my_wallet/my_wallet_head.html');">
 					<div class="H-padding-vertical-bottom-8"></div>
-					<div class="H-font-size-18 H-theme-font-color-white H-horizontal-center">
+					<div class="H-font-size-18 H-theme-font-color-white H-horizontal-center" id="ding">
 						￥0.00
 					</div>
 					<div class="H-font-size-12 H-theme-font-color-white H-horizontal-center">
@@ -115,9 +115,23 @@
 				//alert(JSON.stringify(user));
 				if (ret && ret.value) {
 					var user = eval('(' + ret.value + ')');
-					$("#userTel").html(user[0].phone_number);
+					//请求用户信息接口
+					$xy.ajax(function(ret, err) {
+						if (ret.success) {
+							$("#userTel").html(ret.data[0].phone_number);
+							$("#ding").html(ret.data[0].orient_overage);
+							$("#pu").html(ret.data[0].account_overage);
+							$("#nums").html(ret.data[0].wash_total);
+						} else {
+							api.toast({
+								msg : ret.message
+							});
+						}
+					}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
+					//用户已登录的情况
 					userType = 1;
 				} else {
+					//用户未登录的情况
 					userType = 2;
 				}
 			});
