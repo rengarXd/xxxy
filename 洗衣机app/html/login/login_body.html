@@ -246,7 +246,11 @@
 						retInfo = ret.data;
 						if (ret.data[0].uuid) {
 							//存储用户数据
-							$xy.userlogInfo(retInfo);
+							//							$xy.userlogInfo(retInfo);
+							api.execScript({
+								name : 'main',
+								script : 'initInfo();'
+							});
 							//初始化推送
 							if (systemtype != "ios") {
 								//初始化android推送
@@ -254,10 +258,10 @@
 									if (ret && ret.status) {
 										//注册设备
 										jpush.getRegistrationId(function(ret) {
-											console.log(JSON.stringify(ret));
+											//console.log(JSON.stringify(ret));
 											var registrationId = ret.id;
 											$xy.ajax(function(ret, err) {
-												console.log("绑定成功！");
+												//console.log("绑定成功！");
 												//登录成功对话框
 												alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
 													if (ret.eventType == 'left') {
