@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
@@ -16,7 +15,6 @@
 			}
 		</style>
 	</head>
-
 	<body>
 		<div id="dengdai" class="H-position-absolute H-position-center-all" id="statuss">
 			<div class="H-font-size-14 H-text-align-center">
@@ -83,26 +81,26 @@
 			</div>
 			<footer class="H-footer H-padding-15 ">
 				<button tapmode="H-touch-active" onclick="exit();" class="xy_login_btn H-margin-vertical-top-10 H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
-				退出登录
-			</button>
+					退出登录
+				</button>
 			</footer>
 		</div>
 		<script type="text/javascript" src="../../script/xy.js"></script>
 		<script type="text/javascript" src="../../script/zepto.min.js"></script>
 		<script type="text/javascript" src="../../script/uploadimg/upImg.js"></script>
 		<script type="text/javascript">
-			var HeadPortrait = null,
-				NickName = null,
-				SchoolName = null,
-				Grade = null,
-				DormRoom = null;
+			var HeadPortrait = null, NickName = null, SchoolName = null, Grade = null, DormRoom = null;
 			var id = null;
 			var textname = null;
-
+			var wash_user_id = null;
+			var uuid = null;
 			apiready = function() {
+				// 引入过滤压缩模块
+				imageFilter = api.require("imageFilter");
 				initPage();
 			};
-			Zepto(function($) {});
+			Zepto(function($) {
+			});
 			// 初始化页面
 			function initPage() {
 				//				api.getPrefs({
@@ -117,19 +115,19 @@
 				//				});
 				//初始化页面获取个人信息
 				api.getPrefs({
-					key: 'userinfo'
+					key : 'userinfo'
 				}, function(ret, err) {
-					if(ret && ret.value) {
+					if (ret && ret.value) {
 						user = eval('(' + ret.value + ')');
 						wash_user_id = user[0].wash_user_id;
 						uuid = user[0].uuid;
 						$xy.ajax(function(ret, err) {
 							//api.hideProgress();
-							if(ret) {
+							if (ret) {
 								console.log(JSON.stringify(ret));
 								//$("#nonetwork").hide();
 								api.refreshHeaderLoadDone();
-								if(ret.success) {
+								if (ret.success) {
 									//console.log(JSON.stringify(ret));
 									document.getElementById('phone_number').innerHTML = ret.data[0].phone_number;
 									document.getElementById('nicknamename').innerHTML = ret.data[0].pet_name;
@@ -139,12 +137,10 @@
 									//document.getElementById('dormitory_buildingname').innerHTML = textname;
 									$("#dengdai").css("display", "none");
 									$("#xiangqing").css("display", "block");
-
 								} else {
 									//console.log(JSON.stringify(ret));
-
 									api.toast({
-										msg: '很抱歉，网络异常！'
+										msg : '很抱歉，网络异常！'
 									});
 								}
 							} else {
@@ -155,20 +151,20 @@
 						$("#jiazai").html("暂无订单");
 					}
 				});
-
 			}
 
 			function openPwd() {
 				api.openWin({
-					name: 'pwd_set_head',
-					url: './setting/pwd_set_head.html',
-					bounces: false,
-					delay: 0,
-					slidBackEnabled: true,
-					vScrollBarEnabled: false,
-					hScrollBarEnabled: false
+					name : 'pwd_set_head',
+					url : './setting/pwd_set_head.html',
+					bounces : false,
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false,
+					hScrollBarEnabled : false
 				});
 			}
+
 			//修改年级
 			function openPick() {
 				var id = "grade";
@@ -176,27 +172,25 @@
 				var date = new Date();
 				var year = date.getFullYear();
 				api.actionSheet({
-					title: '年级',
-					cancelTitle: '取消',
-					buttons: [year - 4 + '级', year - 3 + '级', year - 2 + '级', year - 1 + '级', year + '级']
+					title : '年级',
+					cancelTitle : '取消',
+					buttons : [year - 4 + '级', year - 3 + '级', year - 2 + '级', year - 1 + '级', year + '级']
 				}, function(ret, err) {
-
 					var index = ret.buttonIndex;
-					if(index <= 5) {
+					if (index <= 5) {
 						console.log(index);
 						//alert(year - 5 + index + '级');
 						textname = year - 5 + index + '级';
 						document.getElementById('gradename').innerHTML = textname;
 						ajax(id, textname);
 					}
-
 					//ajax(id, textname);
 					//					switch(index) {
 					//						case 1:
 					//							alert(year - 4 + '级');
 					//							textname=year - 4 + '级'
 					//							ajax(id, textname);
-					//							
+					//
 					//							break;
 					//						case 2:
 					//							alert(year - 3 + '级');
@@ -211,61 +205,153 @@
 					//							alert(year  + '级');
 					//							break;
 					//					}
-
 				});
+			}
+
+			// 图片压缩
+			// imgsrc：源图片的路径
+			// quality：图片压缩质量，一般建议0.5
+			// scale：图片压缩比例，也是建议0.5
+			// ext：源图片拓展名
+			// callback：转换成功之后回调函数
+			function imgCompress(imgsrc, quality, scale, ext, callback) {
+				// 压缩文件的保存目录
+				var savePath = api.cacheDir + "/" + getNowFormatDate() + "/";
+				// 压缩文件生成的随机文件名称
+				var savename = NewGuid() + "." + ext;
+				imageFilter.compress({
+					img : imgsrc,
+					quality : quality,
+					scale : quality,
+					save : {
+						album : false,
+						imgPath : savePath,
+						imgName : savename
+					}
+				}, function(ret, err) {
+					if (ret) {
+						callback(savePath + savename);
+					} else {
+						api.toast({
+							msg : JSON.stringify(err)
+						});
+					}
+				});
+			}
+
+			//生成随机文件名
+			function NewGuid() {
+				function S4() {
+					return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+				}
+
+				return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+			}
+
+			//获取当前时间
+			function getNowFormatDate() {
+				var date = new Date();
+				var seperator1 = "-";
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var strDate = date.getDate();
+				if (month >= 1 && month <= 9) {
+					month = "0" + month;
+				}
+				if (strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				var currentdate = year + seperator1 + month + seperator1 + strDate
+				return currentdate;
+			}
+
+			// 获取文件拓展名
+			function getExt(fileName) {
+				return fileName.substring(fileName.lastIndexOf('.') + 1);
 			}
 
 			function setvatar() {
 				api.actionSheet({
-					title: '请选择您要上传头像的方式',
-					cancelTitle: '取消',
-					buttons: ['拍照', '相册']
+					title : '请选择您要上传头像的方式',
+					cancelTitle : '取消',
+					buttons : ['拍照', '相册']
 				}, function(ret, err) {
-					if(ret) {
+					if (ret) {
 						switch(ret.buttonIndex) {
 							case 1:
 								//拍照处理
 								api.getPicture({
-									sourceType: 'camera',
-									encodingType: 'jpg',
-									mediaValue: 'pic',
-									destinationType: 'url',
-									allowEdit: true,
-									quality: 50,
-									targetWidth: 300,
-									targetHeight: 200,
-									saveToPhotoAlbum: false
+									sourceType : 'camera',
+									encodingType : 'jpg',
+									mediaValue : 'pic',
+									destinationType : 'url',
+									allowEdit : true,
+									quality : 50,
+									targetWidth : 300,
+									targetHeight : 200,
+									saveToPhotoAlbum : false
 								}, function(ret, err) {
-									if(ret) {
+									if (ret) {
 										var returnUrl = ret.data;
 										console.log(returnUrl);
-										$("#nopic").attr("src", returnUrl);
+										//$("#nopic").attr("src", returnUrl);
+										//压缩图片
+										imgCompress(returnUrl, 0.5, 0.5, getExt(returnUrl), function(compressImg) {
+											$("#nopic").attr("src", compressImg);
+											postHeadPortrait({
+												wash_user_id : wash_user_id,
+												uuid : uuid,
+												head_portrait : compressImg
+											}, function(ret, err) {
+												if (ret.success) {
+													console.log(JSON.stringify(ret));
+												} else {
+													api.toast({
+														msg : '网络异常，请稍后重试'
+													});
+												}
+											});
+										});
 									} else {
 										api.toast({
-											msg: JSON.stringify(err)
+											msg : JSON.stringify(err)
 										});
 									}
 								});
 								break;
 							case 2:
 								api.getPicture({
-									sourceType: 'library',
-									encodingType: 'jpg',
-									mediaValue: 'pic',
-									destinationType: 'url',
-									allowEdit: true,
-									quality: 50,
-									targetWidth: 100,
-									targetHeight: 100,
-									saveToPhotoAlbum: false
+									sourceType : 'library',
+									encodingType : 'jpg',
+									mediaValue : 'pic',
+									destinationType : 'url',
+									allowEdit : true,
+									quality : 50,
+									targetWidth : 100,
+									targetHeight : 100,
+									saveToPhotoAlbum : false
 								}, function(ret, err) {
-									if(ret) {
+									if (ret) {
 										var returnUrl = ret.data;
-
-										$("#nopic").attr("src", returnUrl);
+										//$("#nopic").attr("src", returnUrl);
+										//压缩图片
+										imgCompress(returnUrl, 0.5, 0.5, getExt(returnUrl), function(compressImg) {
+											$("#nopic").attr("src", compressImg);
+											postHeadPortrait({
+												head_portrait : compressImg
+											}, function(ret, err) {
+												if (ret.success) {
+													console.log(JSON.stringify(ret));
+												} else {
+													api.toast({
+														msg : '网络异常，请稍后重试'
+													});
+												}
+											});
+										});
 									} else {
 										api.toast({
-											msg: JSON.stringify(err)
+											msg : JSON.stringify(err)
 										});
 									}
 								});
@@ -273,9 +359,35 @@
 						};
 					} else {
 						api.toast({
-							msg: ''
+							msg : ''
 						});
 					}
+				});
+			}
+
+			//发送图片
+			function postHeadPortrait(datas, callback) {
+				api.getPrefs({
+					key : 'userinfo'
+				}, function(ret, err) {
+					if (ret && ret.value) {
+						user = eval('(' + ret.value + ')');
+						wash_user_id = user[0].wash_user_id;
+						uuid = user[0].uuid;						
+					}
+				});
+				$xy.Pajax(function(ret, err) {
+					console.log(wash_user_id);
+					console.log(uuid);
+					api.hideProgress();
+					if (ret) {
+						console.log(JSON.stringify(ret));
+					} else {
+						alert("err====" + err.message);
+						console.log(JSON.stringify(ret));
+					}
+				}, 'editUserinfo&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '', 'post', {
+					files : datas
 				});
 			}
 
@@ -284,98 +396,97 @@
 				var id = id;
 				var dialogBox = api.require('dialogBox');
 				dialogBox.input({
-					keyboardType: 'default',
-					texts: {
-						title: '请输入想要修改的信息',
-						placeholder: '',
-						leftBtnTitle: '取消',
-						rightBtnTitle: '确定'
+					keyboardType : 'default',
+					texts : {
+						title : '请输入想要修改的信息',
+						placeholder : '',
+						leftBtnTitle : '取消',
+						rightBtnTitle : '确定'
 					},
-					styles: {
-						bg: '#fff',
-						w: 300,
-						h: 150,
-						title: {
-							h: 20,
-							alignment: 'center',
-							size: 14,
-							color: '#000',
-							marginT: 40
-								//marginT: 10
+					styles : {
+						bg : '#fff',
+						w : 300,
+						h : 150,
+						title : {
+							h : 20,
+							alignment : 'center',
+							size : 14,
+							color : '#000',
+							marginT : 40
+							//marginT: 10
 						},
-						input: {
-							h: 20,
-							marginUD: 3,
-							textSize: 14,
-							textColor: '#000'
+						input : {
+							h : 20,
+							marginUD : 3,
+							textSize : 14,
+							textColor : '#000'
 						},
-						dividingLine: {
-							width: 0.5,
-							color: '#696969'
+						dividingLine : {
+							width : 0.5,
+							color : '#696969'
 						},
-						left: {
-							marginB: 0,
-							marginL: 0,
-							w: 150,
-							h: 200,
-							bg: '#fff',
-							color: '#cacaca',
-							size: 15
+						left : {
+							marginB : 0,
+							marginL : 0,
+							w : 150,
+							h : 200,
+							bg : '#fff',
+							color : '#cacaca',
+							size : 15
 						},
-						right: {
-							marginB: 0,
-							marginL: 0,
-							w: 150,
-							h: 200,
-							bg: '#119ed1',
-							color: '#fff',
-							size: 15
+						right : {
+							marginB : 0,
+							marginL : 0,
+							w : 150,
+							h : 200,
+							bg : '#119ed1',
+							color : '#fff',
+							size : 15
 						}
 					}
 				}, function(ret) {
-					if(ret.eventType == 'right') {
+					if (ret.eventType == 'right') {
 						var textname = ret.text
-
 						//昵称
-						if(id == pet_name) {
+						if (id == pet_name) {
 							id = "pet_name";
 							ajax(id, textname);
 							document.getElementById('nicknamename').innerHTML = textname;
 						}
 						//学校
-						if(id == locality_university) {
+						if (id == locality_university) {
 							id = "locality_university";
 							ajax(id, textname);
 							document.getElementById('schoolname').innerHTML = textname;
 						}
 						//宿舍楼栋
-						if(id == dormitory_building) {
+						if (id == dormitory_building) {
 							id = "dormitory_building";
 							ajax(id, textname);
 							document.getElementById('dormitory_buildingname').innerHTML = textname;
 						}
-
 						//关闭弹出框
 						dialogBox.close({
-							dialogName: 'input'
+							dialogName : 'input'
 						});
 					}
-					if(ret.eventType == 'left') {
+					if (ret.eventType == 'left') {
 						//var dialogBox = api.require('dialogBox');
 						dialogBox.close({
-							dialogName: 'input'
+							dialogName : 'input'
 						});
 					}
 				});
 			}
+
 			//修改昵称提交服务器
 			function ajax(id, textname) {
 				var id = id;
 				var textname = textname;
 				api.getPrefs({
-					key: 'userinfo'
+					key : 'userinfo'
 				}, function(ret, err) {
-					if(ret && ret.value) {
+					if (ret && ret.value) {
 						user = eval('(' + ret.value + ')');
 						wash_user_id = user[0].wash_user_id;
 						uuid = user[0].uuid;
@@ -383,22 +494,21 @@
 						console.log(textname);
 						$xy.ajax(function(ret, err) {
 							//api.hideProgress();
-							if(ret) {
+							if (ret) {
 								console.log(JSON.stringify(ret));
 								//$("#nonetwork").hide();
 								api.refreshHeaderLoadDone();
-								if(ret.success) {
+								if (ret.success) {
 									//console.log(JSON.stringify(ret));
 									//									api.alert({
 									//										msg: JSON.stringify(ret)
 									//
 									//									});
-
 								} else {
 									//console.log(JSON.stringify(ret));
 									$("#jiazai").html("暂无订单");
 									api.toast({
-										msg: '很抱歉，您可能没有订单！'
+										msg : '很抱歉，您可能没有订单！'
 									});
 								}
 							} else {
@@ -416,18 +526,18 @@
 			//退出登录
 			function exit() {
 				api.confirm({
-					title: '温馨提示',
-					msg: '您确定要退出登录吗？',
-					buttons: ['取消', '确定']
+					title : '温馨提示',
+					msg : '您确定要退出登录吗？',
+					buttons : ['取消', '确定']
 				}, function(ret, err) {
-					if(ret.buttonIndex == 2) {
+					if (ret.buttonIndex == 2) {
 						api.removePrefs({
-							key: 'userinfo'
+							key : 'userinfo'
 						});
 						api.execScript({
-							name: 'main',
-							frameName: 'me_index',
-							script: 'reload();'
+							name : 'main',
+							frameName : 'me_index',
+							script : 'reload();'
 						});
 						//延时关闭窗口
 						setTimeout(function() {
@@ -438,5 +548,4 @@
 			}
 		</script>
 	</body>
-
 </html>
