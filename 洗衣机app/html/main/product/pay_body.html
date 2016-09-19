@@ -57,7 +57,7 @@
 			</div>
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i payway="2" class="iconfont payway  H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
 		</div>
-		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this);">
+		<div id="ptye_html" class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this);">
 			<div class="H-flex-item H-padding-horizontal-both-15  H-padding-vertical-both-12">
 				<span class="color-22a5f9 H-font-size-18" id="ptye">0.00元</span>
 			</div>
@@ -135,7 +135,11 @@
 									$xy.ajax(function(ret, err) {
 										if (ret) {
 											//alert(JSON.stringify(ret));
-											document.getElementById('ptye').innerHTML = ret.data[0].account_overage + '元';
+											if (parseFloat(ret.data[0].account_overage) > parseFloat(product.movement_money)) {
+												document.getElementById('ptye').innerHTML = ret.data[0].account_overage + '元';
+											} else {
+												document.getElementById('ptye_html').style.display = "none";
+											}
 										} else {
 											api.toast({
 												msg : '请检查网络并刷新该页面'
