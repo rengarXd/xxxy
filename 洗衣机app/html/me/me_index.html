@@ -39,7 +39,7 @@
 				<span class="H-theme-font-color-white">共洗衣<span id="nums">0</span>次</span>
 			</div>
 			<div class="H-flexbox-horizontal">
-				<div class="H-flex-item" tapmode="font-active" onclick="openWin('my_wallet_head','./my_wallet/my_wallet_head.html');">
+				<div class="H-flex-item" tapmode="font-active" onclick="openWalletWin();">
 					<div class="H-padding-vertical-bottom-8"></div>
 					<div>
 						<div class="H-font-size-18 H-theme-font-color-white H-horizontal-center" id="pu">
@@ -50,7 +50,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="H-flex-item" tapmode="font-active" onclick="openWin('my_wallet_head','./my_wallet/my_wallet_head.html');">
+				<div class="H-flex-item" tapmode="font-active" onclick="openWalletWin();">
 					<div class="H-padding-vertical-bottom-8"></div>
 					<div class="H-font-size-18 H-theme-font-color-white H-horizontal-center" id="ding">
 						￥0.00
@@ -102,7 +102,7 @@
 	<script type="text/javascript" src="../../script/xy.js"></script>
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript">
-		var userType = null;
+		var userType = null, userMsg = null;
 		apiready = function() {
 			api.parseTapmode();
 			initPref();
@@ -115,19 +115,28 @@
 				//alert(JSON.stringify(user));
 				if (ret && ret.value) {
 					var user = eval('(' + ret.value + ')');
+					$("#userTel").html(user[0].phone_number);
+					$("#ding").html(user[0].orient_overage);
+					$("#pu").html(user[0].account_overage);
+					$("#nums").html(user[0].wash_total);
+					//					$("#userTel").html(userMsg.phone_number);
+					//					$("#ding").html(userMsg.orient_overage);
+					//					$("#pu").html(userMsg.account_overage);
+					//					$("#nums").html(userMsg.wash_total);
 					//请求用户信息接口
-					$xy.ajax(function(ret, err) {
-						if (ret.success) {
-							$("#userTel").html(ret.data[0].phone_number);
-							$("#ding").html(ret.data[0].orient_overage);
-							$("#pu").html(ret.data[0].account_overage);
-							$("#nums").html(ret.data[0].wash_total);
-						} else {
-							api.toast({
-								msg : ret.message
-							});
-						}
-					}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
+					//					$xy.ajax(function(ret, err) {
+					//						if (ret.success) {
+					//							userMsg = ret.data[0];
+					//						} else {
+					//							api.toast({
+					//								msg : ret.message
+					//							});
+					//							$("#userTel").html(user[0].phone_number);
+					//							$("#ding").html(user[0].orient_overage);
+					//							$("#pu").html(user[0].account_overage);
+					//							$("#nums").html(user[0].wash_total);
+					//						}
+					//					}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
 					//用户已登录的情况
 					userType = 1;
 				} else {
@@ -180,23 +189,35 @@
 			});
 		}
 
-		//		function openHelpCenter() {
-		//			api.openWin({
-		//				name : 'help_center_head',
-		//				url : './help_center/help_center_head.html',
-		//				bounces : false,
-		//				delay : 0,
-		//			});
-		//		}
+		//				function openHelpCenter() {
+		//					api.openWin({
+		//						name : 'help_center_head',
+		//						url : './help_center/help_center_head.html',
+		//						bounces : false,
+		//						delay : 0,
+		//					});
+		//				}
 		//
-		//		function openMyWallet() {
-		//			api.openWin({
-		//				name : 'my_wallet_head',
-		//				url : './my_wallet/my_wallet_head.html',
-		//				bounces : false,
-		//				delay : 0,
-		//			});
-		//		}
+		function openWalletWin() {
+			api.openWin({
+				name : 'my_wallet_head',
+				url : './my_wallet/my_wallet_head.html',
+				pageParam : {
+					data : userMsg
+				},
+				bounces : false,
+				delay : 0,
+				slidBackEnabled : true,
+				vScrollBarEnabled : false,
+				hScrollBarEnabled : false,
+				animation : {
+					type : "none", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 0 //动画过渡时间，默认300毫秒
+				}
+			});
+		}
+
 		function reload() {
 			location.reload();
 		}
