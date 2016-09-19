@@ -29,11 +29,8 @@
 				border: 1px solid #ff6600;
 				background-color: white;
 				border-radius: 50px;
-				
 				color: #ff6600;
 			}
-				
-			
 			.img-icon {
 				width: 45px;
 				height: 40px;
@@ -43,54 +40,46 @@
 	<body>
 		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1">
 			<div class="ziti H-text-show-row-1  H-font-size-14 H-padding-10 H-padding-vertical-both-12 ziti">
-				当前账户余额<span>78</span>元 ，其中：
+				当前账户余额共计<span id="total">0</span>元 ，其中：
 			</div>
 		</div>
 		<div class=" H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1 ">
 			<div class=" H-text-show-row-1  H-font-size-20 H-padding-10  ziti hongse" style="width: 25%;">
-				50.00<span class="H-font-size-14">元</span>
+				<span id="balance">0.00</span><span class="H-font-size-14">元</span>
 			</div>
 			<div class=" H-text-show-row-1  H-font-size-14 H-padding-10  ziti" style="width:40%;">
 				通用余额
 			</div>
-			<div class="H-padding-10" style="line-height: 21px;" onclick="openDiscountRecharge();">
+			<div class="H-padding-10" style="line-height: 21px;" onclick="openRecharge();">
 				<button class="H-font-size-14 H-border-none chongzhi_btnn">
 					&nbsp;充&nbsp;值&nbsp;
 				</button>
 			</div>
 		</div>
-		<div class=" H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1 ">
-			<div class=" H-text-show-row-1  H-font-size-20 H-padding-10  ziti lanse" style="width: 25%;">
-				50.00<span class="H-font-size-14">元</span>
+		<div id="overage_html">
+			<div class=" H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1 ">
+				<div class=" H-text-show-row-1  H-font-size-20 H-padding-10  ziti lanse" style="width: 25%;">
+					50.00<span class="H-font-size-14">元</span>
+				</div>
+				<div class=" H-text-show-row-1  H-font-size-14 H-padding-10 H-padding-vertical-both-12 huise">
+					郑州大学定向余额
+				</div>
 			</div>
-			<div class=" H-text-show-row-1  H-font-size-14 H-padding-10 H-padding-vertical-both-12 huise">
-				郑州大学定向余额
-			</div>
-			<div class="H-padding-20" style=""></div>
-		</div>
-		<div class=" H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1 ">
-			<div class=" H-text-show-row-1  H-font-size-20 H-padding-10  ziti lanse" style="width: 25%;">
-				50.00<span class="H-font-size-14">元</span>
-			</div>
-			<div class=" H-text-show-row-1  H-font-size-14 H-padding-10 H-padding-vertical-both-12 huise">
-				郑州大学定向余额
-			</div>
-			<div class="H-padding-20" style=""></div>
 		</div>
 		<div id="record_list"></div>
 		<script id="record_list_item" type="text/html">
-			{{# for(var i=0,len=d.length;i<len;i++) { }} 
-				{{# if(i==0){ }} 
-				{{# var str=d [i].reader_time; }} 
-				{{# var month=str.substring(5, 7); }} 
-				<div id="monthnumber" style="" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
+			{{# for(var i=0,len=d.length;i<len;i++) { }}
+			{{# if(i==0){ }}
+			{{# var str=d [i].reader_time; }}
+			{{# var month=str.substring(5, 7); }}
+			<div id="monthnumber" style="" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
 			{{ month }}月订单
 			</div>
-			{{# } }} {{# if(i>0){ }} 
-			{{# var str1 = d[i].reader_time; }} 
-			{{# var monthnow = str1.substring(5,7); }} 
+			{{# } }} {{# if(i>0){ }}
+			{{# var str1 = d[i].reader_time; }}
+			{{# var monthnow = str1.substring(5,7); }}
 			{{# var str2 = d[i-1].reader_time; }}
-			{{# var monthprevious = str2.substring(5,7); }} 
+			{{# var monthprevious = str2.substring(5,7); }}
 			{{# if(monthnow == monthprevious) { }}
 			<div style="" class="H-margin-vertical-bottom-2">
 			</div>
@@ -99,8 +88,7 @@
 			{{ monthnow }}月订单
 			</div>
 			{{# } }} {{# } }}
-			
-			<div class="H-theme-font-color-999 H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active  H-margin-vertical-bottom-2" tapmode="H-touch-active" onclick="open_order_details('{{ d[i].order_id }}');">
+			<div class="H-theme-font-color-999 H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active  H-margin-vertical-bottom-2">
 			<div class=" H-flexbox-vertical H-margin-horizontal-left-15  H-font-size-15 ">
 			{{# var myDate = new Date(); var thisYear=myDate.getFullYear(); var thisMonth=myDate.getMonth()+1; var thisDay=myDate.getDate(); var previousDay=thisDay-1;}} {{# var strtime = d[i].reader_time; var readerYear = strtime.substring(0,4); var readerMonth = strtime.substring(5,7); var readerDay = strtime.substring(8,10); var readerTime = strtime.substring(11,16); }} {{# if(thisYear==readerYear && thisMonth==readerMonth && thisDay==readerDay){ }}
 			<span class=" H-font-size-16 H-center-all">今天</span><span class="tip-message H-font-size-12 H-float-right H-center-all">{{ readerTime }}</span> {{# }else if(thisYear==readerYear && thisMonth==readerMonth && previousDay==readerDay){ }}
@@ -151,16 +139,32 @@
 		</div>
 		</div>
 		</div>-->
+		<script type="text/html" id="overage_data">
+			{{# for(var i=0,len=d.length;i<len;i++) { }}
+			<div class=" H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1 ">
+			<div class=" H-text-show-row-1  H-font-size-20 H-padding-10  ziti lanse" style="width: 25%;">
+			{{ d[i].user_sum }}<span class="H-font-size-14">元</span>
+			</div>
+			<div class=" H-text-show-row-1  H-font-size-14 H-padding-10 H-padding-vertical-both-12 huise">
+			{{ d[i].orientact_name }}
+			</div>
+			<div class="H-padding-20" style=""></div>
+			</div>
+			{{# } }}
+		</script>
 		<script type="text/javascript" src="../../../script/xy.js"></script>
-		<script type="text/javascript" src="../../../script/zepto.min.js"></script>
+		<!--		<script type="text/javascript" src="../../../script/zepto.min.js"></script>-->
 		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
-		<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>
-		<script type="text/javascript" src="../../../script/api.js"></script>
+		<!--		<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>-->
+		<!--		<script type="text/javascript" src="../../../script/api.js"></script>-->
 		<script type="text/javascript">
-			var user = null;
-			var wash_user_id = null;
-			var uuid = null;
+			var user = null, uuid = null, wash_user_id = null, data = null;
 			apiready = function() {
+				//从上一页面传来的参数
+				data = api.pageParam.data;
+				console.log(JSON.stringify(data));
+				document.getElementById('balance').innerHTML = data.account_overage;
+				document.getElementById('total').innerHTML = parseFloat(data.orient_overage) + parseFloat(data.account_overage);
 				initPage();
 			};
 			function initPage() {
@@ -173,6 +177,32 @@
 						uuid = user[0].uuid;
 						$xy.ajax(function(ret, err) {
 							//api.hideProgress();
+							if (ret.success) {
+								//console.log(JSON.stringify(ret));
+								if (ret.data.length == 0) {
+									//当没有订单时的处理
+									var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无记录</div></div></div>';
+									document.getElementById('order_list').innerHTML = htmls;
+								} else {
+									console.log(JSON.stringify(ret));
+									var tpl = document.getElementById('overage_data').innerHTML;
+									//读取模版
+									//方式一：异步渲染（推荐）
+									laytpl(tpl).render(ret.data, function(render) {
+										api.hideProgress();
+										document.getElementById('overage_html').innerHTML = render;
+									});
+								}
+							} else {
+								//console.log(JSON.stringify(ret));
+								//$("#jiazai").html("暂无订单");
+								api.toast({
+									msg : ret.message
+								});
+							}
+						}, 'appOverage&funid=wash_user_dxye&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
+						$xy.ajax(function(ret, err) {
+							//api.hideProgress();
 							if (ret) {
 								console.log(JSON.stringify(ret));
 								//$("#nonetwork").hide();
@@ -180,9 +210,9 @@
 								if (ret.success) {
 									//console.log(JSON.stringify(ret));
 									if (ret.data.length == 0) {
-										//当洗衣机数量为空时的处理
-										//var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无订单</div></div></div>';
-										//document.getElementById('order_list').innerHTML = htmls;
+										//当没有订单时的处理
+										var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无记录</div></div></div>';
+										document.getElementById('order_list').innerHTML = htmls;
 									} else {
 										console.log(JSON.stringify(ret));
 										var tpl = document.getElementById('record_list_item').innerHTML;
@@ -209,16 +239,8 @@
 				});
 			}
 
-			function openHelpCenterText() {
-				api.openWin({
-					name : 'help_center_text_head',
-					url : './help_center_text/help_center_text_head.html',
-					bounces : false,
-					delay : 0,
-				});
-			}
-
-			function openDiscountRecharge() {
+			//打开通用余额充值页
+			function openRecharge() {
 				api.openWin({
 					name : 'wallet_recharge_head',
 					url : 'wallet_recharge_head.html',
