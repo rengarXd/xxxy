@@ -167,8 +167,10 @@
 				//从上一页面传来的参数
 				data = api.pageParam.data;
 				console.log(JSON.stringify(data));
-				document.getElementById('balance').innerHTML = data.account_overage;
-				document.getElementById('total').innerHTML = parseFloat(data.orient_overage) + parseFloat(data.account_overage);
+				if (data.account_overage != "") {
+					document.getElementById('balance').innerHTML = data.account_overage;
+					document.getElementById('total').innerHTML = parseFloat(data.orient_overage) + parseFloat(data.account_overage);
+				}
 				initPage();
 			};
 			function initPage() {

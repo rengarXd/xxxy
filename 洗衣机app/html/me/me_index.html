@@ -205,23 +205,29 @@
 		//				}
 		//
 		function openWalletWin() {
-			api.openWin({
-				name : 'my_wallet_head',
-				url : './my_wallet/my_wallet_head.html',
-				pageParam : {
-					data : user[0]
-				},
-				bounces : false,
-				delay : 0,
-				slidBackEnabled : true,
-				vScrollBarEnabled : false,
-				hScrollBarEnabled : false,
-				animation : {
-					type : "none", //动画类型（详见动画类型常量）
-					subType : "from_right", //动画子类型（详见动画子类型常量）
-					duration : 0 //动画过渡时间，默认300毫秒
-				}
-			});
+			if (user) {
+				api.openWin({
+					name : 'my_wallet_head',
+					url : './my_wallet/my_wallet_head.html',
+					pageParam : {
+						data : user[0]
+					},
+					bounces : false,
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false,
+					hScrollBarEnabled : false,
+					animation : {
+						type : "none", //动画类型（详见动画类型常量）
+						subType : "from_right", //动画子类型（详见动画子类型常量）
+						duration : 0 //动画过渡时间，默认300毫秒
+					}
+				});
+			}else{
+				api.toast({
+	                msg:'请点击头像先进行登录'
+                });
+			}
 		}
 
 		function reload() {
