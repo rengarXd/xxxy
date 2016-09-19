@@ -374,7 +374,7 @@
 					if (ret && ret.value) {
 						user = eval('(' + ret.value + ')');
 						wash_user_id = user[0].wash_user_id;
-						uuid = user[0].uuid;						
+						uuid = user[0].uuid;
 					}
 				});
 				$xy.Pajax(function(ret, err) {
@@ -532,18 +532,28 @@
 					buttons : ['取消', '确定']
 				}, function(ret, err) {
 					if (ret.buttonIndex == 2) {
-						api.removePrefs({
-							key : 'userinfo'
+						var ajpush = api.require('ajpush');
+						ajpush.stopPush(function(ret) {
+							if (ret && ret.status) {
+								//success
+								api.removePrefs({
+									key : 'userinfo'
+								});
+								api.execScript({
+									name : 'main',
+									frameName : 'me_index',
+									script : 'reload();'
+								});
+								//延时关闭窗口
+								setTimeout(function() {
+									api.closeWin();
+								}, 500);
+							} else {
+								api.toast({
+									msg : '退出失败'
+								});
+							}
 						});
-						api.execScript({
-							name : 'main',
-							frameName : 'me_index',
-							script : 'reload();'
-						});
-						//延时关闭窗口
-						setTimeout(function() {
-							api.closeWin();
-						}, 500);
 					}
 				});
 			}
