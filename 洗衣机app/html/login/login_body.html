@@ -238,7 +238,6 @@
 				title : "登录中"
 			});
 			$xy.ajax(function(ret, err) {
-				api.hideProgress();
 				if (ret) {
 					//$("#nonetwork").hide();
 					if (ret.success) {
@@ -246,7 +245,9 @@
 						retInfo = ret.data;
 						if (ret.data[0].uuid) {
 							//存储用户数据
-							//							$xy.userlogInfo(retInfo);
+							$xy.userlogInfo(retInfo);
+							api.hideProgress();
+							//执行main页面获取用户信息的函数
 							api.execScript({
 								name : 'main',
 								script : 'initInfo();'
@@ -262,30 +263,36 @@
 											var registrationId = ret.id;
 											$xy.ajax(function(ret, err) {
 												//console.log("绑定成功！");
-												//登录成功对话框
-												alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
-													if (ret.eventType == 'left') {
-														var dialogBox = api.require('dialogBox');
-														dialogBox.close({
-															dialogName : 'alert'
-														});
-														api.closeWin();
-													} else {
-														var dialogBox = api.require('dialogBox');
-														dialogBox.close({
-															dialogName : 'alert'
-														});
-														api.openWin({
-															name : 'user_set_head',
-															url : '../me/user_set_head.html',
-															bounces : false,
-															delay : 0,
-														});
-														setTimeout(function() {
+												if (ret) {
+													//登录成功对话框
+													alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
+														if (ret.eventType == 'left') {
+															var dialogBox = api.require('dialogBox');
+															dialogBox.close({
+																dialogName : 'alert'
+															});
 															api.closeWin();
-														}, 1000);
-													}
-												});
+														} else {
+															var dialogBox = api.require('dialogBox');
+															dialogBox.close({
+																dialogName : 'alert'
+															});
+															api.openWin({
+																name : 'user_set_head',
+																url : '../me/user_set_head.html',
+																bounces : false,
+																delay : 0,
+															});
+															setTimeout(function() {
+																api.closeWin();
+															}, 1000);
+														}
+													});
+												} else {
+													api.toast({
+														msg : '连接失败，请重新登录'
+													});
+												}
 											}, 'updateRegistration&funid=wash_user&registrationId=' + registrationId + '&wash_user_id=' + retInfo[0].wash_user_id + '&uuid=' + retInfo[0].uuid);
 										});
 									}
@@ -296,6 +303,7 @@
 								jpush.getRegistrationId(function(ret) {
 									var registrationId = ret.id;
 									$xy.ajax(function(ret, err) {
+										api.hideProgress();
 										//                                  console.log("绑定成功！");
 										//登录成功对话框
 										alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
@@ -325,6 +333,7 @@
 								});
 							}
 						} else {
+							api.hideProgress();
 							//登录成功对话框
 							alertLog('登录失败', '由于您长时间未登录须进行身份验证', '取消', '继续', function(ret) {
 								if (ret.eventType == 'left') {
@@ -352,11 +361,13 @@
 							});
 						}
 					} else {
+						api.hideProgress();
 						api.toast({
 							msg : ret.message
 						});
 					}
 				} else {
+					api.hideProgress();
 					api.toast({
 						msg : '连接失败，请检查网络配置'
 					});
