@@ -247,30 +247,79 @@
 						if (ret.data[0].uuid) {
 							//存储用户数据
 							$xy.userlogInfo(retInfo);
-							//登录成功对话框
-							alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
-								if (ret.eventType == 'left') {
-									var dialogBox = api.require('dialogBox');
-									dialogBox.close({
-										dialogName : 'alert'
-									});
-									api.closeWin();
-								} else {
-									var dialogBox = api.require('dialogBox');
-									dialogBox.close({
-										dialogName : 'alert'
-									});
-									api.openWin({
-										name : 'user_set_head',
-										url : '../me/user_set_head.html',
-										bounces : false,
-										delay : 0,
-									});
-									setTimeout(function() {
-										api.closeWin();
-									}, 1000);
-								}
-							});
+							//初始化推送
+							if (systemtype != "ios") {
+								//初始化android推送
+								jpush.init(function(ret) {
+									if (ret && ret.status) {
+										//注册设备
+										jpush.getRegistrationId(function(ret) {
+											console.log(JSON.stringify(ret));
+											var registrationId = ret.id;
+											$xy.ajax(function(ret, err) {
+												console.log("绑定成功！");
+												//登录成功对话框
+												alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
+													if (ret.eventType == 'left') {
+														var dialogBox = api.require('dialogBox');
+														dialogBox.close({
+															dialogName : 'alert'
+														});
+														api.closeWin();
+													} else {
+														var dialogBox = api.require('dialogBox');
+														dialogBox.close({
+															dialogName : 'alert'
+														});
+														api.openWin({
+															name : 'user_set_head',
+															url : '../me/user_set_head.html',
+															bounces : false,
+															delay : 0,
+														});
+														setTimeout(function() {
+															api.closeWin();
+														}, 1000);
+													}
+												});
+											}, 'updateRegistration&funid=wash_user&registrationId=' + registrationId + '&wash_user_id=' + retInfo[0].wash_user_id + '&uuid=' + retInfo[0].uuid);
+										});
+									}
+								});
+							} else {
+								//适配ios推送
+								//注册设备
+								jpush.getRegistrationId(function(ret) {
+									var registrationId = ret.id;
+									$xy.ajax(function(ret, err) {
+										//                                  console.log("绑定成功！");
+										//登录成功对话框
+										alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
+											if (ret.eventType == 'left') {
+												var dialogBox = api.require('dialogBox');
+												dialogBox.close({
+													dialogName : 'alert'
+												});
+												api.closeWin();
+											} else {
+												var dialogBox = api.require('dialogBox');
+												dialogBox.close({
+													dialogName : 'alert'
+												});
+												api.openWin({
+													name : 'user_set_head',
+													url : '../me/user_set_head.html',
+													bounces : false,
+													delay : 0,
+												});
+												setTimeout(function() {
+													api.closeWin();
+												}, 1000);
+											}
+										});
+									}, 'updateRegistration&funid=wash_user&registrationId=' + registrationId + '&wash_user_id=' + retInfo[0].wash_user_id + '&uuid=' + retInfo[0].uuid);
+								});
+							}
 						} else {
 							//登录成功对话框
 							alertLog('登录失败', '由于您长时间未登录须进行身份验证', '取消', '继续', function(ret) {
@@ -298,30 +347,6 @@
 								}
 							});
 						}
-						//初始化推送
-						//							if (systemtype != "ios") {
-						//								//初始化android推送
-						//								jpush.init(function(ret) {
-						//									if (ret && ret.status) {
-						//										//注册设备
-						//										jpush.getRegistrationId(function(ret) {
-						//											var registrationId = ret.id;
-						//											$xy.ajax(function(ret, err) {
-						//												//                                  console.log("绑定成功！");
-						//											}, '...' + registrationId);
-						//										});
-						//									}
-						//								});
-						//							} else {
-						//								//适配ios推送
-						//								//注册设备
-						//								jpush.getRegistrationId(function(ret) {
-						//									var registrationId = ret.id;
-						//									$xy.ajax(function(ret, err) {
-						//										//                                  console.log("绑定成功！");
-						//									}, '...' + registrationId);
-						//								});
-						//							}
 					} else {
 						api.toast({
 							msg : ret.message
