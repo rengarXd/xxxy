@@ -102,7 +102,7 @@
 	<script type="text/javascript" src="../../script/xy.js"></script>
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript">
-		var userType = null, userMsg = null;
+		var userType = null, user = null;
 		apiready = function() {
 			api.parseTapmode();
 			initPref();
@@ -114,11 +114,17 @@
 			}, function(ret, err) {
 				//alert(JSON.stringify(user));
 				if (ret && ret.value) {
-					var user = eval('(' + ret.value + ')');
+					user = eval('(' + ret.value + ')');
 					$("#userTel").html(user[0].phone_number);
-					$("#ding").html(user[0].orient_overage);
-					$("#pu").html(user[0].account_overage);
-					$("#nums").html(user[0].wash_total);
+					if (user[0].orient_overage != "") {
+						$("#ding").html(user[0].orient_overage);
+					};
+					if (user[0].account_overage != "") {
+						$("#pu").html(user[0].account_overage);
+					};
+					if (user[0].wash_total) {
+						$("#nums").html(user[0].wash_total);
+					}
 					//					$("#userTel").html(userMsg.phone_number);
 					//					$("#ding").html(userMsg.orient_overage);
 					//					$("#pu").html(userMsg.account_overage);
@@ -203,7 +209,7 @@
 				name : 'my_wallet_head',
 				url : './my_wallet/my_wallet_head.html',
 				pageParam : {
-					data : userMsg
+					data : user[0]
 				},
 				bounces : false,
 				delay : 0,
