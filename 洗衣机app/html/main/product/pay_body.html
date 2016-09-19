@@ -135,7 +135,7 @@
 									$xy.ajax(function(ret, err) {
 										if (ret) {
 											//alert(JSON.stringify(ret));
-											if (parseFloat(ret.data[0].account_overage) > parseFloat(product.movement_money)) {
+											if (parseFloat(ret.data[0].account_overage) >= parseFloat(product.movement_money)) {
 												document.getElementById('ptye').innerHTML = ret.data[0].account_overage + '元';
 											} else {
 												document.getElementById('ptye_html').style.display = "none";
