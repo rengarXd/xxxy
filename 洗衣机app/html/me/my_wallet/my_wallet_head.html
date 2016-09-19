@@ -16,7 +16,6 @@
 				我的钱包
 			</div>
 			<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-15 H-z-index-100">筛选</span>
-
 		</header>
 	</body>
 	<script type="text/javascript" src="../../../script/api.js"></script>
@@ -30,6 +29,7 @@
 			api.openFrame({
 				name : 'my_wallet_body',
 				url : 'my_wallet_body.html',
+				pageParam : api.pageParam,
 				bounces : true,
 				rect : {
 					x : 0,
