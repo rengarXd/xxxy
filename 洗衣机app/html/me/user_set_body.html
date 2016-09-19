@@ -337,6 +337,7 @@
 										//压缩图片
 										imgCompress(returnUrl, 0.5, 0.5, getExt(returnUrl), function(compressImg) {
 											$("#nopic").attr("src", compressImg);
+											console.log(JSON.stringify(compressImg));
 											postHeadPortrait({
 												head_portrait : compressImg
 											}, function(ret, err) {
@@ -378,7 +379,7 @@
 				});
 				$xy.Pajax(function(ret, err) {
 					console.log(wash_user_id);
-					console.log(uuid);
+					console.log(JSON.stringify(datas));
 					api.hideProgress();
 					if (ret) {
 						console.log(JSON.stringify(ret));
@@ -387,7 +388,7 @@
 						console.log(JSON.stringify(ret));
 					}
 				}, 'editUserinfo&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '', 'post', {
-					files : datas
+					files : JSON.stringify(datas)
 				});
 			}
 
