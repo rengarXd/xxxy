@@ -156,6 +156,7 @@
 							//api.hideProgress();
 							if (ret.success) {
 								retInfo = ret.data;
+								console.log(JSON.stringify(retInfo));
 								$xy.userlogInfo(retInfo);
 							} else {
 								api.toast({
