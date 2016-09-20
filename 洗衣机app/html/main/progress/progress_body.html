@@ -142,7 +142,7 @@
 							console.log('start_time==' + start_time);
 							api.setPrefs({
 								key : 'washtime',
-								value : "'" + start_time + "'"
+								value : JSON.stringify(ret.data[0])
 							});
 							//获取当前时间
 							var now = new Date();
@@ -151,11 +151,17 @@
 							console.log('times==' + times);
 							//调用倒计时方法
 							isinerval = setInterval("CountDown()", 1000);
-							//							api.execScript({
-							//								name : 'main',
-							//								frameName : 'main_index',
-							//								script : 'listener(' + "'" + totalTime + "'" + ');'
-							//							});
+							api.execScript({
+								name : 'main',
+								frameName : 'main_index',
+								script : 'listener();'
+							});
+							if (parseInt(totalTime) > 300) {
+								//设置定时任务
+								setTimeout(function() {
+									alert('还有5分钟结束');
+								}, (parseInt(totalTime) - 60) * 1000);
+							}
 							//进度条
 							arcProgress();
 						});

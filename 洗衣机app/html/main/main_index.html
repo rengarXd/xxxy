@@ -359,12 +359,23 @@
 					if (ret && ret.value) {
 						//获取之前开始的时间
 						var time = eval('(' + ret.value + ')');
+						var stringTime = time.start_time;
+						//总时间
+						totalTime = time.turn_around_date;
+						//时间格式转时间戳
+						var start_time = Date.parse(new Date(stringTime));
 						//获取当前时间
 						var now = new Date();
 						//计算剩余时间
-						times = parseInt(toltal) - ((now.getTime() - parseInt(time)) / 1000);
+						times = parseInt(totalTime) * 60 - ((now.getTime() - parseInt(start_time)) / 1000);
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
+						if (parseInt(totalTime) > 300) {
+							//设置定时任务
+							setTimeout(function() {
+								alert('还有5分钟结束');
+							}, (parseInt(totalTime) - 60) * 1000);
+						}
 					} else {
 						//隐藏提示条
 						$("#progress_toast").hide();
