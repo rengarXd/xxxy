@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
@@ -10,38 +11,60 @@
 		<link rel="stylesheet" type="text/css" href="../../../css/fonts/iconfont.css" />
 		<link rel="stylesheet" type="text/css" href="../../../css/style.css" />
 		<style>
-			html, body {
+			html,
+			body {
 				background-color: white;
 			}
+			
 			.xy_border {
 				border-bottom: 1px solid #f0f0f0;
 			}
 		</style>
 	</head>
+
 	<body>
 		<div class="H-margin-vertical-both-12 H-margin-horizontal-both-10 H-flexbox-horizontal H-font-size-14">
-			<div class="H-center-all H-padding-horizontal-right-5" style="">
+			<div class="H-center-all H-padding-horizontal-right-5" id="" style="">
 				电话号码：
 			</div>
-			<input type="text" id="code" class=" H-textbox H-vertical-middle H-font-size-14 H-flex-item  H-border-none H-padding-5 H-outline-none " style="color:#999999;" placeholder="请输入验证码">
+			<div id="phone_number" class=" H-textbox H-vertical-middle H-flex-item H-border-none H-outline-none H-padding-5">
+				电话号码
+			</div>
+		</div>
+		<div class="xy_border"></div>
+		<div class="H-margin-vertical-both-12 H-margin-horizontal-both-10 H-flexbox-horizontal H-font-size-14">
+			<div class="H-center-all H-padding-horizontal-right-5">
+				设备地址：
+			</div>
+			<div id="washloca_name" class=" H-textbox H-vertical-middle H-flex-item H-border-none H-outline-none H-padding-5" >
+				设备地址
+			</div>
 		</div>
 		<div class="xy_border"></div>
 		<div class="H-margin-vertical-both-12 H-margin-horizontal-both-10 H-flexbox-horizontal H-font-size-14">
 			<div class="H-center-all H-padding-horizontal-right-5">
 				设备名称：
 			</div>
-			<div id="" class=" H-textbox H-vertical-middle H-flex-item H-border-none H-outline-none H-padding-5" style="color:#999999;" >
-				选择设备
+
+			<div id="device_name" class=" H-textbox H-vertical-middle H-flex-item H-border-none H-outline-none H-padding-5">
+				设备名称
 			</div>
 		</div>
+
 		<div class="xy_border"></div>
 		<div class="H-margin-vertical-both-12 H-margin-horizontal-both-10 H-flexbox-horizontal H-font-size-14">
 			<div class="H-center-all H-padding-horizontal-right-5">
 				故障类别：
 			</div>
-			<div id="" class="H-theme-font-color-999 H-textbox H-vertical-middle H-flex-item H-border-none H-outline-none H-padding-5">
+
+			<select name="cars" class=" H-vertical-middle  H-border-none H-outline-none H-padding-5" style="background-color: white; width: 100px;">
+				<option value="设备">设备故障</option>
+				<option value="订单">订单金额</option>
+				<option value="其他">其他问题</option>
+			</select>
+			<!--<div id="" class="H-theme-font-color-999 H-textbox H-vertical-middle H-flex-item H-border-none H-outline-none H-padding-5">
 				选择类别
-			</div>
+			</div>-->
 		</div>
 		<div class="H-margin-10" style="border-color:#555555; ">
 			<textarea class=" H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box  H-outline-none H-padding-12" style="width: 100%;border-radius: 5px; color:#999999;" placeholder="请尽量详细描述您遇到的问题"></textarea>
@@ -54,7 +77,39 @@
 	</body>
 	<script type="text/javascript" src="../script/api.js"></script>
 	<script type="text/javascript">
+		var user = null,
+			wash_user_id = null,
+			uuid = null,
+			data = null;
 		apiready = function() {
+			data = api.pageParam.data;
+			console.log(JSON.stringify(data));
+			//			api.getPrefs({
+			//				key: 'userinfo'
+			//			}, function(ret, err) {
+			//				if(ret && ret.value) {
+			//					user = eval('(' + ret.value + ')');
+			//					wash_user_id = user[0].wash_user_id;
+			//					uuid = user[0].uuid;
+			//
+			//				}
+			//			});
+
+			initPage();
 		};
+
+		function initPage() {
+			//			console.log(JSON.stringify(user));
+			//			console.log(wash_user_id);
+			//			console.log(uuid);
+			console.log(JSON.stringify(data));
+			//页面渲染
+						document.getElementById('phone_number').innerHTML = data[0].phone_number;
+						document.getElementById('washloca_name').innerHTML = data[0].washloca_name;
+						document.getElementById('device_name').innerHTML = data[0].device_name;
+			
+
+		}
 	</script>
+
 </html>

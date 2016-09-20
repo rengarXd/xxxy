@@ -58,7 +58,7 @@
 			</div>
 			<div id="fankui" class=" xy_font_color H-font-size-13 H-padding-vertical-bottom-25 H-padding-vertical-top-5" style="padding-left: 37px;">
 				<div class="H-float-right">
-					<span>故障反馈</span>
+					<span onclick="open_fault_feedback();">故障反馈</span>
 					<span class="H-margin-horizontal-left-25 H-padding-horizontal-right-15">联系客服</span>
 				</div>
 			</div>
@@ -192,6 +192,24 @@
 				delay : 0,
 				slidBackEnabled : true,
 				vScrollBarEnabled : false
+			});
+		}
+		
+		
+		
+		//打开故障反馈
+		function open_fault_feedback() {
+			//								console.log(JSON.stringify(dept_id));
+			api.openWin({
+				name: 'fault_feedback_head.html',
+				url: '../../me/feedback/fault_feedback_head.html',
+				pageParam : {
+					data : dataarr
+				},
+				bounces: false,
+				delay: 0,
+				slidBackEnabled: true,
+				vScrollBarEnabled: false
 			});
 		}
 	</script>
