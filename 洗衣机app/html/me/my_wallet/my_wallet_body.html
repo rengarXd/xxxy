@@ -168,10 +168,22 @@
 				data = api.pageParam.data;
 				console.log(JSON.stringify(data));
 				if (data.account_overage != "") {
+					var toltal = parseFloat(data.orient_overage) + parseFloat(data.account_overage);
 					document.getElementById('balance').innerHTML = data.account_overage;
-					document.getElementById('total').innerHTML = parseFloat(data.orient_overage) + parseFloat(data.account_overage);
+					document.getElementById('total').innerHTML = toltal.toFixed(2);
 				}
 				initPage();
+				//下拉刷新
+				api.setRefreshHeaderInfo({
+					visible : true,
+					bgColor : '#fff',
+					textColor : '#666666',
+					textDown : '下拉刷新...',
+					textUp : '松开刷新...',
+					showTime : true
+				}, function(ret, err) {
+					location.reload();
+				});
 			};
 			function initPage() {
 				api.getPrefs({
@@ -184,6 +196,7 @@
 						$xy.ajax(function(ret, err) {
 							//api.hideProgress();
 							if (ret.success) {
+								api.refreshHeaderLoadDone();
 								//console.log(JSON.stringify(ret));
 								if (ret.data.length == 0) {
 									//当没有订单时的处理
@@ -202,8 +215,9 @@
 							} else {
 								//console.log(JSON.stringify(ret));
 								//$("#jiazai").html("暂无订单");
+								api.refreshHeaderLoadDone();
 								api.toast({
-									msg : ret.message
+									msg : '查询失败'
 								});
 							}
 						}, 'appOverage&funid=wash_user_dxye&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
@@ -230,11 +244,16 @@
 										});
 									}
 								} else {
-									//console.log(JSON.stringify(ret));
-									//$("#jiazai").html("暂无订单");
+									api.refreshHeaderLoadDone();
+									api.toast({
+										msg : '查询失败'
+									});
 								}
 							} else {
-								console.log(JSON.stringify("false"));
+								api.refreshHeaderLoadDone();
+								api.toast({
+									msg : '连接失败，请检查网络'
+								});
 								//					api.refreshHeaderLoadDone();
 								//					$("#nonetwork").show();
 							}

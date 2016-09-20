@@ -134,10 +134,10 @@
 						_tpl('progress_data', ret.data, 'progress_html', function() {
 							if (isinerval) {
 								isinerval = null;
-								return;
 							}
 							var stringTime = ret.data[0].start_time;
-							var totalTime = ret.data[0].turn_around_date;
+							//总时间
+							totalTime = parseInt(time.turn_around_date) * 60;
 							var start_time = Date.parse(new Date(stringTime));
 							console.log('start_time==' + start_time);
 							api.setPrefs({
@@ -146,8 +146,9 @@
 							});
 							//获取当前时间
 							var now = new Date();
+							//totalTime = 2;
 							//计算剩余时间
-							times = parseInt(totalTime) * 60 - ((now.getTime() - parseInt(start_time)) / 1000);
+							times = totalTime - ((now.getTime() - parseInt(start_time)) / 1000);
 							console.log('times==' + times);
 							//调用倒计时方法
 							isinerval = setInterval("CountDown()", 1000);
@@ -156,11 +157,12 @@
 								frameName : 'main_index',
 								script : 'listener();'
 							});
-							if (parseInt(totalTime) > 300) {
-								//设置定时任务
+							//设置定时任务
+							if (totalTime > 60) {
+								var last = (totalTime - 60) * 1000;
 								setTimeout(function() {
 									alert('还有5分钟结束');
-								}, (parseInt(totalTime) - 60) * 1000);
+								}, last);
 							}
 							//进度条
 							arcProgress();
