@@ -135,11 +135,13 @@
 							if (isinerval) {
 								isinerval = null;
 							}
+							//开始时间
 							var stringTime = ret.data[0].start_time;
-							//总时间
-							totalTime = parseInt(time.turn_around_date) * 60;
 							var start_time = Date.parse(new Date(stringTime));
+							//总时间
+							totalTime = parseInt(ret.data[0].turn_around_date) * 60;
 							console.log('start_time==' + start_time);
+							//设置洗衣时间偏好值
 							api.setPrefs({
 								key : 'washtime',
 								value : JSON.stringify(ret.data[0])
@@ -148,7 +150,7 @@
 							var now = new Date();
 							//totalTime = 2;
 							//计算剩余时间
-							times = totalTime - ((now.getTime() - parseInt(start_time)) / 1000);
+							times = totalTime - ((now.getTime() - start_time) / 1000);
 							console.log('times==' + times);
 							//调用倒计时方法
 							isinerval = setInterval("CountDown()", 1000);
