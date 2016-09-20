@@ -73,7 +73,7 @@
 				document.getElementById('model').innerHTML = data[0].title;
 				// 初始化时间递减
 				api.getPrefs({
-					key : 'washtime'
+					key : 'resulttime'
 				}, function(ret, err) {
 					if (ret && ret.value) {
 						//获取之前开始的时间
@@ -93,7 +93,7 @@
 						times = 300 - ((now.getTime() - parseInt(timestamp2)) / 1000);
 						//记录当前时间
 						api.setPrefs({
-							key : 'washtime',
+							key : 'resulttime',
 							value : "'" + now.getTime() + "'"
 						});
 						//调用倒计时方法
