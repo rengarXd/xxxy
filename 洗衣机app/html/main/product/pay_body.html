@@ -248,7 +248,6 @@
 					});
 				} else if (pay_way == 2) {
 					var orderid = "W" + order_id;
-					order_no = ret.data;
 					//打开支付成功页;
 					doPay({
 						wash_user_id : user[0].wash_user_id,
@@ -260,20 +259,20 @@
 						origin_type : '4', //来源
 						order_id : orderid//订单号
 					}, function(ret, err) {
+						order_no = ret.data;
 						if (ret.success) {
 							var wxPay = api.require('wxPay');
 							wxPay.config({
-								apiKey : '',
-								mchId : '',
-								partnerKey : '',
-								notifyUrl : ''
+								mchId : '1390880602',
+								partnerKey : 'nZ9booT9pQOaIGp5hcrjMs243GPvS7g4',
+								notifyUrl : 'http://218.29.85.98:8080/wash/notify_url.jsp'
 							}, function(ret, err) {
 								if (ret.status) {
 									alert('配置商户支付参数成功');
 									wxPay.pay({
 										description : product.title,
-										totalFee : product.movement_money,
-										tradeNo : "W" + order_id
+										totalFee : parseFloat(product.movement_money) * 100,
+										tradeNo : orderid
 									}, function(ret, err) {
 										if (ret.status) {
 											alert(ret.result);
@@ -281,10 +280,12 @@
 											openResult(order_no);
 										} else {
 											alert(err.code);
+											deleteOrder(orderid);
 										}
 									});
 								} else {
 									alert(err.code);
+									deleteOrder(orderid);
 								}
 							});
 						} else {
