@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
@@ -11,17 +10,14 @@
 		<link rel="stylesheet" type="text/css" href="../../../css/fonts/iconfont.css" />
 		<link rel="stylesheet" type="text/css" href="../../../css/style.css" />
 		<style>
-			html,
-			body {
+			html, body {
 				background-color: white;
 			}
-			
 			.xy_border {
 				border-bottom: 1px solid #f0f0f0;
 			}
 		</style>
 	</head>
-
 	<body>
 		<div class="H-margin-vertical-both-12 H-margin-horizontal-both-10 H-flexbox-horizontal H-font-size-14">
 			<div class="H-center-all H-padding-horizontal-right-5" id="" style="">
@@ -45,32 +41,29 @@
 			<div class="H-center-all H-padding-horizontal-right-5">
 				设备名称：
 			</div>
-
 			<div id="device_name" class=" H-textbox H-vertical-middle H-flex-item H-border-none H-outline-none H-padding-5">
 				设备名称
 			</div>
 		</div>
-
 		<div class="xy_border"></div>
 		<div class="H-margin-vertical-both-12 H-margin-horizontal-both-10 H-flexbox-horizontal H-font-size-14">
 			<div class="H-center-all H-padding-horizontal-right-5">
 				故障类别：
 			</div>
-
 			<select id="select" name="cars" class=" H-vertical-middle  H-border-none H-outline-none H-padding-5" style="background-color: white; width: 100px;">
 				<option value="1">设备故障</option>
 				<option value="2">订单金额</option>
 				<option value="3">其他问题</option>
 			</select>
 			<!--<div id="" class="H-theme-font-color-999 H-textbox H-vertical-middle H-flex-item H-border-none H-outline-none H-padding-5">
-				选择类别
+			选择类别
 			</div>-->
 		</div>
 		<div class="H-margin-10" style="border-color:#555555; ">
 			<textarea id="textarea" class=" H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box  H-outline-none H-padding-12" style="width: 100%;border-radius: 5px; color:#999999;" placeholder="请尽量详细描述您遇到的问题"></textarea>
 		</div>
 		<div class=" H-margin-horizontal-both-20 H-padding-vertical-both-15">
-			<button style="background-color: #ff6600" class=" H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent   H-theme-font-color-white" tapmode="H-touch-active" onclick="send_feedback();">
+			<button style="background-color: #ff6600" class=" H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent   H-theme-font-color-white" tapmode="H-touch-active" onclick="ajax();">
 				确&nbsp;&nbsp;&nbsp;定
 			</button>
 		</div>
@@ -78,39 +71,37 @@
 	<script type="text/javascript" src="../../../script/xy.js"></script>
 	<script type="text/javascript" src="../../../script/api.js"></script>
 	<script type="text/javascript">
-		var user = null,
-			wash_user_id = null,
-			uuid = null,
-			data = null;
+		var user = null, wash_user_id = null, uuid = null, data = null;
 		apiready = function() {
 			data = api.pageParam.data;
 			//console.log(JSON.stringify(data));
-
-			initPage();
+			send_feedback();
 		};
-
 		function initPage() {
 			//console.log(JSON.stringify(data));
 			//页面渲染
 			document.getElementById('phone_number').innerHTML = data[0].phone_number;
 			document.getElementById('washloca_name').innerHTML = data[0].washloca_name;
 			document.getElementById('device_name').innerHTML = data[0].device_name;
-
 		}
+
 		//提交
 		function send_feedback() {
 			api.getPrefs({
-				key: 'userinfo'
+				key : 'userinfo'
 			}, function(ret, err) {
-				if(ret && ret.value) {
+				if (ret && ret.value) {
 					user = eval('(' + ret.value + ')');
 					wash_user_id = user[0].wash_user_id;
 					uuid = user[0].uuid;
+					phone_number = user[0].phone_number;
+					document.getElementById('phone_number').innerHTML = phone_number;
+					document.getElementById('washloca_name').innerHTML = data[0].washloca_name;
+					document.getElementById('device_name').innerHTML = data[0].device_name;
 				}
 				//console.log(v);
 				//console.log(JSON.stringify(user));
-				ajax(wash_user_id, uuid);
-
+				
 			});
 		}
 
@@ -119,18 +110,18 @@
 			var order_id = data[0].order_id;
 			var utype = document.getElementById("select").value;
 			var fault_matter = document.getElementById("textarea").value;
-//			console.log('device_id:'+device_id);
-//			console.log('order_id:'+order_id);
-//			console.log('wash_user_id:'+wash_user_id);
-//			console.log('uuid:'+uuid);
-//			console.log('utype:'+utype);
-//			console.log('fault_matter:'+fault_matter);
+			//			console.log('device_id:'+device_id);
+			//			console.log('order_id:'+order_id);
+			//			console.log('wash_user_id:'+wash_user_id);
+			//			console.log('uuid:'+uuid);
+			//			console.log('utype:'+utype);
+			//			console.log('fault_matter:'+fault_matter);
 			$xy.ajax(function(ret, err) {
 				//api.hideProgress();
 				//api.refreshHeaderLoadDone();
-				if(ret) {
+				if (ret) {
 					console.log(JSON.stringify(ret));
-					if(ret.success) {
+					if (ret.success) {
 						alert('提交成功，我们将尽快为你解决');
 						api.closeWin();
 						console.log(JSON.stringify(ret));
@@ -140,11 +131,10 @@
 					}
 				} else {
 					api.toast({
-						msg: '连接失败，请检查网络配置'
+						msg : '连接失败，请检查网络配置'
 					});
 				}
 			}, 'appMatter&funid=wash_matter&device_id=' + device_id + '&order_id=' + order_id + '&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&utype=' + utype + '&fault_matter=' + fault_matter);
 		}
 	</script>
-
 </html>
