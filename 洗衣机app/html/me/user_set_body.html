@@ -507,9 +507,9 @@
 									//									});
 								} else {
 									//console.log(JSON.stringify(ret));
-									$("#jiazai").html("暂无订单");
+									$("#jiazai").html("获取用户信息失败");
 									api.toast({
-										msg : '很抱歉，您可能没有订单！'
+										msg : '很抱歉，获取用户信息失败！'
 									});
 								}
 							} else {
@@ -519,7 +519,7 @@
 							}
 						}, 'editUserinfo&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&' + id + '=' + textname);
 					} else {
-						$("#jiazai").html("暂无订单");
+						$("#jiazai").html("获取用户信息失败");
 					}
 				});
 			}
