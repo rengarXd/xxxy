@@ -35,5 +35,10 @@
   </feature>  
   <feature name="aliPay"> 
     <param name="urlScheme" value="AliPayA6926955799619"/> 
+  </feature>  
+  <feature name="wxPay"> 
+    <param name="urlScheme" value="wx563cde637c901097"/>  
+    <param name="apiKey" value="wx563cde637c901097"/>  
+    <param name="apiSecret" value="4246148dcba3fdf97671c012304fdb44"/> 
   </feature> 
 </widget>
