@@ -372,7 +372,7 @@
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
 						//设置定时任务
-						if (totalTime > 60) {
+						if (times > 60) {
 							var last = (totalTime - 60) * 1000;
 							setTimeout(function() {
 								alert('还有5分钟结束');
