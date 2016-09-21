@@ -4,8 +4,9 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>body</title>
+		<title>优惠活动body</title>
 		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/fonts/iconfont.css" />
 		<link rel="stylesheet" href="../../../css/style.css" />
 		<style>
 			.xy_border {
@@ -47,7 +48,7 @@
 		<div id="nearby_preferential"></div>
 		<script id="nearby_preferential_list_item" type="text/html">
 			{{# for(var i=0,l=d.length;i<l;i++){ }}
-			<div id="" style="position:relative;" class=" H-padding-10 H-padding-vertical-bottom-2" onclick="openDiscountRecharge();">
+			<div id="" style="position:relative;" class=" H-padding-10 H-padding-vertical-bottom-2" onclick="openDiscountRecharge('{{ i }}');">
 			<div class="H-flexbox-horizontal tubiaobeijing ">
 			<div class="H-padding-2"></div>
 			<div class="H-padding-5">
@@ -181,9 +182,6 @@
 						autoStop : true
 					}, function(ret, err) {
 						if (ret.status) {
-							//						api.toast({
-							//							msg : '获取位置成功2'
-							//						});
 							//经度
 							longitude = ret.longitude;
 							//纬度
@@ -202,8 +200,10 @@
 
 			//获取附近10公里范围内的洗衣点
 			function get_nearby_preferential(longitude, latitude) {
-				longitude = longitude;
-				latitude = latitude;
+				//经度
+				//longitude = longitude;
+				//纬度
+				//latitude = latitude;
 				//console.log(latitude);
 				//console.log(longitude);
 				$xy.ajax(function(ret, err) {
@@ -214,34 +214,40 @@
 						if (ret.success) {
 							console.log("获取成功");
 							console.log(JSON.stringify(ret));
+							//优惠活动信息
+							discount = ret.data;
 							var tpl = document.getElementById('nearby_preferential_list_item').innerHTML;
 							//读取模版
 							//方式一：异步渲染（推荐）
-							laytpl(tpl).render(ret.data, function(render) {
+							laytpl(tpl).render(discount, function(render) {
 								api.hideProgress();
 								document.getElementById('nearby_preferential').innerHTML = render;
 							});
 						} else {
 							//console.log(JSON.stringify(ret));
-							api.toast({
-								msg : '很抱歉，附近没有优惠充值活动！'
-							});
+							var dis = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-white"></i><div class="H-theme-font-color-white">很抱歉，附近没有优惠充值活动！</div></div></div>'; 
+							document.getElementById('nearby_preferential').innerHTML = dis;
+//							api.toast({
+//								msg : '很抱歉，附近没有优惠充值活动！'
+//							});
 						}
 					} else {
-						$("#nonetwork").show();
+						api.toast({
+							msg : '连接失败，请检查网络配置'
+						});
+						//$("#nonetwork").show();
 					}
-				}, 'appOrient&funid=wash_orient_activity&gps_lng=' + 113.608274 + '&gps_lat=' + 34.801564);
+				}, 'appOrient&funid=wash_orient_activity&gps_lng=' + longitude + '&gps_lat=' + latitude);
 			}
 
 			//打开优惠充值页面
-			function openDiscountRecharge() {
+			function openDiscountRecharge(i) {
 				api.openWin({
 					name : 'discount_recharge_head',
 					url : './discount_recharge_head.html',
-					//				pageParam: {
-					//					washloca_id: id,
-					//					distance: distance_id
-					//				},
+					pageParam : {
+						data : discount[parseInt(i)]
+					},
 					bounces : false,
 					delay : 0,
 					slidBackEnabled : true,
