@@ -57,7 +57,7 @@
 		<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>
 		<script type="text/javascript" src="../../../script/tools/jquery.flipcountdown.js"></script>
 		<script type="text/javascript">
-			var user = null, data = null;
+			var user = null, data = null, isinerval = null;
 			apiready = function() {
 				data = api.pageParam.data;
 				console.log(JSON.stringify(data));
@@ -71,6 +71,10 @@
 				document.getElementById('money').innerHTML = data[0].pay_num;
 				document.getElementById('machine').innerHTML = data[0].device_name;
 				document.getElementById('model').innerHTML = data[0].title;
+				if (isinerval) {
+					isinerval = null;
+					return;
+				}
 				// 初始化时间递减
 				api.getPrefs({
 					key : 'resulttime'
@@ -94,7 +98,7 @@
 						//记录当前时间
 						api.setPrefs({
 							key : 'resulttime',
-							value : "'" + now.getTime() + "'"
+							value : "'" + timestamp2 + "'"
 						});
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
