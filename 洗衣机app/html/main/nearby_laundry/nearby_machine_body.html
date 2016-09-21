@@ -69,7 +69,8 @@
 			{{# }else{ }}
 			<span class="H-float-right xyzt">空闲提醒</span>
 			<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
-			{{ d[i].ustatus }} <span class="H-float-right">预计{{ d[i].hold_ending }}分钟后结束</span>
+			{{# var str = d[i].hold_ending;var strtime = str.substring(11,19); }}
+			{{ d[i].ustatus }} <span class="H-float-right">预计{{ strtime }}结束</span>
 			</div>
 			{{# } }}
 			</div>

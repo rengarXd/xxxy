@@ -71,27 +71,26 @@
 				<img src="../../image/loading_more.gif" width="30" />
 			</div>
 		</div>
+		<!--{{# }else{ }}
+		<span class="H-float-right xyzt">空闲提醒</span>
+		<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
+		被占用
+		</div>-->
 		<script type="text/html" id="xyj_data">
 			<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-3  animated fadeIn" style="padding-left: 30px;">
-			您曾使用过的洗衣机
+			您曾使用过的空闲的洗衣机
 			</div>
 			{{# for(var i = 0, len = d.length; i < len; i++) { }}
+			{{# if(d[i].ustatus == "空闲") { }}
 			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
 			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
 			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
 			<div class="H-flex-item xy_font_color">
 			<span>{{ d[i].device_name }}</span>
-			{{# if(d[i].ustatus == "空闲") { }}
 			<span class="H-float-right xyzt"  tapmode="H-touch-active" onclick="openProduct('{{ i }}');">我要洗衣</span>
 			<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
 			空闲
 			</div>
-			{{# }else{ }}
-			<span class="H-float-right xyzt">空闲提醒</span>
-			<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
-			被占用
-			</div>
-			{{# } }}
 			</div>
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
 			</div>
@@ -101,6 +100,7 @@
 			<span class="H-padding-horizontal-right-20 H-float-right">{{ d[i].distance }}米</span>
 			</div>
 			</div>
+			{{# } }}
 			{{# } }}
 			<div class="H-text-align-center H-font-size-14 H-theme-font-color-999" tapmode="touch" onclick="openWin('nearby_laundry_head','./nearby_laundry/nearby_laundry_head.html');">
 			查找更多洗衣点

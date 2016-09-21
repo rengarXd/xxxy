@@ -56,16 +56,7 @@
 				</button>
 			</div>
 		</div>
-		<div id="overage_html">
-			<div class=" H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1 ">
-				<div class=" H-text-show-row-1  H-font-size-20 H-padding-10  ziti lanse" style="width: 25%;">
-					50.00<span class="H-font-size-14">元</span>
-				</div>
-				<div class=" H-text-show-row-1  H-font-size-14 H-padding-10 H-padding-vertical-both-12 huise">
-					郑州大学定向余额
-				</div>
-			</div>
-		</div>
+		<div id="overage_html"></div>
 		<div id="record_list">
 			<div class="H-text-align-center H-font-size-12 H-theme-font-color-999 H-padding-vertical-top-15">
 				加载中
@@ -193,14 +184,15 @@
 						user = eval('(' + ret.value + ')');
 						wash_user_id = user[0].wash_user_id;
 						uuid = user[0].uuid;
+						//查询定向余额
 						$xy.ajax(function(ret, err) {
 							//api.hideProgress();
 							if (ret.success) {
 								api.refreshHeaderLoadDone();
 								//console.log(JSON.stringify(ret));
 								if (ret.data.length == 0) {
-									//当没有订单时的处理
-									var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无记录</div></div></div>';
+									//当没有定向余额时的处理
+									var htmls = '<div class=" H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1 "><div class=" H-text-show-row-1  H-font-size-20 H-padding-10  ziti lanse" style="width: 25%;">00.00<span class="H-font-size-14">元</span></div><div class=" H-text-show-row-1  H-font-size-14 H-padding-10 H-padding-vertical-both-12 huise">定向余额</div></div>';
 									document.getElementById('order_list').innerHTML = htmls;
 								} else {
 									console.log(JSON.stringify(ret));
