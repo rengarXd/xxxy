@@ -86,19 +86,21 @@
 						var now = new Date();
 						//计算剩余时间
 						times = 300 - ((now.getTime() - parseInt(time)) / 1000);
+						console.log('times111=='+times);
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
 					} else {
 						//初始化所用时间
 						var stringTime = data[0].reader_time;
-						var timestamp2 = Date.parse(new Date(stringTime));
+						var timestamp = Date.parse(new Date(stringTime));
 						var now = new Date();
 						//计算剩余时间
-						times = 300 - ((now.getTime() - timestamp2) / 1000);
+						times = 300 - ((now.getTime() - timestamp) / 1000);
+						console.log('times2222=='+times);
 						//记录当前时间
 						api.setPrefs({
 							key : 'resulttime',
-							value : "'" + timestamp2 + "'"
+							value : "'" + timestamp + "'"
 						});
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);

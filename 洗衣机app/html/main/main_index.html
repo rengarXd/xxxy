@@ -177,7 +177,14 @@
 									}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
 								} else {
 									xyjdata = ret.data;
-									_tpl('xyj_data', xyjdata, 'xyj_html', function() {
+									var kong = new Array();
+									for(var i = 0, len = xyjdata.length; i < len; i++) {
+										if(xyjdata[i].ustatus == "空闲"){
+											kong.push(xyjdata[i]);
+										}
+									}
+									//alert(JSON.stringify(kong));
+									_tpl('xyj_data', kong, 'xyj_html', function() {
 									});
 								}
 							} else {
