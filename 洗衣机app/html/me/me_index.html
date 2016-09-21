@@ -96,6 +96,7 @@
 			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-14 H-padding-vertical-both-12">
 				清除缓存
 			</div>
+			<label class="H-display-inline-block H-vertical-middle H-theme-font-color-ccc H-font-size-12 H-padding-horizontal-right-8">当前缓存：<span id="cache" class="H-theme-font-color-999">0.00M</span></label>
 			<span class="H-theme-font-color-999 H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
 		</div>
 		<div class="H-text-list H-border-vertical-bottom-after  H-flexbox-horizontal H-theme-background-color-white H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="openWin('help_center_head', './help_center/help_center_head.html');">
@@ -113,6 +114,12 @@
 		apiready = function() {
 			api.parseTapmode();
 			initPref();
+			//获取缓存
+			api.getCacheSize(function(ret) {
+				var size = ret.size;
+				size = size / (1024 * 1024);
+				$("#cache").html(size.toFixed(2) + 'M');
+			});
 		};
 		//获取偏好值
 		function initPref() {
@@ -155,10 +162,16 @@
 			});
 		}
 
+		//清除缓存
 		function cleanCache() {
 			api.clearCache(function() {
 				api.toast({
 					msg : '清除完成'
+				});
+				api.getCacheSize(function(ret) {
+					var size = ret.size;
+					size = size / (1024 * 1024);
+					$("#cache").html(size.toFixed(2) + 'M');
 				});
 			});
 		}
