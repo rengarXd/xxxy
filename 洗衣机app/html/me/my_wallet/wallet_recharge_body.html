@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
@@ -13,15 +12,12 @@
 			.color-888 {
 				color: #888888;
 			}
-			
 			.color-22a5f9 {
 				color: #22a5f9;
 			}
-			
 			.color-ff6600 {
 				color: #ff6600;
 			}
-			
 			.color-555555 {
 				color: #555555;
 			}
@@ -32,21 +28,19 @@
 			}
 		</style>
 	</head>
-
 	<body>
 		<div class="H-padding-vertical-bottom-10"></div>
 		<div class="H-padding-12 H-theme-background-color-white">
-		<div class=" H-flexbox-horizontal H-font-size-14">
-			<div class="H-center-all" style="">
-				金额：
+			<div class=" H-flexbox-horizontal H-font-size-14">
+				<div class="H-center-all" style="">
+					金额：
+				</div>
+				<input type="text" id="code" class=" H-textbox H-vertical-middle H-font-size-14 H-flex-item  H-border-none  H-outline-none " style="color:#999999;" placeholder="建议充值100以上金额">
 			</div>
-			<input type="text" id="code" class=" H-textbox H-vertical-middle H-font-size-14 H-flex-item  H-border-none  H-outline-none " style="color:#999999;" placeholder="建议充值100以上金额">
-		</div>
 		</div>
 		<div class="H-padding-horizontal-left-10 H-padding-vertical-both-3 H-font-size-12 color-888">
 			目前平台只支持支付宝和微信充值
 		</div>
-
 		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active">
 			<span class="zhifubao-bg-color H-icon H-center-all H-display-block H-margin-horizontal-left-10"><i class="iconfont icon-zhifubao H-font-size-18 H-vertical-middle H-theme-font-color-white"></i></span>
 			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-16 H-padding-vertical-both-12">
@@ -62,7 +56,7 @@
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-duihao H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
 		</div>
 		<div class="H-padding-20">
-			<button onclick="" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+			<button tapmode="H-touch-active" onclick="openResult();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
 				确认支付
 			</button>
 		</div>
@@ -71,10 +65,24 @@
 	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
 	<script type="text/javascript">
 		apiready = function() {
+			api.parseTapmode();
 			initPage();
 		};
 		// 初始化页面
-		function initPage() {}
-	</script>
+		function initPage() {
+		
+		}
 
+		//支付
+		function openResult() {
+			api.openWin({
+				name : 'recharge_success_head',
+				url : '../../result/recharge_success_head.html',
+				bounces : false,
+				delay : 0,
+				slidBackEnabled : true,
+				vScrollBarEnabled : false
+			});
+		}
+	</script>
 </html>
