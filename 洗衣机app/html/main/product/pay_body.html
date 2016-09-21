@@ -275,7 +275,7 @@
 								notifyUrl : 'http://218.29.85.98:8080/wash/payNotifyUrl.jsp'
 							}, function(ret, err) {
 								if (ret.status) {
-									alert('配置商户支付参数成功');
+									//alert('配置商户支付参数成功');
 									wxPay.pay({
 										description : product.title,
 										totalFee : parseFloat(product.movement_money) * 100,
