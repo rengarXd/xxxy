@@ -172,10 +172,10 @@
 				});
 				//监听返回键
 				api.addEventListener({
-	                name:'keyback'
-                },function(ret,err){
-                	api.closeWin();
-                });
+					name : 'keyback'
+				}, function(ret, err) {
+					api.closeWin();
+				});
 			}
 
 			//模板渲染
@@ -269,6 +269,7 @@
 						if (ret.success) {
 							var wxPay = api.require('wxPay');
 							wxPay.config({
+								apiKey : 'wx563cde637c901097',
 								mchId : '1390880602',
 								partnerKey : 'nZ9booT9pQOaIGp5hcrjMs243GPvS7g4',
 								notifyUrl : 'http://218.29.85.98:8080/wash/payNotifyUrl.jsp'
@@ -281,7 +282,7 @@
 										tradeNo : orderid
 									}, function(ret, err) {
 										if (ret.status) {
-											alert(ret.result);
+											//alert(ret.result);
 											//打开支付成功页;
 											openResult(order_no);
 										} else {
