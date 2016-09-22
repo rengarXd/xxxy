@@ -452,14 +452,18 @@
 				key : 'userinfo',
 				value : JSON.stringify(data)
 			});
+//			api.execScript({
+//				name : 'main',
+//				frameName : 'me_index',
+//				script : 'reload();'
+//			});
 			api.execScript({
 				name : 'main',
-				frameName : 'me_index',
-				script : 'reload();'
+				script : 'initInfo();'
 			});
-			api.sendEvent({
-				name : 'userlogin'
-			});
+//			api.sendEvent({
+//				name : 'userlogin'
+//			});
 		},
 		toast : function(callback, msg, duration, location, global) {
 			var that = this;
