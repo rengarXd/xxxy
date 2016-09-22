@@ -122,6 +122,9 @@
 			var pay_way = null;
 			//定向余额活动id（充值余额类型为2时必填）（string）
 			var orientact_id = null;
+			//订单id
+			var orderid = null;
+			var itemdata = null;
 			apiready = function() {
 				product = api.pageParam.data;
 				console.log(JSON.stringify(product));
@@ -174,14 +177,15 @@
 					if (ret.success) {
 						//console.log(JSON.stringify(ret));
 						console.log(JSON.stringify(ret));
+						itemdata = ret.data;
 						var tpl = document.getElementById('clzl_item').innerHTML;
 						//读取模版
 						//方式一：异步渲染（推荐）
-						laytpl(tpl).render(ret.data, function(render) {
+						laytpl(tpl).render(itemdata, function(render) {
 							api.hideProgress();
-							alert(JSON.stringify(ret.data[0]));
-							document.getElementById('recharge_pay').innerHTML = ret.data[0].recharge_pay;
-							document.getElementById('presentation_pay').innerHTML = ret.data[0].presentation_pay;
+							alert(JSON.stringify(itemdata[0]));
+							document.getElementById('recharge_pay').innerHTML = itemdata[0].recharge_pay;
+							document.getElementById('presentation_pay').innerHTML = itemdata[0].presentation_pay;
 							document.getElementById('clzl_list').innerHTML = render;
 						});
 					} else {
@@ -202,7 +206,7 @@
 				$(obj).children().addClass("H-theme-border-color7 p_active");
 			}
 
-			//对应选项判断
+			//选择支付方式
 			function check(obj) {
 				$(".payway").removeClass('icon-duihao');
 				$(obj).find(".payway").addClass('icon-duihao');
@@ -217,7 +221,7 @@
 					});
 					return;
 				};
-				var orderid = "C" + A();
+				orderid = "C" + A();
 				//alert(orderid);
 				if (pay_way == 1) {
 					//var orderid = "C" + order_id;
