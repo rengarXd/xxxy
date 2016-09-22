@@ -264,7 +264,7 @@
 						uuid : user[0].uuid,
 						recharge_id : orderid, //用户充值记录id
 						pay_method : pay_way, //支付方式
-						recharge_amount : product.recharge_pay, //支付金额
+						recharge_amount : paymoney, //支付金额
 						overage_type : '2', //来源
 						orientact_id : product.orientact_id//定向余额Id
 					}, function(ret, err) {
@@ -295,7 +295,7 @@
 						obj.pay({
 							subject : product.orientact_name,
 							body : product.dept_name,
-							amount : product.recharge_pay,
+							amount : paymoney,
 							tradeNO : orderid
 						}, function(ret, err) {
 							//1.0 如果支付宝提示付款成功！
@@ -318,8 +318,8 @@
 					if (ret.status) {
 						alert('配置商户支付参数成功');
 						wxPay.pay({
-							description : product.title,
-							totalFee : parseFloat(product.movement_money) * 100,
+							description : product.dept_name,
+							totalFee : parseFloat(paymoney) * 100,
 							tradeNo : orderid
 						}, function(ret, err) {
 							if (ret.status) {
