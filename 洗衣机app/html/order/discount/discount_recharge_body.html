@@ -21,6 +21,11 @@
 			.color-555555 {
 				color: #555555;
 			}
+			.b_czbutton {
+				width: 33.333%;
+				float: left;
+				text-align: center;
+			}
 			.xy_border {
 				border-bottom: 1px solid #d8d8d8;
 				margin-left: 10px;
@@ -41,7 +46,7 @@
 						<div class="color-555555" style="font-size: 15px;">
 							充值金额
 						</div>
-						<div class="color-22a5f9" style="font-size: 30px;">
+						<div class="color-22a5f9" style="font-size: 30px;" id="recharge_pay">
 							100.00
 						</div>
 					</div>
@@ -51,12 +56,23 @@
 						<div class="color-555555" style="font-size: 15px;">
 							赠送金额
 						</div>
-						<div class="color-ff6600" style="font-size: 30px;">
+						<div class="color-ff6600" style="font-size: 30px;" id="presentation_pay">
 							20.00
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div style="background: #F0F0F0;height: 10px;"></div>
+		<div class="H-vertical-middle H-padding-horizontal-left-10 H-font-size-15 H-border-vertical-bottom-after H-theme-background-color-white H-padding-10">
+			请选择充值余额
+		</div>
+		<div class="H-border-vertical-bottom-after H-padding-10 H-theme-background-color-white" id="clzl_list">
+			<!--加载进度-->
+			<!--<div class="H-text-align-center">
+			<img src="../../../image/loading01.gif" />
+			</div>-->
+			<!--加载进度-->
 		</div>
 		<div class="H-padding-horizontal-left-10 H-padding-vertical-both-3 H-font-size-12 color-888">
 			目前平台只支持支付宝和微信充值
@@ -80,205 +96,279 @@
 				确认支付
 			</button>
 		</div>
-	</body>
-	<script type="text/javascript" src="../../../script/xy.js"></script>
-	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
-	<script type="text/javascript">
-		//支付方式（必填）（1、支付宝，2、微信）
-		var pay_way = null;
-		//定向余额活动id（充值余额类型为2时必填）（string）
-		var orientact_id = null;
-		apiready = function() {
-			product = api.pageParam.data;
-			console.log(JSON.stringify(product));
-			initPage();
-		};
-		// 初始化页面
-		function initPage() {
-			api.getPrefs({
-				key : 'userinfo'
-			}, function(ret, err) {
-				if (ret && ret.value) {
-					user = eval('(' + ret.value + ')');
-				} else {
-					api.alert({
-						title : '温馨提示',
-						msg : '进行该操作前请先登录',
-					}, function(ret, err) {
-						if (ret.buttonIndex == 1) {
-							api.openWin({
-								name : 'login_body',
-								url : '../../login/login_body.html'
-							});
-							setTimeout(function() {
-								api.closeWin();
-							}, 1000);
-						}
-					});
-				}
-			});
-			//监听返回键
-			api.addEventListener({
-				name : 'keyback'
-			}, function(ret, err) {
-				api.closeWin();
-			});
-		}
-
-		//对应选项判断
-		function check(obj) {
-			$(".payway").removeClass('icon-duihao');
-			$(obj).find(".payway").addClass('icon-duihao');
-			pay_way = $(obj).find(".icon-duihao").attr("payway");
-		}
-
-		//支付方法
-		function openCf() {
-			if (!pay_way) {
-				api.toast({
-					msg : '请先选择支付方式'
-				});
-				return;
+		<!--充值策略循环体-->
+		<script id="clzl_item" type="text/html">
+			{{# for(var i=0,l=d.length;i<l;i++){ }}
+			{{# if(i == 0){ }}
+			<div class="H-font-size-14 b_czbutton" tapmode onclick="choase(this,{{= d[i].recharge_pay }},{{= d[i].presentation_pay}});">
+			<div class="H-border-both H-theme-border-color7" style="margin: 4px">
+			{{# }else{ }}
+			<div class="H-font-size-14 b_czbutton" tapmode onclick="choase(this,{{= d[i].recharge_pay }},{{= d[i].presentation_pay}});">
+			<div class="H-border-both" style="margin: 4px">
+			{{# } }}
+			{{ d[i].recharge_pay }}元
+			<br />
+			<span class="H-theme-font-color-999 H-font-size-10">赠送{{ d[i].presentation_pay }}元</span>
+			</div>
+			</div>
+			{{# } }}
+		</script>
+		<!--充值策略循环体-->
+		<script type="text/javascript" src="../../../script/xy.js"></script>
+		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
+		<script type="text/javascript" src="../../../script/zepto.min.js"></script>
+		<script type="text/javascript">
+			//支付方式（必填）（1、支付宝，2、微信）
+			var pay_way = null;
+			//定向余额活动id（充值余额类型为2时必填）（string）
+			var orientact_id = null;
+			apiready = function() {
+				product = api.pageParam.data;
+				console.log(JSON.stringify(product));
+				initPage();
 			};
-			var orderid = "C" + A();
-			alert(orderid);
-			if (pay_way == 1) {
-				var orderid = "C" + order_id;
-				doPay({
-					wash_user_id : user[0].wash_user_id,
-					uuid : user[0].uuid,
-					recharge_id : orderid, //用户充值记录id
-					pay_method : pay_way, //支付方式
-					recharge_amount : product.recharge_pay, //支付金额
-					overage_type : '2', //来源
-					orientact_id : product.orientact_id//定向余额Id
+			// 初始化页面
+			function initPage() {
+				api.getPrefs({
+					key : 'userinfo'
 				}, function(ret, err) {
-					order_no = ret.data;
-					if (ret.success) {
-						var obj = api.require('aliPay');
-						obj.config({
-							partner : '2088421786244385',
-							seller : 'jiyou360@126.com',
-							rsaPriKey : 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMnRFvabENOHewFvPz4zTLVRG/7hyq8oDcsa+Qw2Wve7bHhSQP/jZPb7gRjiilEKUUtADXqZq1WcllEebVrSapcQrpX3kYlhhdGiSGhGyZRy018UieG3dqvQGXa/3ktqbBKcD3Uqr/1W+5pyNa1g4ABCYWG7/NA8PLMgrjgN/bXZAgMBAAECgYAH6HGF6D2YjE59l+ZagZgX4r2+FwriIieoNb5chCS8YFO3w0FYxYhHRUOhvf69fjIBSNk+XJciG6ioNRED5grXHrJPIfcCIQYOpX0JEb0NhG/jpyOaCHxXKNGjij9qhJFUnmAH6At28N9YX02HZJBZPgx8P1UaOfvlmUxHFrmXIQJBAO73n8/gjFGg0i3lh9tjU/0cb7bdxrgSVovW+nFdMqRGQuNbKbTjjTUQ3PCZ8l5oYUcFI9JaZ/BJyEyhpFsO8ZMCQQDYM5bTV0JxLAJKjH2mmin7KCwSx+bAjQqVhqL/QZ5bsg302fLt4t6NwFknsvz+gWjpPoFR+S4rcCromOZXJs5jAkApxLBzRj1geyqhiRARAbCJejHwlZ0JSXNFKANIU1Dps7o3QRTuICPrVZI4n7/kTnxKTJSxTMoEDvFqq4otvFPvAkBoQliVihrsYICqWp2tXeKoz3KRi/znFhzohojL92Taaz73uLLBrQoN6ZgU4OfIA7gH4rCSS0vMfsbya+mIVZppAkEA5rhmaQ9RCbpcPcd+3jqLpIQtbXrKhsc3YRKtWpH06l2BKG8dDjey9ecLCp/UYWCObSLSvWhNg/1gxaVlAgRUDQ==',
-							rsaPubKey : 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJ0Rb2mxDTh3sBbz8+M0y1URv+4cqvKA3LGvkMNlr3u2x4UkD/42T2+4EY4opRClFLQA16matVnJZRHm1a0mqXEK6V95GJYYXRokhoRsmUctNfFInht3ar0Bl2v95LamwSnA91Kq/9VvuacjWtYOAAQmFhu/zQPDyzIK44Df212QIDAQAB',
-							notifyURL : 'http://218.29.85.98:8080/wash/notify_url.jsp',
-						}, function(ret, err) {
-							if (ret.status)
-								obj.pay({
-									subject : product.orientact_name,
-									body : product.dept_name,
-									amount : product.recharge_pay,
-									tradeNO : "A" + order_id
-								}, function(ret, err) {
-									//1.0 如果支付宝提示付款成功！
-									if (ret && ret.statusCode == 9000) {
-										openResult(order_no);
-									} else {
-										deleteOrder(orderid);
-									}
-								});
-						});
+					if (ret && ret.value) {
+						user = eval('(' + ret.value + ')');
+						//请求选择钱数条目
+						moneyItem();
 					} else {
-						api.toast({
-							msg : '服务器未响应，支付失败'
+						//提示登录
+						userlogin();
+					}
+				});
+				//监听返回键
+				api.addEventListener({
+					name : 'keyback'
+				}, function(ret, err) {
+					api.closeWin();
+				});
+			}
+
+			//提示登录
+			function userlogin() {
+				api.alert({
+					title : '温馨提示',
+					msg : '进行该操作前请先登录',
+				}, function(ret, err) {
+					if (ret.buttonIndex == 1) {
+						setTimeout(function() {
+							api.closeWin();
+						}, 1000);
+						api.openWin({
+							name : 'login_body',
+							url : '../../login/login_body.html'
 						});
 					}
 				});
-			} else if (pay_way == 2) {
-				var orderid = "W" + order_id;
-				//打开支付成功页;
-				doPay({
-					wash_user_id : user[0].wash_user_id,
-					uuid : user[0].uuid,
-					recharge_id : orderid, //用户充值记录id
-					pay_method : pay_way, //支付方式
-					recharge_amount : product.recharge_pay, //支付金额
-					overage_type : '2', //来源
-					orientact_id : product.orientact_id//定向余额Id
-				}, function(ret, err) {
-					order_no = ret.data;
+			}
+
+			//请求选择钱数条目
+			function moneyItem() {
+				$xy.ajax(function(ret, err) {
+					//api.hideProgress();
 					if (ret.success) {
-						var wxPay = api.require('wxPay');
-						wxPay.config({
-							mchId : '1390880602',
-							partnerKey : 'nZ9booT9pQOaIGp5hcrjMs243GPvS7g4',
-							notifyUrl : 'http://218.29.85.98:8080/wash/payNotifyUrl.jsp'
+						//console.log(JSON.stringify(ret));
+						console.log(JSON.stringify(ret));
+						var tpl = document.getElementById('clzl_item').innerHTML;
+						//读取模版
+						//方式一：异步渲染（推荐）
+						laytpl(tpl).render(ret.data, function(render) {
+							api.hideProgress();
+							alert(JSON.stringify(ret.data[0]));
+							document.getElementById('recharge_pay').innerHTML = ret.data[0].recharge_pay;
+							document.getElementById('presentation_pay').innerHTML = ret.data[0].presentation_pay;
+							document.getElementById('clzl_list').innerHTML = render;
+						});
+					} else {
+						//console.log(JSON.stringify(ret));
+						var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无金额</div></div></div>';
+						document.getElementById('clzl_list').innerHTML = htmls;
+					}
+				}, 'OrientRule&funid=wash_orient_activity&orientact_id=' + orientact_id);
+			}
+
+			//选择钱数的处理
+			function choase(obj, money, presentation_pay) {
+				paymoney = money;
+				presentation_pay = presentation_pay;
+				$("#recharge_pay").html(paymoney);
+				$("#presentation_pay").html(presentation_pay);
+				$(obj).parent().children().children().removeClass("H-theme-border-color7 p_active");
+				$(obj).children().addClass("H-theme-border-color7 p_active");
+			}
+
+			//对应选项判断
+			function check(obj) {
+				$(".payway").removeClass('icon-duihao');
+				$(obj).find(".payway").addClass('icon-duihao');
+				pay_way = $(obj).find(".icon-duihao").attr("payway");
+			}
+
+			//支付方法
+			function openCf() {
+				if (!pay_way) {
+					api.toast({
+						msg : '请先选择支付方式'
+					});
+					return;
+				};
+				var orderid = "C" + A();
+				//alert(orderid);
+				if (pay_way == 1) {
+					//var orderid = "C" + order_id;
+					doPay({
+						wash_user_id : user[0].wash_user_id,
+						uuid : user[0].uuid,
+						recharge_id : orderid, //用户充值记录id
+						pay_method : pay_way, //支付方式
+						recharge_amount : paymoney, //支付金额
+						overage_type : '2', //来源
+						orientact_id : product.orientact_id//定向余额Id
+					}, function(ret, err) {
+						//下单成功返回的数据
+						order_no = ret.data;
+						if (ret.success) {
+							//支付宝支付
+							alipayFunction(order_no, orderid);
+						} else {
+							api.toast({
+								msg : '服务器未响应，支付失败'
+							});
+						}
+					});
+				} else if (pay_way == 2) {
+					//var orderid = "W" + order_id;
+					//打开支付成功页;
+					doPay({
+						wash_user_id : user[0].wash_user_id,
+						uuid : user[0].uuid,
+						recharge_id : orderid, //用户充值记录id
+						pay_method : pay_way, //支付方式
+						recharge_amount : product.recharge_pay, //支付金额
+						overage_type : '2', //来源
+						orientact_id : product.orientact_id//定向余额Id
+					}, function(ret, err) {
+						order_no = ret.data;
+						if (ret.success) {
+							//微信支付
+							wxPayFunction(order_no, orderid);
+						} else {
+							api.toast({
+								msg : '抱歉，支付失败'
+							});
+						}
+					});
+				}
+			}
+
+			//支付宝支付方法
+			function alipayFunction(order_no, orderid) {
+				var obj = api.require('aliPay');
+				obj.config({
+					partner : '2088421786244385',
+					seller : 'jiyou360@126.com',
+					rsaPriKey : 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMnRFvabENOHewFvPz4zTLVRG/7hyq8oDcsa+Qw2Wve7bHhSQP/jZPb7gRjiilEKUUtADXqZq1WcllEebVrSapcQrpX3kYlhhdGiSGhGyZRy018UieG3dqvQGXa/3ktqbBKcD3Uqr/1W+5pyNa1g4ABCYWG7/NA8PLMgrjgN/bXZAgMBAAECgYAH6HGF6D2YjE59l+ZagZgX4r2+FwriIieoNb5chCS8YFO3w0FYxYhHRUOhvf69fjIBSNk+XJciG6ioNRED5grXHrJPIfcCIQYOpX0JEb0NhG/jpyOaCHxXKNGjij9qhJFUnmAH6At28N9YX02HZJBZPgx8P1UaOfvlmUxHFrmXIQJBAO73n8/gjFGg0i3lh9tjU/0cb7bdxrgSVovW+nFdMqRGQuNbKbTjjTUQ3PCZ8l5oYUcFI9JaZ/BJyEyhpFsO8ZMCQQDYM5bTV0JxLAJKjH2mmin7KCwSx+bAjQqVhqL/QZ5bsg302fLt4t6NwFknsvz+gWjpPoFR+S4rcCromOZXJs5jAkApxLBzRj1geyqhiRARAbCJejHwlZ0JSXNFKANIU1Dps7o3QRTuICPrVZI4n7/kTnxKTJSxTMoEDvFqq4otvFPvAkBoQliVihrsYICqWp2tXeKoz3KRi/znFhzohojL92Taaz73uLLBrQoN6ZgU4OfIA7gH4rCSS0vMfsbya+mIVZppAkEA5rhmaQ9RCbpcPcd+3jqLpIQtbXrKhsc3YRKtWpH06l2BKG8dDjey9ecLCp/UYWCObSLSvWhNg/1gxaVlAgRUDQ==',
+					rsaPubKey : 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJ0Rb2mxDTh3sBbz8+M0y1URv+4cqvKA3LGvkMNlr3u2x4UkD/42T2+4EY4opRClFLQA16matVnJZRHm1a0mqXEK6V95GJYYXRokhoRsmUctNfFInht3ar0Bl2v95LamwSnA91Kq/9VvuacjWtYOAAQmFhu/zQPDyzIK44Df212QIDAQAB',
+					notifyURL : 'http://218.29.85.98:8080/wash/notify_url.jsp',
+				}, function(ret, err) {
+					if (ret.status)
+						obj.pay({
+							subject : product.orientact_name,
+							body : product.dept_name,
+							amount : product.recharge_pay,
+							tradeNO : orderid
+						}, function(ret, err) {
+							//1.0 如果支付宝提示付款成功！
+							if (ret && ret.statusCode == 9000) {
+								openResult(order_no);
+							} else {
+								deleteOrder(orderid);
+							}
+						});
+				});
+			}
+
+			function wxPayFunction(order_no, orderid) {
+				var wxPay = api.require('wxPay');
+				wxPay.config({
+					mchId : '1390880602',
+					partnerKey : 'nZ9booT9pQOaIGp5hcrjMs243GPvS7g4',
+					notifyUrl : 'http://218.29.85.98:8080/wash/payNotifyUrl.jsp'
+				}, function(ret, err) {
+					if (ret.status) {
+						alert('配置商户支付参数成功');
+						wxPay.pay({
+							description : product.title,
+							totalFee : parseFloat(product.movement_money) * 100,
+							tradeNo : orderid
 						}, function(ret, err) {
 							if (ret.status) {
-								alert('配置商户支付参数成功');
-								wxPay.pay({
-									description : product.title,
-									totalFee : parseFloat(product.movement_money) * 100,
-									tradeNo : orderid
-								}, function(ret, err) {
-									if (ret.status) {
-										alert(ret.result);
-										//打开支付成功页;
-										openResult(order_no);
-									} else {
-										alert(err.code);
-										deleteOrder(orderid);
-									}
-								});
+								alert(ret.result);
+								//打开支付成功页;
+								openResult(order_no);
 							} else {
 								alert(err.code);
 								deleteOrder(orderid);
 							}
 						});
 					} else {
-						api.toast({
-							msg : '抱歉，支付失败'
-						});
+						alert(err.code);
+						deleteOrder(orderid);
 					}
 				});
 			}
-		}
 
-		//提交支付请求ajax
-		function doPay(datas, callback) {
-			api.showProgress();
-			$xy.Pajax(function(ret, err) {
-				api.hideProgress();
-				if (ret) {
-					//打开支付成功页;
-					callback(ret, err);
-					//openResult(ret.data);
-				} else {
-					alert("err====" + err.message);
+			//提交支付请求ajax
+			function doPay(datas, callback) {
+				api.showProgress();
+				$xy.Pajax(function(ret, err) {
+					api.hideProgress();
+					if (ret) {
+						//打开支付成功页;
+						callback(ret, err);
+						//openResult(ret.data);
+					} else {
+						alert("err====" + err.message);
+					}
+				}, 'addOrder&funid=wash_order', 'post', {
+					values : datas
+				});
+			}
+
+			//生成随机订单号
+			function A() {
+				var date = new Date();
+				var seperator1 = "-";
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var strDate = date.getDate();
+				var hour = date.getHours();
+				var minutes = date.getMinutes();
+				var seconds = date.getSeconds();
+				if (month >= 1 && month <= 9) {
+					month = "0" + month;
 				}
-			}, 'addOrder&funid=wash_order', 'post', {
-				values : datas
-			});
-		}
-
-		//生成随机订单号
-		function A() {
-			var date = new Date();
-			var seperator1 = "-";
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1;
-			var strDate = date.getDate();
-			var hour = date.getHours();
-			var minutes = date.getMinutes();
-			var seconds = date.getSeconds();
-			if (month >= 1 && month <= 9) {
-				month = "0" + month;
+				if (strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				if (hour >= 0 && hour <= 9) {
+					hour = "0" + hour;
+				}
+				if (minutes >= 0 && minutes <= 9) {
+					minutes = "0" + minutes;
+				}
+				if (seconds >= 0 && seconds <= 9) {
+					seconds = "0" + seconds;
+				}
+				var currentdate = year + month + strDate + hour + minutes + seconds + parseInt((Math.random()) * 10000);
+				return currentdate;
+				//alert(currentdate);
 			}
-			if (strDate >= 0 && strDate <= 9) {
-				strDate = "0" + strDate;
-			}
-			if (hour >= 0 && hour <= 9) {
-				hour = "0" + hour;
-			}
-			if (minutes >= 0 && minutes <= 9) {
-				minutes = "0" + minutes;
-			}
-			if (seconds >= 0 && seconds <= 9) {
-				seconds = "0" + seconds;
-			}
-			var currentdate = year + month + strDate + hour + minutes + seconds + parseInt((Math.random()) * 10000);
-			return currentdate;
-			//alert(currentdate);
-		}
-	</script>
+		</script>
+	</body>
 </html>

@@ -86,7 +86,7 @@
 						var now = new Date();
 						//计算剩余时间
 						times = 300 - ((now.getTime() - parseInt(time)) / 1000);
-						console.log('times111=='+times);
+						console.log('times111==' + times);
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
 					} else {
@@ -96,7 +96,7 @@
 						var now = new Date();
 						//计算剩余时间
 						times = 300 - ((now.getTime() - timestamp) / 1000);
-						console.log('times2222=='+times);
+						console.log('times2222==' + times);
 						//记录当前时间
 						api.setPrefs({
 							key : 'resulttime',
@@ -172,6 +172,9 @@
 				api.removePrefs({
 					key : 'resulttime'
 				});
+				setTimeout(function() {
+					api.closeWin();
+				}, 1000);
 				api.openWin({
 					name : 'progress_head',
 					url : '../progress/progress_head.html',
@@ -183,9 +186,6 @@
 					slidBackEnabled : true,
 					vScrollBarEnabled : false
 				});
-				setTimeout(function() {
-					api.closeWin();
-				}, 800);
 			}
 		</script>
 	</body>
