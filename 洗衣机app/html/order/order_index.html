@@ -202,6 +202,8 @@
 					user = eval('(' + ret.value + ')');
 					wash_user_id = user[0].wash_user_id;
 					uuid = user[0].uuid;
+					console.log("wash_user_id:" + wash_user_id);
+					console.log("uuid:" + uuid);
 					$xy.ajax(function(ret, err) {
 						//api.hideProgress();
 						if (ret) {
