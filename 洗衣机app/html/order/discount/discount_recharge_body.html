@@ -26,6 +26,11 @@
 				float: left;
 				text-align: center;
 			}
+			.p_active {
+				background-image: url('../../../image/p_type_active.jpg');
+				background-repeat: no-repeat;
+				background-position: bottom right;
+			}
 			.xy_border {
 				border-bottom: 1px solid #d8d8d8;
 				margin-left: 10px;
@@ -74,8 +79,9 @@
 			</div>-->
 			<!--加载进度-->
 		</div>
-		<div class="H-padding-horizontal-left-10 H-padding-vertical-both-3 H-font-size-12 color-888">
-			目前平台只支持支付宝和微信充值
+		<div style="background: #F0F0F0;height: 10px;"></div>
+		<div class="H-vertical-middle H-padding-horizontal-left-10 H-font-size-15 H-border-vertical-bottom-after H-theme-background-color-white H-padding-10">
+			请选择支付方式
 		</div>
 		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this);">
 			<span class="zhifubao-bg-color H-icon H-center-all H-display-block H-margin-horizontal-left-10"><i class="iconfont icon-zhifubao H-font-size-18 H-vertical-middle H-theme-font-color-white"></i></span>
@@ -91,6 +97,9 @@
 			</div>
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i payway="2" class="iconfont payway H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
 		</div>
+		<div class="H-padding-horizontal-left-10 H-text-align-center H-padding-vertical-top-5 H-font-size-12 color-888">
+			目前平台只支持支付宝和微信两种方式充值
+		</div>
 		<div class="H-padding-20">
 			<button onclick="openCf();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
 				确认支付
@@ -101,7 +110,7 @@
 			{{# for(var i=0,l=d.length;i<l;i++){ }}
 			{{# if(i == 0){ }}
 			<div class="H-font-size-14 b_czbutton" tapmode onclick="choase(this,{{= d[i].recharge_pay }},{{= d[i].presentation_pay}});">
-			<div class="H-border-both H-theme-border-color7" style="margin: 4px">
+			<div class="H-border-both H-theme-border-color7 p_active" style="margin: 4px">
 			{{# }else{ }}
 			<div class="H-font-size-14 b_czbutton" tapmode onclick="choase(this,{{= d[i].recharge_pay }},{{= d[i].presentation_pay}});">
 			<div class="H-border-both" style="margin: 4px">
@@ -125,6 +134,7 @@
 			//订单id
 			var orderid = null;
 			var itemdata = null;
+			var paymoney = null;
 			apiready = function() {
 				product = api.pageParam.data;
 				console.log(JSON.stringify(product));
@@ -137,6 +147,7 @@
 				}, function(ret, err) {
 					if (ret && ret.value) {
 						user = eval('(' + ret.value + ')');
+						orientact_id = product.orientact_id;
 						//请求选择钱数条目
 						moneyItem();
 					} else {
@@ -342,6 +353,24 @@
 				}, 'addOrder&funid=wash_order', 'post', {
 					values : datas
 				});
+			}
+
+			//删除订单方法
+			function deleteOrder(orderid) {
+				$xy.ajax(function(ret, err) {
+					if (ret.success) {
+						api.toast({
+							msg : '已取消订单'
+						});
+						setTimeout(function() {
+							api.closeWin();
+						}, 800);
+					} else {
+						api.toast({
+							msg : ret.message
+						});
+					}
+				}, 'deleteOrder&funid=wash_order&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_id=' + orderid);
 			}
 
 			//生成随机订单号
