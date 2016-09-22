@@ -20,6 +20,11 @@
 			.xy_border {
 				border-bottom: 1px solid #f0f0f0;
 			}
+			.xy_border_top {
+				border-bottom: 1px solid #f0f0f0;
+				margin-left: 20px;
+				margin-right: 20px;
+			}
 			.border-dx {
 				border-radius: 20px;
 			}
@@ -50,28 +55,26 @@
 			密码登录
 			</div>
 			</div>-->
-			<div class="xy_border"></div>
+			<div class="xy_border_top"></div>
 			<div id="content">
-				<div class="switvh H-font-size-14 ">
+				<div class="switvh H-font-size-14 H-padding-horizontal-both-20">
 					<div class="H-flexbox-horizontal">
-						<input type="text" id="tel" class=" H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入手机号码">
+						<input type="text" id="tel" class=" H-flexbox-horizontal  H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入手机号码">
 						<div class="H-padding-10">
 							<span tapmode onclick="getVerify();" id="sendVerify" class="H-font-size-14 H-theme-background-color-transparent  H-theme-font-color1 H-theme-border-color1 H-theme-border-color1-click H-theme-background-color1-click H-theme-font-color1-click border-dx H-padding-horizontal-both-15 H-padding-vertical-both-5"> 获取验证码 </span>
 						</div>
 					</div>
 					<div class="xy_border"></div>
-					<div>
-						<input type="text" id="code" class="H-margin-vertical-top-2 H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入验证码">
-					</div>
+					<input type="text" id="code" class="H-margin-vertical-top-2 H-flexbox-horizontal  H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入验证码">
 					<div class="xy_border"></div>
-					<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-14 H-padding-vertical-both-5 H-padding-horizontal-left-25">
-						<input type="checkbox" id="checkbox-1" class="H-checkbox H-checkbox-null H-vertical-align-middle H-font-size-18 H-theme-font-color1 H-border-radius-circle H-padding-horizontal-right-5">
-						<span   tapmode="H-touch-active" onclick="openTermsService();">同意《用户协议》</span>
-					</div>
-					<div class="H-margin-horizontal-both-20 H-padding-vertical-both-15">
+					<div class=" H-padding-vertical-both-15">
 						<button tapmode="" onclick="login_btn();" class="xy_login_btn H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent   H-theme-font-color-white">
 							登&nbsp;&nbsp;&nbsp;录
 						</button>
+					</div>
+					<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-12 H-padding-horizontal-left-25 H-text-align-center">
+						<!--<input type="checkbox" id="checkbox-1" class="H-checkbox H-checkbox-null H-vertical-align-middle H-font-size-18 H-theme-font-color1 H-border-radius-circle H-padding-horizontal-right-5">-->
+						点击登录，即表示您同意<span style="color:#49b1f4;" tapmode="H-touch-active" onclick="openTermsService();">《智能洗衣服务协议》</span>
 					</div>
 				</div>
 				<div style="display: none;" class="switvh H-font-size-14">
