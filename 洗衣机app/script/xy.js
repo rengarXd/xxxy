@@ -452,15 +452,15 @@
 				key : 'userinfo',
 				value : JSON.stringify(data)
 			});
-//			api.execScript({
-//				name : 'main',
-//				frameName : 'me_index',
-//				script : 'reload();'
-//			});
 			api.execScript({
 				name : 'main',
-				script : 'initInfo();'
+				frameName : 'me_index',
+				script : 'reload();'
 			});
+//			api.execScript({
+//				name : 'main',
+//				script : 'initInfo();'
+//			});
 //			api.sendEvent({
 //				name : 'userlogin'
 //			});
