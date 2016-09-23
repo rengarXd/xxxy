@@ -55,6 +55,11 @@
 			请选择充值余额
 		</div>
 		<div class="H-border-vertical-bottom-after H-padding-10 H-theme-background-color-white" id="clzl_list">
+			<div class="H-font-size-14 b_czbutton" tapmode onclick="choase(this,0.01);">
+				<div class="H-border-both H-padding-vertical-both-5 H-theme-border-color7 p_active" style="margin: 5px">
+					0.01元
+				</div>
+			</div>
 			<div class="H-font-size-14 b_czbutton" tapmode onclick="choase(this,50);">
 				<div class="H-border-both H-padding-vertical-both-5 H-theme-border-color7 p_active" style="margin: 5px">
 					50元
@@ -148,13 +153,18 @@
 
 		//支付
 		function openResult() {
+			api.execScript({
+				name : 'main',
+				script : 'initInfo();'
+			});
 			api.openWin({
 				name : 'recharge_success_head',
 				url : '../../result/recharge_success_head.html',
 				bounces : false,
 				delay : 0,
 				slidBackEnabled : true,
-				vScrollBarEnabled : false
+				vScrollBarEnabled : false,
+				hScrollBarEnabled : false
 			});
 		}
 
