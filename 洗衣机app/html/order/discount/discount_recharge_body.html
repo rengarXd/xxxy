@@ -194,7 +194,7 @@
 						//方式一：异步渲染（推荐）
 						laytpl(tpl).render(itemdata, function(render) {
 							api.hideProgress();
-							alert(JSON.stringify(itemdata[0]));
+							//alert(JSON.stringify(itemdata[0]));
 							document.getElementById('recharge_pay').innerHTML = itemdata[0].recharge_pay;
 							document.getElementById('presentation_pay').innerHTML = itemdata[0].presentation_pay;
 							document.getElementById('clzl_list').innerHTML = render;
@@ -222,6 +222,23 @@
 				$(".payway").removeClass('icon-duihao');
 				$(obj).find(".payway").addClass('icon-duihao');
 				pay_way = $(obj).find(".icon-duihao").attr("payway");
+			}
+
+			//支付结果
+			function openResult() {
+				api.execScript({
+					name : 'main',
+					script : 'initInfo();'
+				});
+				api.openWin({
+					name : 'recharge_success_head',
+					url : '../../result/recharge_success_head.html',
+					bounces : false,
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false,
+					hScrollBarEnabled : false
+				});
 			}
 
 			//支付方法
@@ -350,7 +367,7 @@
 					} else {
 						alert("err====" + err.message);
 					}
-				}, 'addOrder&funid=wash_order', 'post', {
+				}, 'alipayReOrder&funid=wash_user', 'post', {
 					values : datas
 				});
 			}
@@ -360,7 +377,7 @@
 				$xy.ajax(function(ret, err) {
 					if (ret.success) {
 						api.toast({
-							msg : '已取消订单'
+							msg : '支付失败，订单取消'
 						});
 						setTimeout(function() {
 							api.closeWin();

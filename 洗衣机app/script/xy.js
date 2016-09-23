@@ -457,13 +457,33 @@
 				frameName : 'me_index',
 				script : 'reload();'
 			});
-//			api.execScript({
-//				name : 'main',
-//				script : 'initInfo();'
-//			});
-//			api.sendEvent({
-//				name : 'userlogin'
-//			});
+			//			api.execScript({
+			//				name : 'main',
+			//				script : 'initInfo();'
+			//			});
+			//			api.sendEvent({
+			//				name : 'userlogin'
+			//			});
+		},
+		jsDateDiff : function(publishTime) {
+			nowtime = (new Date).getTime();
+			secondNum = parseInt((nowtime - publishTime * 1000) / 1000);
+			if (secondNum >= 0 && secondNum < 60) {
+				return secondNum + "秒前"
+			} else {
+				if (secondNum >= 60 && secondNum < 3600) {
+					var nTime = parseInt(secondNum / 60);
+					return nTime + "分钟前"
+				} else {
+					if (secondNum >= 3600 && secondNum < 3600 * 24) {
+						var nTime = parseInt(secondNum / 3600);
+						return nTime + "小时前"
+					} else {
+						var nTime = parseInt(secondNum / 86400);
+						return nTime + "天前"
+					}
+				}
+			}
 		},
 		toast : function(callback, msg, duration, location, global) {
 			var that = this;
