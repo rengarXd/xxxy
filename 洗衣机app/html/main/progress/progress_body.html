@@ -74,8 +74,8 @@
 			<div class="xy_border"></div>
 			<div class="H-theme-background-color-white H-font-size-13 H-padding-vertical-bottom-25 H-padding-vertical-top-5" style="padding-left: 37px;">
 			<div class="H-float-right">
-			<span>故障反馈</span>
-			<span class="H-margin-horizontal-left-25 H-padding-horizontal-right-15">联系客服</span>
+			<span onclick="open_fault_feedback();">故障反馈</span>
+			<span class="H-margin-horizontal-left-25 H-padding-horizontal-right-15" onclick="openCustomerService();">联系客服</span>
 			</div>
 			</div>
 			</div>
@@ -86,6 +86,7 @@
 		<script type="text/javascript">
 			var times = null, timeall = null;
 			var data = null, isinerval = null;
+			var dataarr = null;
 			apiready = function() {
 				// 初始化页面
 				data = api.pageParam.data;
@@ -135,6 +136,8 @@
 							if (isinerval) {
 								isinerval = null;
 							}
+							//订单信息
+							dataarr = ret.data;
 							//开始时间
 							var stringTime = ret.data[0].start_time;
 							var start_time = Date.parse(new Date(stringTime));
@@ -160,12 +163,12 @@
 								script : 'listener();'
 							});
 							//设置定时任务
-//							if (totalTime > 60) {
-//								var last = (totalTime - 60) * 1000;
-//								setTimeout(function() {
-//									alert('还有5分钟结束');
-//								}, last);
-//							}
+							//							if (totalTime > 60) {
+							//								var last = (totalTime - 60) * 1000;
+							//								setTimeout(function() {
+							//									alert('还有5分钟结束');
+							//								}, last);
+							//							}
 							//进度条
 							arcProgress();
 						});
@@ -314,6 +317,34 @@
 					} else {
 						alert(JSON.stringify(err));
 					}
+				});
+			}
+
+			//打开联系客服页面
+			function openCustomerService() {
+				api.openWin({
+					name : 'custom_server_head.html',
+					url : '../../me/server/custom_server_head.html',
+					bounces : false,
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
+				});
+			}
+
+			//打开故障反馈
+			function open_fault_feedback() {
+				//								console.log(JSON.stringify(dept_id));
+				api.openWin({
+					name : 'fault_feedback_head.html',
+					url : '../../me/feedback/fault_feedback_head.html',
+					pageParam : {
+						data : dataarr
+					},
+					bounces : false,
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
 				});
 			}
 		</script>

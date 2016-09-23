@@ -74,7 +74,7 @@
 			<div id="qita" class=" xy_font_color H-font-size-13 H-padding-vertical-bottom-25 H-padding-vertical-top-5" style="padding-left: 37px;">
 				<div class="H-float-right">
 					<span onclick="ChangesToPhone();">手机号验证</span>
-					<span class="H-margin-horizontal-left-25 H-padding-horizontal-right-15">联系客服</span>
+					<span class="H-margin-horizontal-left-25 H-padding-horizontal-right-15"onclick="openCustomerService();">联系客服</span>
 				</div>
 			</div>
 			<div class="H-margin-horizontal-both-20 H-padding-vertical-both-15">
@@ -122,7 +122,6 @@
 				console.log("wash_user_id:" + wash_user_id);
 				console.log("uuid:" + uuid);
 				console.log("phone_number:" + phone_number);
-				
 			});
 		}
 
@@ -269,6 +268,7 @@
 			//			});
 		}
 
+		//打开联系客服页面
 		function openCustomerService() {
 			api.openWin({
 				name : 'custom_server_head.html',
