@@ -1,14 +1,16 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<title>联系客服header</title>
 		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
 		<link rel="stylesheet" href="../../../css/fonts/iconfont.css" />
 		<link rel="stylesheet" href="../../../css/style.css" />
 	</head>
+
 	<body class="H-flexbox-vertical">
 		<header class="H-header b_header_bg" id="header">
 			<span tapmode="H-theme-font-color-444" tapmode="" onclick="api.closeWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i> 返回</span>
@@ -26,16 +28,19 @@
 			var headerPos = $api.offset(header);
 			var body_h = $api.offset($api.dom('body')).h;
 			api.openFrame({
-				name : 'custom_server_body',
-				url : 'custom_server_body.html',
-				bounces : false,
-				rect : {
-					x : 0,
-					y : headerPos.h,
-					w : 'auto',
-					h : 'auto'
-				}
+				name: 'custom_server_body',
+				url: 'custom_server_body.html',
+				bounces: false,
+				rect: {
+					x: 0,
+					y: headerPos.h,
+					w: 'auto',
+					h: 'auto'
+				},
+				vScrollBarEnabled: false,
+				hScrollBarEnabled: false
 			})
 		};
 	</script>
+
 </html>
