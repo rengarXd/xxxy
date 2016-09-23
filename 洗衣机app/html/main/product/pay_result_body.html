@@ -106,6 +106,14 @@
 						isinerval = setInterval("CountDown()", 1000);
 					}
 				});
+				//监听安卓手机的返回
+				api.addEventListener({
+	                name:'keyback'
+                },function(ret,err){
+                	api.closeToWin({
+	                    name: 'main'
+                    });
+                });
 			}
 
 			//时间递减处理
@@ -172,9 +180,6 @@
 				api.removePrefs({
 					key : 'resulttime'
 				});
-				setTimeout(function() {
-					api.closeWin();
-				}, 1000);
 				api.openWin({
 					name : 'progress_head',
 					url : '../progress/progress_head.html',
@@ -186,6 +191,9 @@
 					slidBackEnabled : true,
 					vScrollBarEnabled : false
 				});
+				setTimeout(function() {
+					api.closeWin();
+				}, 1000);
 			}
 		</script>
 	</body>

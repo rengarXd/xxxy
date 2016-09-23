@@ -75,7 +75,7 @@
 		</div>
 		<script type="text/html" id="dxye_data">
 			{{# for(var i = 0, len = d.length;i<len;i++) { }}
-			<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this);">
+			<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this,{{ i }});">
 			<div class="color-22a5f9 H-flex-item H-padding-horizontal-both-15 H-font-size-18 H-padding-vertical-both-12">
 			{{ d[i].user_sum }}元
 			</div>
@@ -100,7 +100,8 @@
 			//pay_num 支付金额（必填）（string）
 			//origin_type 来源类型（必填）（string）（1、支付宝扫码；2、微信扫码；3、app扫码；4、app在线；5、投币；6、刷卡）
 			//uorientoverage_id 用户定向余额Id
-			var order_id = null, user = null, uorientoverage_id = null, orientact_id = null, device_id = null, commodity_id = null, pay_way = null, orientact_id = null, pay_num = null, origin_type = null;
+			//dxyeData  定向余额数据
+			var order_id = null, ye_a = null, dxyeData = null, user = null, uorientoverage_id = null, orientact_id = null, device_id = null, commodity_id = null, pay_way = null, orientact_id = null, pay_num = null, origin_type = null;
 			apiready = function() {
 				//商品信息
 				product = api.pageParam;
@@ -131,21 +132,11 @@
 						user = eval('(' + ret.value + ')');
 						$xy.ajax(function(ret, err) {
 							if (ret.success) {
-								$xy.ajax(function(ret, err) {
-									if (ret) {
-										//alert(JSON.stringify(ret));
-										if (parseFloat(ret.data[0].account_overage) >= parseFloat(product.movement_money)) {
-											document.getElementById('ptye').innerHTML = ret.data[0].account_overage + '元';
-										} else {
-											document.getElementById('ptye_html').style.display = "none";
-										}
-									} else {
-										api.toast({
-											msg : '请检查网络并刷新该页面'
-										});
-									}
-								}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
-								_tpl('dxye_data', ret.data, 'dxye_html', function() {
+								//普通余额
+								ptyeAjax();
+								//定向余额数据
+								dxyeData = ret.data;
+								_tpl('dxye_data', dxyeData, 'dxye_html', function() {
 								});
 							} else {
 								api.toast({
@@ -178,6 +169,26 @@
 				});
 			}
 
+			//普通余额请求
+			function ptyeAjax() {
+				$xy.ajax(function(ret, err) {
+					if (ret) {
+						//alert(JSON.stringify(ret));
+						//普通余额
+						account_overage = parseFloat(ret.data[0].account_overage);
+						if (parseFloat(ret.data[0].account_overage) >= parseFloat(product.movement_money)) {
+							document.getElementById('ptye').innerHTML = ret.data[0].account_overage + '元';
+						} else {
+							$('#ptye').css('color', '#999999');
+						}
+					} else {
+						api.toast({
+							msg : '请检查网络并刷新该页面'
+						});
+					}
+				}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
+			}
+
 			//模板渲染
 			//@tplId 模板循环部分DOM id 【string】
 			//@renderData 模板部分数据 【JSON对象】
@@ -192,14 +203,72 @@
 			}
 
 			//对应选项判断
-			function check(obj) {
+			function check(obj, num) {
 				$(".payway").removeClass('icon-duihao');
 				$(obj).find(".payway").addClass('icon-duihao');
 				pay_way = $(obj).find(".icon-duihao").attr("payway");
 				if ($(obj).find(".icon-duihao").attr("orientact_id")) {
-					orientact_id = $(obj).find(".icon-duihao").attr("orientact_id");
-					uorientoverage_id = $(obj).find(".icon-duihao").attr("uorientoverage_id");
+					//用户剩余的定向余额金额
+					ye_a = parseFloat(dxyeData[num].user_sum);
+					//商品总金额
+					var tolal = parseFloat(product.movement_money);
+					if (ye_a < tolal) {
+						$('button').attr('onclick', 'paydxye();');
+						//剩余支付金额
+						last_money = tolal - ye_a;
+					}
+					orientact_id = dxyeData[num].orientact_id;
+					//$(obj).find(".icon-duihao").attr("orientact_id");
+					uorientoverage_id = dxyeData[num].uorientoverage_id;
+					//$(obj).find(".icon-duihao").attr("uorientoverage_id");
 				}
+			}
+
+			//定向余额+普通余额支付
+			function paydxye(datas, callback) {
+				//判断所剩余额是否够支付
+				if (last_money > account_overage) {
+					api.toast({
+						msg : '余额不足，请充值或选择其他支付方式'
+					});
+					return;
+				}
+				orderid = "D" + order_id;
+				api.showProgress();
+				$xy.Pajax(function(ret, err) {
+					api.hideProgress();
+					if (ret) {
+						//打开支付成功页;
+						if (ret.success) {
+							//执行main页面获取用户信息的函数
+							api.execScript({
+								name : 'main',
+								script : 'initInfo();'
+							});
+							openResult(ret.data);
+						} else {
+							deleteOrder(orderid);
+						}
+						//openResult(ret.data);
+					} else {
+						alert("err====" + err.message);
+					}
+				}, 'addOrderOrient&funid=wash_order', 'post', {
+					values : {
+						wash_user_id : user[0].wash_user_id,
+						uuid : user[0].uuid,
+						device_id : product.device_id, //洗衣机id  （必填）（string）
+						commodity_id : product.commodity_id, //商品id（必填）（string）
+						pay_way : '4', //支付方式
+						pay_num : ye_a, //用户定向余额的金额
+						pay_way1 : '3', //普通余额支付方式
+						pay_num1 : last_money, //剩余支付金额
+						orientact_id : orientact_id, //定向余额活动id（当支付方式为定向余额时必填）（string）
+						uorientoverage_id : uorientoverage_id, //用户定向余额Id
+						origin_type : '4', //来源
+						order_id : orderid//订单号
+					}
+				});
 			}
 
 			function openCf() {
@@ -255,6 +324,13 @@
 						}
 					});
 				} else if (pay_way == 3) {
+					//判断普通余额
+					if (parseFloat(product.movement_money) > account_overage) {
+						api.toast({
+							msg : '余额不足，请充值或选择其他支付方式'
+						});
+						return;
+					}
 					orderid = "P" + order_id
 					doPay({
 						wash_user_id : user[0].wash_user_id,
@@ -268,6 +344,11 @@
 					}, function(ret, err) {
 						//打开支付成功页;
 						if (ret.success) {
+							//执行main页面获取用户信息的函数
+							api.execScript({
+								name : 'main',
+								script : 'initInfo();'
+							});
 							openResult(ret.data);
 						} else {
 							deleteOrder(orderid);
