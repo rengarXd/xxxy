@@ -32,7 +32,9 @@
 		function CountDown() {
 			if (times < 1) {
 				clearInterval(isinerval);
-				api.closeWin();
+				api.closeToWin({
+	                name: 'main'
+                });
 				return;
 			} else {
 				document.getElementById('time').innerHTML = times
