@@ -213,6 +213,14 @@
 				//						});
 				//					}
 				//				});
+				//监听安卓手机的返回
+				api.addEventListener({
+	                name:'keyback'
+                },function(ret,err){
+                	api.closeToWin({
+	                    name: 'main'
+                    });
+                });
 			}
 
 			//时间递减处理
