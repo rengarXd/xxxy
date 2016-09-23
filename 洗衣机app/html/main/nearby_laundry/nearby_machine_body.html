@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
@@ -12,12 +13,14 @@
 			.iconfont {
 				color: #b8b8b8;
 			}
+			
 			.xy_border {
 				border-bottom: 1px solid #f0f0f0;
 				margin-left: 37px;
 			}
 		</style>
 	</head>
+
 	<body>
 		<!--<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
 		<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
@@ -55,52 +58,57 @@
 		</div>-->
 		<div id="machine_list"></div>
 		<script id="machine_list_item" type="text/html">
-			{{# for(var i=0,l=d.length;i<l;i++){ }}
-			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
-			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
-			<span class="H-padding-horizontal-both-10"><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
-			<div class="H-flex-item xy_font_color">
-			<span>{{ d[i].device_name }}</span>
-			{{# if (d[i].ustatus=="空闲"){ }}
-			<span class="H-float-right xyzt " tapmode="H-touch-active" onclick="openProduct('{{ i }}');">我要洗衣</span>
-			<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
-			{{ d[i].ustatus }}
-			</div>
-			{{# }else{ }}
-			<span class="H-float-right xyzt">空闲提醒</span>
-			<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
-			{{# var str = d[i].hold_ending;var strtime = str.substring(11,19); }}
-			{{ d[i].ustatus }} <span class="H-float-right">预计{{ strtime }}结束</span>
-			</div>
-			{{# } }}
-			</div>
-			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
-			</div>
-			<div class="xy_border"></div>
-			<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
-			{{ d[i].washloca_name }}
-			<span class="H-padding-horizontal-right-25 H-float-right"><span class="distance"></span>米</span>
-			</div>
-			</div>
-			{{# } }}
+			{{# for(var i=0,l=d.length;i
+			<l;i++){ }} <div class="H-theme-background-color-white H-margin-vertical-bottom-5">
+				<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
+					<span class="H-padding-horizontal-both-10"><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+					<div class="H-flex-item xy_font_color">
+						<span>{{ d[i].device_name }}</span> {{# if (d[i].ustatus=="空闲"){ }}
+						<span class="H-float-right xyzt " tapmode="H-touch-active" onclick="openProduct('{{ i }}');">我要洗衣</span>
+						<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
+							{{ d[i].ustatus }}
+						</div>
+						{{# }else{ }}
+						<span class="H-float-right xyzt" onclick="Set_availability(' {{ d[i].device_id }} ')">空闲提醒</span>
+						<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
+							{{# var str = d[i].hold_ending;var strtime = str.substring(11,19); }} {{ d[i].ustatus }} <span class="H-float-right">预计{{ strtime }}结束</span>
+						</div>
+						{{# } }}
+					</div>
+					<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+				</div>
+				<div class="xy_border"></div>
+				<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
+					{{ d[i].washloca_name }}
+					<span class="H-padding-horizontal-right-25 H-float-right"><span class="distance"></span>米</span>
+				</div>
+				</div>
+				{{# } }}
 		</script>
 		<script type="text/javascript" src="../../../script/xy.js"></script>
 		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
+		<script type="text/javascript" src="../../../script/zepto.min.js"></script>
+		<script type="text/javascript" src="../../../script/api.js"></script>
 		<script type="text/javascript">
+			var device_id = null
 			var distance = null;
+			var user = null;
+			var wash_user_id = null;
+			var uuid = null;
 			apiready = function() {
 				//从洗衣点传来的距离
 				distance = api.pageParam.distance;
 				//初始化加载页面
 				initPage();
+				initPref();
 				//下拉刷新
 				api.setRefreshHeaderInfo({
-					visible : true,
-					bgColor : '#fff',
-					textColor : '#666666',
-					textDown : '下拉刷新...',
-					textUp : '松开刷新...',
-					showTime : true
+					visible: true,
+					bgColor: '#fff',
+					textColor: '#666666',
+					textDown: '下拉刷新...',
+					textUp: '松开刷新...',
+					showTime: true
 				}, function(ret, err) {
 					initPage();
 				});
@@ -110,11 +118,11 @@
 				var data = xyjdata[parseInt(i)];
 				data.distance = distance;
 				api.openWin({
-					name : 'option_head',
-					url : '../product/option_head.html',
-					bounces : false,
-					pageParam : {
-						data : xyjdata[parseInt(i)]
+					name: 'option_head',
+					url: '../product/option_head.html',
+					bounces: false,
+					pageParam: {
+						data: xyjdata[parseInt(i)]
 					},
 				});
 			}
@@ -129,11 +137,11 @@
 			function initPage() {
 				$xy.ajax(function(ret, err) {
 					//api.hideProgress();
-					if (ret) {
+					if(ret) {
 						//$("#nonetwork").hide();
 						api.refreshHeaderLoadDone();
-						if (ret.success) {
-							if (ret.data.length == 0) {
+						if(ret.success) {
+							if(ret.data.length == 0) {
 								//当洗衣机数量为空时的处理
 								var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无洗衣机</div></div></div>';
 								document.getElementById('machine_list').innerHTML = htmls;
@@ -149,14 +157,14 @@
 								});
 								//渲染距离
 								var dis = document.getElementsByClassName('distance');
-								for (var i = 0; i < dis.length; i++) {
+								for(var i = 0; i < dis.length; i++) {
 									dis[i].innerHTML = distance;
 								}
 							}
 						} else {
 							//console.log(JSON.stringify(ret));
 							api.toast({
-								msg : '很抱歉，附近没有洗衣点！'
+								msg: '很抱歉，附近没有洗衣点！'
 							});
 						}
 					} else {
@@ -165,6 +173,152 @@
 					}
 				}, 'appDeviceList&funid=wash_location&washloca_id=' + api.pageParam.washloca_id);
 			}
+
+			//获取偏好值
+			function initPref() {
+				api.getPrefs({
+					key: 'userinfo'
+				}, function(ret, err) {
+					//alert(JSON.stringify(user));
+					if(ret && ret.value) {
+						user = eval('(' + ret.value + ')');
+						wash_user_id = user[0].wash_user_id;
+						uuid = user[0].uuid;
+						console.log("wash_user_id:" + wash_user_id);
+						console.log("uuid:" + uuid);
+					}
+				});
+			}
+
+			function Set_availability(device_id) {
+
+				//打开个人中心或登录页
+				if(user) {
+					console.log("wash_user_id:" + wash_user_id);
+					console.log("uuid:" + uuid);
+					console.log("device_id:" + device_id);
+					//设置空闲提醒对话框
+					alertLog('提醒设置', '确认对这台洗衣机设置提醒吗？', '不用了', '是的', function(ret) {
+						if(ret.eventType == 'left') {
+							var dialogBox = api.require('dialogBox');
+							dialogBox.close({
+								dialogName: 'alert'
+							});
+							//api.closeWin();
+						} else {
+							var dialogBox = api.require('dialogBox');
+							dialogBox.close({
+								dialogName: 'alert'
+							});
+
+							$xy.ajax(function(ret, err) {
+								//api.hideProgress();
+								if(ret) {
+									console.log(JSON.stringify(ret));
+									//$("#nonetwork").hide();
+									api.refreshHeaderLoadDone();
+									if(ret.success) {
+										console.log(JSON.stringify(ret));
+										api.toast({
+											msg: ret.message
+										});
+
+									} else {
+										//console.log(JSON.stringify(ret));
+										api.toast({
+											msg: '很抱歉，网络异常'
+										});
+									}
+								} else {
+									console.log(JSON.stringify("false"));
+									//					api.refreshHeaderLoadDone();
+									//					$("#nonetwork").show();
+								}
+							}, 'addFree&funid=wash_user_new&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&device_id=' + device_id);
+
+						}
+					});
+				} else {
+					alertLog('尚未登录', '是否进行登录？', '取消', '登录', function(ret) {
+						if(ret.eventType == 'left') {
+							var dialogBox = api.require('dialogBox');
+							dialogBox.close({
+								dialogName: 'alert'
+							});
+							api.closeWin();
+						} else {
+							var dialogBox = api.require('dialogBox');
+							dialogBox.close({
+								dialogName: 'alert'
+							});
+							api.openWin({
+								name: 'login_body',
+								url: '../../login/login_body.html',
+								bounces: false,
+								delay: 0,
+								slidBackEnabled: true,
+								vScrollBarEnabled: false,
+								hScrollBarEnabled: false
+							});
+							setTimeout(function() {
+								api.closeWin();
+							}, 1000);
+						}
+					});
+
+				}
+
+			}
+
+			//dialog对话框
+			function alertLog(title, content, leftBtnTitle, rightBtnTitle, callback) {
+				var dialogBox = api.require('dialogBox');
+				dialogBox.alert({
+					texts: {
+						title: title,
+						content: content,
+						leftBtnTitle: leftBtnTitle,
+						rightBtnTitle: rightBtnTitle
+					},
+					styles: {
+						bg: '#fff',
+						w: 300,
+						corner: 5,
+						title: {
+							marginT: 30,
+							titleSize: 18,
+							titleColor: '#119ed1'
+						},
+						content: {
+							color: '#555555',
+							marginT: 30,
+							marginB: 50,
+							size: 16
+						},
+						left: {
+							marginB: 0,
+							marginL: 0,
+							w: 150,
+							h: 50,
+							bg: '#fff',
+							color: '#cacaca',
+							size: 15
+						},
+						right: {
+							marginB: 0,
+							marginL: 0,
+							w: 150,
+							h: 50,
+							bg: '#119ed1',
+							color: '#fff',
+							size: 15
+						}
+					}
+				}, function(ret) {
+					callback(ret);
+				});
+			}
 		</script>
 	</body>
+
 </html>
