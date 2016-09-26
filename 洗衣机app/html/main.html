@@ -99,14 +99,25 @@
 			var FNScanner = null;
 			H.ready(function() {
 				$('.brige').hide();
+				//初始化极光推送
+				var ajpush = api.require('ajpush');
+				var systemtype = api.systemType;
+				ajpush.setListener(function(ret) {
+					//alert('接收推送成功');
+					$('.brige').show();
+					//					var id = ret.id;
+					//					var title = ret.title;
+					//					var content = ret.content;
+					//					var extra = ret.extra;
+				});
+				//初始化推送监听
+				pushListener();
 				//1.3页面初始化函数
 				pageInit();
 				//初始化用户信息
 				initInfo();
 				//1.4连按两次退出APP
 				H.dblclickToCloseApp();
-				//极光推送监听
-				pushListener();
 			});
 			//			apiready = function() {
 			//				$xy.openFrameGroupNavOrFoot(function(ret, err) {
@@ -210,17 +221,6 @@
 										return;
 									}
 								}
-								var ajpush = api.require('ajpush');
-								//初始化推送
-								var systemtype = api.systemType;
-								ajpush.setListener(function(ret) {
-									//alert('接收推送成功');
-									$('.brige').show();
-									//					var id = ret.id;
-									//					var title = ret.title;
-									//					var content = ret.content;
-									//					var extra = ret.extra;
-								});
 							} else {
 								//console.log(JSON.stringify(ret));
 								api.toast({
