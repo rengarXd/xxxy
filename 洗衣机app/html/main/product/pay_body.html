@@ -462,23 +462,23 @@
 				}, function(ret, err) {
 					if (ret.status) {
 						//alert('配置商户支付参数成功');
-						var jiage = "'" + parseFloat(product.movement_money) * 100 + "'";
-						alert(jiage);
-						deleteOrder(orderid);
-						//									wxPay.pay({
-						//										description : product.title,
-						//										totalFee : jiage,
-						//										tradeNo : orderid
-						//									}, function(ret, err) {
-						//										if (ret.status) {
-						//											//alert(ret.result);
-						//											//打开支付成功页;
-						//											openResult(order_no);
-						//										} else {
-						//											alert(JSON.stringify(err));
-						//											deleteOrder(orderid);
-						//										}
-						//									});
+						var jiage = parseFloat(product.movement_money) * 100;
+						//alert(jiage);
+						//deleteOrder(orderid);
+						wxPay.pay({
+							description : product.title,
+							totalFee : jiage,
+							tradeNo : orderid
+						}, function(ret, err) {
+							if (ret.status) {
+								//alert(ret.result);
+								//打开支付成功页;
+								openResult(order_no);
+							} else {
+								alert(JSON.stringify(err));
+								deleteOrder(orderid);
+							}
+						});
 					} else {
 						alert(err.code);
 						deleteOrder(orderid);
