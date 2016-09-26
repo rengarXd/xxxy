@@ -112,12 +112,8 @@
 							$('.brige').show();
 							//初始化推送监听
 							pushListener();
-							//1.3页面初始化函数
-							pageInit();
 							//初始化用户信息
 							initInfo();
-							//1.4连按两次退出APP
-							H.dblclickToCloseApp();
 							//					var id = ret.id;
 							//					var title = ret.title;
 							//					var content = ret.content;
@@ -126,6 +122,10 @@
 					} else {
 					}
 				});
+				//1.3页面初始化函数
+				pageInit();
+				//1.4连按两次退出APP
+				H.dblclickToCloseApp();
 			});
 			//			apiready = function() {
 			//				$xy.openFrameGroupNavOrFoot(function(ret, err) {
