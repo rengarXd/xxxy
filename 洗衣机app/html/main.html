@@ -100,24 +100,32 @@
 			H.ready(function() {
 				$('.brige').hide();
 				//初始化极光推送
-				var ajpush = api.require('ajpush');
-				var systemtype = api.systemType;
-				ajpush.setListener(function(ret) {
-					//alert('接收推送成功');
-					$('.brige').show();
-					//					var id = ret.id;
-					//					var title = ret.title;
-					//					var content = ret.content;
-					//					var extra = ret.extra;
+				api.getPrefs({
+					key : 'userinfo'
+				}, function(ret, err) {
+					if (ret && ret.value) {
+						user = eval('(' + ret.value + ')');
+						var ajpush = api.require('ajpush');
+						var systemtype = api.systemType;
+						ajpush.setListener(function(ret) {
+							//alert('接收推送成功');
+							$('.brige').show();
+							//初始化推送监听
+							pushListener();
+							//1.3页面初始化函数
+							pageInit();
+							//初始化用户信息
+							initInfo();
+							//1.4连按两次退出APP
+							H.dblclickToCloseApp();
+							//					var id = ret.id;
+							//					var title = ret.title;
+							//					var content = ret.content;
+							//					var extra = ret.extra;
+						});
+					} else {
+					}
 				});
-				//初始化推送监听
-				pushListener();
-				//1.3页面初始化函数
-				pageInit();
-				//初始化用户信息
-				initInfo();
-				//1.4连按两次退出APP
-				H.dblclickToCloseApp();
 			});
 			//			apiready = function() {
 			//				$xy.openFrameGroupNavOrFoot(function(ret, err) {
@@ -161,26 +169,18 @@
 
 			//初始化用户信息
 			function initInfo() {
-				api.getPrefs({
-					key : 'userinfo'
-				}, function(ret, err) {
-					if (ret && ret.value) {
-						var user = eval('(' + ret.value + ')');
-						$xy.ajax(function(ret, err) {
-							//api.hideProgress();
-							if (ret.success) {
-								retInfo = ret.data;
-								//console.log(JSON.stringify(retInfo));
-								$xy.userlogInfo(retInfo);
-							} else {
-								api.toast({
-									msg : '您的登录状态异常'
-								});
-							}
-						}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
+				$xy.ajax(function(ret, err) {
+					//api.hideProgress();
+					if (ret.success) {
+						retInfo = ret.data;
+						//console.log(JSON.stringify(retInfo));
+						$xy.userlogInfo(retInfo);
 					} else {
+						api.toast({
+							msg : '您的登录状态异常'
+						});
 					}
-				});
+				}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
 			}
 
 			//			function selectIndex(index) {
@@ -206,31 +206,23 @@
 
 			//监听推送方法
 			function pushListener() {
-				api.getPrefs({
-					key : 'userinfo'
-				}, function(ret, err) {
-					if (ret && ret.value) {
-						var user = eval('(' + ret.value + ')');
-						$xy.ajax(function(ret, err) {
-							//api.hideProgress();
-							if (ret.success) {
-								//console.log(JSON.stringify(ret));
-								for (var i = 0, len = ret.data.length; i < len; i++) {
-									if (ret.data[i].is_read == "0") {
-										$('.brige').show();
-										return;
-									}
-								}
-							} else {
-								//console.log(JSON.stringify(ret));
-								api.toast({
-									msg : '服务器未响应'
-								});
+				$xy.ajax(function(ret, err) {
+					//api.hideProgress();
+					if (ret.success) {
+						//console.log(JSON.stringify(ret));
+						for (var i = 0, len = ret.data.length; i < len; i++) {
+							if (ret.data[i].is_read == "0") {
+								$('.brige').show();
+								return;
 							}
-						}, 'appUserNews&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
+						}
 					} else {
+						//console.log(JSON.stringify(ret));
+						api.toast({
+							msg : '服务器未响应'
+						});
 					}
-				});
+				}, 'appUserNews&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
 			}
 		</script>
 	</body>
