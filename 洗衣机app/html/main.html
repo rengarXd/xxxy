@@ -105,15 +105,15 @@
 				}, function(ret, err) {
 					if (ret && ret.value) {
 						user = eval('(' + ret.value + ')');
+						//初始化推送监听
+						pushListener();
+						//初始化用户信息
+						initInfo();
 						var ajpush = api.require('ajpush');
 						var systemtype = api.systemType;
 						ajpush.setListener(function(ret) {
 							//alert('接收推送成功');
 							$('.brige').show();
-							//初始化推送监听
-							pushListener();
-							//初始化用户信息
-							initInfo();
 							//					var id = ret.id;
 							//					var title = ret.title;
 							//					var content = ret.content;
