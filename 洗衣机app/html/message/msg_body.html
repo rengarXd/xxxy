@@ -23,8 +23,11 @@
 	</head>
 	<body>
 		<div class="H-theme-background-color-white H-font-size-12 H-padding-horizontal-left-10 H-padding-vertical-both-5 H-margin-vertical-bottom-5">
-			<span style="background-color: #ff7200;">&nbsp;</span><span class="H-padding-horizontal-both-8">已读</span>
-			<span style="background-color: #03aafe;">&nbsp;</span><span class="H-padding-horizontal-left-8">未读</span>
+			<span class="H-font-size-14 H-theme-font-color-999">消息状态：</span>
+			<div class="H-float-right H-display-inline H-padding-horizontal-right-10">
+				<span style="background-color: #ff7200;" >&nbsp;</span><span class=" H-padding-horizontal-both-8">已读</span>
+				<span style="background-color: #03aafe;" >&nbsp;</span><span class=" H-padding-horizontal-left-8">未读</span>
+			</div>
 		</div>
 		<div id="message_html">
 			<div class="H-position-absolute H-position-center-all" id="statuss">
@@ -64,7 +67,7 @@
 		<script type="text/html" id="message_data">
 			{{# for(var i=0,len=d.length;i<len;i++) { }}
 			<div class=" H-theme-background-color-white H-margin-vertical-bottom-5">
-			<div class="H-channel-title H-flexbox-horizontal H-theme-background-color-white H-vertical-middle" tapmode="" onclick="openOrder();">
+			<div class="H-channel-title H-flexbox-horizontal H-theme-background-color-white H-vertical-middle" tapmode="" onclick="openOrder(this);">
 			{{# if (d[i].is_read == 1){ }}
 			<div style="background-color: #ff7200;" class="H-channel-line H-padding-vertical-top-15 H-padding-horizontal-left-3 H-margin-horizontal-left-10"></div>
 			{{# }else{ }}
@@ -115,9 +118,8 @@
 					}
 				});
 			}
-			
-			function openOrder(){
-				
+
+			function openOrder() {
 			}
 
 			function initpage() {

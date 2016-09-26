@@ -177,18 +177,19 @@
 			//				$("header").hide().eq(index).show();
 			//			}
 			function openWin(name, url) {
-				$('.brige').hide();
 				var delay = 0;
 				if (api.systemType != 'ios') {
 					delay = 200;
 				}
+				$('.brige').hide();
 				api.openWin({
 					name : name,
 					url : url,
 					bounces : false,
 					delay : delay,
 					slidBackEnabled : true,
-					vScrollBarEnabled : false
+					vScrollBarEnabled : false,
+					hScrollBarEnabled : false
 				});
 			}
 
@@ -206,21 +207,43 @@
 								for (var i = 0, len = ret.data.length; i < len; i++) {
 									if (ret.data[i].is_read == "0") {
 										$('.brige').show();
+										return;
 									}
 								}
 								var ajpush = api.require('ajpush');
-								ajpush.setListener(function(ret) {
-									$('.brige').show();
-									//					var id = ret.id;
-									//					var title = ret.title;
-									//					var content = ret.content;
-									//					var extra = ret.extra;
-								});
+								//初始化推送
+								var systemtype = api.systemType;
+								if (systemtype != "ios") {
+									//初始化android推送
+									ajpush.init(function(ret) {
+										if (ret && ret.status) {
+											alert('初始化android推送成功')
+											//注册设备
+											ajpush.setListener(function(ret) {
+												alert('接收推送成功');
+												$('.brige').show();
+												//					var id = ret.id;
+												//					var title = ret.title;
+												//					var content = ret.content;
+												//					var extra = ret.extra;
+											});
+										}
+									});
+								} else {
+									//适配ios推送
+									ajpush.setListener(function(ret) {
+										$('.brige').show();
+										//					var id = ret.id;
+										//					var title = ret.title;
+										//					var content = ret.content;
+										//					var extra = ret.extra;
+									});
+								}
 							} else {
 								//console.log(JSON.stringify(ret));
 								api.toast({
-	                                msg:'服务器未响应'
-                                });
+									msg : '服务器未响应'
+								});
 							}
 						}, 'appUserNews&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
 					} else {
