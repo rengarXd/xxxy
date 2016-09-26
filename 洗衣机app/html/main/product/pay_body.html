@@ -383,7 +383,7 @@
 				$xy.ajax(function(ret, err) {
 					if (ret.success) {
 						api.toast({
-							msg : '已取消订单'
+							msg : ret.message
 						});
 						setTimeout(function() {
 							api.closeWin();
