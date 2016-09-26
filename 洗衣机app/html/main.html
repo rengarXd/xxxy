@@ -213,32 +213,14 @@
 								var ajpush = api.require('ajpush');
 								//初始化推送
 								var systemtype = api.systemType;
-								if (systemtype != "ios") {
-									//初始化android推送
-									ajpush.init(function(ret) {
-										if (ret && ret.status) {
-											alert('初始化android推送成功')
-											//注册设备
-											ajpush.setListener(function(ret) {
-												alert('接收推送成功');
-												$('.brige').show();
-												//					var id = ret.id;
-												//					var title = ret.title;
-												//					var content = ret.content;
-												//					var extra = ret.extra;
-											});
-										}
-									});
-								} else {
-									//适配ios推送
-									ajpush.setListener(function(ret) {
-										$('.brige').show();
-										//					var id = ret.id;
-										//					var title = ret.title;
-										//					var content = ret.content;
-										//					var extra = ret.extra;
-									});
-								}
+								ajpush.setListener(function(ret) {
+									//alert('接收推送成功');
+									$('.brige').show();
+									//					var id = ret.id;
+									//					var title = ret.title;
+									//					var content = ret.content;
+									//					var extra = ret.extra;
+								});
 							} else {
 								//console.log(JSON.stringify(ret));
 								api.toast({
