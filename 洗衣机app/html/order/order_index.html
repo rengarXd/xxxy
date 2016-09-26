@@ -3,14 +3,11 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-		<title>title</title>
-		<link rel="stylesheet" type="text/css" href="../css/api.css" />
+		<title>订单列表</title>
 		<link rel="stylesheet" type="text/css" href="../../css/Hui.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/fonts/iconfont.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
 		<style>
-			body {
-			}
 			.img-icon {
 				width: 45px;
 				height: 40px;
@@ -28,6 +25,11 @@
 				</div>
 			</div>
 		</div>
+		<!--loading-->
+		<div class="H-text-align-center" id="loading" style="padding:10px 25px;display: none;color: rgb(167, 167, 167);font-size: 14px;">
+			<img src="../../image/loading01.gif" id="show" style="width: 45px;" />&nbsp;&nbsp;加载中...
+		</div>
+		<!--loading-->
 		<script id="order_list_item" type="text/html">
 			{{# for(var i=0,len=d.length;i<len;i++) { }}
 			{{# if(i==0){ }}
@@ -208,17 +210,13 @@
 				showTime : true
 			}, function(ret, err) {
 				location.reload();
-				api.refreshHeaderLoadDone();
+				//api.refreshHeaderLoadDone();
 			});
 		};
-		
 		function initPage() {
-				get_data();
-			}
-		
-		
-		
-		
+			get_data();
+		}
+
 		function get_data() {
 			loadLock = true;
 			api.getPrefs({
@@ -228,13 +226,14 @@
 					user = eval('(' + ret.value + ')');
 					wash_user_id = user[0].wash_user_id;
 					uuid = user[0].uuid;
-					console.log("wash_user_id:" + wash_user_id);
-					console.log("uuid:" + uuid);
+					//console.log("wash_user_id:" + wash_user_id);
+					//console.log("uuid:" + uuid);
 					$xy.ajax(function(ret, err) {
 						//api.hideProgress();
 						if (ret) {
-							console.log(JSON.stringify(ret));
+							//console.log(JSON.stringify(ret));
 							//$("#nonetwork").hide();
+							//关闭下拉刷新
 							api.refreshHeaderLoadDone();
 							if (ret.success) {
 								//console.log(JSON.stringify(ret));
@@ -242,6 +241,7 @@
 									//当洗衣机数量为空时的处理
 									var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无订单</div></div></div>';
 									document.getElementById('order_list').innerHTML = htmls;
+									$("#loading").hide();
 								} else {
 									//console.log(JSON.stringify(ret));
 									var tpl = document.getElementById('order_list_item').innerHTML;
@@ -249,7 +249,14 @@
 									//方式一：异步渲染（推荐）
 									laytpl(tpl).render(ret.data, function(render) {
 										api.hideProgress();
-										document.getElementById('order_list').innerHTML = render;
+										if (page == 1) {
+											document.getElementById('order_list').innerHTML = render;
+										} else {
+											//向后渲染
+											$("#order_list").append(render);
+											$("#loading").hide();
+										}
+										//document.getElementById('').innerHTML = render;
 										datacount = ret.message;
 										initEventLinster();
 										//懒加载
@@ -264,18 +271,22 @@
 							} else {
 								//console.log(JSON.stringify(ret));
 								$("#jiazai").html("暂无订单");
+								$("#loading").hide();
 								api.toast({
 									msg : '很抱歉，您可能没有订单！'
 								});
 							}
 						} else {
+							api.refreshHeaderLoadDone();
 							$("#jiazai").html("连接失败，请检查网络");
+							$("#loading").hide();
 							//					api.refreshHeaderLoadDone();
 							//					$("#nonetwork").show();
 						}
 					}, 'appOrderList&funid=wash_order&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&page=' + page);
 				} else {
 					$("#jiazai").html("暂无订单");
+					$("#loading").hide();
 				}
 			});
 		}
@@ -285,29 +296,27 @@
 		//			myDate.getMonth();
 		//		}
 		//当前时间格式化
-		
-		
 		//初始化事件监听
-			function initEventLinster() {
-				//数据行数大于初始页数
-				if (datacount > page) {
-					// 2.0 底部加载更多
-					api.addEventListener({
-						name : 'scrolltobottom',
-						extra : {
-							threshold : -10
-						}
-					}, function(ret, err) {
-						if (loadLock == false) {
+		function initEventLinster() {
+			//数据行数大于初始页数
+			if (datacount > page) {
+				// 2.0 底部加载更多
+				api.addEventListener({
+					name : 'scrolltobottom',
+					extra : {
+						threshold : -10
+					}
+				}, function(ret, err) {
+					if (loadLock == false) {
+						$("#loading").show();
+						setTimeout(function() {
 							get_data();
-						}
-					});
-				}
+						}, 1000);
+					}
+				});
 			}
-		
-		
-		
-		
+		}
+
 		//打开订单详情
 		function open_order_details(order_id) {
 			//								console.log(JSON.stringify(dept_id));
