@@ -39,31 +39,7 @@
 				</div>
 			</div>
 		</div>
-		<!--<div class=" H-theme-background-color-white H-margin-vertical-bottom-5">
-		<div class="H-channel-title H-flexbox-horizontal H-theme-background-color-white H-vertical-middle ">
-		<div class="H-channel-line H-theme-background-color4 H-padding-vertical-top-15 H-padding-horizontal-left-3  H-margin-horizontal-left-10 chense"></div>
-		<div class="H-channel-text H-theme-font-color4 H-flex-item H-font-size-16 H-theme-font-color-black H-padding-10 H-margin-horizontal-right-10 H-text-show-row-1 chense">
-		充100送20,新学期打折季
-		</div>
-		</div>
-		<div class="xy_border"></div>
-		<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-5" style="padding-left: 20px;padding-right: 20px;">
-		河南教育学院河南教育学院河南教育学院河南教育学院河南教育河南教育学院河南教育学院河南教育学院河南教育学院河南教育学院	充费地址：<span class="lanse">http://docs.apicloud.com/Dev-Tools</span>
-		</div>
-		</div>
-		<div class=" H-theme-background-color-white H-margin-vertical-bottom-5">
-		<div class="H-channel-title H-flexbox-horizontal H-theme-background-color-white H-vertical-middle ">
-		<div class="H-channel-line H-theme-background-color4 H-padding-vertical-top-15 H-padding-horizontal-left-3  H-margin-horizontal-left-10 chense"></div>
-		<div class="H-channel-text H-theme-font-color4 H-flex-item H-font-size-16 H-theme-font-color-black H-padding-10 H-margin-horizontal-right-10 H-text-show-row-1 chense">
-		充100送20,新学期打折季
-		</div>
-		<span class="H-theme-font-color-999 H-font-size-12 H-margin-horizontal-right-25">1天前</span>
-		</div>
-		<div class="xy_border"></div>
-		<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-5" style="padding-left: 20px;padding-right: 20px;">
-		河南教育学院河南教育学院河南教育学院河南教育学院河南教育河南教育学院河南教育学院河南教育学院河南教育学院河南教育学院	充费地址：<span class="lanse">http://docs.apicloud.com/Dev-Tools</span>
-		</div>
-		</div>-->
+
 		<script type="text/html" id="message_data">
 			{{# for(var i=0,len=d.length;i<len;i++) { }}
 			<div class=" H-theme-background-color-white H-margin-vertical-bottom-5">
@@ -119,7 +95,34 @@
 				});
 			}
 
+//查看详情，更改颜色
 			function openOrder() {
+				$xy.ajax(function(ret, err) {
+					//api.hideProgress();
+					if (ret.success) {
+						//console.log(JSON.stringify(ret));
+						if (ret.data.length == 0) {
+							//当没有订单时的处理
+							api.refreshHeaderLoadDone();
+							var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无消息记录</div></div></div>';
+							document.getElementById('message_html').innerHTML = htmls;
+						} else {
+							//console.log(JSON.stringify(ret));
+							api.refreshHeaderLoadDone();
+							var tpl = document.getElementById('message_data').innerHTML;
+							//读取模版
+							//方式一：异步渲染（推荐）
+							laytpl(tpl).render(ret.data, function(render) {
+								//api.hideProgress();
+								document.getElementById('message_html').innerHTML = render;
+							});
+						}
+					} else {
+						//console.log(JSON.stringify(ret));
+						$("#jiazai").html("服务器未响应");
+					}
+				}, 'appNewsInfo&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&news_id=' + user[0].news_id);
+
 			}
 
 			function initpage() {

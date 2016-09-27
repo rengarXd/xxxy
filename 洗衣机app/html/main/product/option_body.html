@@ -13,8 +13,9 @@
 				color: #03aafe;
 			}
 			.img-icon {
-				width: 68px;
-				height: 68px;
+				width: 40px;
+				height: 40px;
+				padding-left: 5px
 			}
 			.yuding {
 				width: 74px;
@@ -196,8 +197,9 @@
 		<script type="text/html" id="option_data">
 			{{# for(var i = 0,len=d.length;i<len;i++) { }}
 			<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle">
-			<span class="H-icon H-display-block"><img src="../../../image/666.png" class="img-icon"/></span>
-			<div class="H-flex-item H-padding-horizontal-right-5 H-font-size-15 xy_font_color ">
+			<span class="H-icon H-display-block"><img src="../../../image/commodity_icon/{{ d[i].commodity_icon }}" class="img-icon"/></span>
+			<span class="H-icon H-display-block H-padding-horizontal-left-5 "><img src="../../../image/shuxian.png" style="height: 68px;"/></span>
+			<div class="H-flex-item H-padding-horizontal-right-5 H-font-size-15 xy_font_color H-padding-10">
 			<span>{{ d[i].title }}</span><span class="tip-message H-font-size-12 H-float-right">{{ d[i].turn_around_date }}分钟<span class="H-padding-horizontal-left-5 tip-message-money">{{ d[i].movement_money }}</span>元</span>
 			<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-top-5">
 			{{ d[i].memo }}
@@ -276,7 +278,7 @@
 					//console.log(JSON.stringify(device_id));
 					//$("#nonetwork").hide();
 					if (ret.success) {
-						//console.log(JSON.stringify(ret));
+						console.log(JSON.stringify(ret));
 						product = ret.data;
 						var tpl = document.getElementById('option_data').innerHTML;
 						//读取模版
