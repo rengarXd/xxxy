@@ -105,6 +105,8 @@
 				pageInit();
 				//1.4连按两次退出APP
 				H.dblclickToCloseApp();
+				//监听事件
+				listener();
 			});
 			//			apiready = function() {
 			//				$xy.openFrameGroupNavOrFoot(function(ret, err) {
@@ -125,6 +127,16 @@
 			//				//退出app
 			//				$xy.dblclickToCloseApp();
 			//			}
+			function listener() {
+				//系统消息处理========================
+				api.addEventListener({
+					name : 'noticeclicked'
+				}, function(ret, err) {
+					//alert(JSON.stringify(ret));
+					$('.brige').show();
+				});
+			}
+
 			//页面初始化函数
 			function pageInit() {
 				//1.2打开沉浸式页面
