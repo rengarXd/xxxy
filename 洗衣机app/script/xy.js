@@ -5,7 +5,7 @@
  */
 ;! function(window) {
 	window.serverUrl = "http://218.29.85.98:8080/wash/fileAction.do?pagetype=grid&nousercheck=1&eventcode=";
-	window.ImgWebUrl = 'http://218.29.85.98:8080/wash/fileAction.do';
+	window.ImgWebUrl = 'http://218.29.85.98:8080/wash/fileAction.do?';
 	window.selectUrl = "&funid=app_remote";
 	//	var isAndroid = (/android/gi).test(navigator.appVersion);
 	//	var uzStorage = function() {
