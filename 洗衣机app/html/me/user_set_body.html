@@ -310,7 +310,7 @@
 										//压缩图片
 										imgCompress(returnUrl, 0.5, 0.5, getExt(returnUrl), function(compressImg) {
 											$("#nopic").attr("src", compressImg);
-											console.log(JSON.stringify(compressImg));																					
+											console.log(JSON.stringify(compressImg));
 											attach_name = compressImg;
 											console.log(JSON.stringify(attach_name));
 											Get_HeadPortrait_ID(attach_name);
@@ -329,7 +329,7 @@
 											//												}
 											//											});
 										});
-										
+
 									} else {
 										api.toast({
 											msg: JSON.stringify(err)
@@ -359,20 +359,20 @@
 											attach_name = compressImg;
 											console.log(attach_name);
 											Get_HeadPortrait_ID(attach_name);
-											
-//																						postHeadPortrait({
-//																							head_portrait: compressImg
-//																						}, function(ret, err) {
-//																							if(ret.success) {
-//																								console.log(JSON.stringify(ret));
-//																							} else {
-//																								api.toast({
-//																									msg: '网络异常，请稍后重试'
-//																								});
-//																							}
-//																						});
+
+											//																						postHeadPortrait({
+											//																							head_portrait: compressImg
+											//																						}, function(ret, err) {
+											//																							if(ret.success) {
+											//																								console.log(JSON.stringify(ret));
+											//																							} else {
+											//																								api.toast({
+											//																									msg: '网络异常，请稍后重试'
+											//																								});
+											//																							}
+											//																						});
 										});
-										
+
 									} else {
 										api.toast({
 											msg: JSON.stringify(err)
@@ -594,6 +594,15 @@
 			}
 
 			function Get_HeadPortrait_ID(attach_name) {
+				var funid = "sys_attach";
+				var pagetype = "editgrid";
+				var eventcode = "create";
+				var nousercheck = 1;
+				var dataType = "byte";
+				var datafunid = "wash_user";
+				var dataid = wash_user_id;
+				var attach_name = attach_name;
+
 				$xy.imgAjax(function(ret, err) {
 					//					$xy.Pajax(function(ret,err){
 					//						
@@ -619,18 +628,26 @@
 					}
 
 				}, 'post', {
-					
-						values: {
-							funid: "sys_attach",
-							pagetype: "editgrid",
-							eventcode: "create",
-							nousercheck: "1",
-							dataType: "byte",
-							datafunid： "wash_user",
-							dataid: wash_user_id,
-							attach_name: attach_name
-						}
-					
+
+					values: {
+						//							funid: "sys_attach",
+						//							pagetype: "editgrid",
+						//							eventcode: "create",
+						//							nousercheck: "1",
+						//							dataType: "byte",
+						//							datafunid： "wash_user",
+						//							dataid: wash_user_id,
+						//							attach_name: attach_name
+						funid: funid,
+						pagetype: pagetype,
+						eventcode: eventcode,
+						nousercheck: nousercheck,
+						dataType: dataType,
+						datafunid: datafunid,
+						dataid: dataid,
+						attach_name: attach_name
+					}
+
 				});
 			}
 		</script>
