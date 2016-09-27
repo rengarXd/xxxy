@@ -106,6 +106,7 @@
 			var textname = null;
 			var wash_user_id = null;
 			var uuid = null;
+			var attach_name = null;
 			apiready = function() {
 				// 引入过滤压缩模块
 				imageFilter = api.require("imageFilter");
@@ -309,20 +310,26 @@
 										//压缩图片
 										imgCompress(returnUrl, 0.5, 0.5, getExt(returnUrl), function(compressImg) {
 											$("#nopic").attr("src", compressImg);
-											postHeadPortrait({
-												wash_user_id: wash_user_id,
-												uuid: uuid,
-												head_portrait: compressImg
-											}, function(ret, err) {
-												if(ret.success) {
-													console.log(JSON.stringify(ret));
-												} else {
-													api.toast({
-														msg: '网络异常，请稍后重试'
-													});
-												}
-											});
+											console.log(JSON.stringify(compressImg));																					
+											attach_name = compressImg;
+											console.log(JSON.stringify(attach_name));
+											Get_HeadPortrait_ID(attach_name);
+											//提交头像到服务器
+											//											postHeadPortrait({
+											//												wash_user_id: wash_user_id,
+											//												uuid: uuid,
+											//												head_portrait: compressImg
+											//											}, function(ret, err) {
+											//												if(ret.success) {
+											//													console.log(JSON.stringify(ret));
+											//												} else {
+											//													api.toast({
+											//														msg: '网络异常，请稍后重试'
+											//													});
+											//												}
+											//											});
 										});
+										
 									} else {
 										api.toast({
 											msg: JSON.stringify(err)
@@ -349,18 +356,23 @@
 										imgCompress(returnUrl, 0.5, 0.5, getExt(returnUrl), function(compressImg) {
 											$("#nopic").attr("src", compressImg);
 											console.log(JSON.stringify(compressImg));
-											postHeadPortrait({
-												head_portrait: compressImg
-											}, function(ret, err) {
-												if(ret.success) {
-													console.log(JSON.stringify(ret));
-												} else {
-													api.toast({
-														msg: '网络异常，请稍后重试'
-													});
-												}
-											});
+											attach_name = compressImg;
+											console.log(attach_name);
+											Get_HeadPortrait_ID(attach_name);
+											
+//																						postHeadPortrait({
+//																							head_portrait: compressImg
+//																						}, function(ret, err) {
+//																							if(ret.success) {
+//																								console.log(JSON.stringify(ret));
+//																							} else {
+//																								api.toast({
+//																									msg: '网络异常，请稍后重试'
+//																								});
+//																							}
+//																						});
 										});
+										
 									} else {
 										api.toast({
 											msg: JSON.stringify(err)
@@ -580,15 +592,45 @@
 					vScrollBarEnabled: false
 				});
 			}
-			
-			function touxiang(){
-				$xy.imgAjax(function(ret,err){
-					$xy.Pajax(function(ret,err){
-						
-					});
-				},'post',{
-					values:{
+
+			function Get_HeadPortrait_ID(attach_name) {
+				$xy.imgAjax(function(ret, err) {
+					//					$xy.Pajax(function(ret,err){
+					//						
+					//					});
+					if(ret) {
+						console.log(JSON.stringify(ret));
+						//$("#nonetwork").hide();
+						api.refreshHeaderLoadDone();
+						if(ret.success) {
+							//console.log(JSON.stringify(ret));
+							//									api.alert({
+							//										msg: JSON.stringify(ret)
+							//
+							//									});
+						} else {
+
+							api.toast({
+								msg: '很抱歉，获取用户信息失败！'
+							});
+						}
+					} else {
+						console.log(JSON.stringify("false"));
 					}
+
+				}, 'post', {
+					
+						values: {
+							funid: "sys_attach",
+							pagetype: "editgrid",
+							eventcode: "create",
+							nousercheck: "1",
+							dataType: "byte",
+							datafunid： "wash_user",
+							dataid: wash_user_id,
+							attach_name: attach_name
+						}
+					
 				});
 			}
 		</script>
