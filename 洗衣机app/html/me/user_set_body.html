@@ -299,9 +299,9 @@
 										//压缩图片
 										imgCompress(returnUrl, 0.5, 0.5, getExt(returnUrl), function(compressImg) {
 											$("#nopic").attr("src", compressImg);
-											console.log(JSON.stringify(compressImg));
+											//console.log(JSON.stringify(compressImg));
 											attach_name = compressImg;
-											console.log(JSON.stringify(attach_name));
+											//console.log(JSON.stringify(attach_name));
 											Get_HeadPortrait_ID(attach_name);
 											//提交头像到服务器
 											//											postHeadPortrait({
@@ -343,9 +343,9 @@
 										//压缩图片
 										imgCompress(returnUrl, 0.5, 0.5, getExt(returnUrl), function(compressImg) {
 											$("#nopic").attr("src", compressImg);
-											console.log(JSON.stringify(compressImg));
+											//console.log(JSON.stringify(compressImg));
 											attach_name = compressImg;
-											console.log(attach_name);
+											//console.log(attach_name);
 											Get_HeadPortrait_ID(attach_name);
 											//																						postHeadPortrait({
 											//																							head_portrait: compressImg
@@ -580,14 +580,14 @@
 			}
 
 			function Get_HeadPortrait_ID(attach_name) {
-				var funid = "sys_attach";
-				var pagetype = "editgrid";
-				var eventcode = "create";
-				var nousercheck = 1;
-				var dataType = "byte";
-				var datafunid = "wash_user";
-				var dataid = wash_user_id;
-				var attach_name = attach_name;
+				//				var funid = "sys_attach";
+				//				var pagetype = "editgrid";
+				//				var eventcode = "create";
+				//				var nousercheck = 1;
+				//				var dataType = "byte";
+				//				var datafunid = "wash_user";
+				//				var dataid = wash_user_id;
+				//				var attach_name = attach_name;
 				$xy.imgAjax(function(ret, err) {
 					//					$xy.Pajax(function(ret,err){
 					//
@@ -604,7 +604,7 @@
 							//									});
 						} else {
 							api.toast({
-								msg : '很抱歉，获取用户信息失败！'
+								msg : ret.message
 							});
 						}
 					} else {
@@ -620,20 +620,19 @@
 						//							datafunid： "wash_user",
 						//							dataid: wash_user_id,
 						//							attach_name: attach_name
-						funid : funid,
-						pagetype : pagetype,
-						eventcode : eventcode,
-						nousercheck : nousercheck,
-						dataType : dataType,
-						datafunid : datafunid,
-						dataid : dataid,
+						funid : "sys_attach",
+						pagetype : "editgrid",
+						eventcode : "create",
+						nousercheck : 1,
+						dataType : "byte",
+						datafunid : "wash_user",
+						dataid : wash_user_id,
 						attach_name : attach_name
-						
 					}
-//					files : {
-//						file : attach_name
-//						
-//					}
+					//					files : {
+					//						file : attach_name
+					//
+					//					}
 				});
 			}
 		</script>
