@@ -78,10 +78,9 @@
 		</div>-->
 		<script type="text/html" id="xyj_data">
 			<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-3  animated fadeIn" style="padding-left: 30px;">
-			您曾使用过的空闲的洗衣机
+			您曾使用过的洗衣机
 			</div>
 			{{# for(var i = 0, len = d.length; i < len; i++) { }}
-			{{# if(d[i].ustatus == "空闲") { }}
 			<div class="H-theme-background-color-white H-margin-vertical-bottom-5">
 			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
 			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
@@ -100,7 +99,6 @@
 			<span class="H-padding-horizontal-right-20 H-float-right">{{ d[i].distance }}米</span>
 			</div>
 			</div>
-			{{# } }}
 			{{# } }}
 			<div class="H-text-align-center H-font-size-14 H-theme-font-color-999" tapmode="touch" onclick="openWin('nearby_laundry_head','./nearby_laundry/nearby_laundry_head.html');">
 			查找更多洗衣点
@@ -177,14 +175,14 @@
 									}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
 								} else {
 									xyjdata = ret.data;
-									var kong = new Array();
-									for (var i = 0, len = xyjdata.length; i < len; i++) {
-										if (xyjdata[i].ustatus == "空闲") {
-											kong.push(xyjdata[i]);
-										}
-									}
+									//									var kong = new Array();
+									//									for (var i = 0, len = xyjdata.length; i < len; i++) {
+									//										if (xyjdata[i].ustatus == "空闲") {
+									//											kong.push(xyjdata[i]);
+									//										}
+									//									}
 									//alert(JSON.stringify(kong));
-									_tpl('xyj_data', kong, 'xyj_html', function() {
+									_tpl('xyj_data', xyjdata, 'xyj_html', function() {
 									});
 								}
 							} else {
@@ -303,7 +301,7 @@
 							//纬度
 							latitude = ret.latitude;
 							//初始化数据
-							initData(longitude,latitude);
+							initData(longitude, latitude);
 						} else {
 							api.toast({
 								msg : '获取位置失败'
