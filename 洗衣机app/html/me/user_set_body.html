@@ -580,14 +580,7 @@
 			}
 
 			function Get_HeadPortrait_ID(attach_name) {
-				//				var funid = "sys_attach";
-				//				var pagetype = "editgrid";
-				//				var eventcode = "create";
-				//				var nousercheck = 1;
-				//				var dataType = "byte";
-				//				var datafunid = "wash_user";
-				//				var dataid = wash_user_id;
-				//				var attach_name = attach_name;
+
 				$xy.imgAjax(function(ret, err) {
 					//					$xy.Pajax(function(ret,err){
 					//
@@ -628,11 +621,12 @@
 						datafunid : "wash_user",
 						dataid : wash_user_id,
 						attach_name : attach_name
-					}
-					//					files : {
-					//						file : attach_name
-					//
-					//					}
+						
+					},
+										files : {
+											attach_path : attach_name
+					
+										}
 				});
 			}
 		</script>
