@@ -295,9 +295,15 @@
 							//支付宝支付方法
 							alipayFunction(order_no, orderid);
 						} else {
-							api.toast({
-								msg : '服务器未响应，支付失败'
-							});
+							if (ret.message) {
+								api.toast({
+									msg : ret.message
+								});
+							} else {
+								api.toast({
+									msg : '服务器未响应，支付失败'
+								});
+							}
 						}
 					});
 				} else if (pay_way == 2) {
@@ -318,9 +324,15 @@
 							//微信支付
 							wxPayFunction(order_no, orderid);
 						} else {
-							api.toast({
-								msg : '抱歉，支付失败'
-							});
+							if (ret.message) {
+								api.toast({
+									msg : ret.message
+								});
+							} else {
+								api.toast({
+									msg : '服务器未响应，支付失败'
+								});
+							}
 						}
 					});
 				} else if (pay_way == 3) {
@@ -389,9 +401,15 @@
 							api.closeWin();
 						}, 800);
 					} else {
-						api.toast({
-							msg : ret.message
-						});
+						if (ret.message) {
+							api.toast({
+								msg : ret.message
+							});
+						} else {
+							api.toast({
+								msg : '服务器未响应，支付失败'
+							});
+						}
 					}
 				}, 'deleteOrder&funid=wash_order&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_id=' + orderid);
 			}
