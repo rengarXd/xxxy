@@ -580,7 +580,6 @@
 			}
 
 			function Get_HeadPortrait_ID(attach_name) {
-
 				$xy.imgAjax(function(ret, err) {
 					//					$xy.Pajax(function(ret,err){
 					//
@@ -590,11 +589,13 @@
 						//$("#nonetwork").hide();
 						api.refreshHeaderLoadDone();
 						if (ret.success) {
+							var attachid = ret.data.attachId;
+							$xy.ajax(function(ret, err) {
+								api.toast({
+									msg : ret.message
+								});
+							}, 'upUserAttach&funid=wash_user' + '&attachId=' + attachid + '&dataid=' + wash_user_id);
 							//console.log(JSON.stringify(ret));
-							//									api.alert({
-							//										msg: JSON.stringify(ret)
-							//
-							//									});
 						} else {
 							api.toast({
 								msg : ret.message
@@ -605,28 +606,18 @@
 					}
 				}, 'post', {
 					values : {
-						//							funid: "sys_attach",
-						//							pagetype: "editgrid",
-						//							eventcode: "create",
-						//							nousercheck: "1",
-						//							dataType: "byte",
-						//							datafunid： "wash_user",
-						//							dataid: wash_user_id,
-						//							attach_name: attach_name
 						funid : "sys_attach",
 						pagetype : "editgrid",
 						eventcode : "create",
-						nousercheck : 1,
+						nousercheck : "1",
 						dataType : "byte",
 						datafunid : "wash_user",
 						dataid : wash_user_id,
 						attach_name : attach_name
-						
 					},
-										files : {
-											attach_path : attach_name
-					
-										}
+					files : {
+						attach_path : attach_name
+					}
 				});
 			}
 		</script>
