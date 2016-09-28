@@ -44,17 +44,17 @@
 				position: relative;
 			}
 			.swiper-wrapper .swiper-slide:nth-child(1) {
-				background: url(../launch/launch1080x1920.png) no-repeat center center;
+				background: url(../launch/start/pop1_4.png) no-repeat center center;
 				background-size: cover;
 				-webkit-background-size: cover;
 			}
 			.swiper-wrapper .swiper-slide:nth-child(2) {
-				background: url(../launch/launch1080x1920.png) no-repeat center center;
+				background: url(../launch/start/pop2_1.png) no-repeat center center;
 				background-size: cover;
 				-webkit-background-size: cover;
 			}
 			.swiper-wrapper .swiper-slide:nth-child(3) {
-				background: url(../launch/launch1080x1920.png) no-repeat center center;
+				background: url(../launch/start/pop3_1.png) no-repeat center center;
 				background-size: cover;
 				-webkit-background-size: cover;
 			}
@@ -65,7 +65,11 @@
 			<div class="swiper-wrapper">
 				<div class="swiper-slide"></div>
 				<div class="swiper-slide"></div>
-				<div class="swiper-slide" id="App"></div>
+				<div class="swiper-slide" id="App">
+					<div style="font-size:13px;color:#fff;text-align:center;position: absolute;top: 320px;left: 150px;">
+						轻触屏幕跳过
+					</div>
+				</div>
 			</div>
 			<div class="swiper-pagination"></div>
 		</div>
@@ -97,7 +101,6 @@
 						duration : 100 //动画过渡时间，默认300毫秒
 					}
 				});
-
 				//获取偏好值（user_islogin），是否登录
 				//				H.$getPrefs(function(rets, errs) {
 				//					//如果有值
