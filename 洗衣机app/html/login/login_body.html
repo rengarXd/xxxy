@@ -304,6 +304,7 @@
 								//适配ios推送
 								//注册设备
 								jpush.getRegistrationId(function(ret) {
+									alert("ios推送注册成功");
 									var registrationId = ret.id;
 									$xy.ajax(function(ret, err) {
 										api.hideProgress();
