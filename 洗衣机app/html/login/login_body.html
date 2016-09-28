@@ -231,12 +231,12 @@
 				});
 				return;
 			}
-			//			if (!$("#checkbox-1").attr("checked")) {
-			//				api.toast({
-			//					msg : '请您同意《用户协议》'
-			//				});
-			//				return;
-			//			}
+//			if (!$("#checkbox-1").attr("checked")) {
+//				api.toast({
+//					msg : '请您同意《用户协议》'
+//				});
+//				return;
+//			}
 			api.showProgress({
 				title : "登录中"
 			});
@@ -256,87 +256,85 @@
 								script : 'initInfo();'
 							});
 							//初始化推送
-							//初始化android推送
-							jpush.init(function(ret) {
-								if (ret && ret.status) {
-									//注册设备
-									jpush.getRegistrationId(function(ret) {
-										//console.log(JSON.stringify(ret));
-										var registrationId = ret.id;
-										$xy.ajax(function(ret, err) {
-											//console.log("绑定成功！");
-											if (ret) {
-												//登录成功对话框
-												alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
-													if (ret.eventType == 'left') {
-														var dialogBox = api.require('dialogBox');
-														dialogBox.close({
-															dialogName : 'alert'
-														});
-														api.closeWin();
-													} else {
-														var dialogBox = api.require('dialogBox');
-														dialogBox.close({
-															dialogName : 'alert'
-														});
-														api.openWin({
-															name : 'user_set_head',
-															url : '../me/user_set_head.html',
-															bounces : false,
-															delay : 0,
-														});
-														setTimeout(function() {
+							if (systemtype != "ios") {
+								//初始化android推送
+								jpush.init(function(ret) {
+									if (ret && ret.status) {
+										//注册设备
+										jpush.getRegistrationId(function(ret) {
+											//console.log(JSON.stringify(ret));
+											var registrationId = ret.id;
+											$xy.ajax(function(ret, err) {
+												//console.log("绑定成功！");
+												if (ret) {
+													//登录成功对话框
+													alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
+														if (ret.eventType == 'left') {
+															var dialogBox = api.require('dialogBox');
+															dialogBox.close({
+																dialogName : 'alert'
+															});
 															api.closeWin();
-														}, 1000);
-													}
+														} else {
+															var dialogBox = api.require('dialogBox');
+															dialogBox.close({
+																dialogName : 'alert'
+															});
+															api.openWin({
+																name : 'user_set_head',
+																url : '../me/user_set_head.html',
+																bounces : false,
+																delay : 0,
+															});
+															setTimeout(function() {
+																api.closeWin();
+															}, 1000);
+														}
+													});
+												} else {
+													api.toast({
+														msg : '连接失败，请重新登录'
+													});
+												}
+											}, 'updateRegistration&funid=wash_user&registrationId=' + registrationId + '&wash_user_id=' + retInfo[0].wash_user_id + '&uuid=' + retInfo[0].uuid);
+										});
+									}
+								});
+							} else {
+								//适配ios推送
+								//注册设备
+								jpush.getRegistrationId(function(ret) {
+									var registrationId = ret.id;
+									$xy.ajax(function(ret, err) {
+										api.hideProgress();
+										//                                  console.log("绑定成功！");
+										//登录成功对话框
+										alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
+											if (ret.eventType == 'left') {
+												var dialogBox = api.require('dialogBox');
+												dialogBox.close({
+													dialogName : 'alert'
 												});
+												api.closeWin();
 											} else {
-												api.toast({
-													msg : '连接失败，请重新登录'
+												var dialogBox = api.require('dialogBox');
+												dialogBox.close({
+													dialogName : 'alert'
 												});
+												api.openWin({
+													name : 'user_set_head',
+													url : '../me/user_set_head.html',
+													bounces : false,
+													delay : 0,
+												});
+												setTimeout(function() {
+													api.closeWin();
+												}, 1000);
 											}
-										}, 'updateRegistration&funid=wash_user&registrationId=' + registrationId + '&wash_user_id=' + retInfo[0].wash_user_id + '&uuid=' + retInfo[0].uuid);
-									});
-								}
-							});
-							//							if (systemtype != "ios") {
-							//
-							//							} else {
-							//								//适配ios推送
-							//								//注册设备
-							//								jpush.getRegistrationId(function(ret) {
-							//									alert("ios推送注册成功");
-							//									var registrationId = ret.id;
-							//									$xy.ajax(function(ret, err) {
-							//										api.hideProgress();
-							//										//                                  console.log("绑定成功！");
-							//										//登录成功对话框
-							//										alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
-							//											if (ret.eventType == 'left') {
-							//												var dialogBox = api.require('dialogBox');
-							//												dialogBox.close({
-							//													dialogName : 'alert'
-							//												});
-							//												api.closeWin();
-							//											} else {
-							//												var dialogBox = api.require('dialogBox');
-							//												dialogBox.close({
-							//													dialogName : 'alert'
-							//												});
-							//												api.openWin({
-							//													name : 'user_set_head',
-							//													url : '../me/user_set_head.html',
-							//													bounces : false,
-							//													delay : 0,
-							//												});
-							//												setTimeout(function() {
-							//													api.closeWin();
-							//												}, 1000);
-							//											}
-							//										});
-							//									}, 'updateRegistration&funid=wash_user&registrationId=' + registrationId + '&wash_user_id=' + retInfo[0].wash_user_id + '&uuid=' + retInfo[0].uuid);
-							//								});
-							//							}
+										});
+									}, 'updateRegistration&funid=wash_user&registrationId=' + registrationId + '&wash_user_id=' + retInfo[0].wash_user_id + '&uuid=' + retInfo[0].uuid);
+								});
+							}
 						} else {
 							api.hideProgress();
 							//登录成功对话框
