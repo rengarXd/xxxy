@@ -233,7 +233,7 @@
 					});
 					return;
 				}
-				orderid = "D" + order_id;
+				orderid = "D" + A();
 				api.showProgress();
 				$xy.Pajax(function(ret, err) {
 					api.hideProgress();
@@ -279,7 +279,7 @@
 					return;
 				};
 				if (pay_way == 1) {
-					orderid = "A" + order_id;
+					orderid = "A" + A();
 					doPay({
 						wash_user_id : user[0].wash_user_id,
 						uuid : user[0].uuid,
@@ -307,7 +307,7 @@
 						}
 					});
 				} else if (pay_way == 2) {
-					orderid = "W" + order_id;
+					orderid = "W" + A();
 					//打开支付成功页;
 					doPay({
 						wash_user_id : user[0].wash_user_id,
@@ -343,7 +343,7 @@
 						});
 						return;
 					}
-					orderid = "P" + order_id
+					orderid = "P" + A()
 					doPay({
 						wash_user_id : user[0].wash_user_id,
 						uuid : user[0].uuid,
@@ -367,7 +367,7 @@
 						}
 					});
 				} else if (pay_way == 4) {
-					orderid = "D" + order_id;
+					orderid = "D" + A();
 					doPay({
 						wash_user_id : user[0].wash_user_id,
 						uuid : user[0].uuid,
@@ -548,7 +548,7 @@
 					seconds = "0" + seconds;
 				}
 				var currentdate = year + month + strDate + hour + minutes + seconds + parseInt((Math.random()) * 10000);
-				order_id = currentdate;
+				return currentdate;
 				//alert(currentdate);
 			}
 		</script>
