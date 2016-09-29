@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
@@ -8,11 +7,9 @@
 		<title>body</title>
 		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
 		<link rel="stylesheet" href="../../../css/style.css" />
-		<link rel="stylesheet" href="../../../css/jquery.flipcountdown.css" />
 	</head>
-
 	<body>
-		<div id="dengdai" class="H-center-all H-font-size-12 H-theme-font-color-999">
+		<div id="dengdai" class="H-center-all H-font-size-13 H-theme-font-color-999 H-margin-vertical-top-10">
 			请稍后...
 		</div>
 		<div id="xiangqing" style="display:none;">
@@ -77,21 +74,11 @@
 		</div>
 	</body>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
-	<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
 	<script type="text/javascript">
-		var data = null,
-			dataarr = null;
-		var wash_user_id = wash_user_id,
-			uuid = uuid,
-			order_id = order_id;
-		var order_condition = null,
-			pay_num = null,
-			pay_way = null,
-			device_name = null,
-			washloca_name = null,
-			title = null,
-			reader_time = null,
-			order_id = null;
+		var data = null, dataarr = null;
+		var wash_user_id = wash_user_id, uuid = uuid, order_id = order_id;
+		var order_condition = null, pay_num = null, pay_way = null, device_name = null, washloca_name = null, title = null, reader_time = null, order_id = null;
 		apiready = function() {
 			//接收从订单列表传来的用户id uid 订单id
 			wash_user_id = api.pageParam.wash_user_id;
@@ -101,12 +88,12 @@
 			console.log(JSON.stringify("uuid:" + uuid));
 			console.log(JSON.stringify("order_id:" + order_id));
 			api.setRefreshHeaderInfo({
-				visible: true,
-				bgColor: '#fff',
-				textColor: '#666666',
-				textDown: '下拉刷新...',
-				textUp: '松开刷新...',
-				showTime: true
+				visible : true,
+				bgColor : '#fff',
+				textColor : '#666666',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...',
+				showTime : true
 			}, function(ret, err) {
 				location.reload();
 				api.refreshHeaderLoadDone();
@@ -117,22 +104,22 @@
 		function initPage() {
 			$xy.ajax(function(ret, err) {
 				//api.hideProgress();
-				if(ret) {
+				if (ret) {
 					//console.log(JSON.stringify(ret));
 					//$("#nonetwork").hide();
 					api.refreshHeaderLoadDone();
-					if(ret.success) {
+					if (ret.success) {
 						console.log(JSON.stringify(ret));
 						dataarr = ret.data;
 						data = ret.data[0];
 						//1.显示 订单状态
 						order_condition = ret.data[0].order_condition;
 						$("#order_condition").html(order_condition);
-						if(order_condition == "使用中") {
+						if (order_condition == "使用中") {
 							$("#order_condition").css("color", "#FF6600");
 							$("#chakanjingdu").css("display", "block");
 						}
-						if(order_condition == "待开始") {
+						if (order_condition == "待开始") {
 							$("#order_condition").css("color", "#FF6600");
 							$("#kaishixiyi").css("display", "block");
 						}
@@ -166,7 +153,7 @@
 					} else {
 						//console.log(JSON.stringify(ret));
 						api.toast({
-							msg: '很抱歉，您可能没有订单！'
+							msg : '很抱歉，您可能没有订单！'
 						});
 					}
 				} else {
@@ -176,34 +163,36 @@
 				}
 			}, 'appOrderInfo&funid=wash_order&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&order_id=' + order_id);
 		}
+
 		//查看洗衣进度
 		function open_progress() {
 			//								console.log(JSON.stringify(dept_id));
 			api.openWin({
-				name: 'progress_head.html',
-				url: '../../main/progress/progress_head.html',
-				pageParam: {
-					data: data
+				name : 'progress_head.html',
+				url : '../../main/progress/progress_head.html',
+				pageParam : {
+					data : data
 				},
-				bounces: false,
-				delay: 0,
-				slidBackEnabled: true,
-				vScrollBarEnabled: false
+				bounces : false,
+				delay : 0,
+				slidBackEnabled : true,
+				vScrollBarEnabled : false
 			});
 		}
+
 		//开始洗衣
 		function open_pay_result() {
 			//								console.log(JSON.stringify(dept_id));
 			api.openWin({
-				name: 'pay_result_head.html',
-				url: '../../main/product/pay_result_head.html',
-				pageParam: {
-					data: dataarr
+				name : 'pay_result_head.html',
+				url : '../../main/product/pay_result_head.html',
+				pageParam : {
+					data : dataarr
 				},
-				bounces: false,
-				delay: 0,
-				slidBackEnabled: true,
-				vScrollBarEnabled: false
+				bounces : false,
+				delay : 0,
+				slidBackEnabled : true,
+				vScrollBarEnabled : false
 			});
 		}
 
@@ -211,18 +200,19 @@
 		function open_fault_feedback() {
 			//								console.log(JSON.stringify(dept_id));
 			api.openWin({
-				name: 'fault_feedback_head.html',
-				url: '../../me/feedback/fault_feedback_head.html',
-				pageParam: {
-					data: dataarr
+				name : 'fault_feedback_head.html',
+				url : '../../me/feedback/fault_feedback_head.html',
+				pageParam : {
+					data : dataarr
 				},
-				bounces: false,
-				delay: 0,
-				slidBackEnabled: true,
-				vScrollBarEnabled: false
+				bounces : false,
+				delay : 0,
+				slidBackEnabled : true,
+				vScrollBarEnabled : false
 			});
 		}
-				//打开联系客服页面
+
+		//打开联系客服页面
 		function openCustomerService() {
 			api.openWin({
 				name : 'custom_server_head.html',
@@ -233,7 +223,5 @@
 				vScrollBarEnabled : false
 			});
 		}
-		
 	</script>
-
 </html>
