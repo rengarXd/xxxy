@@ -61,7 +61,7 @@
 				</div>
 			</div>
 			<div class="H-font-size-14 b_czbutton" tapmode onclick="choase(this,50);">
-				<div class="H-border-both H-padding-vertical-both-5 H-theme-border-color7 p_active" style="margin: 5px">
+				<div class="H-border-both H-padding-vertical-both-5" style="margin: 5px">
 					50元
 				</div>
 			</div>
@@ -248,10 +248,9 @@
 				});
 				return;
 			};
-			orderid = "C" + A();
 			//alert(orderid);
 			if (pay_way == 1) {
-				//var orderid = "C" + order_id;
+				orderid = "C" + A();
 				doPay({
 					wash_user_id : user[0].wash_user_id,
 					uuid : user[0].uuid,
@@ -272,16 +271,15 @@
 					}
 				});
 			} else if (pay_way == 2) {
-				//var orderid = "W" + order_id;
+				orderid = "C" + A();
 				//打开支付成功页;
 				doPay({
 					wash_user_id : user[0].wash_user_id,
 					uuid : user[0].uuid,
 					recharge_id : orderid, //用户充值记录id
 					pay_method : pay_way, //支付方式
-					recharge_amount : product.recharge_pay, //支付金额
-					overage_type : '2', //来源
-					orientact_id : product.orientact_id//定向余额Id
+					recharge_amount : paymoney, //支付金额
+					overage_type : '2' //来源
 				}, function(ret, err) {
 					order_no = ret.data;
 					if (ret.success) {
@@ -338,16 +336,16 @@
 						tradeNo : orderid
 					}, function(ret, err) {
 						if (ret.status) {
-							alert(ret.result);
+							//alert(ret.result);
 							//打开支付成功页;
 							openResult(order_no);
 						} else {
-							alert(err.code);
+							//alert(err.code);
 							deleteOrder(orderid);
 						}
 					});
 				} else {
-					alert(err.code);
+					//alert(err.code);
 					deleteOrder(orderid);
 				}
 			});
