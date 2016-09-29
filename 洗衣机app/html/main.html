@@ -263,6 +263,9 @@
 						times = totalTime - ((now.getTime() - parseInt(start_time)) / 1000);
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
+						//渲染提示条
+						var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的西三宿舍三楼西01机，大约<span id="minttime"></span>后结束</div></div>';
+						$('#index_header').append(timedom);
 						//设置定时任务
 						if (times > 60) {
 							var last = (totalTime - 60) * 1000;
@@ -299,11 +302,9 @@
 				var lasttime = parseInt(times / 60);
 				var second = parseInt(times % 60);
 				if (lasttime < 1) {
-					var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的西三宿舍三楼西01机，大约' + second + '秒后结束</div></div>';
-					$('#index_header').append(timedom);
+					$("#minttime").html(second + '秒');
 				} else {
-					var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的西三宿舍三楼西01机，大约' + lasttime + '分钟后结束</div></div>';
-					$('#index_header').append(timedom);
+					$("#minttime").html(lasttime + '分钟');
 				}
 				if (times < 1) {
 					//结束时间递减
