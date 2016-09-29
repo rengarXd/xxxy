@@ -134,6 +134,10 @@
 					});
 					$xy.ajax(function(ret, err) {
 						$xy.userlogInfo(ret.data);
+						api.execScript({
+							name : 'main',
+							script : 'exec();'
+						});
 						api.closeWin({
 							name : 'login_body'
 						});
