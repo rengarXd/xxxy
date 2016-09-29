@@ -485,7 +485,7 @@
 						//deleteOrder(orderid);
 						wxPay.pay({
 							description : product.title,
-							totalFee : jiage,
+							totalFee : String(jiage),
 							tradeNo : orderid
 						}, function(ret, err) {
 							if (ret.status) {
