@@ -432,18 +432,9 @@
 				key : 'userinfo',
 				value : JSON.stringify(data)
 			});
-			api.execScript({
-				name : 'main',
-				frameName : 'me_index',
-				script : 'reload();'
+			api.sendEvent({
+				name : 'reload'
 			});
-			//			api.execScript({
-			//				name : 'main',
-			//				script : 'initInfo();'
-			//			});
-			//			api.sendEvent({
-			//				name : 'userlogin'
-			//			});
 		},
 		jsDateDiff : function(publishTime) {
 			nowtime = (new Date).getTime();
