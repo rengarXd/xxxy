@@ -333,10 +333,10 @@
 					notifyUrl : 'http://218.29.85.98:8080/wash/payNotifyUrl.jsp'
 				}, function(ret, err) {
 					if (ret.status) {
-						alert('配置商户支付参数成功');
+						//alert('配置商户支付参数成功');
 						wxPay.pay({
 							description : product.dept_name,
-							totalFee : parseFloat(paymoney) * 100,
+							totalFee : String(parseFloat(paymoney) * 100),
 							tradeNo : orderid
 						}, function(ret, err) {
 							if (ret.status) {

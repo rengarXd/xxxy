@@ -71,6 +71,7 @@
 				<img src="../../image/loading_more.gif" width="30" />
 			</div>
 		</div>
+		<div style="height: 30px;"></div>
 		<!--{{# }else{ }}
 		<span class="H-float-right xyzt">空闲提醒</span>
 		<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
@@ -385,7 +386,7 @@
 							var last = (totalTime - 60) * 1000;
 							setTimeout(function() {
 								Send_notifications()
-								alert('还有5分钟结束');
+								alert('还有' + (times % 60) + '分钟结束');
 							}, last);
 						}
 					} else {
