@@ -96,7 +96,7 @@
 		<script type="text/javascript" src="../script/xy.js"></script>
 		<script type="text/javascript" src="../script/zepto.min.js"></script>
 		<script type="text/javascript">
-			var FNScanner = null, user = null;
+			var FNScanner = null, user = null, isinerval = null;
 			H.ready(function() {
 				$('.brige').hide();
 				//初始化极光推送
@@ -107,6 +107,8 @@
 				H.dblclickToCloseApp();
 				//监听事件
 				listener();
+				//系统消息监听
+				msglistener();
 			});
 			//			apiready = function() {
 			//				$xy.openFrameGroupNavOrFoot(function(ret, err) {
@@ -127,7 +129,7 @@
 			//				//退出app
 			//				$xy.dblclickToCloseApp();
 			//			}
-			function listener() {
+			function msglistener() {
 				//系统消息处理========================
 				api.addEventListener({
 					name : 'noticeclicked'
@@ -180,7 +182,7 @@
 						//初始化推送监听
 						pushListener();
 						var ajpush = api.require('ajpush');
-						var systemtype = api.systemType;
+						//var systemtype = api.systemType;
 						ajpush.setListener(function(ret) {
 							//alert('接收推送成功');
 							$('.brige').show();
@@ -234,6 +236,87 @@
 						});
 					}
 				}, 'appUserNews&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
+			}
+
+			//监听事件
+			function listener() {
+				//结束时间递减
+				if (isinerval) {
+					clearInterval(isinerval);
+				}
+				//倒计时提醒
+				api.getPrefs({
+					key : 'washtime'
+				}, function(ret, err) {
+					if (ret && ret.value) {
+						//获取之前开始的时间
+						var time = eval('(' + ret.value + ')');
+						var stringTime = time.start_time;
+						//总时间
+						totalTime = parseInt(time.turn_around_date) * 60;
+						//时间格式转时间戳
+						var start_time = Date.parse(new Date(stringTime));
+						//获取当前时间
+						var now = new Date();
+						//totalTime = 2;
+						//计算剩余时间
+						times = totalTime - ((now.getTime() - parseInt(start_time)) / 1000);
+						//调用倒计时方法
+						isinerval = setInterval("CountDown()", 1000);
+						//设置定时任务
+						if (times > 60) {
+							var last = (totalTime - 60) * 1000;
+							setTimeout(function() {
+								Send_notifications();
+								alert('还有' + ((totalTime - times) % 60) + '分钟结束');
+							}, last);
+						}
+					} else {
+						//隐藏提示条
+						if ($("#progress_toast")) {
+							$("#progress_toast").hide();
+						}
+					}
+				});
+			}
+
+			//通知栏提醒
+			function Send_notifications() {
+				api.notification({
+					notify : {
+						title : '咭咭洗衣',
+						content : '大约还有五分钟，洗衣就将结束'
+					},
+					light : true,
+				}, function(ret, err) {
+					var id = ret.id;
+				});
+			}
+
+			//时间递减处理
+			function CountDown() {
+				//剩余时间
+				var lasttime = parseInt(times / 60);
+				var second = parseInt(times % 60);
+				if (lasttime < 1) {
+					var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的西三宿舍三楼西01机，大约' + second + '秒后结束</div></div>';
+					$('#index_header').append(timedom);
+				} else {
+					var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的西三宿舍三楼西01机，大约' + lasttime + '分钟后结束</div></div>';
+					$('#index_header').append(timedom);
+				}
+				if (times < 1) {
+					//结束时间递减
+					clearInterval(isinerval);
+					//隐藏提示条
+					$("#progress_toast").hide();
+					//移除偏好值
+					api.removePrefs({
+						key : 'washtime'
+					});
+					return;
+				}
+				times--;
 			}
 		</script>
 	</body>
