@@ -130,7 +130,9 @@
 										$("#nopic").attr('src', window.washUrl + ret.data[0].attach_path);
 									}
 									//document.getElementById('dormitory_buildingname').innerHTML = textname;
+									//等待CSS隐藏
 									$("#dengdai").css("display", "none");
+									//等待详情CSS隐藏
 									$("#xiangqing").css("display", "block");
 								} else {
 									//console.log(JSON.stringify(ret));
@@ -146,11 +148,12 @@
 						}, 'appUserInfo&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid);
 					} else {
 						//无订单情况处理
-						$("#jiazai").html("暂无订单");
+						$("#jiazai").html("暂无用户信息");
 					}
 				});
 			}
 
+			//打开修改密码
 			function openPwd() {
 				api.openWin({
 					name : 'pwd_set_head',
@@ -426,8 +429,8 @@
 						user = eval('(' + ret.value + ')');
 						wash_user_id = user[0].wash_user_id;
 						uuid = user[0].uuid;
-						console.log(id);
-						console.log(textname);
+						//console.log(id);
+						//console.log(textname);
 						$xy.ajax(function(ret, err) {
 							//api.hideProgress();
 							if (ret) {
@@ -506,29 +509,38 @@
 			}
 
 			function Get_HeadPortrait_ID(attach_name) {
+				api.showProgress({
+					title : '上传中'
+				});
 				$xy.imgAjax(function(ret, err) {
-					//					$xy.Pajax(function(ret,err){
-					//
-					//					});
 					if (ret) {
-						console.log(JSON.stringify(ret));
+						//console.log(JSON.stringify(ret));
 						//$("#nonetwork").hide();
-						api.refreshHeaderLoadDone();
 						if (ret.success) {
 							var attachid = ret.data.attachId;
 							$xy.ajax(function(ret, err) {
+								//执行main页面获取用户信息的函数
+								api.execScript({
+									name : 'main',
+									script : 'initInfo();'
+								});
+								api.hideProgress();
 								api.toast({
 									msg : ret.message
 								});
 							}, 'upUserAttach&funid=wash_user' + '&attachId=' + attachid + '&dataid=' + wash_user_id);
 							//console.log(JSON.stringify(ret));
 						} else {
+							api.hideProgress();
 							api.toast({
 								msg : ret.message
 							});
 						}
 					} else {
-						console.log(JSON.stringify("false"));
+						api.hideProgress();
+						api.toast({
+							msg : '连接失败，请检查网络配置'
+						});
 					}
 				}, 'post', {
 					values : {

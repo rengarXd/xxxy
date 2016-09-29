@@ -154,13 +154,17 @@
 				//alert(JSON.stringify(user));
 				if (ret && ret.value) {
 					user = eval('(' + ret.value + ')');
+					//手机号
 					$("#userTel").html(user[0].phone_number);
+					//定向余额
 					if (user[0].orient_overage != "") {
 						$("#ding").html(user[0].orient_overage);
 					};
+					//账户余额
 					if (user[0].account_overage != "") {
 						$("#pu").html(user[0].account_overage);
 					};
+					//洗衣总次数
 					if (user[0].wash_total) {
 						$("#nums").html(user[0].wash_total);
 					}
@@ -173,17 +177,13 @@
 			});
 		}
 
-		//打卡图片预览
-		function openbrowse() {
-			
-		}
-
 		//清除缓存
 		function cleanCache() {
 			api.clearCache(function() {
 				api.toast({
 					msg : '清除完成'
 				});
+				//获取缓存大小
 				api.getCacheSize(function(ret) {
 					var size = ret.size;
 					size = size / (1024 * 1024);
@@ -269,19 +269,5 @@
 				});
 			}
 		}
-
-		//通知栏提醒
-		//		function Send_notifications() {
-		//			api.notification({
-		//
-		//				notify: {
-		//					title: '咭咭洗衣',
-		//					content: '大约还有五分钟，洗衣就将结束'
-		//				},
-		//				light:true,
-		//			}, function(ret, err) {
-		//				var id = ret.id;
-		//			});
-		//		}
 	</script>
 </html>
