@@ -196,7 +196,7 @@
 			// callback：转换成功之后回调函数
 			function imgCompress(imgsrc, quality, scale, ext, callback) {
 				// 压缩文件的保存目录
-				var savePath = api.cacheDir + "/" + getNowFormatDate() + "/";
+				var savePath = api.cacheDir + '/picture/' + getNowFormatDate() + '/';
 				// 压缩文件生成的随机文件名称
 				var savename = NewGuid() + "." + ext;
 				imageFilter.compress({
@@ -267,8 +267,6 @@
 									destinationType : 'url',
 									allowEdit : true,
 									quality : 50,
-									targetWidth : 300,
-									targetHeight : 200,
 									saveToPhotoAlbum : false
 								}, function(ret, err) {
 									if (ret) {
@@ -299,8 +297,6 @@
 									destinationType : 'url',
 									allowEdit : true,
 									quality : 50,
-									targetWidth : 100,
-									targetHeight : 100,
 									saveToPhotoAlbum : false
 								}, function(ret, err) {
 									if (ret) {
