@@ -104,16 +104,6 @@
 			});
 			// 初始化页面
 			function initPage() {
-				//				api.getPrefs({
-				//					key: 'userinfo'
-				//				}, function(ret, err) {
-				//					//alert(JSON.stringify(user));
-				//					if(ret && ret.value) {
-				//						console.log(JSON.stringify(user.phone_number));
-				//						var user = eval('(' + ret.value + ')');
-				//						$("#userTel").html(user[0].phone_number);
-				//					}
-				//				});
 				//初始化页面获取个人信息
 				api.getPrefs({
 					key : 'userinfo'
@@ -135,7 +125,8 @@
 									document.getElementById('schoolname').innerHTML = ret.data[0].locality_university;
 									document.getElementById('dormitory_buildingname').innerHTML = ret.data[0].dormitory_building;
 									document.getElementById('gradename').innerHTML = ret.data[0].grade;
-									//$("#nopic").attr("src", ret.data[0].attach_path);
+									//渲染头像
+									$("#nopic").attr('src', window.washUrl + ret.data[0].attach_path);
 									//document.getElementById('dormitory_buildingname').innerHTML = textname;
 									$("#dengdai").css("display", "none");
 									$("#xiangqing").css("display", "block");
@@ -150,6 +141,7 @@
 							}
 						}, 'appUserInfo&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid);
 					} else {
+						//无订单情况处理
 						$("#jiazai").html("暂无订单");
 					}
 				});
@@ -186,27 +178,6 @@
 						document.getElementById('gradename').innerHTML = textname;
 						ajax(id, textname);
 					}
-					//ajax(id, textname);
-					//					switch(index) {
-					//						case 1:
-					//							alert(year - 4 + '级');
-					//							textname=year - 4 + '级'
-					//							ajax(id, textname);
-					//
-					//							break;
-					//						case 2:
-					//							alert(year - 3 + '级');
-					//							break;
-					//							case 3:
-					//							alert(year - 2 + '级');
-					//							break;
-					//							case 4:
-					//							alert(year - 1 + '级');
-					//							break;
-					//							case 5:
-					//							alert(year  + '级');
-					//							break;
-					//					}
 				});
 			}
 
@@ -303,21 +274,8 @@
 											//console.log(JSON.stringify(compressImg));
 											attach_name = compressImg;
 											//console.log(JSON.stringify(attach_name));
-											Get_HeadPortrait_ID(attach_name);
 											//提交头像到服务器
-											//											postHeadPortrait({
-											//												wash_user_id: wash_user_id,
-											//												uuid: uuid,
-											//												head_portrait: compressImg
-											//											}, function(ret, err) {
-											//												if(ret.success) {
-											//													console.log(JSON.stringify(ret));
-											//												} else {
-											//													api.toast({
-											//														msg: '网络异常，请稍后重试'
-											//													});
-											//												}
-											//											});
+											Get_HeadPortrait_ID(attach_name);
 										});
 									} else {
 										api.toast({
@@ -348,17 +306,6 @@
 											attach_name = compressImg;
 											//console.log(attach_name);
 											Get_HeadPortrait_ID(attach_name);
-											//																						postHeadPortrait({
-											//																							head_portrait: compressImg
-											//																						}, function(ret, err) {
-											//																							if(ret.success) {
-											//																								console.log(JSON.stringify(ret));
-											//																							} else {
-											//																								api.toast({
-											//																									msg: '网络异常，请稍后重试'
-											//																								});
-											//																							}
-											//																						});
 										});
 									} else {
 										api.toast({
@@ -373,32 +320,6 @@
 							msg : ''
 						});
 					}
-				});
-			}
-
-			//发送图片
-			function postHeadPortrait(datas, callback) {
-				api.getPrefs({
-					key : 'userinfo'
-				}, function(ret, err) {
-					if (ret && ret.value) {
-						user = eval('(' + ret.value + ')');
-						wash_user_id = user[0].wash_user_id;
-						uuid = user[0].uuid;
-					}
-				});
-				$xy.Pajax(function(ret, err) {
-					console.log(wash_user_id);
-					console.log(JSON.stringify(datas));
-					api.hideProgress();
-					if (ret) {
-						console.log(JSON.stringify(ret));
-					} else {
-						alert("err====" + err.message);
-						console.log(JSON.stringify(ret));
-					}
-				}, 'editUserinfo&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '', 'post', {
-					files : JSON.stringify(datas)
 				});
 			}
 
