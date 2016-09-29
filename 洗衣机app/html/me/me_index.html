@@ -27,13 +27,23 @@
 			.font-active {
 				font-size: 20px;
 			}
+			.pic {
+				width: 100.5px;
+				height: 100.5px;
+				border-radius: 50%;
+				position: absolute;
+				top: 7.9px;
+				left: 130.2px;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="back">
-			<div class="hu" tapmode onclick="openUser();"></div>
-			<div class="H-padding-2 H-text-align-center H-font-size-16">
-				<span class="H-theme-font-color-white H-font-weight-bold" id="userTel">未登录</span>
+			<div class="hu">
+				<img tapmode onclick="openbrowse();" src="../../image/noavatar.gif"  id="nopic" class="pic" style="display: none" />
+			</div>
+			<div class="H-padding-vertical-top-10 H-text-align-center H-font-size-16">
+				<span class="H-theme-font-color-white H-font-weight-bold" id="userTel"  tapmode onclick="openUser();">未登录</span>
 			</div>
 			<div class="H-padding-2 H-text-align-center H-font-size-13">
 				<span class="H-theme-font-color-white">共洗衣<span id="nums">0</span>次</span>
@@ -116,6 +126,7 @@
 	</body>
 	<script type="text/javascript" src="../../script/xy.js"></script>
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../scritp/uploading/upImg.js"></script>
 	<script type="text/javascript">
 		var user = null;
 		apiready = function() {
@@ -153,27 +164,18 @@
 					if (user[0].wash_total) {
 						$("#nums").html(user[0].wash_total);
 					}
-					//					$("#userTel").html(userMsg.phone_number);
-					//					$("#ding").html(userMsg.orient_overage);
-					//					$("#pu").html(userMsg.account_overage);
-					//					$("#nums").html(userMsg.wash_total);
-					//请求用户信息接口
-					//					$xy.ajax(function(ret, err) {
-					//						if (ret.success) {
-					//							userMsg = ret.data[0];
-					//						} else {
-					//							api.toast({
-					//								msg : ret.message
-					//							});
-					//							$("#userTel").html(user[0].phone_number);
-					//							$("#ding").html(user[0].orient_overage);
-					//							$("#pu").html(user[0].account_overage);
-					//							$("#nums").html(user[0].wash_total);
-					//						}
-					//					}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
-					//用户已登录的情况
+					//渲染头像
+					if (user[0].attach_path != "") {
+						$("#nopic").show();
+						$("#nopic").attr('src', window.washUrl + user[0].attach_path);
+					}
 				}
 			});
+		}
+
+		//打卡图片预览
+		function openbrowse() {
+			
 		}
 
 		//清除缓存
@@ -281,6 +283,5 @@
 		//				var id = ret.id;
 		//			});
 		//		}
-
 	</script>
 </html>

@@ -126,7 +126,9 @@
 									document.getElementById('dormitory_buildingname').innerHTML = ret.data[0].dormitory_building;
 									document.getElementById('gradename').innerHTML = ret.data[0].grade;
 									//渲染头像
-									$("#nopic").attr('src', window.washUrl + ret.data[0].attach_path);
+									if (ret.data[0].attach_path != "") {
+										$("#nopic").attr('src', window.washUrl + ret.data[0].attach_path);
+									}
 									//document.getElementById('dormitory_buildingname').innerHTML = textname;
 									$("#dengdai").css("display", "none");
 									$("#xiangqing").css("display", "block");
@@ -137,7 +139,9 @@
 									});
 								}
 							} else {
-								console.log(JSON.stringify("false"));
+								api.toast({
+									msg : '很抱歉，网络异常！'
+								});
 							}
 						}, 'appUserInfo&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid);
 					} else {
