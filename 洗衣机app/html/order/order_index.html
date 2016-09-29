@@ -280,21 +280,16 @@
 							api.refreshHeaderLoadDone();
 							$("#jiazai").html("连接失败，请检查网络");
 							$("#loading").hide();
-							//					api.refreshHeaderLoadDone();
-							//					$("#nonetwork").show();
 						}
 					}, 'appOrderList&funid=wash_order&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&page=' + page);
 				} else {
+					api.refreshHeaderLoadDone();
 					$("#jiazai").html("暂无订单");
 					$("#loading").hide();
 				}
 			});
 		}
 
-		//		function Date() {
-		//			var myDate = new Date();
-		//			myDate.getMonth();
-		//		}
 		//当前时间格式化
 		//初始化事件监听
 		function initEventLinster() {
