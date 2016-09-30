@@ -1,6 +1,6 @@
 /*
  * API JavaScript Library
- * Copyright (c) 2014 apicloud.com
+ * Copyright (c) 2016
  * 作者：徐达
  */
 ;! function(window) {
