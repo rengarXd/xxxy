@@ -7,7 +7,7 @@
 	window.serverUrl = "http://218.29.85.98:8080/wash/fileAction.do?pagetype=grid&nousercheck=1&eventcode=";
 	window.ImgWebUrl = 'http://218.29.85.98:8080/wash/fileAction.do?';
 	window.washUrl = 'http://218.29.85.98:8080/wash';
-	window.wxPayurl = 'http://218.29.85.98:8080/wash/pay_notify_url.jsp';
+	window.wxPayurl = 'http://218.29.85.98:8080/wash/payNotifyUrl.jsp';
 	window.aliPayurl = 'http://218.29.85.98:8080/wash/notify_url.jsp';
 	//	var isAndroid = (/android/gi).test(navigator.appVersion);
 	//	var uzStorage = function() {
