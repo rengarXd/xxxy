@@ -307,7 +307,7 @@
 					rsaPubKey : 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJ0Rb2mxDTh3sBbz8+M0y1URv+4cqvKA3LGvkMNlr3u2x4UkD/42T2+4EY4opRClFLQA16matVnJZRHm1a0mqXEK6V95GJYYXRokhoRsmUctNfFInht3ar0Bl2v95LamwSnA91Kq/9VvuacjWtYOAAQmFhu/zQPDyzIK44Df212QIDAQAB',
 					notifyURL : window.aliPayurl,
 				}, function(ret, err) {
-					if (ret.status)
+					if (ret.status) {
 						obj.pay({
 							subject : product.orientact_name,
 							body : product.dept_name,
@@ -321,6 +321,9 @@
 								deleteOrder(orderid);
 							}
 						});
+					} else {
+						deleteOrder(orderid);
+					}
 				});
 			}
 
