@@ -342,18 +342,59 @@
 			}
 
 			function scanner() {
-//				var FNScanner = api.require('FNScanner');
-//				//打开二维码扫描器
-//				FNScanner.openScanner(function(ret, err) {
-//					if (ret.content) {
-//						alert(ret.content);
-//					}
-//				});
+				//				api.openFrame({
+				//	                name: 'scanner',
+				//	                url: 'scanner.html'
+				//              });
+				var FNScanner = api.require('FNScanner');
+				//				var frameWidth = api.frameWidth;
+				//				var frameHeight = api.frameHeight;
+				FNScanner.openView({
+					autorotation : true,
+				}, function(ret, err) {
+					if (ret) {
+						//alert( JSON.stringify( ret ) );
+						api.openFrame({
+							name : 'wxscanline',
+							url : 'wxscanline.html',
+							bounces : false,
+						});
+						if (ret.eventType == "show") {
+							//var frameWidth = api.frameWidth;
+							//var frameHeight = api.frameHeight;
+							//openscanline(frameWidth / 2 - 100, frameHeight / 2 - 100);
+						}
+						if (ret.eventType == "success") {
+							//							var code = $api.byId("code");
+							//							code.value = ret.content;
+							//							//FNScanner.closeView();
+							//							openScanView();
+						}
+					} else {
+						alert(JSON.stringify(err));
+					}
+				});
+				//				var FNScanner = api.require('FNScanner');
+				//				//打开二维码扫描器
+				//				FNScanner.openScanner(function(ret, err) {
+				//					if (ret.content) {
+				//						alert(ret.content);
+				//					}
+				//				});
+			}
+
+			//打开扫码线页面
+			function openscanline(w, h) {
 				api.openFrame({
-					name : 'scanner',
-					url : 'scanner.html',
-					bounces : false
-				})
+					name : 'wxscanline',
+					url : 'wxscanline.html',
+					rect : {
+						x : w,
+						y : h,
+						w : 200,
+						h : 200
+					},
+				});
 			}
 
 			//空闲提醒

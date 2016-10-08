@@ -9,26 +9,17 @@
 		<link rel="stylesheet" href="../../css/style.css" />
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css" />
 		<style>
-			html, body {
-				background: rgba(0,0,0,0.2);
-			}
+			/*html, body {
+			 background-color: rgba(0,0,0,0.4)
+			 }*/
 		</style>
 	</head>
 	<body>
-	<body tapmode="">
-		<!--<div id="wrap" class="bg">
-		<div id="header" >
-		<div class="aui-form"  style="padding-top:10px">
-		<div class="aui-input-row">
-		<input type="text" class="aui-input" placeholder="code" id="code"/>
-		<label class="aui-input-addon btn" id="sub">提交</label>
+		<div class="H-center-all">
+			1111
 		</div>
-		</div>
-		</div>
-		<div id="main" class=""></div>
-		</div>-->
 	</body>
-	</body> <!--	<script type="text/javascript" src="../../script/xy.js"></script>
+	<!--	<script type="text/javascript" src="../../script/xy.js"></script>
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>-->
 	<script type="text/javascript">
 		apiready = function() {
@@ -37,21 +28,38 @@
 		};
 		//打开扫码区
 		function openScanView() {
-			var frameWidth = api.frameWidth;
-			var frameHeight = api.frameHeight;
+			//			FNScanner.openScanner(function(ret, err) {
+			//				if (ret.content) {
+			//					alert(ret.content);
+			//					FNScanner.closeView();
+			//					api.closeFrame();
+			//				}
+			//			});
+			//			var frameWidth = api.frameWidth;
+			//						var frameHeight = api.frameHeight;
+			//			x : frameWidth / 2 - 100,
+			//							y : frameHeight / 2 - 100,
+			//							w : 200,
+			//							h : 200,
 			FNScanner.openView({
-				rect : {
-					x : frameWidth / 2 - 100,
-					y : frameHeight / 2 - 100,
-					w : 200,
-					h : 200,
-				},
 				autorotation : true,
 			}, function(ret, err) {
 				if (ret) {
 					//alert( JSON.stringify( ret ) );
 					if (ret.eventType == "show") {
-						openscanline(frameWidth / 2 - 100, frameHeight / 2 - 100);
+						var frameWidth = api.frameWidth;
+						var frameHeight = api.frameHeight;
+						api.openFrame({
+							name : 'wxscanline',
+							url : 'wxscanline.html',
+							rect : {
+								x : 0,
+								y : 0,
+								w : 'auto',
+								h : 'auto'
+							},
+						});
+						//openscanline(frameWidth / 2 - 100, frameHeight / 2 - 100);
 					}
 					if (ret.eventType == "success") {
 						var code = $api.byId("code");
