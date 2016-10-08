@@ -5,48 +5,119 @@
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<title>body</title>
-		<link rel="stylesheet" type="text/css" href="../../css/Hui.css" />
+		<!--		<link rel="stylesheet" type="text/css" href="../../css/aui.css" />-->
 		<link rel="stylesheet" href="../../css/style.css" />
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css" />
 		<style>
 			html, body {
-				background: rgba(0,0,0,0.8);
+				background: rgba(0,0,0,0.2);
 			}
 		</style>
 	</head>
 	<body>
-		<header class="H-header" id="header">
-			<span tapmode="H-theme-font-color-444" tapmode="" onclick="api.closeWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i> 返回</span>
-			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
-				二维码扫描
-			</div>
-		</header>
+	<body tapmode="">
+		<!--<div id="wrap" class="bg">
+		<div id="header" >
+		<div class="aui-form"  style="padding-top:10px">
+		<div class="aui-input-row">
+		<input type="text" class="aui-input" placeholder="code" id="code"/>
+		<label class="aui-input-addon btn" id="sub">提交</label>
+		</div>
+		</div>
+		</div>
+		<div id="main" class=""></div>
+		</div>-->
 	</body>
-	<script type="text/javascript" src="../../script/xy.js"></script>
-	<script type="text/javascript" src="../../script/zepto.min.js"></script>
+	</body> <!--	<script type="text/javascript" src="../../script/xy.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>-->
 	<script type="text/javascript">
 		apiready = function() {
-			initPage();
+			FNScanner = api.require('FNScanner');
+			openScanView();
 		};
-		// 初始化页面
-		function initPage() {
-			var FNScanner = api.require('FNScanner');
+		//打开扫码区
+		function openScanView() {
+			var frameWidth = api.frameWidth;
+			var frameHeight = api.frameHeight;
 			FNScanner.openView({
 				rect : {
-					x : api.frameWidth / 4,
-					y : 100,
-					w : api.frameWidth / 2,
-					h : api.frameHeight / 3
+					x : frameWidth / 2 - 100,
+					y : frameHeight / 2 - 100,
+					w : 200,
+					h : 200,
 				},
-				fixedOn : 'scanner',
-				autorotation : false
+				autorotation : true,
 			}, function(ret, err) {
 				if (ret) {
-					alert(JSON.stringify(ret));
+					//alert( JSON.stringify( ret ) );
+					if (ret.eventType == "show") {
+						openscanline(frameWidth / 2 - 100, frameHeight / 2 - 100);
+					}
+					if (ret.eventType == "success") {
+						var code = $api.byId("code");
+						code.value = ret.content;
+						//FNScanner.closeView();
+						openScanView();
+					}
 				} else {
 					alert(JSON.stringify(err));
 				}
 			});
 		}
+
+		//打开扫码线页面
+		function openscanline(w, h) {
+			api.openFrame({
+				name : 'wxscanline',
+				url : 'wxscanline.html',
+				rect : {
+					x : w,
+					y : h,
+					w : 200,
+					h : 200
+				},
+			});
+		}
+
+		//获取二维码的内容
+		function submit() {
+			var code = $api.byId("code");
+			var content = code.value;
+			if (content == '') {
+				alert("二维码不能为空！");
+			} else {
+				code.value = '';
+			}
+		}
+
+		//		apiready = function() {
+		//			initPage();
+		//		};
+		//		// 初始化页面
+		//		function initPage() {
+		//			var FNScanner = api.require('FNScanner');
+		//			FNScanner.setFrame({
+		//				x : api.frameWidth / 2 - 100,
+		//				y : api.frameHeight / 3 - 90,
+		//				w : 200,
+		//				h : 210
+		//			});
+		//			FNScanner.openView({
+		//				//				rect : {
+		//				//					x : api.frameWidth / 2 - 100,
+		//				//					y : api.frameHeight / 3 - 90,
+		//				//					w : 200,
+		//				//					h : 210
+		//				//				},
+		//				fixedOn : 'scanner',
+		//				autorotation : false
+		//			}, function(ret, err) {
+		//				if (ret) {
+		//					alert(JSON.stringify(ret));
+		//				} else {
+		//					alert(JSON.stringify(err));
+		//				}
+		//			});
+		//		}
 	</script>
 </html>

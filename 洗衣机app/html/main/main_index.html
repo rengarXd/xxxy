@@ -342,22 +342,18 @@
 			}
 
 			function scanner() {
-				var FNScanner = api.require('FNScanner');
-				//打开二维码扫描器
-				FNScanner.openScanner(function(ret, err) {
-					if (ret.content) {
-						alert(ret.content);
-					}
-				});
-				//				var header = $api.byId('header');
-				//				$api.fixStatusBar(header);
-				//				var headerPos = $api.offset(header);
-				//var body_h = $api.offset($api.dom('body')).h;
-				//				api.openFrame({
-				//					name : 'scanner',
-				//					url : 'scanner.html',
-				//					bounces : false
-				//				})
+//				var FNScanner = api.require('FNScanner');
+//				//打开二维码扫描器
+//				FNScanner.openScanner(function(ret, err) {
+//					if (ret.content) {
+//						alert(ret.content);
+//					}
+//				});
+				api.openFrame({
+					name : 'scanner',
+					url : 'scanner.html',
+					bounces : false
+				})
 			}
 
 			//空闲提醒
