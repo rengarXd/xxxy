@@ -19,7 +19,7 @@
 	</head>
 	<body>
 		<header class="H-header H-padding-vertical-top-25" style="background-color: #000" id="header">
-			<span tapmode="H-theme-font-color-444" tapmode="" onclick="closeWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i> 返回</span>
+			<span tapmode="H-theme-font-color-444" tapmode="" onclick="closeScan();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i> 返回</span>
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				咭咭洗衣扫码
 			</div>
@@ -34,7 +34,7 @@
 	<!--	<script type="text/javascript" src="../../script/xy.js"></script>
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>-->
 	<script type="text/javascript">
-		var h = 0;
+		var h = 0, FNScanner = null;
 		apiready = function() {
 			FNScanner = api.require('FNScanner');
 			openScanView();
@@ -63,17 +63,19 @@
 			}, function(ret, err) {
 				if (ret) {
 					//alert( JSON.stringify( ret ) );
-					if (ret.eventType == "show") {
-						var frameWidth = api.frameWidth;
-						var frameHeight = api.frameHeight;
-						openscanline(frameWidth / 2 - 100, frameHeight / 2 - 100);
-					}
+					var frameWidth = api.frameWidth;
+					var frameHeight = api.frameHeight;
+					openscanline(frameWidth / 2 - 100, frameHeight / 2 - 100);
+					//					if (ret.eventType == "show") {
+					//					}
 					if (ret.eventType == "success") {
-						var code = $api.byId("code");
-						code.value = ret.content;
-						//FNScanner.closeView();
-						openScanView();
+						alert(ret.content);
+						closeScan();
 					}
+					if (ret.eventType == "fail")
+						api.toast({
+							msg : '扫码失败'
+						});
 				} else {
 					alert(JSON.stringify(err));
 				}
