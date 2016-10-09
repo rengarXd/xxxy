@@ -69,8 +69,8 @@
 					//					if (ret.eventType == "show") {
 					//					}
 					if (ret.eventType == "success") {
-						alert(ret.content);
 						closeScan();
+						alert(ret.content);
 					}
 					if (ret.eventType == "fail")
 						api.toast({
