@@ -222,9 +222,9 @@
 
 		//打开窗口
 		function openWin(name, url) {
-//			var sys = api.systemType;
-//			//安卓加载延迟设置
-//			sys != "ios" ? delay = 200 : delay = 0;
+			//			var sys = api.systemType;
+			//			//安卓加载延迟设置
+			//			sys != "ios" ? delay = 200 : delay = 0;
 			api.openWin({
 				name : name,
 				url : url,
@@ -234,7 +234,7 @@
 				vScrollBarEnabled : false,
 				hScrollBarEnabled : false,
 				animation : {
-//					type : "none", //动画类型（详见动画类型常量）
+					//					type : "none", //动画类型（详见动画类型常量）
 					subType : "from_right", //动画子类型（详见动画子类型常量）
 					duration : 300 //动画过渡时间，默认300毫秒
 				}
@@ -251,6 +251,9 @@
 		//				}
 		//
 		function openWalletWin() {
+			var sys = api.systemType;
+			//安卓加载延迟设置
+			sys != "ios" ? delay = 200 : delay = 0;
 			if (user) {
 				api.openWin({
 					name : 'my_wallet_head',
@@ -259,7 +262,7 @@
 						data : user[0]
 					},
 					bounces : false,
-					delay : 0,
+					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false,
 					hScrollBarEnabled : false,
@@ -271,7 +274,7 @@
 				});
 			} else {
 				api.toast({
-					msg : '请点击头像先进行登录'
+					msg : '请点击‘未登录’进行登录'
 				});
 			}
 		}
