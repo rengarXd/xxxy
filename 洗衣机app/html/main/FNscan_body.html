@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>二维码扫描器</title>
+	</head>
+	<script type="text/javascript">
+		var h = 0, FNScanner = null;
+		apiready = function() {
+			FNScanner = api.require('FNScanner');
+			openScanView();
+			keyback();
+		};
+		function keyback() {
+			var systemType = api.systemType;
+			if (systemType != "ios")
+				api.sendEvent({
+					name : 'keybackb'
+				});
+		}
+
+		//打开扫码区
+		function openScanView() {
+			var frameWidth = api.frameWidth;
+			var frameHeight = api.frameHeight;
+			FNScanner.openView({
+				autorotation : true,
+				fixedOn : 'FNscan_body'
+			}, function(ret, err) {
+				if (ret) {
+					//alert( JSON.stringify( ret ) );
+					api.openFrame({
+						name : 'scanner',
+						url : 'scanner.html',
+						rect : {
+							x : 0,
+							y : 0,
+							w : 'auto',
+							h : 'auto'
+						}
+					});
+					//					var frameWidth = api.frameWidth;
+					//					var frameHeight = api.frameHeight;
+					//					openscanline(frameWidth / 2 - 100, frameHeight / 2 - 100);
+					//					if (ret.eventType == "show") {
+					//					}
+					if (ret.eventType == "success") {
+						closeScan();
+						alert(ret.content);
+					}
+					if (ret.eventType == "fail")
+						api.toast({
+							msg : '扫码失败'
+						});
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		}
+
+		function closeScan() {
+			FNScanner.closeView();
+			setTimeout(function() {
+				api.closeFrame({
+					name : 'wxscanline'
+				});
+				api.closeFrame({
+					name : 'scanner'
+				});
+				api.closeFrame();
+			}, 200);
+		}
+	</script>
+</html>
