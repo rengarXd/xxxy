@@ -45,7 +45,7 @@
 	</head>
 	<body>
 		<header class="H-header H-padding-vertical-top-25" style="background-color: #000" id="header">
-			<span tapmode="H-theme-font-color-444" tapmode="" onclick="closeScan();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i> 返回</span>
+			<span tapmode="H-theme-font-color-444" tapmode="" onclick="closeall();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i> 返回</span>
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				咭咭洗衣扫码
 			</div>
@@ -90,19 +90,11 @@
 			});
 		}
 
-		function closeScan() {
-			FNScanner.closeView();
-			setTimeout(function() {
-				api.closeFrame({
-					name : 'wxscanline'
-				});
-				api.closeFrame({
-					name : 'scanner'
-				});
-				api.closeFrame({
-					name:'FNscan_body'
-				});
-			}, 200);
+		function closeall() {
+			api.execScript({
+				frameName : 'FNscan_body',
+				script : 'closeScan();'
+			});
 		}
 	</script>
 </html>

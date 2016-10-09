@@ -62,14 +62,14 @@
 		}
 
 		function closeScan() {
+			api.closeFrame({
+				name : 'wxscanline'
+			});
+			api.closeFrame({
+				name : 'scanner'
+			});
 			FNScanner.closeView();
 			setTimeout(function() {
-				api.closeFrame({
-					name : 'wxscanline'
-				});
-				api.closeFrame({
-					name : 'scanner'
-				});
 				api.closeFrame();
 			}, 200);
 		}
