@@ -14,8 +14,8 @@
 			#line {
 				width: 200px;
 				height: 20px;
-				background: transparent;
-				border-bottom: 2px solid #0062CC;
+				background: rgba(0,0,0,0.1);
+				border-bottom: 2px solid #52ace5;
 			}
 			#line:active {
 				height: 100px;
@@ -34,7 +34,7 @@
 		var h = 0;
 		apiready = function() {
 			//alert('1');
-			setInterval(moveline, 20);
+			setInterval(moveline, 10);
 		};
 		function moveline() {
 			var line = $api.byId('line');
