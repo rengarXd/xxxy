@@ -137,6 +137,22 @@
 					//alert(JSON.stringify(ret));
 					$('.brige').show();
 				});
+				api.addEventListener({
+					name : 'keybackb'
+				}, function(ret, err) {
+					api.addEventListener({
+						name : 'keyback'
+					}, function(ret, err) {
+						api.execScript({
+							frameName : 'scanner',
+							script : 'closeScan();'
+						});
+						location.reload();
+//						setTimeout(function() {
+//							
+//						}, 200);
+					});
+				});
 			}
 
 			//页面初始化函数

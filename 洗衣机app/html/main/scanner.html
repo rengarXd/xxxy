@@ -4,44 +4,61 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>body</title>
-		<!--		<link rel="stylesheet" type="text/css" href="../../css/aui.css" />-->
+		<title>二维码扫描</title>
+		<link rel="stylesheet" type="text/css" href="../../css/Hui.css" />
 		<link rel="stylesheet" href="../../css/style.css" />
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css" />
 		<style>
-			/*html, body {
-			 background-color: rgba(0,0,0,0.4)
-			 }*/
+			html, body {
+				background-color: rgba(0,0,0,0.4)
+			}
+			.bord {
+				border: 4px solid #000000 !important;
+			}
 		</style>
 	</head>
 	<body>
-		<div class="H-center-all">
-			1111
+		<header class="H-header H-padding-vertical-top-25" style="background-color: #000" id="header">
+			<span tapmode="H-theme-font-color-444" tapmode="" onclick="closeWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i> 返回</span>
+			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
+				咭咭洗衣扫码
+			</div>
+		</header>
+		<div class="bord H-position-absolute H-position-center-all " style="height: 200px;width: 200px;"></div>
+		<div class="H-position-center-all H-margin-vertical-top-15 H-font-size-15 H-theme-font-color-white" style="position: absolute;top: 439px;width: 280px;">
+			<div class="H-text-align-center">
+				请将摄像头对准二维码进行扫描
+			</div>
 		</div>
 	</body>
 	<!--	<script type="text/javascript" src="../../script/xy.js"></script>
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>-->
 	<script type="text/javascript">
+		var h = 0;
 		apiready = function() {
 			FNScanner = api.require('FNScanner');
 			openScanView();
+			keyback();
 		};
+		function keyback() {
+			var systemType = api.systemType;
+			if (systemType != "ios")
+				api.sendEvent({
+					name : 'keybackb'
+				});
+		}
+
 		//打开扫码区
 		function openScanView() {
-			//			FNScanner.openScanner(function(ret, err) {
-			//				if (ret.content) {
-			//					alert(ret.content);
-			//					FNScanner.closeView();
-			//					api.closeFrame();
-			//				}
-			//			});
-			//			var frameWidth = api.frameWidth;
-			//						var frameHeight = api.frameHeight;
-			//			x : frameWidth / 2 - 100,
-			//							y : frameHeight / 2 - 100,
-			//							w : 200,
-			//							h : 200,
+			var frameWidth = api.frameWidth;
+			var frameHeight = api.frameHeight;
 			FNScanner.openView({
+				rect : {
+					x : frameWidth / 2 - 100,
+					y : frameHeight / 2 - 100,
+					w : 200,
+					h : 200
+				},
 				autorotation : true,
 			}, function(ret, err) {
 				if (ret) {
@@ -49,17 +66,7 @@
 					if (ret.eventType == "show") {
 						var frameWidth = api.frameWidth;
 						var frameHeight = api.frameHeight;
-						api.openFrame({
-							name : 'wxscanline',
-							url : 'wxscanline.html',
-							rect : {
-								x : 0,
-								y : 0,
-								w : 'auto',
-								h : 'auto'
-							},
-						});
-						//openscanline(frameWidth / 2 - 100, frameHeight / 2 - 100);
+						openscanline(frameWidth / 2 - 100, frameHeight / 2 - 100);
 					}
 					if (ret.eventType == "success") {
 						var code = $api.byId("code");
@@ -98,34 +105,16 @@
 			}
 		}
 
-		//		apiready = function() {
-		//			initPage();
-		//		};
-		//		// 初始化页面
-		//		function initPage() {
-		//			var FNScanner = api.require('FNScanner');
-		//			FNScanner.setFrame({
-		//				x : api.frameWidth / 2 - 100,
-		//				y : api.frameHeight / 3 - 90,
-		//				w : 200,
-		//				h : 210
-		//			});
-		//			FNScanner.openView({
-		//				//				rect : {
-		//				//					x : api.frameWidth / 2 - 100,
-		//				//					y : api.frameHeight / 3 - 90,
-		//				//					w : 200,
-		//				//					h : 210
-		//				//				},
-		//				fixedOn : 'scanner',
-		//				autorotation : false
-		//			}, function(ret, err) {
-		//				if (ret) {
-		//					alert(JSON.stringify(ret));
-		//				} else {
-		//					alert(JSON.stringify(err));
-		//				}
-		//			});
-		//		}
+		function closeScan() {
+			FNScanner.closeView();
+			setTimeout(function() {
+				api.closeFrame({
+					name : 'wxscanline'
+				});
+				api.closeFrame({
+					name : 'scanner'
+				});
+			}, 200);
+		}
 	</script>
 </html>
