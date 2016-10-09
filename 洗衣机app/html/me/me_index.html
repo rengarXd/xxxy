@@ -194,12 +194,15 @@
 
 		//打开个人中心或登录页
 		function openUser() {
+			var sys = api.systemType;
+			//安卓加载延迟设置
+			sys != "ios" ? delay = 200 : delay = 0;
 			if (user) {
 				api.openWin({
 					name : 'user_set_head',
 					url : 'user_set_head.html',
 					bounces : false,
-					delay : 0,
+					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false,
 					hScrollBarEnabled : false
@@ -209,7 +212,7 @@
 					name : 'login_body',
 					url : '../login/login_body.html',
 					bounces : false,
-					delay : 0,
+					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false,
 					hScrollBarEnabled : false
@@ -219,6 +222,9 @@
 
 		//打开窗口
 		function openWin(name, url) {
+//			var sys = api.systemType;
+//			//安卓加载延迟设置
+//			sys != "ios" ? delay = 200 : delay = 0;
 			api.openWin({
 				name : name,
 				url : url,
@@ -228,9 +234,9 @@
 				vScrollBarEnabled : false,
 				hScrollBarEnabled : false,
 				animation : {
-					type : "none", //动画类型（详见动画类型常量）
+//					type : "none", //动画类型（详见动画类型常量）
 					subType : "from_right", //动画子类型（详见动画子类型常量）
-					duration : 0 //动画过渡时间，默认300毫秒
+					duration : 300 //动画过渡时间，默认300毫秒
 				}
 			});
 		}
