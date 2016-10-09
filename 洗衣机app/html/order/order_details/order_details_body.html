@@ -77,16 +77,16 @@
 	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
 	<script type="text/javascript">
 		var data = null, dataarr = null;
-		var wash_user_id = wash_user_id, uuid = uuid, order_id = order_id;
+		var wash_user_id = null, uuid = null, order_id = null;
 		var order_condition = null, pay_num = null, pay_way = null, device_name = null, washloca_name = null, title = null, reader_time = null, order_id = null;
 		apiready = function() {
 			//接收从订单列表传来的用户id uid 订单id
 			wash_user_id = api.pageParam.wash_user_id;
 			uuid = api.pageParam.uuid;
 			order_id = api.pageParam.order_id;
-			console.log(JSON.stringify("wash_user_id:" + wash_user_id));
-			console.log(JSON.stringify("uuid:" + uuid));
-			console.log(JSON.stringify("order_id:" + order_id));
+			//console.log(JSON.stringify("wash_user_id:" + wash_user_id));
+			//console.log(JSON.stringify("uuid:" + uuid));
+			//console.log(JSON.stringify("order_id:" + order_id));
 			api.setRefreshHeaderInfo({
 				visible : true,
 				bgColor : '#fff',
