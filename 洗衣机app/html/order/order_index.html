@@ -33,16 +33,16 @@
 		<script id="order_list_item" type="text/html">
 			{{# for(var i=0,len=d.length;i<len;i++) { }}
 			{{# if(i==0){ }}
-			{{# var str=d [i].reader_time; }}
+			{{# var str=format(d[i].reader_time); }}
 			{{# var month=str.substring(5, 7); }}
 			<div id="monthnumber" style="" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
 			{{ month }}月订单
 			</div>
 			{{# } }}
 			{{# if(i>0){ }}
-			{{# var str1 = d[i].reader_time; }}
+			{{# var str1 = format(d[i].reader_time); }}
 			{{# var monthnow = str1.substring(5,7); }}
-			{{# var str2 = d[i-1].reader_time; }}
+			{{# var str2 = format(d[i-1].reader_time); }}
 			{{# var monthprevious = str2.substring(5,7); }}
 			{{# if(monthnow == monthprevious) { }}
 			<div style="" class="H-margin-vertical-bottom-2">
@@ -57,7 +57,7 @@
 			<div class="H-theme-font-color-999 H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active  H-margin-vertical-bottom-2" tapmode="H-touch-active" onclick="open_order_details('{{ d[i].order_id }}');">
 			<div class="H-margin-horizontal-left-10  H-font-size-15 H-center-all">
 			{{# var myDate = new Date(); var thisYear=myDate.getFullYear(); var thisMonth=myDate.getMonth()+1; var thisDay=myDate.getDate(); var previousDay=thisDay-1;}}
-			{{# var strtime = d[i].reader_time; var readerYear = strtime.substring(0,4); var readerMonth = strtime.substring(5,7); var readerDay = strtime.substring(8,10); var readerTime = strtime.substring(11,16); }}
+			{{# var strtime = format(d[i].reader_time); var readerYear = strtime.substring(0,4); var readerMonth = strtime.substring(5,7); var readerDay = strtime.substring(8,10); var readerTime = strtime.substring(11,16); }}
 			{{# if(thisYear==readerYear && thisMonth==readerMonth && thisDay==readerDay){ }}
 			<span class="">今天</span><br /><span class="tip-message H-font-size-12">{{ readerTime }}</span>
 			{{# }else if(thisYear==readerYear && thisMonth==readerMonth && previousDay==readerDay){ }}
@@ -224,6 +224,23 @@
 		};
 		function initPage() {
 			get_data();
+		}
+
+		//月份处理
+		function add0(m) {
+			return m < 10 ? '0' + m : m
+		}
+		//js时间戳转换
+		function format(shijianchuo) {//shijianchuo是整数，否则要parseInt转换
+			var time = new Date(parseInt(shijianchuo)*1000);
+			var y = time.getFullYear();
+			var m = time.getMonth() + 1;
+			var d = time.getDate();
+			var h = time.getHours();
+			var mm = time.getMinutes();
+			var s = time.getSeconds();
+			return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+			//alert(y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s));
 		}
 
 		function get_data() {

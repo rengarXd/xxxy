@@ -148,7 +148,7 @@
 						title = ret.data[0].title;
 						$("#title").html(title);
 						//6.显示 下单时间
-						reader_time = ret.data[0].reader_time;
+						reader_time = getLocalTime(ret.data[0].reader_time);
 						$("#reader_time").html(reader_time);
 						//7.显示 订单编号
 						order_id = ret.data[0].order_id;
@@ -171,6 +171,24 @@
 					//					$("#nonetwork").show();
 				}
 			}, 'appOrderInfo&funid=wash_order&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&order_id=' + order_id);
+		}
+
+		//月份处理
+		function add0(m) {
+			return m < 10 ? '0' + m : m
+		}
+
+		//js时间戳转换
+		function getLocalTime(shijianchuo) {//shijianchuo是整数，否则要parseInt转换
+			var time = new Date(parseInt(shijianchuo) * 1000);
+			var y = time.getFullYear();
+			var m = time.getMonth() + 1;
+			var d = time.getDate();
+			var h = time.getHours();
+			var mm = time.getMinutes();
+			var s = time.getSeconds();
+			return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+			//alert(y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s));
 		}
 
 		//查看洗衣进度

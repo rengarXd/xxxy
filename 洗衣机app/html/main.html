@@ -272,11 +272,12 @@
 					if (ret && ret.value) {
 						//获取之前开始的时间
 						var time = eval('(' + ret.value + ')');
-						var stringTime = time.start_time;
+						//var stringTime = time.start_time;
 						//总时间
 						totalTime = parseInt(time.turn_around_date) * 60;
 						//时间格式转时间戳
-						var start_time = Date.parse(new Date(stringTime));
+						//var start_time = Date.parse(new Date(stringTime));
+						var start_time = parseInt(time.start_time);
 						//获取当前时间
 						var now = new Date();
 						//totalTime = 2;
