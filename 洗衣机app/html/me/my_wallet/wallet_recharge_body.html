@@ -40,7 +40,7 @@
 	</head>
 	<body>
 		<div class="H-center-all H-theme-background-color-white" style="height: 80px;">
-			<span class="H-font-size-32 color-22a5f9" id="recharge_pay">100</span><span class="H-theme-font-color-999">元</span>
+			<span class="H-font-size-32 color-22a5f9" id="recharge_pay">0.01</span><span class="H-theme-font-color-999">元</span>
 		</div>
 		<div class="H-padding-vertical-bottom-10"></div>
 		<!--<div class="H-padding-12 H-theme-background-color-white">
@@ -115,6 +115,7 @@
 		apiready = function() {
 			api.parseTapmode();
 			initPage();
+			paymoney = $("#recharge_pay").html();
 		};
 		// 初始化页面
 		function initPage() {
@@ -134,14 +135,14 @@
 
 		//选择钱数的处理
 		function choase(obj, money) {
-			$(obj).parent().children().children().removeClass("H-theme-border-color7 p_active");
-			$(obj).children().addClass("H-theme-border-color7 p_active");
 			if (money == null) {
 				dialogInput();
 			} else {
 				paymoney = money;
 				$("#recharge_pay").html(paymoney);
 			}
+			$(obj).parent().children().children().removeClass("H-theme-border-color7 p_active");
+			$(obj).children().addClass("H-theme-border-color7 p_active");
 		}
 
 		//选择支付方式
@@ -248,6 +249,12 @@
 				});
 				return;
 			};
+			if (parseFloat(paymoney) == 0 || paymoney == null) {
+				api.toast({
+					msg : '充值金额不少于零元'
+				});
+				return;
+			}
 			//alert(orderid);
 			if (pay_way == 1) {
 				orderid = "C" + A();
@@ -279,7 +286,7 @@
 					recharge_id : orderid, //用户充值记录id
 					pay_method : pay_way, //支付方式
 					recharge_amount : paymoney, //支付金额
-					overage_type : '2' //来源
+					overage_type : '1' //来源
 				}, function(ret, err) {
 					order_no = ret.data;
 					if (ret.success) {
