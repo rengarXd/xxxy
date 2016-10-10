@@ -55,35 +55,44 @@
 			{{# } }}
 			{{# } }}
 			<div class="H-theme-font-color-999 H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active  H-margin-vertical-bottom-2" tapmode="H-touch-active" onclick="open_order_details('{{ d[i].order_id }}');">
-			<div class=" H-flexbox-vertical H-margin-horizontal-left-15  H-font-size-15 ">
+			<div class="H-margin-horizontal-left-10  H-font-size-15 H-center-all">
 			{{# var myDate = new Date(); var thisYear=myDate.getFullYear(); var thisMonth=myDate.getMonth()+1; var thisDay=myDate.getDate(); var previousDay=thisDay-1;}}
 			{{# var strtime = d[i].reader_time; var readerYear = strtime.substring(0,4); var readerMonth = strtime.substring(5,7); var readerDay = strtime.substring(8,10); var readerTime = strtime.substring(11,16); }}
 			{{# if(thisYear==readerYear && thisMonth==readerMonth && thisDay==readerDay){ }}
-			<span class=" H-font-size-16 H-center-all">今天</span><span class="tip-message H-font-size-12 H-float-right H-center-all">{{ readerTime }}</span>
+			<span class="">今天</span><br /><span class="tip-message H-font-size-12">{{ readerTime }}</span>
 			{{# }else if(thisYear==readerYear && thisMonth==readerMonth && previousDay==readerDay){ }}
-			<span class=" H-font-size-16 H-center-all">昨天</span><span class="tip-message H-font-size-12 H-float-right H-center-all">{{ readerTime }}</span>
+			<span class="">昨天</span><br /><span class="tip-message H-font-size-12">{{ readerTime }}</span>
 			{{# }else{ }}
-			<span class=" H-font-size-16 H-center-all">{{ readerMonth }}-{{ readerDay }}</span><span class="tip-message H-font-size-12 H-float-right H-center-all">{{ readerTime }}</span>
+			<span class="">{{ readerMonth }}-{{ readerDay }}</span><br /><span class="tip-message H-font-size-12">{{ readerTime }}</span>
 			{{# } }}
 			</div>
 			<div class="H-icon H-display-block"><img src="../../image/yifu.gif" style="padding-right: 10px" class="H-center-all img-icon H-padding-10" />
 			</div>
-			<div class="H-flex-item H-padding-horizontal-right-5 H-font-size-15  H-flexbox-vertical">
-			<div class="H-flexbox-horizontal">
-			<div class="H-font-size-14 ">
+			<div class="H-flex-item H-font-size-15 H-padding-horizontal-right-10">
+			<div class="H-flexbox-horizontal H-font-size-14">
+			<span class="H-padding-horizontal-right-10">
 			{{ d[i].pay_num }}
-			</div>
-			<div class="tip-message H-font-size-14 H-margin-horizontal-left-10">
+			</span>
+			<span class="H-padding-horizontal-right-15">
 			{{ d[i].title }}
-			</div>
-			<div class="H-text-show-row-1  H-font-size-14 H-margin-horizontal-left-5">
+			</span>
+			<span class="">
 			{{ d[i].pay_way }}
+			</span>
 			</div>
-			</div>
-			<div class="H-flexbox-horizontal H-font-size-14 H-margin-vertical-both-3">
+			<div class="H-flexbox-horizontal H-text-show-row-1 H-font-size-14 H-margin-vertical-both-3">
 			{{ d[i].washloca_name }}{{ d[i].device_name }}
 			</div>
 			</div>
+			{{# if(d[i].order_condition == "已完成" ) { }}
+			<div class="H-padding-horizontal-right-10 H-font-size-15 ">
+			{{ d[i].order_condition }}
+			</div>
+			{{# }else{ }}
+			<div class="H-padding-horizontal-right-10 H-font-size-15 xyzt">
+			{{ d[i].order_condition }}
+			</div>
+			{{# } }}
 			</div>
 			{{# } }}
 		</script>
