@@ -121,7 +121,9 @@
 						//						}
 					} else {
 						//console.log(JSON.stringify(ret));
-						$("#jiazai").html("连接失败，请检查网络配置");
+						api.toast({
+	                        msg:ret.message
+                        });
 					}
 				}, 'appNewsInfo&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&news_id=' + user[0].news_id);
 			}
