@@ -138,7 +138,7 @@
 		<script type="text/javascript" src="../../script/zepto.min.js"></script>
 		<script type="text/javascript" src="../../script/tools/laytpl.js"></script>
 		<script type="text/javascript">
-			var longitude = null, latitude = null, isinerval = null, xyjdata = null;
+			var longitude = null, latitude = null, isinerval = null, xyjdata = null, user = null;
 			apiready = function() {
 				api.parseTapmode();
 				//获取位置信息
@@ -164,7 +164,7 @@
 				}, function(ret, err) {
 					//alert(JSON.stringify(user));
 					if (ret && ret.value) {
-						var user = eval('(' + ret.value + ')');
+						user = eval('(' + ret.value + ')');
 						$xy.ajax(function(ret, err) {
 							api.refreshHeaderLoadDone();
 							if (ret.success) {
@@ -353,9 +353,9 @@
 			function Set_availability(device_id) {
 				//打开个人中心或登录页
 				if (user) {
-					console.log("wash_user_id:" + wash_user_id);
-					console.log("uuid:" + uuid);
-					console.log("device_id:" + device_id);
+					console.log("wash_user_id:" + user[0].wash_user_id);
+					console.log("uuid:" + user[0].uuid);
+					console.log("device_id:" + user[0].device_id);
 					//设置空闲提醒对话框
 					alertLog('提醒设置', '确认对这台洗衣机设置提醒吗？', '不用了', '是的', function(ret) {
 						if (ret.eventType == 'left') {
@@ -391,7 +391,7 @@
 									//					api.refreshHeaderLoadDone();
 									//					$("#nonetwork").show();
 								}
-							}, 'addFree&funid=wash_user_new&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&device_id=' + device_id);
+							}, 'addFree&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&device_id=' + user[0].device_id);
 						}
 					});
 				} else {
