@@ -148,10 +148,15 @@
 							script : 'closeScan();'
 						});
 						location.reload();
-//						setTimeout(function() {
-//							
-//						}, 200);
+						//						setTimeout(function() {
+						//
+						//						}, 200);
 					});
+				});
+				api.addEventListener({
+					name : 'msgload'
+				}, function(ret, err) {
+					location.reload();
 				});
 			}
 

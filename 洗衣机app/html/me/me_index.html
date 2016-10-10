@@ -175,8 +175,7 @@
 					}
 				}
 			});
-		}
-
+		};
 		//清除缓存
 		function cleanCache() {
 			api.clearCache(function() {
@@ -190,8 +189,7 @@
 					$("#cache").html(size.toFixed(2) + 'M');
 				});
 			});
-		}
-
+		};
 		//打开个人中心或登录页
 		function openUser() {
 			var sys = api.systemType;
@@ -218,8 +216,7 @@
 					hScrollBarEnabled : false
 				});
 			}
-		}
-
+		};
 		//打开窗口
 		function openWin(name, url) {
 			//			var sys = api.systemType;
@@ -239,16 +236,24 @@
 					duration : 300 //动画过渡时间，默认300毫秒
 				}
 			});
-		}
-
-		//				function openHelpCenter() {
-		//					api.openWin({
-		//						name : 'help_center_head',
-		//						url : './help_center/help_center_head.html',
-		//						bounces : false,
-		//						delay : 0,
-		//					});
-		//				}
+		};
+		function openbrowse() {
+			var photoBrowser = api.require('photoBrowser');
+			var picurl = $("#nopic").attr('src');
+			photoBrowser.open({
+				images : [picurl],
+				bgColor : '#000'
+			}, function(ret, err) {
+				if (ret) {
+					if(ret.eventType == "click"){
+						photoBrowser.close();
+					}
+					//alert(JSON.stringify(ret));
+				} else {
+					alert(JSON.stringify(err));
+				}
+			});
+		};
 		//
 		function openWalletWin() {
 			var sys = api.systemType;
@@ -277,6 +282,6 @@
 					msg : '请点击‘未登录’进行登录'
 				});
 			}
-		}
+		};
 	</script>
 </html>
