@@ -60,14 +60,14 @@
 			var user = null, data = null, isinerval = null;
 			apiready = function() {
 				data = api.pageParam.data;
-				console.log(JSON.stringify(data));
+				//console.log(JSON.stringify(data));
 				initPage();
 			};
 			// 初始化页面
 			function initPage() {
 				//页面渲染
 				document.getElementById('no').innerHTML = data[0].order_id;
-				document.getElementById('time').innerHTML = data[0].reader_time;
+				document.getElementById('time').innerHTML = getLocalTime(data[0].reader_time);
 				document.getElementById('money').innerHTML = data[0].pay_num;
 				document.getElementById('machine').innerHTML = data[0].device_name;
 				document.getElementById('model').innerHTML = data[0].title;
@@ -91,16 +91,16 @@
 						isinerval = setInterval("CountDown()", 1000);
 					} else {
 						//初始化所用时间
-						var stringTime = data[0].reader_time;
-						var timestamp = Date.parse(new Date(stringTime));
+						var stringTime = parseInt(data[0].reader_time) * 1000;
+						//var timestamp = Date.parse(new Date(stringTime));
 						var now = new Date();
 						//计算剩余时间
-						times = 300 - ((now.getTime() - timestamp) / 1000);
-						console.log('times2222==' + times);
+						times = 300 - ((now.getTime() - stringTime) / 1000);
+						//console.log('times2222==' + times);
 						//记录当前时间
 						api.setPrefs({
 							key : 'resulttime',
-							value : "'" + timestamp + "'"
+							value : "'" + stringTime + "'"
 						});
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
@@ -194,6 +194,24 @@
 				setTimeout(function() {
 					api.closeWin();
 				}, 1000);
+			}
+
+			//月份处理
+			function add0(m) {
+				return m < 10 ? '0' + m : m
+			}
+
+			//js时间戳转换
+			function getLocalTime(shijianchuo) {//shijianchuo是整数，否则要parseInt转换
+				var time = new Date(parseInt(shijianchuo) * 1000);
+				var y = time.getFullYear();
+				var m = time.getMonth() + 1;
+				var d = time.getDate();
+				var h = time.getHours();
+				var mm = time.getMinutes();
+				var s = time.getSeconds();
+				return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+				//alert(y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s));
 			}
 		</script>
 	</body>
