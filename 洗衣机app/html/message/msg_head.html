@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
@@ -10,10 +9,9 @@
 		<link rel="stylesheet" href="../../css/fonts/iconfont.css" />
 		<link rel="stylesheet" href="../../css/style.css" />
 	</head>
-
 	<body class="H-flexbox-vertical">
 		<header class="H-header b_header_bg" id="header">
-			<span tapmode="H-theme-font-color-444" tapmode="" onclick="api.closeWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i> 返回</span>
+			<span tapmode="H-theme-font-color-444" tapmode="" onclick="closeMsgWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i> 返回</span>
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				消息中心
 			</div>
@@ -28,19 +26,32 @@
 			var headerPos = $api.offset(header);
 			var body_h = $api.offset($api.dom('body')).h;
 			api.openFrame({
-				name: 'msg_body',
-				url: 'msg_body.html',
-				bounces: true,
-				rect: {
-					x: 0,
-					y: headerPos.h,
-					w: 'auto',
-					h: 'auto'
+				name : 'msg_body',
+				url : 'msg_body.html',
+				bounces : true,
+				rect : {
+					x : 0,
+					y : headerPos.h,
+					w : 'auto',
+					h : 'auto'
 				},
-				vScrollBarEnabled: false,
-				hScrollBarEnabled: false
-			})
+				vScrollBarEnabled : false,
+				hScrollBarEnabled : false
+			});
+			var systemtype = api.systemType;
+			if (systemtype != "ios") {
+				api.addEventListener({
+					name : 'keyback'
+				}, function(ret, err) {
+					closeMsgWin()
+				});
+			}
 		};
+		function closeMsgWin() {
+			api.sendEvent({
+				name : 'msgload'
+			});
+			api.closeWin();
+		}
 	</script>
-
 </html>
