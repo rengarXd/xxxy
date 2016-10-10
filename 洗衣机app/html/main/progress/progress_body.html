@@ -289,7 +289,7 @@
 					})
 				});
 				function setValue(obj) {
-					var times = times;
+					var times = times*10;
 					if (obj.value == times) {
 						obj.value = 0;
 					}
@@ -301,7 +301,6 @@
 						setValue(obj)
 					}, 1000);
 				}
-
 			}
 
 			//倒计时时钟提醒模块
