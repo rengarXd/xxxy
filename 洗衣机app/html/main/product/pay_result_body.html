@@ -108,12 +108,12 @@
 				});
 				//监听安卓手机的返回
 				api.addEventListener({
-	                name:'keyback'
-                },function(ret,err){
-                	api.closeToWin({
-	                    name: 'main'
-                    });
-                });
+					name : 'keyback'
+				}, function(ret, err) {
+					api.closeToWin({
+						name : 'main'
+					});
+				});
 			}
 
 			//时间递减处理
@@ -126,7 +126,7 @@
 						};
 						var minutes = parseInt(times / 60);
 						var seconds = parseInt(times % 60);
-						return nol(minutes) + ':' + nol(seconds);
+						return String(nol(minutes)) + ':' + String(nol(seconds));
 					}
 				});
 				if (times < 1) {
