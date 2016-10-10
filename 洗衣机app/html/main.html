@@ -277,7 +277,7 @@
 						totalTime = parseInt(time.turn_around_date) * 60;
 						//时间格式转时间戳
 						//var start_time = Date.parse(new Date(stringTime));
-						var start_time = parseInt(time.start_time);
+						var start_time = parseInt(time.start_time) * 1000;
 						//获取当前时间
 						var now = new Date();
 						//totalTime = 2;
