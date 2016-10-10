@@ -214,89 +214,89 @@
 			<div class="H-padding-vertical-bottom-3"></div>
 			{{# } }}
 		</script>
-	</body>
-	<script type="text/javascript" src="../../../script/xy.js"></script>
-	<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
-	<script type="text/javascript">
-		//洗衣机距离
-		var distance = null;
-		//名称
-		var device_name = null;
-		//地址
-		var washloca_name = null;
-		var product = null;
-		apiready = function() {
-			datas = api.pageParam.data;
-			//alert(JSON.stringify(datas));
-			//DOM渲染
-			domInfo();
-			//初始化页面
-			//initPage();
-			//渲染商品列表
-			getWashComList();
-			//下拉刷新
-			api.setRefreshHeaderInfo({
-				visible : true,
-				bgColor : '#fff',
-				textColor : '#666666',
-				textDown : '下拉刷新...',
-				textUp : '松开刷新...',
-				showTime : true
-			}, function(ret, err) {
+		<script type="text/javascript" src="../../../script/xy.js"></script>
+		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
+		<script type="text/javascript">
+			//洗衣机距离
+			var distance = null;
+			//名称
+			var device_name = null;
+			//地址
+			var washloca_name = null;
+			var product = null;
+			apiready = function() {
+				datas = api.pageParam.data;
+				//alert(JSON.stringify(datas));
+				//DOM渲染
+				domInfo();
+				//初始化页面
+				//initPage();
+				//渲染商品列表
 				getWashComList();
-			});
-		};
-		//DOM头部信息
-		function domInfo() {
-			document.getElementsByClassName('distance')[0].innerHTML = datas.distance;
-			document.getElementById('device_name').innerHTML = datas.device_name;
-			document.getElementById('address').innerHTML = datas.washloca_name;
-		}
+				//下拉刷新
+				api.setRefreshHeaderInfo({
+					visible : true,
+					bgColor : '#fff',
+					textColor : '#666666',
+					textDown : '下拉刷新...',
+					textUp : '松开刷新...',
+					showTime : true
+				}, function(ret, err) {
+					getWashComList();
+				});
+			};
+			//DOM头部信息
+			function domInfo() {
+				document.getElementsByClassName('distance')[0].innerHTML = datas.distance;
+				document.getElementById('device_name').innerHTML = datas.device_name;
+				document.getElementById('address').innerHTML = datas.washloca_name;
+			}
 
-		//打开支付页
-		function openPayWin(i) {
-			var result = $xy.extendObj(datas, product[parseInt(i)]);
-			//console.log('打开支付product===' + JSON.stringify(result));
-			api.openWin({
-				name : 'pay_head',
-				url : 'pay_head.html',
-				pageParam : result,
-				bounces : false,
-				delay : 0,
-				slidBackEnabled : true,
-				vScrollBarEnabled : false
-			});
-		}
+			//打开支付页
+			function openPayWin(i) {
+				var result = $xy.extendObj(datas, product[parseInt(i)]);
+				//console.log('打开支付product===' + JSON.stringify(result));
+				api.openWin({
+					name : 'pay_head',
+					url : 'pay_head.html',
+					pageParam : result,
+					bounces : false,
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
+				});
+			}
 
-		//页面渲染
-		function getWashComList() {
-			var device_id = datas.device_id;
-			$xy.ajax(function(ret, err) {
-				api.hideProgress();
-				api.refreshHeaderLoadDone();
-				if (ret) {
-					//console.log(JSON.stringify(device_id));
-					//$("#nonetwork").hide();
-					if (ret.success) {
-						console.log(JSON.stringify(ret));
-						product = ret.data;
-						var tpl = document.getElementById('option_data').innerHTML;
-						//读取模版
-						//方式一：异步渲染（推荐）
-						laytpl(tpl).render(ret.data, function(render) {
-							api.hideProgress();
-							document.getElementById('option_list').innerHTML = render;
-						});
+			//页面渲染
+			function getWashComList() {
+				var device_id = datas.device_id;
+				$xy.ajax(function(ret, err) {
+					api.hideProgress();
+					api.refreshHeaderLoadDone();
+					if (ret) {
+						//console.log(JSON.stringify(device_id));
+						//$("#nonetwork").hide();
+						if (ret.success) {
+							console.log(JSON.stringify(ret));
+							product = ret.data;
+							var tpl = document.getElementById('option_data').innerHTML;
+							//读取模版
+							//方式一：异步渲染（推荐）
+							laytpl(tpl).render(ret.data, function(render) {
+								api.hideProgress();
+								document.getElementById('option_list').innerHTML = render;
+							});
+						} else {
+							//console.log(JSON.stringify(2));
+							alert(ret.message);
+						}
 					} else {
-						//console.log(JSON.stringify(2));
-						alert(ret.message);
+						api.toast({
+							msg : '连接失败，请检查网络配置'
+						});
 					}
-				} else {
-					api.toast({
-						msg : '连接失败，请检查网络配置'
-					});
-				}
-			}, 'getWashComList&funid=wash_commodity&device_id=' + device_id);
-		}
-	</script>
+				}, 'getWashComList&funid=wash_commodity&device_id=' + device_id);
+			}
+		</script>
+	</body>
 </html>
