@@ -417,7 +417,7 @@
 				if (seconds >= 0 && seconds <= 9) {
 					seconds = "0" + seconds;
 				}
-				var currentdate = year + month + strDate + hour + minutes + seconds + parseInt((Math.random()) * 10000);
+				var currentdate = String(year) + String(month) + String(strDate) + String(hour) + String(minutes) + String(seconds) + String(parseInt((Math.random()) * 10000));
 				return currentdate;
 				//alert(currentdate);
 			}
