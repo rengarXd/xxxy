@@ -71,6 +71,11 @@
 					开始洗衣
 				</button>
 			</div>
+			<div id="payorder" style="display:none;" class="H-padding-20">
+				<button onclick="open_pay();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+					支付订单
+				</button>
+			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
@@ -122,6 +127,10 @@
 						if (order_condition == "待开始") {
 							$("#order_condition").css("color", "#FF6600");
 							$("#kaishixiyi").css("display", "block");
+						}
+						if (order_condition == "未支付") {
+							$("#order_condition").css("color", "#FF6600");
+							$("#payorder").css("display", "block");
 						}
 						//2.显示 订单金额
 						pay_num = ret.data[0].pay_num;
@@ -193,6 +202,81 @@
 				delay : 0,
 				slidBackEnabled : true,
 				vScrollBarEnabled : false
+			});
+		}
+
+		//未支付按钮
+		function open_pay() {
+			var orderid = order_id;
+			if ($("#pay_way").html() == "支付宝")
+				alipayFunction(orderid);
+			if ($("#pay_way").html() == "微信")
+				wxPayFunction(orderid);
+		}
+
+		//支付宝支付方法
+		function alipayFunction(orderid) {
+			var obj = api.require('aliPay');
+			var aliPayurl = window.aliPayurl;
+			obj.config({
+				partner : '2088421786244385',
+				seller : 'jiyou360@126.com',
+				rsaPriKey : 'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMnRFvabENOHewFvPz4zTLVRG/7hyq8oDcsa+Qw2Wve7bHhSQP/jZPb7gRjiilEKUUtADXqZq1WcllEebVrSapcQrpX3kYlhhdGiSGhGyZRy018UieG3dqvQGXa/3ktqbBKcD3Uqr/1W+5pyNa1g4ABCYWG7/NA8PLMgrjgN/bXZAgMBAAECgYAH6HGF6D2YjE59l+ZagZgX4r2+FwriIieoNb5chCS8YFO3w0FYxYhHRUOhvf69fjIBSNk+XJciG6ioNRED5grXHrJPIfcCIQYOpX0JEb0NhG/jpyOaCHxXKNGjij9qhJFUnmAH6At28N9YX02HZJBZPgx8P1UaOfvlmUxHFrmXIQJBAO73n8/gjFGg0i3lh9tjU/0cb7bdxrgSVovW+nFdMqRGQuNbKbTjjTUQ3PCZ8l5oYUcFI9JaZ/BJyEyhpFsO8ZMCQQDYM5bTV0JxLAJKjH2mmin7KCwSx+bAjQqVhqL/QZ5bsg302fLt4t6NwFknsvz+gWjpPoFR+S4rcCromOZXJs5jAkApxLBzRj1geyqhiRARAbCJejHwlZ0JSXNFKANIU1Dps7o3QRTuICPrVZI4n7/kTnxKTJSxTMoEDvFqq4otvFPvAkBoQliVihrsYICqWp2tXeKoz3KRi/znFhzohojL92Taaz73uLLBrQoN6ZgU4OfIA7gH4rCSS0vMfsbya+mIVZppAkEA5rhmaQ9RCbpcPcd+3jqLpIQtbXrKhsc3YRKtWpH06l2BKG8dDjey9ecLCp/UYWCObSLSvWhNg/1gxaVlAgRUDQ==',
+				rsaPubKey : 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJ0Rb2mxDTh3sBbz8+M0y1URv+4cqvKA3LGvkMNlr3u2x4UkD/42T2+4EY4opRClFLQA16matVnJZRHm1a0mqXEK6V95GJYYXRokhoRsmUctNfFInht3ar0Bl2v95LamwSnA91Kq/9VvuacjWtYOAAQmFhu/zQPDyzIK44Df212QIDAQAB',
+				notifyURL : aliPayurl,
+			}, function(ret, err) {
+				if (ret.status) {
+					obj.pay({
+						subject : data.title,
+						body : data.dept_name,
+						amount : data.pay_num,
+						tradeNO : orderid
+					}, function(ret, err) {
+						//1.0 如果支付宝提示付款成功！
+						if (ret && ret.statusCode == 9000) {
+							open_pay_result();
+						} else {
+							deleteOrder(orderid);
+						}
+					});
+				} else {
+					deleteOrder(orderid);
+				}
+			});
+		}
+
+		function wxPayFunction(orderid) {
+			var wxPay = api.require('wxPay');
+			var wxPayurl = window.wxPayurl;
+			wxPay.config({
+				apiKey : 'wx563cde637c901097',
+				mchId : '1390880602',
+				partnerKey : 'nZ9booT9pQOaIGp5hcrjMs243GPvS7g4',
+				notifyUrl : wxPayurl
+			}, function(ret, err) {
+				if (ret.status) {
+					//alert('配置商户支付参数成功');
+					var jiage = parseFloat(data.pay_num) * 100;
+					//alert(jiage);
+					//deleteOrder(orderid);
+					wxPay.pay({
+						description : data.title,
+						totalFee : String(jiage),
+						tradeNo : orderid
+					}, function(ret, err) {
+						if (ret.status) {
+							//alert(ret.result);
+							//打开支付成功页;
+							open_pay_result();
+						} else {
+							alert(JSON.stringify(err));
+							deleteOrder(orderid);
+						}
+					});
+				} else {
+					alert(err.code);
+					deleteOrder(orderid);
+				}
 			});
 		}
 
