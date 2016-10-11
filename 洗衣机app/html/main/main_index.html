@@ -253,6 +253,9 @@
 
 			//打开洗衣点下的洗衣机
 			function openXyj(washloca_id, distance_id) {
+				var sys = api.systemType;
+				//安卓加载延迟设置
+				sys != "ios" ? delay = 200 : delay = 0;
 				api.openWin({
 					name : 'nearby_machine_head',
 					url : './nearby_laundry/nearby_machine_head.html',
@@ -261,7 +264,7 @@
 						distance : distance_id
 					},
 					bounces : false,
-					delay : 0,
+					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false,
 					hScrollBarEnabled : false
@@ -270,10 +273,13 @@
 
 			//打开页面方法
 			function openWin(name, url) {
+				var sys = api.systemType;
+				//安卓加载延迟设置
+				sys != "ios" ? delay = 200 : delay = 0;
 				api.openWin({
 					name : name,
 					url : url,
-					delay : 0,
+					delay : delay,
 					bounces : false,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false,
@@ -283,30 +289,22 @@
 
 			//打开商品选项
 			function openProduct(i) {
+				var sys = api.systemType;
+				//安卓加载延迟设置
+				sys != "ios" ? delay = 200 : delay = 0;
 				api.openWin({
 					name : 'option_head',
 					url : './product/option_head.html',
 					pageParam : {
 						data : xyjdata[parseInt(i)]
 					},
-					delay : 0,
+					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false,
 					hScrollBarEnabled : false
 				});
 			}
 
-			//查找更多洗衣点
-			//			function openLaundry() {
-			//				api.openWin({
-			//					name : 'nearby_laundry_head',
-			//					url : './nearby_laundry/nearby_laundry_head.html',
-			//					delay : 0,
-			//					slidBackEnabled : true,
-			//					vScrollBarEnabled : false,
-			//					hScrollBarEnabled : false
-			//				});
-			//			}
 			//获取位置信息
 			function getlocation() {
 				var systemType = api.systemType;
@@ -372,9 +370,9 @@
 			function Set_availability(device_id) {
 				//打开个人中心或登录页
 				if (user) {
-					console.log("wash_user_id:" + user[0].wash_user_id);
-					console.log("uuid:" + user[0].uuid);
-					console.log("device_id:" + user[0].device_id);
+					//console.log("wash_user_id:" + user[0].wash_user_id);
+					//console.log("uuid:" + user[0].uuid);
+					//console.log("device_id:" + user[0].device_id);
 					//设置空闲提醒对话框
 					alertLog('提醒设置', '确认对这台洗衣机设置提醒吗？', '不用了', '是的', function(ret) {
 						if (ret.eventType == 'left') {
@@ -391,7 +389,7 @@
 							$xy.ajax(function(ret, err) {
 								//api.hideProgress();
 								if (ret) {
-									console.log(JSON.stringify(ret));
+									//console.log(JSON.stringify(ret));
 									//$("#nonetwork").hide();
 									api.refreshHeaderLoadDone();
 									if (ret.success) {
@@ -402,11 +400,13 @@
 									} else {
 										//console.log(JSON.stringify(ret));
 										api.toast({
-											msg : '很抱歉，网络异常'
+											msg : ret.message
 										});
 									}
 								} else {
-									console.log(JSON.stringify("false"));
+									api.toast({
+										msg : '很抱歉，网络异常'
+									});
 									//					api.refreshHeaderLoadDone();
 									//					$("#nonetwork").show();
 								}
