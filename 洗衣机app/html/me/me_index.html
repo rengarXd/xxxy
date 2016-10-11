@@ -195,7 +195,7 @@
 		function openUser() {
 			var sys = api.systemType;
 			//安卓加载延迟设置
-			sys != "ios" ? delay = 200 : delay = 0;
+			sys != "ios" ? delay = 100 : delay = 0;
 			if (user) {
 				api.openWin({
 					name : 'user_set_head',
@@ -270,7 +270,7 @@
 		function openWalletWin() {
 			var sys = api.systemType;
 			//安卓加载延迟设置
-			sys != "ios" ? delay = 200 : delay = 0;
+			sys != "ios" ? delay = 100 : delay = 0;
 			if (user) {
 				api.openWin({
 					name : 'my_wallet_head',
@@ -282,12 +282,7 @@
 					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false,
-					hScrollBarEnabled : false,
-					animation : {
-						type : "none", //动画类型（详见动画类型常量）
-						subType : "from_right", //动画子类型（详见动画子类型常量）
-						duration : 0 //动画过渡时间，默认300毫秒
-					}
+					hScrollBarEnabled : false
 				});
 			} else {
 				api.toast({
