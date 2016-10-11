@@ -19,6 +19,10 @@
 				margin-left: 20px;
 				margin-right: 20px;
 			}
+			.border_msg {
+				/*border: 1px solid #999;*/
+				border-radius: 20px !important;
+			}
 		</style>
 	</head>
 	<body>
@@ -41,23 +45,26 @@
 		</div>
 		<script type="text/html" id="message_data">
 			{{# for(var i=0,len=d.length;i<len;i++) { }}
-			<div class=" H-theme-background-color-white H-margin-vertical-bottom-5" tapmode="" onclick="openOrder('{{ d[i].news_id }}');">
+			{{# var strtime = d[i].publish_time }}
+			{{# var start_time = Date.parse(new Date(strtime))/1000; }}
+			<div class="H-text-align-center H-theme-font-color-999 H-font-size-12 H-margin-horizontal-both-10 H-padding-vertical-top-10 H-padding-vertical-bottom-3">{{ $xy.jsDateDiff(start_time)}}</div>
+			<div class=" H-theme-background-color-white H-border-both-after H-border-radius-15 H-margin-horizontal-both-10 H-margin-vertical-bottom-8" tapmode="" onclick="openOrder('{{ d[i].news_id }}');">
 			<div class="H-channel-title H-flexbox-horizontal H-theme-background-color-white H-vertical-middle" >
 			{{# if (d[i].is_read == '0'){ }}
 			<div style="background-color: #03aafe;" class="H-channel-line H-padding-vertical-top-15 H-padding-horizontal-left-3 H-margin-horizontal-left-10"></div>
 			{{# }else{ }}
 			<div style="background-color: #ff7200;" class="H-channel-line H-padding-vertical-top-15 H-padding-horizontal-left-3 H-margin-horizontal-left-10"></div>
 			{{# } }}
-			<div class="H-channel-text H-theme-font-color4 H-flex-item H-font-size-16 H-theme-font-color-black H-padding-10 H-margin-horizontal-right-10 H-text-show-row-1 chense">
+			<div class="H-channel-text H-theme-font-color4 H-flex-item H-font-size-16 H-theme-font-color-black H-padding-10 H-text-show-row-1 chense">
 			{{ d[i].news_tital }}
 			</div>
-			{{# var strtime = d[i].publish_time }}
-			{{# var start_time = Date.parse(new Date(strtime))/1000; }}
-			<span class="H-theme-font-color-999 H-font-size-12 H-margin-horizontal-right-25">{{ $xy.jsDateDiff(start_time)}}</span>
+			</div>
+			<div class="H-theme-font-color-999 H-font-size-13" style="padding:0px 20px 10px 20px;">
+			{{ d[i].news_content }}
 			</div>
 			<div class="xy_border"></div>
-			<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-5" style="padding-left: 20px;padding-right: 20px;">
-			{{ d[i].news_content }}
+			<div class="H-theme-font-color-999 H-font-size-15" style="padding: 5px 0px 5px 20px">
+			查看详情
 			</div>
 			</div>
 			{{# } }}
@@ -95,37 +102,18 @@
 			}
 
 			//查看详情，更改颜色
-			function openOrder() {
-				$xy.ajax(function(ret, err) {
-					//api.hideProgress();
-					if (ret.success) {
-						//console.log(JSON.stringify(ret));
-						api.toast({
-							msg : '已读'
-						});
-						//						if (ret.data.length == 0) {
-						//							//当没有订单时的处理
-						//							api.refreshHeaderLoadDone();
-						//							var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无消息记录</div></div></div>';
-						//							document.getElementById('message_html').innerHTML = htmls;
-						//						} else {
-						//							//console.log(JSON.stringify(ret));
-						//							api.refreshHeaderLoadDone();
-						//							var tpl = document.getElementById('message_data').innerHTML;
-						//							//读取模版
-						//							//方式一：异步渲染（推荐）
-						//							laytpl(tpl).render(ret.data, function(render) {
-						//								//api.hideProgress();
-						//								document.getElementById('message_html').innerHTML = render;
-						//							});
-						//						}
-					} else {
-						//console.log(JSON.stringify(ret));
-						api.toast({
-	                        msg:ret.message
-                        });
-					}
-				}, 'appNewsInfo&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&news_id=' + user[0].news_id);
+			function openOrder(Param) {
+				api.openWin({
+					name : 'msg_det_head',
+					url : 'msg_det_head.html',
+					pageParam : {
+						data : Param
+					},
+					bounces : false,
+					delay : 0,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
+				});
 			}
 
 			function initpage() {
