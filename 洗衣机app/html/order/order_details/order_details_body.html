@@ -198,7 +198,9 @@
 
 		//查看洗衣进度
 		function open_progress() {
-			//								console.log(JSON.stringify(dept_id));
+			var sys = api.systemType;
+			//安卓加载延迟设置
+			sys != "ios" ? delay = 200 : delay = 0;
 			api.openWin({
 				name : 'progress_head.html',
 				url : '../../main/progress/progress_head.html',
@@ -208,12 +210,7 @@
 				bounces : false,
 				delay : 0,
 				slidBackEnabled : true,
-				vScrollBarEnabled : false,
-				animation : {
-					type : "none", //动画类型（详见动画类型常量）
-					subType : "from_right", //动画子类型（详见动画子类型常量）
-					duration : 0 //动画过渡时间，默认300毫秒
-				}
+				vScrollBarEnabled : false
 			});
 		}
 
@@ -231,12 +228,7 @@
 				bounces : false,
 				delay : delay,
 				slidBackEnabled : true,
-				vScrollBarEnabled : false,
-				animation : {
-					type : "none", //动画类型（详见动画类型常量）
-					subType : "from_right", //动画子类型（详见动画子类型常量）
-					duration : 300 //动画过渡时间，默认300毫秒
-				}
+				vScrollBarEnabled : false
 			});
 			setTimeout(function() {
 				location.reload();
@@ -347,7 +339,7 @@
 		function open_fault_feedback() {
 			var sys = api.systemType;
 			//安卓加载延迟设置
-			sys != "ios" ? delay = 200 : delay = 0;
+			sys != "ios" ? delay = 100 : delay = 0;
 			api.openWin({
 				name : 'fault_feedback_head.html',
 				url : '../../me/feedback/fault_feedback_head.html',
@@ -359,9 +351,8 @@
 				slidBackEnabled : true,
 				vScrollBarEnabled : false,
 				animation : {
-					type : "none", //动画类型（详见动画类型常量）
+					type : "push", //动画类型（详见动画类型常量）
 					subType : "from_right", //动画子类型（详见动画子类型常量）
-					duration : 0 //动画过渡时间，默认300毫秒
 				}
 			});
 		}
@@ -370,19 +361,14 @@
 		function openCustomerService() {
 			var sys = api.systemType;
 			//安卓加载延迟设置
-			sys != "ios" ? delay = 200 : delay = 0;
+			sys != "ios" ? delay = 100 : delay = 0;
 			api.openWin({
 				name : 'custom_server_head.html',
 				url : '../../me/server/custom_server_head.html',
 				bounces : false,
 				delay : delay,
 				slidBackEnabled : true,
-				vScrollBarEnabled : false,
-				animation : {
-					type : "none", //动画类型（详见动画类型常量）
-					subType : "from_right", //动画子类型（详见动画子类型常量）
-					duration : 0 //动画过渡时间，默认300毫秒
-				}
+				vScrollBarEnabled : false
 			});
 		}
 	</script>

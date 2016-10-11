@@ -343,7 +343,7 @@
 		function open_order_details(order_id) {
 			var sys = api.systemType;
 			//安卓加载延迟设置
-			sys != "ios" ? delay = 200 : delay = 0;
+			sys != "ios" ? delay = 100 : delay = 0;
 			api.openWin({
 				name : 'order_details_head',
 				url : './order_details/order_details_head.html',
@@ -353,13 +353,12 @@
 					order_id : order_id
 				},
 				bounces : false,
-				delay : 0,
+				delay : delay,
 				slidBackEnabled : true,
 				vScrollBarEnabled : false,
 				animation : {
-					type : "none", //动画类型（详见动画类型常量）
+					type : "push", //动画类型（详见动画类型常量）
 					subType : "from_right", //动画子类型（详见动画子类型常量）
-					duration : 0 //动画过渡时间，默认300毫秒
 				}
 			});
 		}

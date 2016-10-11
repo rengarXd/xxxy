@@ -494,6 +494,9 @@
 
 			//支付成功结果
 			function openResult(result) {
+				var sys = api.systemType;
+				//安卓加载延迟设置
+				sys != "ios" ? delay = 200 : delay = 0;
 				api.openWin({
 					name : 'pay_result_head',
 					url : 'pay_result_head.html',
@@ -503,7 +506,11 @@
 					bounces : false,
 					delay : 300,
 					slidBackEnabled : true,
-					vScrollBarEnabled : false
+					vScrollBarEnabled : false,
+					animation : {
+						type : "push", //动画类型（详见动画类型常量）
+						subType : "from_right", //动画子类型（详见动画子类型常量）
+					}
 				});
 				setTimeout(function() {
 					api.closeWin();

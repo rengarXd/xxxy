@@ -155,14 +155,22 @@
 
 			//打开修改密码
 			function openPwd() {
+				var sys = api.systemType;
+				//安卓加载延迟设置
+				sys != "ios" ? delay = 100 : delay = 0;
 				api.openWin({
 					name : 'pwd_set_head',
 					url : './setting/pwd_set_head.html',
 					bounces : false,
-					delay : 0,
+					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false,
-					hScrollBarEnabled : false
+					hScrollBarEnabled : false,
+					animation : {
+						type : "reveal", //动画类型（详见动画类型常量）
+						subType : "from_right", //动画子类型（详见动画子类型常量）
+						duration : 0 //动画过渡时间，默认300毫秒
+					}
 				});
 			}
 
@@ -472,9 +480,9 @@
 							if (ret && ret.status) {
 								//success
 							} else {
-//								api.toast({
-//									msg : '退出失败'
-//								});
+								//								api.toast({
+								//									msg : '退出失败'
+								//								});
 							}
 						});
 						api.removePrefs({
@@ -494,13 +502,21 @@
 
 			//换绑手机
 			function ChangePhoneNumber() {
+				var sys = api.systemType;
+				//安卓加载延迟设置
+				sys != "ios" ? delay = 100 : delay = 0;
 				api.openWin({
 					name : 'change_phone_1_head',
 					url : './setting/change_phone_1_head.html',
 					bounces : false,
-					delay : 0,
+					delay : delay,
 					slidBackEnabled : true,
-					vScrollBarEnabled : false
+					vScrollBarEnabled : false,
+					animation : {
+						type : "reveal", //动画类型（详见动画类型常量）
+						subType : "from_right", //动画子类型（详见动画子类型常量）
+						duration : 0 //动画过渡时间，默认300毫秒
+					}
 				});
 			}
 
