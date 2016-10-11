@@ -87,6 +87,7 @@
 					location.reload();
 				});
 			};
+			//初始化偏好值
 			function intuser() {
 				api.getPrefs({
 					key : 'userinfo'
@@ -116,6 +117,7 @@
 				});
 			}
 
+			//初始化页面渲染
 			function initpage() {
 				$xy.ajax(function(ret, err) {
 					//api.hideProgress();
