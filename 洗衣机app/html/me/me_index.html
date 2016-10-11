@@ -246,7 +246,11 @@
 				bgColor : '#000'
 			}, function(ret, err) {
 				if (ret) {
-					if(ret.eventType == "click"){
+					api.execScript({
+						name : 'main',
+						script : 'photoClose();'
+					});
+					if (ret.eventType == "click") {
 						photoBrowser.close();
 					}
 					//alert(JSON.stringify(ret));
@@ -255,7 +259,12 @@
 				}
 			});
 		};
-		//
+		
+		function exec(){
+			var photoBrowser = api.require('photoBrowser');
+			photoBrowser.close();
+		}
+		
 		function openWalletWin() {
 			var sys = api.systemType;
 			//安卓加载延迟设置

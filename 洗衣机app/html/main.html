@@ -160,6 +160,21 @@
 				});
 			}
 
+			function photoClose() {
+				api.addEventListener({
+					name : 'keyback'
+				}, function(ret, err) {
+					api.execScript({
+						frameName : 'me_index',
+						script : 'exec();'
+					});
+					setTimeout(function() {
+						//1.4连按两次退出APP
+						H.dblclickToCloseApp();
+					}, 300);
+				});
+			}
+
 			//页面初始化函数
 			function pageInit() {
 				//1.2打开沉浸式页面
