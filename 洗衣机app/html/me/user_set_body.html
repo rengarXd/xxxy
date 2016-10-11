@@ -471,23 +471,23 @@
 						ajpush.stopPush(function(ret) {
 							if (ret && ret.status) {
 								//success
-								api.removePrefs({
-									key : 'userinfo'
-								});
-								api.execScript({
-									name : 'main',
-									script : 'initInfo();'
-								});
-								//延时关闭窗口
-								setTimeout(function() {
-									api.closeWin();
-								}, 500);
 							} else {
-								api.toast({
-									msg : '退出失败'
-								});
+//								api.toast({
+//									msg : '退出失败'
+//								});
 							}
 						});
+						api.removePrefs({
+							key : 'userinfo'
+						});
+						api.execScript({
+							name : 'main',
+							script : 'initInfo();'
+						});
+						//延时关闭窗口
+						setTimeout(function() {
+							api.closeWin();
+						}, 500);
 					}
 				});
 			}
