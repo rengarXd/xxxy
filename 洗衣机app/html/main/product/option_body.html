@@ -226,7 +226,6 @@
 			var product = null;
 			apiready = function() {
 				datas = api.pageParam.data;
-				//alert(JSON.stringify(datas));
 				//DOM渲染
 				domInfo();
 				//初始化页面
@@ -255,13 +254,15 @@
 			//打开支付页
 			function openPayWin(i) {
 				var result = $xy.extendObj(datas, product[parseInt(i)]);
-				//console.log('打开支付product===' + JSON.stringify(result));
+				var sys = api.systemType;
+				//安卓加载延迟设置
+				sys != "ios" ? delay = 200 : delay = 0;
 				api.openWin({
 					name : 'pay_head',
 					url : 'pay_head.html',
 					pageParam : result,
 					bounces : false,
-					delay : 0,
+					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false
 				});
@@ -274,8 +275,6 @@
 					api.hideProgress();
 					api.refreshHeaderLoadDone();
 					if (ret) {
-						//console.log(JSON.stringify(device_id));
-						//$("#nonetwork").hide();
 						if (ret.success) {
 							console.log(JSON.stringify(ret));
 							product = ret.data;

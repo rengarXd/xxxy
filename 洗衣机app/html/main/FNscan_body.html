@@ -13,6 +13,8 @@
 			openScanView();
 			keyback();
 		};
+		
+		//安卓返回键事件
 		function keyback() {
 			var systemType = api.systemType;
 			if (systemType != "ios")
@@ -61,6 +63,7 @@
 			});
 		}
 
+		//关闭扫描器
 		function closeScan() {
 			api.closeFrame({
 				name : 'wxscanline'

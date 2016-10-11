@@ -105,18 +105,12 @@
 			apiready = function() {
 				//商品信息
 				product = api.pageParam;
-				console.log(JSON.stringify(product));
+				//console.log(JSON.stringify(product));
 				//生成随机的订单号
 				A();
 				//初始化页面
 				initPage();
 			};
-			//			Zepto(function($) {
-			//				$(".icon-duihao").on("click", function(event) {
-			//					$(".icon-duihao").hide();
-			//					$(this).show();
-			//				});
-			//			});
 			// 初始化页面
 			function initPage() {
 				//商品名称
@@ -270,6 +264,7 @@
 				});
 			}
 
+			//支付方法
 			function openCf() {
 				if (!pay_way) {
 					api.toast({
@@ -461,6 +456,7 @@
 				});
 			}
 
+			//微信支付方法
 			function wxPayFunction(order_no, orderid) {
 				var wxPay = api.require('wxPay');
 				var wxPayurl = window.wxPayurl;
