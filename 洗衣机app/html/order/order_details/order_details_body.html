@@ -76,6 +76,11 @@
 					支付订单
 				</button>
 			</div>
+			<div id="delorder" style="display:none;" class="H-padding-20">
+				<button onclick="delet_pay();" class="xy_login_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+					删除订单
+				</button>
+			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
@@ -221,6 +226,30 @@
 				slidBackEnabled : true,
 				vScrollBarEnabled : false
 			});
+		}
+
+		//删除订单方法
+		function deleteOrder() {
+			$xy.ajax(function(ret, err) {
+				if (ret.success) {
+					api.toast({
+						msg : ret.message
+					});
+					setTimeout(function() {
+						api.closeWin();
+					}, 800);
+				} else {
+					if (ret.message) {
+						api.toast({
+							msg : ret.message
+						});
+					} else {
+						api.toast({
+							msg : '服务器未响应，支付失败'
+						});
+					}
+				}
+			}, 'deleteOrder&funid=wash_order&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_id=' + order_id);
 		}
 
 		//未支付按钮
