@@ -101,18 +101,22 @@
 						user = eval('(' + ret.value + ')');
 						initTime();
 					} else {
-						api.alert({
+						api.confirm({
 							title : '温馨提示',
 							msg : '进行该操作前请先登录',
+							buttons : ['确定', '取消']
 						}, function(ret, err) {
 							if (ret.buttonIndex == 1) {
 								api.openWin({
 									name : 'login_body',
-									url : '../../login/login_body.html'
+									url : '../../login/login_body.html',
+									bounces : false
 								});
 								setTimeout(function() {
 									api.closeWin();
-								}, 1000);
+								}, 500);
+							} else {
+								api.closeWin();
 							}
 						});
 					}
