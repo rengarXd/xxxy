@@ -230,9 +230,10 @@
 		function add0(m) {
 			return m < 10 ? '0' + m : m
 		}
+
 		//js时间戳转换
 		function format(shijianchuo) {//shijianchuo是整数，否则要parseInt转换
-			var time = new Date(parseInt(shijianchuo)*1000);
+			var time = new Date(parseInt(shijianchuo) * 1000);
 			var y = time.getFullYear();
 			var m = time.getMonth() + 1;
 			var d = time.getDate();
@@ -340,7 +341,9 @@
 
 		//打开订单详情
 		function open_order_details(order_id) {
-			//								console.log(JSON.stringify(dept_id));
+			var sys = api.systemType;
+			//安卓加载延迟设置
+			sys != "ios" ? delay = 200 : delay = 0;
 			api.openWin({
 				name : 'order_details_head',
 				url : './order_details/order_details_head.html',
@@ -352,7 +355,12 @@
 				bounces : false,
 				delay : 0,
 				slidBackEnabled : true,
-				vScrollBarEnabled : false
+				vScrollBarEnabled : false,
+				animation : {
+					type : "none", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 0 //动画过渡时间，默认300毫秒
+				}
 			});
 		}
 	</script>
