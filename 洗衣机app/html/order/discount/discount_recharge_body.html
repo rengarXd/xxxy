@@ -251,7 +251,7 @@
 				};
 				//alert(orderid);
 				if (pay_way == 1) {
-					orderid = "C" + order_id;
+					orderid = "C" + A();
 					doPay({
 						wash_user_id : user[0].wash_user_id,
 						uuid : user[0].uuid,
@@ -273,7 +273,7 @@
 						}
 					});
 				} else if (pay_way == 2) {
-					orderid = "C" + order_id;
+					orderid = "C" + A();
 					//打开支付成功页;
 					doPay({
 						wash_user_id : user[0].wash_user_id,
