@@ -77,7 +77,7 @@
 				</button>
 			</div>
 			<div id="delorder" style="display:none;" class="H-padding-20">
-				<button onclick="delet_pay();" class="xy_login_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+				<button onclick="deleteOrder();" class="xy_login_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
 					删除订单
 				</button>
 			</div>
@@ -127,15 +127,16 @@
 						$("#order_condition").html(order_condition);
 						if (order_condition == "使用中") {
 							$("#order_condition").css("color", "#FF6600");
-							$("#chakanjingdu").css("display", "block");
+							$("#chakanjingdu").show();
 						}
 						if (order_condition == "待开始") {
 							$("#order_condition").css("color", "#FF6600");
-							$("#kaishixiyi").css("display", "block");
+							$("#kaishixiyi").show();
 						}
 						if (order_condition == "未支付") {
 							$("#order_condition").css("color", "#FF6600");
-							$("#payorder").css("display", "block");
+							$("#payorder").show();
+							$("#delorder").show();
 						}
 						//2.显示 订单金额
 						pay_num = ret.data[0].pay_num;
@@ -212,7 +213,7 @@
 			});
 		}
 
-		//开始洗衣
+		//打开支付结果
 		function open_pay_result() {
 			//								console.log(JSON.stringify(dept_id));
 			api.openWin({
@@ -283,15 +284,16 @@
 						if (ret && ret.statusCode == 9000) {
 							open_pay_result();
 						} else {
-							deleteOrder(orderid);
+							deleteOrder();
 						}
 					});
 				} else {
-					deleteOrder(orderid);
+					deleteOrder();
 				}
 			});
 		}
 
+		//微信支付方法
 		function wxPayFunction(orderid) {
 			var wxPay = api.require('wxPay');
 			var wxPayurl = window.wxPayurl;
@@ -316,20 +318,20 @@
 							//打开支付成功页;
 							open_pay_result();
 						} else {
-							alert(JSON.stringify(err));
-							deleteOrder(orderid);
+							//alert(JSON.stringify(err));
+							deleteOrder();
 						}
 					});
 				} else {
-					alert(err.code);
-					deleteOrder(orderid);
+					//alert(err.code);
+					deleteOrder();
 				}
 			});
 		}
 
 		//打开故障反馈
 		function open_fault_feedback() {
-			//								console.log(JSON.stringify(dept_id));
+			//console.log(JSON.stringify(dept_id));
 			api.openWin({
 				name : 'fault_feedback_head.html',
 				url : '../../me/feedback/fault_feedback_head.html',
