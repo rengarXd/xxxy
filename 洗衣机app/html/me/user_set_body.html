@@ -250,6 +250,7 @@
 				return fileName.substring(fileName.lastIndexOf('.') + 1);
 			}
 
+			//打开设置头像
 			function setvatar() {
 				api.actionSheet({
 					title : '请选择您要上传头像的方式',
@@ -504,6 +505,7 @@
 				});
 			}
 
+			//上传头像方法
 			function Get_HeadPortrait_ID(attach_name) {
 				api.showProgress({
 					title : '上传中'

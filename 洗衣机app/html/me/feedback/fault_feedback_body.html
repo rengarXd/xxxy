@@ -62,7 +62,7 @@
 			<textarea id="textarea" class=" H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-flex-item H-box-sizing-border-box  H-outline-none H-padding-12" style="width: 100%;border-radius: 5px; color:#999999;" placeholder="请尽量详细描述您遇到的问题"></textarea>
 		</div>
 		<div class=" H-margin-horizontal-both-20 H-padding-vertical-both-15">
-			<button class="xy_confirm_btn H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent   H-theme-font-color-white" tapmode="H-touch-active" onclick="ajax();">
+			<button class="xy_confirm_btn H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent   H-theme-font-color-white" tapmode="H-touch-active" onclick="_ajax();">
 				确&nbsp;&nbsp;&nbsp;定
 			</button>
 		</div>
@@ -76,6 +76,7 @@
 			//console.log(JSON.stringify(data));
 			send_feedback();
 		};
+		//初始化
 		function initPage() {
 			//console.log(JSON.stringify(data));
 			//页面渲染
@@ -84,7 +85,7 @@
 			document.getElementById('device_name').innerHTML = data[0].device_name;
 		}
 
-		//提交
+		//提交申请
 		function send_feedback() {
 			api.getPrefs({
 				key : 'userinfo'
@@ -100,30 +101,28 @@
 				}
 				//console.log(v);
 				//console.log(JSON.stringify(user));
-				
 			});
 		}
 
-		function ajax(wash_user_id, uuid) {
+		//ajax方法
+		function _ajax() {
 			var device_id = data[0].device_id;
 			var order_id = data[0].order_id;
 			var utype = document.getElementById("select").value;
 			var fault_matter = document.getElementById("textarea").value;
-			//			console.log('device_id:'+device_id);
-			//			console.log('order_id:'+order_id);
-			//			console.log('wash_user_id:'+wash_user_id);
-			//			console.log('uuid:'+uuid);
-			//			console.log('utype:'+utype);
-			//			console.log('fault_matter:'+fault_matter);
 			$xy.ajax(function(ret, err) {
 				//api.hideProgress();
 				//api.refreshHeaderLoadDone();
 				if (ret) {
-					console.log(JSON.stringify(ret));
+					//console.log(JSON.stringify(ret));
 					if (ret.success) {
-						alert('提交成功，我们将尽快为你解决');
-						api.closeWin();
-						console.log(JSON.stringify(ret));
+						api.toast({
+							msg : '提交成功，我们将尽快为你解决'
+						});
+						setTimeout(function() {
+							api.closeWin();
+						}, 500);
+						//console.log(JSON.stringify(ret));
 					} else {
 						//console.log(JSON.stringify(2));
 						alert(ret.message);

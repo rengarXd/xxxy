@@ -43,14 +43,6 @@
 			<span class="H-font-size-32 color-22a5f9" id="recharge_pay">0.01</span><span class="H-theme-font-color-999">元</span>
 		</div>
 		<div class="H-padding-vertical-bottom-10"></div>
-		<!--<div class="H-padding-12 H-theme-background-color-white">
-		<div class=" H-flexbox-horizontal H-font-size-14">
-		<div class="H-center-all" style="">
-		金额：
-		</div>
-		<input type="text" id="code" class=" H-textbox H-vertical-middle H-font-size-14 H-flex-item  H-border-none  H-outline-none " style="color:#999999;" placeholder="建议充值100以上金额">
-		</div>
-		</div>-->
 		<div class="H-vertical-middle H-padding-horizontal-left-10 H-font-size-15 H-border-vertical-bottom-after H-theme-background-color-white H-padding-10">
 			请选择充值余额
 		</div>
@@ -152,12 +144,8 @@
 			pay_way = $(obj).find(".icon-duihao").attr("payway");
 		}
 
-		//支付
+		//支付结果方法
 		function openResult() {
-			api.execScript({
-				name : 'main',
-				script : 'initInfo();'
-			});
 			api.openWin({
 				name : 'recharge_success_head',
 				url : '../../result/recharge_success_head.html',
@@ -169,6 +157,7 @@
 			});
 		}
 
+		//钱数异常的对话框
 		function dialogInput() {
 			var dialogBox = api.require('dialogBox');
 			dialogBox.input({
@@ -331,6 +320,7 @@
 			});
 		}
 
+		//微信支付方法
 		function wxPayFunction(order_no, orderid) {
 			var wxPay = api.require('wxPay');
 			wxPay.config({
