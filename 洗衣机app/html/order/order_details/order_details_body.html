@@ -75,12 +75,12 @@
 				<button onclick="open_pay();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
 					支付订单
 				</button>
-			</div>
-			<div id="delorder" style="display:none;" class="H-padding-20">
-				<button onclick="deleteOrder();" class="xy_login_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
+				<button onclick="deleteOrder();" class="xy_login_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white H-margin-vertical-top-15">
 					删除订单
 				</button>
 			</div>
+			<!--<div id="delorder" style="display:none;" class="H-padding-20">
+			</div>-->
 		</div>
 	</body>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
@@ -136,7 +136,6 @@
 						if (order_condition == "未支付") {
 							$("#order_condition").css("color", "#FF6600");
 							$("#payorder").show();
-							$("#delorder").show();
 						}
 						//2.显示 订单金额
 						pay_num = ret.data[0].pay_num;
@@ -209,13 +208,20 @@
 				bounces : false,
 				delay : 0,
 				slidBackEnabled : true,
-				vScrollBarEnabled : false
+				vScrollBarEnabled : false,
+				animation : {
+					type : "none", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 0 //动画过渡时间，默认300毫秒
+				}
 			});
 		}
 
 		//打开支付结果
 		function open_pay_result() {
-			//								console.log(JSON.stringify(dept_id));
+			var sys = api.systemType;
+			//安卓加载延迟设置
+			sys != "ios" ? delay = 200 : delay = 0;
 			api.openWin({
 				name : 'pay_result_head.html',
 				url : '../../main/product/pay_result_head.html',
@@ -223,10 +229,18 @@
 					data : dataarr
 				},
 				bounces : false,
-				delay : 0,
+				delay : delay,
 				slidBackEnabled : true,
-				vScrollBarEnabled : false
+				vScrollBarEnabled : false,
+				animation : {
+					type : "none", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 300 //动画过渡时间，默认300毫秒
+				}
 			});
+			setTimeout(function() {
+				location.reload();
+			}, 300);
 		}
 
 		//删除订单方法
@@ -331,7 +345,9 @@
 
 		//打开故障反馈
 		function open_fault_feedback() {
-			//console.log(JSON.stringify(dept_id));
+			var sys = api.systemType;
+			//安卓加载延迟设置
+			sys != "ios" ? delay = 200 : delay = 0;
 			api.openWin({
 				name : 'fault_feedback_head.html',
 				url : '../../me/feedback/fault_feedback_head.html',
@@ -339,21 +355,34 @@
 					data : dataarr
 				},
 				bounces : false,
-				delay : 0,
+				delay : delay,
 				slidBackEnabled : true,
-				vScrollBarEnabled : false
+				vScrollBarEnabled : false,
+				animation : {
+					type : "none", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 0 //动画过渡时间，默认300毫秒
+				}
 			});
 		}
 
 		//打开联系客服页面
 		function openCustomerService() {
+			var sys = api.systemType;
+			//安卓加载延迟设置
+			sys != "ios" ? delay = 200 : delay = 0;
 			api.openWin({
 				name : 'custom_server_head.html',
 				url : '../../me/server/custom_server_head.html',
 				bounces : false,
-				delay : 0,
+				delay : delay,
 				slidBackEnabled : true,
-				vScrollBarEnabled : false
+				vScrollBarEnabled : false,
+				animation : {
+					type : "none", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 0 //动画过渡时间，默认300毫秒
+				}
 			});
 		}
 	</script>
