@@ -43,15 +43,19 @@
 				api.addEventListener({
 					name : 'keyback'
 				}, function(ret, err) {
-					closeMsgWin()
+					closeMsgWin();
 				});
 			}
 		};
+		
+		//关闭并刷新消息标示
 		function closeMsgWin() {
 			api.sendEvent({
 				name : 'msgload'
 			});
-			api.closeWin();
+			setTimeout(function() {
+				api.closeWin();
+			}, 300);
 		}
 	</script>
 </html>
