@@ -227,10 +227,6 @@
 
 			//支付结果
 			function openResult() {
-				api.execScript({
-					name : 'main',
-					script : 'initInfo();'
-				});
 				api.openWin({
 					name : 'recharge_success_head',
 					url : '../../result/recharge_success_head.html',
@@ -328,6 +324,7 @@
 				});
 			}
 
+			//微信支付方法
 			function wxPayFunction(order_no, orderid) {
 				var wxPay = api.require('wxPay');
 				wxPay.config({
