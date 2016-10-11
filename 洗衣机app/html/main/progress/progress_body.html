@@ -92,7 +92,6 @@
 				data = api.pageParam.data;
 				initPage();
 			};
-			
 			//初始化方法
 			function initPage() {
 				api.getPrefs({
@@ -143,7 +142,7 @@
 							//document.getElementById().innerHTML = getLocalTime(ret.data[0].reader_time);
 							//开始时间
 							//var stringTime = ret.data[0].start_time;
-							var start_time = parseInt(ret.data[0].start_time)*1000;
+							var start_time = parseInt(ret.data[0].start_time) * 1000;
 							//总时间
 							totalTime = parseInt(ret.data[0].turn_around_date) * 60;
 							//console.log('start_time==' + start_time);
@@ -160,10 +159,12 @@
 							//console.log('times==' + times);
 							//调用倒计时方法
 							isinerval = setInterval("CountDown()", 1000);
-							api.execScript({
-								name : 'main',
-								script : 'listener();'
-							});
+							if (times >= 1) {
+								api.execScript({
+									name : 'main',
+									script : 'listener();'
+								});
+							}
 							//设置定时任务
 							//							if (totalTime > 60) {
 							//								var last = (totalTime - 60) * 1000;
