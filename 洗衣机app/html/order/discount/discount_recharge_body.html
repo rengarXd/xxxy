@@ -195,6 +195,7 @@
 						laytpl(tpl).render(itemdata, function(render) {
 							api.hideProgress();
 							//alert(JSON.stringify(itemdata[0]));
+							paymoney = itemdata[0].recharge_pay;
 							document.getElementById('recharge_pay').innerHTML = itemdata[0].recharge_pay;
 							document.getElementById('presentation_pay').innerHTML = itemdata[0].presentation_pay;
 							document.getElementById('clzl_list').innerHTML = render;
