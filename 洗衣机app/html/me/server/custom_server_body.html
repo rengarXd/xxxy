@@ -61,6 +61,7 @@
 			});
 		}
 
+		//提交请求
 		function _ajax() {
 			var phone = document.getElementById('phone_number').value;
 			var fault_matter = document.getElementById('fault_matter').value;
@@ -71,7 +72,7 @@
 					api.toast({
 						msg : ret.message
 					});
-					//定时任务
+					//定时任务关闭窗口
 					setTimeout(function() {
 						api.closeWin();
 					}, 1500);

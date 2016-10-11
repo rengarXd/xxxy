@@ -238,6 +238,7 @@
 				}
 			});
 		};
+		//打开图片预览
 		function openbrowse() {
 			var photoBrowser = api.require('photoBrowser');
 			var picurl = $("#nopic").attr('src');
@@ -259,12 +260,13 @@
 				}
 			});
 		};
-		
-		function exec(){
+		//关闭图片预览
+		function exec() {
 			var photoBrowser = api.require('photoBrowser');
 			photoBrowser.close();
 		}
-		
+
+		//打开我的钱包
 		function openWalletWin() {
 			var sys = api.systemType;
 			//安卓加载延迟设置
