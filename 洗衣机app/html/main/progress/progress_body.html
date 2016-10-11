@@ -92,6 +92,8 @@
 				data = api.pageParam.data;
 				initPage();
 			};
+			
+			//初始化方法
 			function initPage() {
 				api.getPrefs({
 					key : 'userinfo'
@@ -135,7 +137,7 @@
 						_tpl('progress_data', ret.data, 'progress_html', function() {
 							if (isinerval) {
 								isinerval = null;
-							}
+							};
 							//订单信息
 							dataarr = ret.data;
 							//document.getElementById().innerHTML = getLocalTime(ret.data[0].reader_time);

@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<title>title</title>
-		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>扫描线</title>
 		<link rel="stylesheet" type="text/css" href="../../css/Hui.css"/>
 		<style>
 			html, body {
@@ -20,33 +20,27 @@
 			#line:active {
 				height: 100px;
 			}
-			.bord {
-				border: 4px solid #000000 !important;
-			}
 		</style>
 	</head>
 	<body>
 		<!--<div class="H-position-relative" style="background: rgba(0,0,0,0.2);"></div>-->
 		<div id="line" style=""></div>
-	</body>
-	<script type="text/javascript" src="../../script/api.js"></script>
-	<script type="text/javascript">
-		var h = 0;
-		apiready = function() {
-			//alert('1');
-			setInterval(moveline, 10);
-		};
-		function moveline() {
-			var line = $api.byId('line');
-			if (h == 200) {
-				h = 0;
-			} else {
-				h++;
+		<script type="text/javascript">
+			var h = 0;
+			apiready = function() {
+				//alert('1');
+				setInterval(moveline, 10);
+			};
+			//扫描线方法
+			function moveline() {
+				if (h == 200) {
+					h = 0;
+				} else {
+					h++;
+				}
+				var hstr = h + 'px';
+				document.getElementById('line').style.cssText = "height:" + hstr;
 			}
-			var hstr = h + 'px';
-			//$api.attr(line,'height',hstr);
-			document.getElementById('line').style.cssText = "height:" + hstr;
-			//alert($api.attr(line,'height'));
-		}
-	</script>
+		</script>
+	</body>
 </html>

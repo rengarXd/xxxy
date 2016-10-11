@@ -61,40 +61,35 @@
 				将二维码对准方框内即可自动扫描
 			</div>
 		</div>
+		<script type="text/javascript">
+			var h = 0, FNScanner = null;
+			apiready = function() {
+				openscanline();
+			};
+			//打开扫码线页面
+			function openscanline() {
+				var frameWidth = api.frameWidth;
+				var frameHeight = api.frameHeight;
+				api.openFrame({
+					name : 'wxscanline',
+					url : 'wxscanline.html',
+					bounces : false,
+					rect : {
+						x : frameWidth / 2 - 100,
+						y : frameHeight / 2 - 100,
+						w : 200,
+						h : 200
+					},
+				});
+			}
+
+			//关闭扫描器
+			function closeall() {
+				api.execScript({
+					frameName : 'FNscan_body',
+					script : 'closeScan();'
+				});
+			}
+		</script>
 	</body>
-	<!--	<script type="text/javascript" src="../../script/xy.js"></script>
-	<script type="text/javascript" src="../../script/zepto.min.js"></script>-->
-	<script type="text/javascript">
-		var h = 0, FNScanner = null;
-		apiready = function() {
-			openFrameSC();
-		};
-		function openFrameSC() {
-			var frameWidth = api.frameWidth;
-			var frameHeight = api.frameHeight;
-			openscanline(frameWidth / 2 - 100, frameHeight / 2 - 100);
-		}
-
-		//打开扫码线页面
-		function openscanline(w, h) {
-			api.openFrame({
-				name : 'wxscanline',
-				url : 'wxscanline.html',
-				bounces : false,
-				rect : {
-					x : w,
-					y : h,
-					w : 200,
-					h : 200
-				},
-			});
-		}
-
-		function closeall() {
-			api.execScript({
-				frameName : 'FNscan_body',
-				script : 'closeScan();'
-			});
-		}
-	</script>
 </html>
