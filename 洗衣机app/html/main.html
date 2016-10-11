@@ -303,6 +303,10 @@
 						//渲染提示条
 						var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的西三宿舍三楼西01机，大约<span id="minttime"></span>后结束</div></div>';
 						$('#index_header').append(timedom);
+						if (times < 1) {
+							//隐藏提示条
+							$("#progress_toast").hide();
+						}
 						//设置定时任务
 						if (times > 60) {
 							var last = (totalTime - 60) * 1000;
@@ -313,9 +317,7 @@
 						}
 					} else {
 						//隐藏提示条
-						if ($("#progress_toast")) {
-							$("#progress_toast").hide();
-						}
+						$("#progress_toast").hide();
 					}
 				});
 			}
