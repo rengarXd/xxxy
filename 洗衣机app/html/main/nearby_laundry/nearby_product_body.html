@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>选择商品body</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/fonts/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/animate/animate.min.css" />
+		<style>
+			.kongxian {
+				color: #03aafe;
+			}
+			.img-icon {
+				width: 40px;
+				height: 40px;
+				padding-left: 5px
+			}
+			.yuding {
+				width: 74px;
+				height: 68px;
+			}
+			.tip-message {
+				color: #888888;
+				line-height: 23px;
+			}
+			.tip-message-money {
+				color: #ff6600;
+			}
+			.xiadan_btnn {
+				border: 1px solid #49b1f4;
+				background-color: white;
+				border-radius: 50px;
+				color: #49b1f4;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="H-padding-vertical-bottom-10"></div>
+		<div id="option_list"></div>
+		<script type="text/html" id="option_data">
+			{{# for(var i = 0,len=d.length;i<len;i++) { }}
+			<div class="animated fadeIn H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle">
+			<span class="H-icon H-display-block"><img src="../../../image/commodity_icon/{{ d[i].commodity_icon }}" class="img-icon"/></span>
+			<span class="H-icon H-display-block H-padding-horizontal-left-5 "><img src="../../../image/shuxian.png" style="height: 68px;"/></span>
+			<div class="H-flex-item H-padding-horizontal-right-5 H-font-size-15 xy_font_color H-padding-10">
+			<span>{{ d[i].title }}</span><span class="tip-message H-font-size-12 H-float-right">{{ d[i].turn_around_date }}分钟<span class="H-padding-horizontal-left-5 tip-message-money">{{ d[i].movement_money }}</span>元</span>
+			<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-top-5">
+			{{ d[i].memo }}
+			</div>
+			</div>
+			<span class="H-icon H-display-block H-padding-horizontal-left-5"><img src="../../../image/shuxian.png" style="height: 68px;"/></span>
+			<span class="H-icon H-padding-horizontal-both-10 H-display-block">
+			<button tapmode="H-touch-active" onclick="openPayWin('{{ i }}');" class="H-touch-active H-font-size-14 H-border-none xiadan_btnn H-padding-horizontal-both-10 H-padding-vertical-both-3">
+			下单
+			</button></span>
+			</div>
+			<div class="H-padding-vertical-bottom-3"></div>
+			{{# } }}
+		</script>
+	</body>
+	<script type="text/javascript" src="../../../script/xy.js"></script>
+	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
+	<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
+	<script type="text/javascript">
+		var product = null, device_id = null;
+		apiready = function() {
+			//关闭扫码器
+			closescann();
+			device_id = api.pageParam.data;
+			//alert(device_id);
+			//渲染商品列表
+			getWashComList();
+			//下拉刷新
+			api.setRefreshHeaderInfo({
+				visible : true,
+				bgColor : '#fff',
+				textColor : '#666666',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...',
+				showTime : true
+			}, function(ret, err) {
+				getWashComList();
+			});
+		};
+		function closescann() {
+			api.execScript({
+				name : 'main',
+				frameName : 'FNscan_body',
+				script : 'closeScan();'
+			});
+		}
+
+		//页面渲染
+		function getWashComList() {
+			$xy.ajax(function(ret, err) {
+				api.hideProgress();
+				api.refreshHeaderLoadDone();
+				if (ret) {
+					if (ret.success) {
+						console.log(JSON.stringify(ret));
+						product = ret.data;
+						var tpl = document.getElementById('option_data').innerHTML;
+						//读取模版
+						//方式一：异步渲染（推荐）
+						laytpl(tpl).render(ret.data, function(render) {
+							api.hideProgress();
+							document.getElementById('option_list').innerHTML = render;
+						});
+					} else {
+						//console.log(JSON.stringify(2));
+						var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">' + ret.message + '</div></div></div>';
+						document.getElementById('option_list').innerHTML = htmls;
+						api.toast({
+							msg : ret.message
+						});
+					}
+				} else {
+					var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">连接失败，请检查网络配置</div></div></div>';
+					document.getElementById('option_list').innerHTML = htmls;
+					api.toast({
+						msg : '连接失败，请检查网络配置'
+					});
+				}
+			}, 'getWashComList&funid=wash_commodity&device_id=' + device_id);
+		}
+
+		//打开支付页
+		function openPayWin(i) {
+			var result = product[parseInt(i)];
+			var delay = 0;
+			if (api.systemType != 'ios')
+				delay = 200;
+			api.openWin({
+				name : 'pay_head',
+				url : '../product/pay_head.html',
+				pageParam : result,
+				bounces : false,
+				delay : delay,
+				slidBackEnabled : true,
+				vScrollBarEnabled : false
+			});
+		}
+	</script>
+</html>

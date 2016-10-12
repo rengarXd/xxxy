@@ -255,9 +255,9 @@
 			//打开支付页
 			function openPayWin(i) {
 				var result = $xy.extendObj(datas, product[parseInt(i)]);
-				var sys = api.systemType;
-				//安卓加载延迟设置
-				sys != "ios" ? delay = 200 : delay = 0;
+				var delay = 0;
+				if (api.systemType != 'ios')
+					delay = 200;
 				api.openWin({
 					name : 'pay_head',
 					url : 'pay_head.html',
@@ -265,11 +265,7 @@
 					bounces : false,
 					delay : delay,
 					slidBackEnabled : true,
-					vScrollBarEnabled : false,
-					animation : {
-						type : "push", //动画类型（详见动画类型常量）
-						subType : "from_right", //动画子类型（详见动画子类型常量）
-					}
+					vScrollBarEnabled : false
 				});
 			}
 
