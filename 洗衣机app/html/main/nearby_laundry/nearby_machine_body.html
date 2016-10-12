@@ -220,11 +220,11 @@
 									//console.log(JSON.stringify(ret));
 									api.refreshHeaderLoadDone();
 									api.toast({
-										msg : ret.message
+										msg : ret.message+'请留意我们的通知！'
 									});
 								} else {
 									api.toast({
-										msg : '很抱歉，网络异常'
+										msg : ret.message
 									});
 								}
 							}, 'addFree&funid=wash_user_new&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&device_id=' + device_id);
