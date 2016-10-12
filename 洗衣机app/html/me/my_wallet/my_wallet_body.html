@@ -44,15 +44,15 @@
 				当前账户余额共计<span id="total">0</span>元 ，其中：
 			</div>
 		</div>
-		<div class=" H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1 ">
+		<div class=" H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle  H-margin-vertical-bottom-1 ">
 			<div class=" H-text-show-row-1  H-font-size-20 H-padding-10  ziti hongse" style="width: 25%;">
 				<span id="balance">0.00</span><span class="H-font-size-14">元</span>
 			</div>
 			<div class=" H-text-show-row-1  H-font-size-14 H-padding-10  ziti" style="width:40%;">
 				通用余额
 			</div>
-			<div class="H-padding-10" style="line-height: 21px;" onclick="openRecharge();">
-				<button class="H-font-size-14 H-border-none chongzhi_btnn">
+			<div class="H-padding-10" style="line-height: 21px;" tapmode="H-touch-active" onclick="openRecharge();">
+				<button class="H-font-size-14 H-border-none chongzhi_btnn H-touch-active">
 					&nbsp;充&nbsp;值&nbsp;
 				</button>
 			</div>
@@ -188,6 +188,7 @@
 				}, function(ret, err) {
 					location.reload();
 				});
+				api.parseTapmode();
 			};
 			//初始化页面
 			function initPage() {
@@ -304,6 +305,9 @@
 
 			//打开通用余额充值页
 			function openRecharge() {
+				var delay = 0;
+				if (api.systemType != 'ios')
+					delay = 100;
 				api.openWin({
 					name : 'wallet_recharge_head',
 					url : 'wallet_recharge_head.html',
@@ -312,7 +316,7 @@
 					//					distance: distance_id
 					//				},
 					bounces : false,
-					delay : 0,
+					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false
 				});
