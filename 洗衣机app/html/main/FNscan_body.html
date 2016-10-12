@@ -5,6 +5,11 @@
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<title>二维码扫描器</title>
+		<style>
+			html, body {
+				background: #000000;
+			}
+		</style>
 	</head>
 	<script type="text/javascript">
 		var h = 0, FNScanner = null;
@@ -13,7 +18,6 @@
 			openScanView();
 			keyback();
 		};
-		
 		//安卓返回键事件
 		function keyback() {
 			var systemType = api.systemType;
@@ -50,8 +54,61 @@
 					//					if (ret.eventType == "show") {
 					//					}
 					if (ret.eventType == "success") {
-						closeScan();
-						alert(ret.content);
+						var contents = ret.content;
+						api.openWin({
+							name : 'nearby_product_head',
+							url : './nearby_laundry/nearby_product_head.html',
+							pageParam : {
+								data : contents
+							},
+							bounces : false,
+							delay : 0,
+							slidBackEnabled : true,
+							vScrollBarEnabled : false
+						});
+						FNScanner.closeView();
+						//						api.sendEvent({
+						//							name : 'product_option',
+						//							extra : {
+						//								content : contents
+						//							}
+						//						});
+						//						closeScan();
+						//						api.alert({
+						//							title : '是否选择'
+						//						}, function(ret, err) {
+						//							var delay = 0;
+						//							if (api.systemType != 'ios')
+						//								delay = 200;
+						//							api.openWin({
+						//								name : 'nearby_product_head',
+						//								url : './nearby_laundry/nearby_product_head.html',
+						//								pageParam : {
+						//									data : contents
+						//								},
+						//								bounces : false,
+						//								delay : delay,
+						//								slidBackEnabled : true,
+						//								vScrollBarEnabled : false
+						//							});
+						//						});
+						//						setTimeout(function() {
+						//							var delay = 0;
+						//							if (api.systemType != 'ios')
+						//								delay = 200;
+						//							api.openWin({
+						//								name : 'nearby_product_head',
+						//								url : './nearby_laundry/nearby_product_head.html',
+						//								pageParam : {
+						//									data : contents
+						//								},
+						//								bounces : false,
+						//								delay : delay,
+						//								slidBackEnabled : true,
+						//								vScrollBarEnabled : false
+						//							});
+						//						}, 2000);
+						//alert(ret.content);
 					}
 					if (ret.eventType == "fail")
 						api.toast({
@@ -65,13 +122,13 @@
 
 		//关闭扫描器
 		function closeScan() {
+			FNScanner.closeView();
 			api.closeFrame({
 				name : 'wxscanline'
 			});
 			api.closeFrame({
 				name : 'scanner'
 			});
-			FNScanner.closeView();
 			setTimeout(function() {
 				api.closeFrame();
 			}, 200);
