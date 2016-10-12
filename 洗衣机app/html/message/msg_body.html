@@ -44,6 +44,11 @@
 				</div>
 			</div>
 		</div>
+		<!--loading-->
+		<div class="H-text-align-center" id="loading" style="padding:10px 25px;display: none;color: rgb(167, 167, 167);font-size: 14px;">
+			<img src="../../image/loading01.gif" id="show" style="width: 45px;" />&nbsp;&nbsp;加载中...
+		</div>
+		<!--loading-->
 		<script type="text/html" id="message_data">
 			{{# for(var i=0,len=d.length;i<len;i++) { }}
 			{{# var strtime = d[i].publish_time }}
@@ -71,9 +76,10 @@
 			{{# } }}
 		</script>
 		<script type="text/javascript" src="../../script/xy.js"></script>
+		<script type="text/javascript" src="../../script/zepto.min.js"></script>
 		<script type="text/javascript" src="../../script/tools/laytpl.js"></script>
 		<script type="text/javascript">
-			var user = null;
+			var user = null, loadLock = false, page = 1;
 			apiready = function() {
 				intuser();
 				//下拉刷新
@@ -104,7 +110,7 @@
 				});
 			}
 
-			//查看详情，更改颜色
+			//查看详情更改状态
 			function openOrder(Param) {
 				var delay = 0;
 				if (api.systemType != 'ios')
@@ -124,6 +130,7 @@
 
 			//初始化页面渲染
 			function initpage() {
+				loadLock = true;
 				$xy.ajax(function(ret, err) {
 					//api.hideProgress();
 					if (ret.success) {
@@ -141,7 +148,23 @@
 							//方式一：异步渲染（推荐）
 							laytpl(tpl).render(ret.data, function(render) {
 								//api.hideProgress();
-								document.getElementById('message_html').innerHTML = render;
+								//document.getElementById('message_html').innerHTML = render;
+								if (page == 1) {
+									document.getElementById('message_html').innerHTML = render;
+								} else {
+									//向后渲染
+									$("#message_html").append(render);
+									$("#loading").hide();
+								}
+								datacount = parseInt(ret.message);
+								initEventLinster();
+								//懒加载
+								if (parseInt(ret.message) == page) {
+									loadLock = true;
+								} else {
+									page++;
+									loadLock = false;
+								}
 							});
 						}
 					} else {
@@ -150,7 +173,28 @@
 						var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">服务器未响应</div></div></div>';
 						document.getElementById('message_html').innerHTML = htmls;
 					}
-				}, 'appUserNews&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
+				}, 'appUserNews&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&page=' + page);
+			}
+
+			//懒加载事件监听
+			function initEventLinster() {
+				//数据行数大于初始页数
+				if (datacount > page) {
+					// 2.0 底部加载更多
+					api.addEventListener({
+						name : 'scrolltobottom',
+						extra : {
+							threshold : -10
+						}
+					}, function(ret, err) {
+						if (loadLock == false) {
+							$("#loading").show();
+							setTimeout(function() {
+								initpage();
+							}, 1000);
+						}
+					});
+				}
 			}
 		</script>
 	</body>

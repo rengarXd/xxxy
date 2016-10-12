@@ -284,11 +284,10 @@
 											$("#order_list").append(render);
 											$("#loading").hide();
 										}
-										//document.getElementById('').innerHTML = render;
-										datacount = ret.message;
+										datacount = parseInt(ret.message);
 										initEventLinster();
 										//懒加载
-										if (ret.message == page) {
+										if (parseInt(ret.message) == page) {
 											loadLock = true;
 										} else {
 											page++;
@@ -318,8 +317,7 @@
 			});
 		}
 
-		//当前时间格式化
-		//初始化事件监听
+		//懒加载事件监听
 		function initEventLinster() {
 			//数据行数大于初始页数
 			if (datacount > page) {
@@ -343,9 +341,8 @@
 		//打开订单详情
 		function open_order_details(order_id) {
 			var delay = 0;
-			if (api.systemType != 'ios') {
+			if (api.systemType != 'ios')
 				delay = 200;
-			}
 			api.openWin({
 				name : 'order_details_head',
 				url : './order_details/order_details_head.html',
