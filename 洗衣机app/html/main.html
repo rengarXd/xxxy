@@ -46,19 +46,19 @@
 	</head>
 	<body class="H-flexbox-vertical">
 		<header class="H-header b_header_bg" id="index_header">
-			<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
+			<span tapmode="H-theme-font-color-444" onclick="openMsgWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				咭咭洗衣
 			</div>
 		</header>
 		<header class="H-header H-header-title b_header_bg H-display-none" id="massages_header">
-			<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
+			<span tapmode="H-theme-font-color-444" onclick="openMsgWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				订单
 			</div>
 		</header>
 		<header class="H-header H-header-title me_header_bg H-display-none" id="setting_header">
-			<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
+			<span tapmode="H-theme-font-color-444" onclick="openMsgWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
 		</header>
 		<!--	<header class="H-header b_header_bg" id="index_header">
 		<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-15 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
@@ -228,7 +228,74 @@
 							//					var extra = ret.extra;
 						});
 					} else {
+						alertLog('温馨提示', '您是否进行登录？', '不用了', '继续', function(ret) {
+							if (ret.eventType == 'left') {
+								var dialogBox = api.require('dialogBox');
+								dialogBox.close({
+									dialogName : 'alert'
+								});
+							} else {
+								var dialogBox = api.require('dialogBox');
+								dialogBox.close({
+									dialogName : 'alert'
+								});
+								api.openWin({
+									name : 'login_body',
+									url : './login/login_body.html',
+									bounces : false
+								});
+							}
+						});
 					}
+				});
+			}
+
+			//dialog对话框
+			function alertLog(title, content, leftBtnTitle, rightBtnTitle, callback) {
+				var dialogBox = api.require('dialogBox');
+				dialogBox.alert({
+					texts : {
+						title : title,
+						content : content,
+						leftBtnTitle : leftBtnTitle,
+						rightBtnTitle : rightBtnTitle
+					},
+					styles : {
+						bg : '#fff',
+						w : 300,
+						corner : 5,
+						title : {
+							marginT : 30,
+							titleSize : 18,
+							titleColor : '#119ed1'
+						},
+						content : {
+							color : '#555555',
+							marginT : 30,
+							marginB : 50,
+							size : 16
+						},
+						left : {
+							marginB : 0,
+							marginL : 0,
+							w : 150,
+							h : 50,
+							bg : '#fff',
+							color : '#cacaca',
+							size : 15
+						},
+						right : {
+							marginB : 0,
+							marginL : 0,
+							w : 150,
+							h : 50,
+							bg : '#119ed1',
+							color : '#fff',
+							size : 15
+						}
+					}
+				}, function(ret) {
+					callback(ret);
 				});
 			}
 
@@ -236,15 +303,15 @@
 			//				$("#index_footer .switch-item").eq(index).addClass('active').siblings().removeClass('active');
 			//				$("header").hide().eq(index).show();
 			//			}
-			function openWin(name, url) {
+			//打开消息列表
+			function openMsgWin() {
 				var delay = 0;
-				if (api.systemType != 'ios') {
+				if (api.systemType != 'ios')
 					delay = 200;
-				}
 				$('.brige').hide();
 				api.openWin({
-					name : name,
-					url : url,
+					name : 'msg_head',
+					url : './message/msg_head.html',
 					bounces : false,
 					delay : delay,
 					slidBackEnabled : true,

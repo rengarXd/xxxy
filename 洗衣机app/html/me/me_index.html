@@ -193,9 +193,9 @@
 		};
 		//打开个人中心或登录页
 		function openUser() {
-			var sys = api.systemType;
-			//安卓加载延迟设置
-			sys != "ios" ? delay = 100 : delay = 0;
+			var delay = 0;
+			if (api.systemType != 'ios')
+				delay = 100;
 			if (user) {
 				api.openWin({
 					name : 'user_set_head',
@@ -268,9 +268,9 @@
 
 		//打开我的钱包
 		function openWalletWin() {
-			var sys = api.systemType;
-			//安卓加载延迟设置
-			sys != "ios" ? delay = 100 : delay = 0;
+			var delay = 0;
+			if (api.systemType != 'ios')
+				delay = 100;
 			if (user) {
 				api.openWin({
 					name : 'my_wallet_head',

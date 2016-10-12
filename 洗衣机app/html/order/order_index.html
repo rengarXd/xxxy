@@ -7,6 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/Hui.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/fonts/iconfont.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/animate/animate.min.css" />
 		<style>
 			.img-icon {
 				width: 45px;
@@ -35,7 +36,7 @@
 			{{# if(i==0){ }}
 			{{# var str=format(d[i].reader_time); }}
 			{{# var month=str.substring(5, 7); }}
-			<div id="monthnumber" style="" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
+			<div id="monthnumber" style="" class="animated fadeIn H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
 			{{ month }}月订单
 			</div>
 			{{# } }}
@@ -49,12 +50,12 @@
 			</div>
 			{{# } }}
 			{{# if(monthnow != monthprevious) { }}
-			<div id="monthnumber" style="" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
+			<div id="monthnumber" style="" class="animated fadeIn H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
 			{{ monthnow }}月订单
 			</div>
 			{{# } }}
 			{{# } }}
-			<div class="H-theme-font-color-999 H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active  H-margin-vertical-bottom-3" tapmode="H-touch-active" onclick="open_order_details('{{ d[i].order_id }}');">
+			<div class="animated fadeIn H-theme-font-color-999 H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active  H-margin-vertical-bottom-3" tapmode="H-touch-active" onclick="open_order_details('{{ d[i].order_id }}');">
 			<div class="H-margin-horizontal-left-10  H-font-size-15 H-center-all">
 			{{# var myDate = new Date(); var thisYear=myDate.getFullYear(); var thisMonth=myDate.getMonth()+1; var thisDay=myDate.getDate(); var previousDay=thisDay-1;}}
 			{{# var strtime = format(d[i].reader_time); var readerYear = strtime.substring(0,4); var readerMonth = strtime.substring(5,7); var readerDay = strtime.substring(8,10); var readerTime = strtime.substring(11,16); }}
@@ -341,9 +342,10 @@
 
 		//打开订单详情
 		function open_order_details(order_id) {
-			var sys = api.systemType;
-			//安卓加载延迟设置
-			sys != "ios" ? delay = 100 : delay = 0;
+			var delay = 0;
+			if (api.systemType != 'ios') {
+				delay = 200;
+			}
 			api.openWin({
 				name : 'order_details_head',
 				url : './order_details/order_details_head.html',
@@ -355,11 +357,7 @@
 				bounces : false,
 				delay : delay,
 				slidBackEnabled : true,
-				vScrollBarEnabled : false,
-				animation : {
-					type : "push", //动画类型（详见动画类型常量）
-					subType : "from_right", //动画子类型（详见动画子类型常量）
-				}
+				vScrollBarEnabled : false
 			});
 		}
 	</script>
