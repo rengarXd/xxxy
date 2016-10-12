@@ -52,6 +52,7 @@
 	<script type="text/javascript" src="../../../script/xy.js"></script>
 	<script type="text/javascript">
 		apiready = function() {
+			userinfo();
 		};
 		// 初始化页面
 		function callnum() {
@@ -61,6 +62,17 @@
 			});
 		}
 
+		function userinfo() {
+			api.getPrefs({
+				key : 'userinfo'
+			}, function(ret, err) {
+				if (ret && ret.value) {
+					var user = eval('(' + ret.value + ')');
+					document.getElementById('phone_number').value = user[0].phone_number;
+				} else {
+				}
+			});
+		};
 		//提交请求
 		function _ajax() {
 			var phone = document.getElementById('phone_number').value;
@@ -80,7 +92,7 @@
 					//console.log(JSON.stringify(ret));
 					//$("#jiazai").html("暂无订单");
 					api.toast({
-						msg : '提交失败'
+						msg : ret.message
 					});
 				}
 			}, 'generalMatter&funid=wash_matter&phone_number=' + phone + '&fault_matter=' + fault_matter);
