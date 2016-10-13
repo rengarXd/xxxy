@@ -4,9 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>订单详情body</title>
+		<title>消息详情body</title>
 		<link rel="stylesheet" type="text/css" href="../../css/Hui.css" />
-		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/fonts/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/animate/animate.min.css" />
 		<style>
 			html, body {
 				background-color: white;
@@ -19,6 +21,15 @@
 		</style>
 	</head>
 	<body>
+		<!--消息头显示与隐藏-->
+		<header class="H-header header_bg animated fadeInDown" style="display:none; width:100%;position: fixed;top:0;z-index: 1000;" id="header">
+			<span tapmode="H-theme-font-color-444" tapmode="" onclick="api.closeWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i>返回</span>
+			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
+				消息详情
+			</div>
+		</header>
+		<div id="pos" style="height: 44px;display:none;"></div>
+		<!--消息头显示与隐藏-->
 		<div id="message_html"></div>
 		<!--<div class="H-padding-vertical-top-15 H-text-align-center H-font-size-32">
 		消息详情
@@ -62,13 +73,43 @@
 		</script>
 	</body>
 	<script type="text/javascript" src="../../script/xy.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript" src="../../script/tools/laytpl.js"></script>
 	<script type="text/javascript">
 		var news_id = null;
 		apiready = function() {
 			news_id = api.pageParam.data;
 			initPage();
+			swipe();
 		};
+		function swipe() {
+			document.getElementById('header').style.display = "";
+			setTimeout(function() {
+				document.getElementById('pos').style.display = "";
+			}, 300);
+			api.addEventListener({
+				name : 'swipedown'
+			}, function(ret, err) {
+				//alert('向下轻扫');
+				$("#header").removeClass('fadeOutUp');
+				$("#header").addClass('fadeInDown');
+				document.getElementById('header').style.display = "";
+				document.getElementById('pos').style.display = "";
+				//$("#header").hide();
+			});
+			api.addEventListener({
+				name : 'swipeup'
+			}, function(ret, err) {
+				//alert('向上轻扫');
+				$("#header").removeClass('fadeInDown');
+				$("#header").addClass('fadeOutUp');
+				setTimeout(function() {
+					document.getElementById('header').style.display = "none";
+					document.getElementById('pos').style.display = "none";
+				}, 300);
+			});
+		}
+
 		// 初始化页面
 		function initPage() {
 			api.getPrefs({

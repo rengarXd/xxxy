@@ -147,6 +147,15 @@
 							frameName : 'FNscan_body',
 							script : 'closeScan();'
 						});
+						api.closeFrame({
+							name : 'main_index'
+						});
+						api.closeFrame({
+							name : 'order_index'
+						});
+						api.closeFrame({
+							name : 'me_index'
+						});
 						location.reload();
 						//						setTimeout(function() {
 						//
@@ -156,6 +165,15 @@
 				api.addEventListener({
 					name : 'msgload'
 				}, function(ret, err) {
+					api.closeFrame({
+						name : 'main_index'
+					});
+					api.closeFrame({
+						name : 'order_index'
+					});
+					api.closeFrame({
+						name : 'me_index'
+					});
 					location.reload();
 				});
 			}

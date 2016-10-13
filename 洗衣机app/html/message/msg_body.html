@@ -27,6 +27,15 @@
 		</style>
 	</head>
 	<body>
+		<!--消息头显示与隐藏-->
+		<header class="H-header header_bg animated " style="display:none; width:100%;position: fixed;top:0;z-index: 1000;" id="header">
+			<span tapmode="H-theme-font-color-444" tapmode="" onclick="closeMsg();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i>返回</span>
+			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
+				消息中心
+			</div>
+		</header>
+		<div id="pos" style="height: 44px;display:none;"></div>
+		<!--消息头显示与隐藏-->
 		<div class="H-theme-background-color-white H-font-size-12 H-padding-horizontal-left-10 H-padding-vertical-both-5 H-margin-vertical-bottom-5">
 			<span class="H-font-size-14 H-theme-font-color-999">消息状态：</span>
 			<div class="H-float-right H-display-inline H-padding-horizontal-right-10">
@@ -83,18 +92,47 @@
 			apiready = function() {
 				intuser();
 				//下拉刷新
-				api.setRefreshHeaderInfo({
-					visible : true,
-					bgColor : '#fff',
-					textColor : '#666666',
-					textDown : '下拉刷新...',
-					textUp : '松开刷新...',
-					showTime : true
-				}, function(ret, err) {
-					location.reload();
-				});
+				swipe();
+				//				api.setRefreshHeaderInfo({
+				//					visible : true,
+				//					bgColor : '#fff',
+				//					textColor : '#666666',
+				//					textDown : '下拉刷新...',
+				//					textUp : '松开刷新...',
+				//					showTime : true
+				//				}, function(ret, err) {
+				//					location.reload();
+				//				});
 				api.parseTapmode();
 			};
+			function swipe() {
+				document.getElementById('header').style.display = "";
+				setTimeout(function() {
+					document.getElementById('pos').style.display = "";
+				}, 300);
+				api.addEventListener({
+					name : 'swipedown'
+				}, function(ret, err) {
+					//alert('向下轻扫');
+					$("#header").removeClass('fadeOutUp');
+					$("#header").addClass('fadeInDown');
+					document.getElementById('pos').style.display = "";
+					document.getElementById('header').style.display = "";
+					//$("#header").hide();
+				});
+				api.addEventListener({
+					name : 'swipeup'
+				}, function(ret, err) {
+					//alert('向上轻扫');
+					$("#header").removeClass('fadeInDown');
+					$("#header").addClass('fadeOutUp');
+					setTimeout(function() {
+						document.getElementById('header').style.display = "none";
+						document.getElementById('pos').style.display = "none";
+					}, 300);
+				});
+			}
+
 			//初始化偏好值
 			function intuser() {
 				api.getPrefs({
@@ -138,8 +176,13 @@
 						if (ret.data.length == 0) {
 							//当没有订单时的处理
 							api.refreshHeaderLoadDone();
-							var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无消息记录</div></div></div>';
+							var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无消息记录，轻触屏幕刷新</div></div></div>';
 							document.getElementById('message_html').innerHTML = htmls;
+							api.addEventListener({
+								name : 'tap'
+							}, function(ret, err) {
+								location.reload();
+							});
 						} else {
 							//console.log(JSON.stringify(ret));
 							api.refreshHeaderLoadDone();
@@ -149,6 +192,9 @@
 							laytpl(tpl).render(ret.data, function(render) {
 								//api.hideProgress();
 								//document.getElementById('message_html').innerHTML = render;
+								api.removeEventListener({
+									name : 'tap'
+								});
 								if (page == 1) {
 									document.getElementById('message_html').innerHTML = render;
 								} else {
@@ -170,8 +216,13 @@
 					} else {
 						api.refreshHeaderLoadDone();
 						//console.log(JSON.stringify(ret));
-						var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">服务器未响应</div></div></div>';
+						var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">连接失败，轻触屏幕刷新</div></div></div>';
 						document.getElementById('message_html').innerHTML = htmls;
+						api.addEventListener({
+							name : 'tap'
+						}, function(ret, err) {
+							location.reload();
+						});
 					}
 				}, 'appUserNews&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&page=' + page);
 			}
@@ -195,6 +246,13 @@
 						}
 					});
 				}
+			}
+
+			function closeMsg() {
+				api.execScript({
+					name : 'msg_head',
+					script : 'closeMsgWin();'
+				});
 			}
 		</script>
 	</body>
