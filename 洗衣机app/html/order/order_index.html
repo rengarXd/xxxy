@@ -267,9 +267,14 @@
 								//console.log(JSON.stringify(ret));
 								if (ret.data.length == 0) {
 									//当洗衣机数量为空时的处理
-									var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无订单</div></div></div>';
+									var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无订单，轻触屏幕刷新</div></div></div>';
 									document.getElementById('order_list').innerHTML = htmls;
 									$("#loading").hide();
+									api.addEventListener({
+										name : 'tap'
+									}, function(ret, err) {
+										location.reload();
+									});
 								} else {
 									//console.log(JSON.stringify(ret));
 									var tpl = document.getElementById('order_list_item').innerHTML;
@@ -277,6 +282,9 @@
 									//方式一：异步渲染（推荐）
 									laytpl(tpl).render(ret.data, function(render) {
 										api.hideProgress();
+										api.removeEventListener({
+											name : 'tap'
+										});
 										if (page == 1) {
 											document.getElementById('order_list').innerHTML = render;
 										} else {
@@ -297,16 +305,26 @@
 								}
 							} else {
 								//console.log(JSON.stringify(ret));
-								$("#jiazai").html("暂无订单");
+								$("#jiazai").html("轻触屏幕刷新");
 								$("#loading").hide();
 								api.toast({
 									msg : '很抱歉，您可能没有订单！'
 								});
+								api.addEventListener({
+									name : 'tap'
+								}, function(ret, err) {
+									location.reload();
+								});
 							}
 						} else {
 							api.refreshHeaderLoadDone();
-							$("#jiazai").html("连接失败，请检查网络");
+							$("#jiazai").html("网络连接失败，轻触屏幕刷新！");
 							$("#loading").hide();
+							api.addEventListener({
+								name : 'tap'
+							}, function(ret, err) {
+								location.reload();
+							});
 						}
 					}, 'appOrderList&funid=wash_order&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&page=' + page);
 				} else {

@@ -48,3 +48,9 @@
 	width: 30px;
 	border-radius: 50%;
 }
+.header_bg {
+	background: -webkit-gradient(linear, left top, left bottom, from(#0977bc), to(#10a0d2));
+}
+.head_bg {
+	background: -webkit-gradient(linear, left top, left bottom, from(#0565b1), to(#0977bc));
+}
