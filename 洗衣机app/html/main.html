@@ -397,7 +397,7 @@
 							var last = (totalTime - 60) * 1000;
 							setTimeout(function() {
 								Send_notifications();
-								alert('还有' + ((totalTime - times) % 60) + '分钟结束');
+								alert('还有' + (times % 60) + '分钟结束');
 							}, last);
 						}
 					} else {
