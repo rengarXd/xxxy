@@ -29,12 +29,12 @@
 				font-size: 20px;
 			}
 			.pic {
-				width: 100.8px;
-				height: 100.7px;
+				width: 95.8px;
+				height: 95.7px;
 				border-radius: 50%;
 				position: absolute;
-				top: 8px;
-				left: 130px;
+				top: 7.3px;
+				left: 132px;
 			}
 		</style>
 	</head>
@@ -52,24 +52,17 @@
 			<div class="H-flexbox-horizontal">
 				<div class="H-flex-item" tapmode="font-active" onclick="openWalletWin();">
 					<div class="H-padding-vertical-bottom-8"></div>
-					<div>
-						<div class="H-font-size-18 H-theme-font-color-white H-horizontal-center" id="pu">
-							￥0.00
-						</div>
-						<div class="H-font-size-12 H-theme-font-color-white H-horizontal-center">
-							普通余额
-						</div>
-					</div>
+					<span class="H-font-size-14 H-theme-font-color-white H-horizontal-center">总余额 ：<span class="H-font-size-20 H-theme-font-color-white " id="pu"> ￥0.00 </span>元</span>
 				</div>
-				<div class="H-flex-item" tapmode="font-active" onclick="openWalletWin();">
-					<div class="H-padding-vertical-bottom-8"></div>
-					<div class="H-font-size-18 H-theme-font-color-white H-horizontal-center" id="ding">
-						￥0.00
-					</div>
-					<div class="H-font-size-12 H-theme-font-color-white H-horizontal-center">
-						定向余额
-					</div>
+				<!--<div class="H-flex-item" tapmode="font-active" onclick="openWalletWin();">
+				<div class="H-padding-vertical-bottom-8"></div>
+				<div class="H-font-size-18 H-theme-font-color-white H-horizontal-center" id="ding">
+				￥0.00
 				</div>
+				<div class="H-font-size-12 H-theme-font-color-white H-horizontal-center">
+				定向余额
+				</div>
+				</div>-->
 			</div>
 			<div class="H-padding-15"></div>
 		</div>
@@ -129,7 +122,7 @@
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript" src="../../scritp/uploading/upImg.js"></script>
 	<script type="text/javascript">
-		var user = null;
+		var user = null, dxmoney = null;
 		apiready = function() {
 			api.parseTapmode();
 			initPref();
@@ -159,11 +152,15 @@
 					$("#userTel").html(user[0].phone_number);
 					//定向余额
 					if (user[0].orient_overage != "") {
-						$("#ding").html(user[0].orient_overage);
+						//$("#ding").html(user[0].orient_overage);
+						dxmoney = parseFloat(user[0].orient_overage);
+					} else {
+						dxmoney = 0;
 					};
 					//账户余额
 					if (user[0].account_overage != "") {
-						$("#pu").html(user[0].account_overage);
+						var total = parseFloat(user[0].account_overage) + dxmoney;
+						$("#pu").html(total);
 					};
 					//洗衣总次数
 					if (user[0].wash_total) {

@@ -127,7 +127,6 @@
 					location.reload();
 				});
 			};
-			
 			//打开页面方法
 			function openWin(name, url, washid) {
 				var delay = 0;
@@ -158,7 +157,7 @@
 					}, function(ret, err) {
 						if (ret.status) {
 							api.toast({
-								msg : '获取位置成功ios'
+								msg : 'ios获取位置成功'
 							});
 							//经度
 							longitude = ret.longitude;
@@ -168,7 +167,8 @@
 							api.toast({
 								msg : '开始获取位置'
 							});
-							get_nearby_laundry(longitude, latitude);
+							//获取附近10公里范围内的洗衣点
+							get_nearby_preferential(longitude, latitude);
 						} else {
 							api.toast({
 								msg : '获取位置失败'

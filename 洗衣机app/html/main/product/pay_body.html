@@ -58,10 +58,10 @@
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i payway="2" class="iconfont payway  H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
 		</div>
 		<div id="ptye_html" class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this);">
-			<div class="H-flex-item H-padding-horizontal-both-15  H-padding-vertical-both-12">
+			<div style="padding-right: 45px;" class="H-padding-horizontal-left-15 H-padding-vertical-both-12">
 				<span class="color-22a5f9 H-font-size-18" id="ptye">0.00元</span>
 			</div>
-			<div class="H-flex-item H-padding-horizontal-both-10  H-padding-vertical-both-12">
+			<div class="H-padding-horizontal-left-25  H-padding-vertical-both-10">
 				<span class="H-font-size-13 color-888">普通余额</span>
 			</div>
 			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888  H-padding-vertical-both-12"></div>
@@ -76,10 +76,10 @@
 		<script type="text/html" id="dxye_data">
 			{{# for(var i = 0, len = d.length;i<len;i++) { }}
 			<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this,{{ i }});">
-			<div class="color-22a5f9 H-flex-item H-padding-horizontal-both-15 H-font-size-18 H-padding-vertical-both-12">
+			<div style="padding-right: 45px;" class="color-22a5f9 H-padding-horizontal-both-15 H-font-size-18 H-padding-vertical-both-12">
 			{{ d[i].user_sum }}元
 			</div>
-			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888 H-padding-vertical-both-12">
+			<div class="H-padding-horizontal-left-25  H-font-size-13 color-888 H-padding-vertical-both-12">
 			{{ d[i].orientact_name }}
 			</div>
 			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888  H-padding-vertical-both-12"></div>
