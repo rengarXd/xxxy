@@ -69,7 +69,7 @@
 			},
 			ajax_CONFIG : {
 				cache : false,
-				timeout : 6,
+				timeout : 30,
 				dataType : "json",
 				report : true,
 				returnAll : false
