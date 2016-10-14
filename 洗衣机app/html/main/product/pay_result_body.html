@@ -151,7 +151,9 @@
 				}, function(ret, err) {
 					if (ret && ret.value) {
 						user = eval('(' + ret.value + ')');
+						api.showProgress();
 						$xy.ajax(function(ret, err) {
+							api.hideProgress();
 							if (ret.success) {
 								startResult();
 							} else {
