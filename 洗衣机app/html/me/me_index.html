@@ -160,7 +160,7 @@
 					//账户余额
 					if (user[0].account_overage != "") {
 						var total = parseFloat(user[0].account_overage) + dxmoney;
-						$("#pu").html(total);
+						document.getElementById('pu').innerHTML = total.toFixed(2);
 					};
 					//洗衣总次数
 					if (user[0].wash_total) {
