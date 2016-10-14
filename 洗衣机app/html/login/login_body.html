@@ -259,6 +259,30 @@
 								script : 'initInfo();'
 							});
 							api.hideProgress();
+							//登录成功对话框
+							alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
+								if (ret.eventType == 'left') {
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+										dialogName : 'alert'
+									});
+									api.closeWin();
+								} else {
+									var dialogBox = api.require('dialogBox');
+									dialogBox.close({
+										dialogName : 'alert'
+									});
+									api.openWin({
+										name : 'user_set_head',
+										url : '../me/user_set_head.html',
+										bounces : false,
+										delay : 0,
+									});
+									setTimeout(function() {
+										api.closeWin();
+									}, 500);
+								}
+							});
 							//初始化推送
 							if (systemtype != "ios") {
 								//初始化android推送
@@ -271,30 +295,6 @@
 											$xy.ajax(function(ret, err) {
 												//console.log("绑定成功！");
 												if (ret) {
-													//登录成功对话框
-													alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
-														if (ret.eventType == 'left') {
-															var dialogBox = api.require('dialogBox');
-															dialogBox.close({
-																dialogName : 'alert'
-															});
-															api.closeWin();
-														} else {
-															var dialogBox = api.require('dialogBox');
-															dialogBox.close({
-																dialogName : 'alert'
-															});
-															api.openWin({
-																name : 'user_set_head',
-																url : '../me/user_set_head.html',
-																bounces : false,
-																delay : 0,
-															});
-															setTimeout(function() {
-																api.closeWin();
-															}, 500);
-														}
-													});
 												} else {
 													api.toast({
 														msg : '连接失败，请重新登录'
