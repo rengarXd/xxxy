@@ -94,6 +94,8 @@
 						var stringTime = parseInt(data[0].reader_time) * 1000;
 						//var timestamp = Date.parse(new Date(stringTime));
 						var now = new Date();
+						//alert('alert(now.getTime());==' + now.getTime());
+						//alert('stringTime==' + stringTime);
 						//计算剩余时间
 						times = 300 - ((now.getTime() - stringTime) / 1000);
 						//console.log('times2222==' + times);
@@ -121,12 +123,16 @@
 				$('#retroclockbox').flipcountdown({
 					tick : function() {
 						//倒计时展示
-						var nol = function(h) {
-							return h > 9 ? h : '0' + h;
-						};
-						var minutes = parseInt(times / 60);
-						var seconds = parseInt(times % 60);
-						return String(nol(minutes)) + ':' + String(nol(seconds));
+						if (times < 0) {
+							return '00' + ':' + '00';
+						} else {
+							var nol = function(h) {
+								return h > 9 ? h : '0' + h;
+							};
+							var minutes = parseInt(times / 60);
+							var seconds = parseInt(times % 60);
+							return String(nol(minutes)) + ':' + String(nol(seconds));
+						}
 					}
 				});
 				if (times < 1) {
@@ -181,6 +187,9 @@
 				api.removePrefs({
 					key : 'resulttime'
 				});
+				var delay = 0;
+				if (api.systemType != 'ios')
+					delay = 200;
 				api.openWin({
 					name : 'progress_head',
 					url : '../progress/progress_head.html',
@@ -188,7 +197,7 @@
 						data : data[0]
 					},
 					bounces : false,
-					delay : 200,
+					delay : delay,
 					slidBackEnabled : true,
 					vScrollBarEnabled : false
 				});
