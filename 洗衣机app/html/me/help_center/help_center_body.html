@@ -4,8 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<title>title</title>
-		<link rel="stylesheet" type="text/css" href="../../../css/api.css" />
+		<title>帮助正文</title>
 		<link rel="stylesheet" type="text/css" href="../../../css/Hui.css" />
 		<link rel="stylesheet" type="text/css" href="../../../css/fonts/iconfont.css" />
 		<link rel="stylesheet" type="text/css" href="../../../css/style.css" />
@@ -23,54 +22,96 @@
 		</style>
 	</head>
 	<body>
-		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1" tapmode="H-touch-active" onclick="openHelpCenterText();">
-			<div class="square"></div>
-			<div class="H-text-show-row-1  H-font-size-16 H-padding-vertical-both-12 ziti">
-				欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
-			</div>
+		<div id="record_list"></div>
+		<!--<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1">
+		<div class="square"></div>
+		<div class="H-text-show-row-1  H-font-size-16 H-padding-vertical-both-12 ziti">
+		欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
+		</div>
 		</div>
 		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1">
-			<div class="square"></div>
-			<div class="H-text-show-row-1  H-font-size-16 H-padding-vertical-both-12 ziti">
-				欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
-			</div>
+		<div class="square"></div>
+		<div class="H-text-show-row-1  H-font-size-16 H-padding-vertical-both-12 ziti">
+		欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
+		</div>
 		</div>
 		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1">
-			<div class="square"></div>
-			<div class="H-text-show-row-1  H-font-size-16 H-padding-vertical-both-12 ziti">
-				欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
-			</div>
+		<div class="square"></div>
+		<div class="H-text-show-row-1  H-font-size-16 H-padding-vertical-both-12 ziti">
+		欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
+		</div>
 		</div>
 		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1">
-			<div class="square"></div>
-			<div class="H-text-show-row-1  H-font-size-16 H-padding-vertical-both-12 ziti">
-				欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
-			</div>
+		<div class="square"></div>
+		<div class="H-text-show-row-1  H-font-size-16 H-padding-vertical-both-12 ziti">
+		欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
+		</div>
 		</div>
 		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1">
-			<div class="square"></div>
-			<div class="H-text-show-row-1  H-font-size-16 H-padding-vertical-both-12 ziti">
-				欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
-			</div>
+		<div class="square"></div>
+		<div class="H-text-show-row-1  H-font-size-16 H-padding-vertical-both-12 ziti">
+		欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
 		</div>
-		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1">
+		</div>-->
+		<script type="text/html" id="record_list_item">
+			{{# for(var i = 0, len = d.length; i < len; i++) { }}
+			<div class="H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1" tapmode="H-touch-active" onclick="openHelpCenterText('{{ d[i].help_id }}');">
 			<div class="square"></div>
-			<div class="H-text-show-row-1  H-font-size-16 H-padding-vertical-both-12 ziti">
-				欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
+			<div class=" H-font-size-16 H-padding-vertical-both-12 xy_font_color H-padding-horizontal-right-20 ">
+			{{ d[i].help_tital }}
 			</div>
-		</div>
+			</div>
+			{{# } }}
+		</script>
+		<script type="text/javascript" src="../../../script/xy.js"></script>
+		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
+		<script type="text/javascript">
+			apiready = function() {
+				_ajax();
+			};
+			function _ajax() {
+				$xy.ajax(function(ret, err) {
+					//api.hideProgress();
+					if (ret && ret.success) {
+						//console.log(JSON.stringify(ret));
+						if (ret.data.length == 0) {
+							//当没有订单时的处理
+							var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无记录</div></div></div>';
+							document.getElementById('order_list').innerHTML = htmls;
+						} else {
+							console.log(JSON.stringify(ret));
+							var tpl = document.getElementById('record_list_item').innerHTML;
+							//读取模版
+							//方式一：异步渲染（推荐）
+							laytpl(tpl).render(ret.data, function(render) {
+								api.hideProgress();
+								document.getElementById('record_list').innerHTML = render;
+							});
+						}
+					} else {
+						//console.log(JSON.stringify(ret));
+						//$("#jiazai").html("暂无订单");
+						api.toast({
+							msg : ret.message
+						});
+					}
+				}, 'appHelpCenter&funid=wash_helpcenter');
+			}
+
+			function openHelpCenterText(help_id) {
+				var delay = 0;
+				if (api.systemType != 'ios')
+					delay = 100;
+				api.openWin({
+					name : 'help_center_text_head',
+					url : './help_center_text/help_center_text_head.html',
+					pageParam : {
+						help_id : help_id
+					},
+					bounces : false,
+					delay : 0,
+				});
+			}
+		</script>
 	</body>
-	<script type="text/javascript" src="../script/api.js"></script>
-	<script type="text/javascript">
-		apiready = function() {
-		};
-		function openHelpCenterText() {
-			api.openWin({
-				name : 'help_center_text_head',
-				url : './help_center_text/help_center_text_head.html',
-				bounces : false,
-				delay : 0,
-			});
-		}
-	</script>
 </html>
