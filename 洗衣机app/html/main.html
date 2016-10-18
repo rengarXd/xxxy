@@ -162,20 +162,6 @@
 						//						}, 200);
 					});
 				});
-				api.addEventListener({
-					name : 'msgload'
-				}, function(ret, err) {
-					api.closeFrame({
-						name : 'main_index'
-					});
-					api.closeFrame({
-						name : 'order_index'
-					});
-					api.closeFrame({
-						name : 'me_index'
-					});
-					location.reload();
-				});
 			}
 
 			function photoClose() {
@@ -338,7 +324,7 @@
 				});
 			}
 
-			//监听推送方法
+			//监听消息
 			function pushListener() {
 				$xy.ajax(function(ret, err) {
 					//api.hideProgress();
