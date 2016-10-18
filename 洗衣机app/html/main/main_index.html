@@ -211,7 +211,7 @@
 								}
 							} else {
 								api.refreshHeaderLoadDone();
-								$("#xyj_html").html('<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">服务器未响应</div></div></div>')
+								$("#xyj_html").html('<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">' + ret.message+'</div></div></div>' );
 							}
 						}, 'appUDeviceList&funid=wash_device&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&gps_longitude=' + +longitude + '&gps_latitude=' + latitude);
 					} else {
