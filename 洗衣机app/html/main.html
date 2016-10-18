@@ -213,6 +213,7 @@
 								retInfo = ret.data;
 								//console.log(JSON.stringify(retInfo));
 								$xy.userlogInfo(retInfo);
+								
 							} else {
 								api.toast({
 									msg : '您的登录状态异常'
@@ -336,6 +337,10 @@
 								return;
 							}
 						}
+					} else if (ret.message = undefined) {
+						api.toast({
+							msg : '服务器未响应'
+						});
 					} else {
 						//console.log(JSON.stringify(ret));
 						api.toast({

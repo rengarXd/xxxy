@@ -33,8 +33,8 @@
 				height: 100px;
 				border-radius: 50%;
 				/*position: absolute;
-				top: 7.3px;
-				left: 132px;*/
+				 top: 7.3px;
+				 left: 132px;*/
 			}
 		</style>
 	</head>
@@ -148,29 +148,44 @@
 				//alert(JSON.stringify(user));
 				if (ret && ret.value) {
 					user = eval('(' + ret.value + ')');
-					//手机号
-					$("#userTel").html(user[0].phone_number);
-					//定向余额
-					if (user[0].orient_overage != "") {
-						//$("#ding").html(user[0].orient_overage);
-						dxmoney = parseFloat(user[0].orient_overage);
-					} else {
-						dxmoney = 0;
-					};
-					//账户余额
-					if (user[0].account_overage != "") {
-						var total = parseFloat(user[0].account_overage) + dxmoney;
-						document.getElementById('pu').innerHTML = total.toFixed(2);
-					};
-					//洗衣总次数
-					if (user[0].wash_total) {
-						$("#nums").html(user[0].wash_total);
-					}
-					//渲染头像
-					if (user[0].attach_path != "") {
-						$("#nopic").show();
-						$("#nopic").attr('src', window.washUrl + user[0].attach_path);
-					}
+					$xy.ajax(function(ret, err) {
+						//api.hideProgress();
+						if (ret.success) {
+							retInfo = ret.data;
+							//console.log(JSON.stringify(retInfo));
+							api.setPrefs({
+								key : 'userinfo',
+								value : JSON.stringify(retInfo)
+							});
+							//手机号
+							$("#userTel").html(retInfo[0].phone_number);
+							//定向余额
+							if (retInfo[0].orient_overage != "") {
+								//$("#ding").html(user[0].orient_overage);
+								dxmoney = parseFloat(user[0].orient_overage);
+							} else {
+								dxmoney = 0;
+							};
+							//账户余额
+							if (retInfo[0].account_overage != "") {
+								var total = parseFloat(user[0].account_overage) + dxmoney;
+								document.getElementById('pu').innerHTML = total.toFixed(2);
+							};
+							//洗衣总次数
+							if (retInfo[0].wash_total) {
+								$("#nums").html(user[0].wash_total);
+							}
+							//渲染头像
+							if (retInfo[0].attach_path != "") {
+								$("#nopic").show();
+								$("#nopic").attr('src', window.washUrl + user[0].attach_path);
+							}
+						} else {
+							api.toast({
+								msg : '您的登录状态异常'
+							});
+						}
+					}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
 				}
 			});
 		};
