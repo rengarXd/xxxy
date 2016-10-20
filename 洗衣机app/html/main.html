@@ -47,8 +47,6 @@
 	<body class="H-flexbox-vertical">
 		<header class="H-header b_header_bg" id="index_header">
 			<span tapmode="H-theme-font-color-444" onclick="openMsgWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
-			<span tapmode="H-theme-font-color-444" onclick="openTEST();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-xiyiji H-font-size-20" ></i><em class="brige"></em></span>
-			
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				咭咭洗衣
 			</div>
@@ -110,14 +108,6 @@
 				//系统消息监听
 				msglistener();
 			});
-			
-			function openTEST(){
-				api.openWin({
-	                name: '',
-	                url: ''
-                });
-			}
-
 			function msglistener() {
 				//系统消息处理========================
 				api.addEventListener({
@@ -353,15 +343,11 @@
 						//totalTime = parseInt(ret.data[0].turn_around_date) * 60;
 						isinerval = setInterval("CountDown()", 1000);
 						//设置定时任务
-						//渲染提示条
-						var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的西三宿舍三楼西01机，大约<span id="minttime"></span>后结束</div></div>';
-						$('#index_header').append(timedom);
-						//							if (totalTime > 60) {
-						//								var last = (totalTime - 60) * 1000;
-						//								setTimeout(function() {
-						//									alert('还有5分钟结束');
-						//								}, last);
-						//							}
+						if (times && times > 0) {
+							//渲染提示条
+							var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的西三宿舍三楼西01机，大约<span id="minttime"></span>后结束</div></div>';
+							$('#index_header').append(timedom);
+						}
 					} else {
 						//						api.toast({
 						//							msg : ret.message
