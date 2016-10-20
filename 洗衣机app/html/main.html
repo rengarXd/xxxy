@@ -428,7 +428,7 @@
 				api.notification({
 					notify : {
 						title : '咭咭洗衣',
-						content : '大约还有五分钟，洗衣就将结束'
+						content : '大约还有一分钟，洗衣就将结束'
 					},
 					light : true,
 				}, function(ret, err) {
@@ -446,15 +446,18 @@
 				} else {
 					$("#minttime").html(lasttime + '分钟');
 				}
+				if (times == 60)
+					Send_notifications();
+				alert('还有一分钟结束');
 				if (times < 1) {
 					//结束时间递减
 					clearInterval(isinerval);
 					//隐藏提示条
 					$("#progress_toast").hide();
 					//移除偏好值
-					api.removePrefs({
-						key : 'washtime'
-					});
+//					api.removePrefs({
+//						key : 'washtime'
+//					});
 					return;
 				}
 				times--;
