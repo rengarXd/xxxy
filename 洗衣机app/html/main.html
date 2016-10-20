@@ -47,6 +47,8 @@
 	<body class="H-flexbox-vertical">
 		<header class="H-header b_header_bg" id="index_header">
 			<span tapmode="H-theme-font-color-444" onclick="openMsgWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
+			<span tapmode="H-theme-font-color-444" onclick="openTEST();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-xiyiji H-font-size-20" ></i><em class="brige"></em></span>
+			
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				咭咭洗衣
 			</div>
@@ -108,25 +110,14 @@
 				//系统消息监听
 				msglistener();
 			});
-			//			apiready = function() {
-			//				$xy.openFrameGroupNavOrFoot(function(ret, err) {
-			//					selectIndex(ret.index);
-			//				}, 'groupName', [{
-			//					name : 'main_index',
-			//					url : './main/main_index.html',
-			//					bounces : false
-			//				}, {
-			//					name : 'order_index',
-			//					url : './order/order_index.html',
-			//					bounces : true
-			//				}, {
-			//					name : 'me_index',
-			//					url : './me/me_index.html',
-			//					bounces : false
-			//				}], 0, '#index_header', 'footer');
-			//				//退出app
-			//				$xy.dblclickToCloseApp();
-			//			}
+			
+			function openTEST(){
+				api.openWin({
+	                name: '',
+	                url: ''
+                });
+			}
+
 			function msglistener() {
 				//系统消息处理========================
 				api.addEventListener({
@@ -353,6 +344,9 @@
 			function lasttimemain() {
 				$xy.ajax(function(ret, err) {
 					if (ret.success) {
+						if (isinerval) {
+							isinerval = null;
+						};
 						//订单信息
 						times = parseInt(ret.data[0].resttime);
 						//总时间
@@ -369,9 +363,9 @@
 						//								}, last);
 						//							}
 					} else {
-						api.toast({
-							msg : ret.message
-						});
+						//						api.toast({
+						//							msg : ret.message
+						//						});
 					}
 				}, 'appOrderList&funid=wash_order' + '&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_condition=' + 1);
 			}
@@ -446,18 +440,19 @@
 				} else {
 					$("#minttime").html(lasttime + '分钟');
 				}
-				if (times == 60)
+				if (times == 60) {
 					Send_notifications();
-				alert('还有一分钟结束');
+					//alert('还有一分钟结束');
+				}
 				if (times < 1) {
 					//结束时间递减
 					clearInterval(isinerval);
 					//隐藏提示条
 					$("#progress_toast").hide();
 					//移除偏好值
-//					api.removePrefs({
-//						key : 'washtime'
-//					});
+					//					api.removePrefs({
+					//						key : 'washtime'
+					//					});
 					return;
 				}
 				times--;
