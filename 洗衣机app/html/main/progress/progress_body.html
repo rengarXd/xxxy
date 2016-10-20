@@ -153,7 +153,7 @@
 							//剩余倒计时
 							times = parseInt(dataarr[0].resttime);
 							//总时间
-							//totalTime = parseInt(ret.data[0].turn_around_date) * 60;
+							totalTime = parseInt(ret.data[0].turn_around_date) * 60;
 							isinerval = setInterval("CountDown()", 1000);
 							//设置定时任务
 							//							if (totalTime > 60) {
@@ -175,70 +175,69 @@
 			}
 
 			// 初始化页面
-//			function initTime() {
-//				//页面渲染
-//				//				document.getElementById('no').innerHTML = data.order_id;
-//				//				var strtime = data.reader_time;
-//				//				var thistime = strtime.substring(10, 16);
-//				//				document.getElementById('time').innerHTML = thistime;
-//				//				document.getElementById('money').innerHTML = data.pay_num;
-//				//				document.getElementById('pay_way').innerHTML = data.pay_way;
-//				//				document.getElementById('title').innerHTML = data.title;
-//				//				document.getElementById('washloca_name').innerHTML = data.washloca_name;
-//				// 初始化时间递减
-//				$xy.ajax(function(ret, err) {
-//					if (ret.success) {
-//						_tpl('progress_data', ret.data, 'progress_html', function() {
-//							if (isinerval) {
-//								isinerval = null;
-//							};
-//							//订单信息
-//							dataarr = ret.data;
-//							//document.getElementById().innerHTML = getLocalTime(ret.data[0].reader_time);
-//							//开始时间
-//							//var stringTime = ret.data[0].start_time;
-//							var start_time = parseInt(ret.data[0].start_time) * 1000;
-//							//总时间
-//							totalTime = parseInt(ret.data[0].turn_around_date) * 60;
-//							//console.log('start_time==' + start_time);
-//							//设置洗衣时间偏好值
-//							api.setPrefs({
-//								key : 'washtime',
-//								value : JSON.stringify(ret.data[0])
-//							});
-//							//获取当前时间
-//							var now = new Date();
-//							//totalTime = 2;
-//							//计算剩余时间
-//							times = totalTime - ((now.getTime() - start_time) / 1000);
-//							//console.log('times==' + times);
-//							//调用倒计时方法
-//							isinerval = setInterval("CountDown()", 1000);
-//							if (times >= 1) {
-//								api.execScript({
-//									name : 'main',
-//									script : 'listener();'
-//								});
-//							}
-//							//设置定时任务
-//							//							if (totalTime > 60) {
-//							//								var last = (totalTime - 60) * 1000;
-//							//								setTimeout(function() {
-//							//									alert('还有5分钟结束');
-//							//								}, last);
-//							//							}
-//							//进度条
-//							arcProgress();
-//						});
-//					} else {
-//						api.toast({
-//							msg : ret.message
-//						});
-//						document.getElementById('progress_html').innerHTML = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999" id="jiazai">' + ret.message + '</div></div></div>'
-//					}
-//				}, 'appOrderList&funid=wash_order' + '&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_condition=' + 1);
-//			}
-
+			//			function initTime() {
+			//				//页面渲染
+			//				//				document.getElementById('no').innerHTML = data.order_id;
+			//				//				var strtime = data.reader_time;
+			//				//				var thistime = strtime.substring(10, 16);
+			//				//				document.getElementById('time').innerHTML = thistime;
+			//				//				document.getElementById('money').innerHTML = data.pay_num;
+			//				//				document.getElementById('pay_way').innerHTML = data.pay_way;
+			//				//				document.getElementById('title').innerHTML = data.title;
+			//				//				document.getElementById('washloca_name').innerHTML = data.washloca_name;
+			//				// 初始化时间递减
+			//				$xy.ajax(function(ret, err) {
+			//					if (ret.success) {
+			//						_tpl('progress_data', ret.data, 'progress_html', function() {
+			//							if (isinerval) {
+			//								isinerval = null;
+			//							};
+			//							//订单信息
+			//							dataarr = ret.data;
+			//							//document.getElementById().innerHTML = getLocalTime(ret.data[0].reader_time);
+			//							//开始时间
+			//							//var stringTime = ret.data[0].start_time;
+			//							var start_time = parseInt(ret.data[0].start_time) * 1000;
+			//							//总时间
+			//							totalTime = parseInt(ret.data[0].turn_around_date) * 60;
+			//							//console.log('start_time==' + start_time);
+			//							//设置洗衣时间偏好值
+			//							api.setPrefs({
+			//								key : 'washtime',
+			//								value : JSON.stringify(ret.data[0])
+			//							});
+			//							//获取当前时间
+			//							var now = new Date();
+			//							//totalTime = 2;
+			//							//计算剩余时间
+			//							times = totalTime - ((now.getTime() - start_time) / 1000);
+			//							//console.log('times==' + times);
+			//							//调用倒计时方法
+			//							isinerval = setInterval("CountDown()", 1000);
+			//							if (times >= 1) {
+			//								api.execScript({
+			//									name : 'main',
+			//									script : 'listener();'
+			//								});
+			//							}
+			//							//设置定时任务
+			//							//							if (totalTime > 60) {
+			//							//								var last = (totalTime - 60) * 1000;
+			//							//								setTimeout(function() {
+			//							//									alert('还有5分钟结束');
+			//							//								}, last);
+			//							//							}
+			//							//进度条
+			//							arcProgress();
+			//						});
+			//					} else {
+			//						api.toast({
+			//							msg : ret.message
+			//						});
+			//						document.getElementById('progress_html').innerHTML = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999" id="jiazai">' + ret.message + '</div></div></div>'
+			//					}
+			//				}, 'appOrderList&funid=wash_order' + '&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_condition=' + 1);
+			//			}
 			//时间递减处理
 			function CountDown() {
 				//剩余时间
@@ -252,13 +251,30 @@
 						id : 1
 					});
 					clearInterval(isinerval);
-//					api.removePrefs({
-//						key : 'washtime'
-//					});
+					//					api.removePrefs({
+					//						key : 'washtime'
+					//					});
 					return;
 				} else {
 					times--;
+					if (times == 60) {
+						Send_notifications();
+						//alert('还有一分钟结束');
+					}
 				}
+			}
+
+			//通知栏提醒
+			function Send_notifications() {
+				api.notification({
+					notify : {
+						title : '咭咭洗衣',
+						content : '大约还有一分钟，洗衣就将结束'
+					},
+					light : true,
+				}, function(ret, err) {
+					var id = ret.id;
+				});
 			}
 
 			//模板渲染
@@ -303,8 +319,8 @@
 					})
 				});
 				function setValue(obj) {
-					var times = times * 10;
-					if (obj.value == times) {
+					var time = times * 100;
+					if (obj.value == time) {
 						obj.value = 0;
 					}
 					setTimeout(function() {
@@ -313,7 +329,7 @@
 							value : ++obj.value
 						});
 						setValue(obj)
-					}, 1000);
+					}, times * 1000);
 				}
 
 			}
