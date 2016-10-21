@@ -200,7 +200,7 @@
 								});
 							}
 						}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
-						//初始化推送监听
+						//初始化消息标示
 						pushListener();
 						var ajpush = api.require('ajpush');
 						//var systemtype = api.systemType;
@@ -332,11 +332,12 @@
 
 			//剩余倒计时方法
 			function lasttimemain() {
+				if (isinerval) {
+					isinerval = null;
+				};
+				$("#progress_toast").remove();
 				$xy.ajax(function(ret, err) {
 					if (ret.success) {
-						if (isinerval) {
-							isinerval = null;
-						};
 						//订单信息
 						times = parseInt(ret.data[0].resttime);
 						//总时间
