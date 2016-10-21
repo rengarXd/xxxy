@@ -130,10 +130,10 @@
 					api.addEventListener({
 						name : 'keyback'
 					}, function(ret, err) {
-						api.execScript({
-							name : 'main',
-							script : 'lasttimemain();'
-						});
+						//						api.execScript({
+						//							name : 'main',
+						//							script : 'lasttimemain();'
+						//						});
 						api.closeToWin({
 							name : 'main'
 						});
@@ -156,12 +156,10 @@
 							totalTime = parseInt(ret.data[0].turn_around_date) * 60;
 							isinerval = setInterval("CountDown()", 1000);
 							//设置定时任务
-							//							if (totalTime > 60) {
-							//								var last = (totalTime - 60) * 1000;
-							//								setTimeout(function() {
-							//									alert('还有5分钟结束');
-							//								}, last);
-							//							}
+							api.execScript({
+								name : 'main',
+								script : 'lasttimemain();'
+							});
 							//进度条
 							arcProgress(times);
 						});
@@ -251,16 +249,12 @@
 						id : 1
 					});
 					clearInterval(isinerval);
-					//					api.removePrefs({
-					//						key : 'washtime'
-					//					});
+					api.removePrefs({
+						key : 'washtime'
+					});
 					return;
 				} else {
 					times--;
-					if (times == 60) {
-						Send_notifications();
-						//alert('还有一分钟结束');
-					}
 				}
 			}
 
