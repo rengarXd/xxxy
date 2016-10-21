@@ -38,9 +38,20 @@
 		</style>
 	</head>
 	<body>
-		<div class="H-padding-vertical-bottom-10"></div>
 		<div id="option_list"></div>
 		<script type="text/html" id="option_data">
+			<div class="H-theme-background-color-white">
+			<div class="H-flexbox-horizontal H-padding-vertical-top-15 H-padding-vertical-bottom-5">
+			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+			<div class="H-flex-item xy_font_color">
+			<span id="device_name">{{ d[0].device_name }}</span>
+			<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-5">
+			<span id="address">{{ d[0].washloca_name }}</span>
+			</div>
+			</div>
+			</div>
+			</div>
+			<div class="H-padding-vertical-bottom-10"></div>
 			{{# for(var i = 0,len=d.length;i<len;i++) { }}
 			<div class="animated fadeIn H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle">
 			<span class="H-icon H-display-block"><img src="../../../image/commodity_icon/{{ d[i].commodity_icon }}" class="img-icon"/></span>
@@ -85,6 +96,7 @@
 				getWashComList();
 			});
 		};
+		//关闭二维码扫描器
 		function closescann() {
 			api.execScript({
 				name : 'main',

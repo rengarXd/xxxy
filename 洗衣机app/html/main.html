@@ -213,23 +213,8 @@
 							//					var extra = ret.extra;
 						});
 					} else {
-						alertLog('温馨提示', '您是否进行登录？', '不用了', '继续', function(ret) {
-							if (ret.eventType == 'left') {
-								var dialogBox = api.require('dialogBox');
-								dialogBox.close({
-									dialogName : 'alert'
-								});
-							} else {
-								var dialogBox = api.require('dialogBox');
-								dialogBox.close({
-									dialogName : 'alert'
-								});
-								api.openWin({
-									name : 'login_body',
-									url : './login/login_body.html',
-									bounces : false
-								});
-							}
+						api.toast({
+							msg : '检测到您未登录'
 						});
 					}
 				});
