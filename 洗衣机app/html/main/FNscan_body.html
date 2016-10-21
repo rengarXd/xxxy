@@ -55,11 +55,12 @@
 					//					}
 					if (ret.eventType == "success") {
 						var contents = ret.content;
+						//alert(contents)
 						api.openWin({
 							name : 'nearby_product_head',
 							url : './nearby_laundry/nearby_product_head.html',
 							pageParam : {
-								data : contents
+								data : getparam(contents)
 							},
 							bounces : false,
 							delay : 0,
@@ -118,6 +119,17 @@
 					alert(JSON.stringify(err));
 				}
 			});
+		}
+
+		function getparam(url) {
+			var query = url.substring(1);
+			//alert(query);
+			var values = query.split("=");
+			for (var i = 0; i < values.length; i++) {
+				var pos = values[i].indexOf('device_id');
+				if (pos == -1)
+					return values[i];
+			}
 		}
 
 		//关闭扫描器

@@ -163,7 +163,7 @@
 							//								}, last);
 							//							}
 							//进度条
-							arcProgress();
+							arcProgress(times);
 						});
 					} else {
 						api.toast({
@@ -302,8 +302,9 @@
 			}
 
 			//进度条
-			function arcProgress() {
+			function arcProgress(times) {
 				var arcProgress = api.require('arcProgress');
+				var time = times;
 				arcProgress.open({
 					type : 0,
 					centerX : api.frameWidth / 6 * (2 * 1 + 1),
@@ -319,7 +320,6 @@
 					})
 				});
 				function setValue(obj) {
-					var time = times * 100;
 					if (obj.value == time) {
 						obj.value = 0;
 					}
@@ -329,7 +329,7 @@
 							value : ++obj.value
 						});
 						setValue(obj)
-					}, times * 1000);
+					}, time * 10);
 				}
 
 			}
