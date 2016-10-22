@@ -128,7 +128,21 @@
 		//选择钱数的处理
 		function choase(obj, money) {
 			if (money == null) {
-				dialogInput();
+				//dialogInput();
+				api.addEventListener({
+					name : 'wallet'
+				}, function(ret, err) {
+					if (ret.value) {
+						paymoney = ret.value.textname;
+					}
+				});
+				api.openFrame({
+					name : 'wallet_money_change',
+					url : 'wallet_money_change.html',
+					bounces : false,
+					vScrollBarEnabled : false,
+					hScrollBarEnabled : false
+				});
 			} else {
 				paymoney = money;
 				$("#recharge_pay").html(paymoney);
