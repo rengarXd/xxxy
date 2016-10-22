@@ -134,6 +134,7 @@
 				}, function(ret, err) {
 					if (ret.value) {
 						paymoney = ret.value.textname;
+						$("#recharge_pay").html(paymoney);
 					}
 				});
 				api.openFrame({
