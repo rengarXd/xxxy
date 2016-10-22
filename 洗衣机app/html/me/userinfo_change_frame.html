@@ -16,14 +16,12 @@
 		</style>
 	</head>
 	<body>
-		<div class="boder H-position-absolute H-position-center-all animated fadeIn"  style="width:320px;height: 280px;">
+		<div id="box" class="boder H-position-absolute H-position-center-all animated fadeIn"  style="height: 280px;">
 			<div class="H-text-align-center H-font-size-18 H-theme-background-color-white H-padding-vertical-top-20">
 				请输入您要修改的信息
 			</div>
 			<div class="H-theme-background-color-white">
-				<div id="name" class="H-theme-font-color-999 H-font-size-15 H-text-align-center H-padding-horizontal-both-10">
-					
-				</div>
+				<div id="name" class="H-theme-font-color-999 H-font-size-15 H-text-align-center H-padding-horizontal-both-10"></div>
 				<div class="H-border-vertical-bottom-margin-both-10-after">
 					<input id="pwd_1" style="color:#49b1f4;width: 90%" type="text" class="H-textbox H-vertical-align-middle H-vertical-middle H-font-size-16 H-border-none H-outline-none H-padding-10" placeholder="">
 				</div>
@@ -50,6 +48,7 @@
 			apiready = function() {
 				var name = api.pageParam.name;
 				document.getElementById('name').innerHTML = name;
+				document.getElementById('box').style.width = api.frameWidth - 70;
 				info = api.pageParam.info;
 			};
 			//修改昵称提交服务器
