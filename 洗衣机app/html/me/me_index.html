@@ -11,12 +11,11 @@
 		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
 		<style>
 			.back {
-				background-image: url('../../image/mebackground.png');
+				background-image: url('../../image/mebackground_1.png');
 				background-position: center;
 				background-repeat: no-repeat;
 				background-origin:border-box;
-				background-size: cover;
-				
+				background-size: 100%;
 			}
 			.hu {
 				height: 120px;
@@ -25,8 +24,8 @@
 				font-size: 20px;
 			}
 			.pic {
-				width: 100px;
-				height: 100px;
+				width: 95px;
+				height: 95px;
 				border-radius: 50%;
 				/*position: absolute;
 				 top: 7.3px;
@@ -138,7 +137,7 @@
 		};
 		//获取偏好值
 		function initPref() {
-			var marl = (api.frameWidth - 100) / 2;
+			var marl = (api.frameWidth - 95) / 2;
 			$(".hu").css('margin-left', marl);
 			$(".hu").css('margin-right', marl);
 			api.getPrefs({
