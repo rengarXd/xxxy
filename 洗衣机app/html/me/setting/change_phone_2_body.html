@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
@@ -9,27 +8,22 @@
 		<link rel="stylesheet" type="text/css" href="../../../css/style.css" />
 		<link rel="stylesheet" type="text/css" href="../../../css/fonts/iconfont.css" />
 		<style>
-			html,
-			body {
+			html, body {
 				background-color: white;
 			}
-			
 			.active {
 				color: #49b1f4;
 				/*				border-bottom: 2px #1786FF solid;*/
 				border: 1px solid #49b1f4;
 			}
-			
 			.xy_border {
 				border-bottom: 1px solid #f0f0f0;
 			}
-			
 			.border-dx {
 				border-radius: 20px;
 			}
 		</style>
 	</head>
-
 	<body>
 		<!--无网络登录和获取验证码优化-->
 		<div id="nonetwork" style="display: none;" tapmode="" onclick="openWifi();">
@@ -42,7 +36,6 @@
 				<span class="H-icon H-padding-horizontal-right-5 H-display-block"><i class="iconfont icon-zhankai H-theme-font-color-white H-font-size-12 H-vertical-middle"></i></span>
 			</div>
 		</div>
-
 		<div class="switvh H-font-size-14 H-padding-vertical-top-20">
 			<div class="H-flexbox-horizontal">
 				<input type="text" id="tel" class=" H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入新手机号码">
@@ -55,36 +48,27 @@
 				<input type="text" id="code" class="H-margin-vertical-top-2 H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入验证码">
 			</div>
 			<div class="xy_border"></div>
-			<div id="qita" class=" xy_font_color H-font-size-13 H-padding-vertical-bottom-25 H-padding-vertical-top-5" style="padding-left: 37px;">
-
-			</div>
+			<div id="qita" class=" xy_font_color H-font-size-13 H-padding-vertical-bottom-25 H-padding-vertical-top-5" style="padding-left: 37px;"></div>
 			<div class="H-margin-horizontal-both-20 H-padding-vertical-both-15">
 				<button tapmode="" onclick="verify_new_phone();" class="xy_login_btn H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent   H-theme-font-color-white">
-							绑&nbsp;&nbsp;&nbsp;定
-						</button>
+					绑&nbsp;&nbsp;&nbsp;定
+				</button>
 			</div>
 		</div>
-
 	</body>
 	<script type="text/javascript" src="../../../script/xy.js"></script>
 	<script type="text/javascript" src="../../../script/zepto.min.js"></script>
 	<script type="text/javascript">
-		var jpush = null,
-			tel = null,
-			jpush = null,
-			systemtype = null;
+		var jpush = null, tel = null, jpush = null, systemtype = null;
 		apiready = function() {
 			wash_user_id = api.pageParam.wash_user_id;
 			uuid = api.pageParam.uuid;
 			phone_number = api.pageParam.phone_number;
 			verify = api.pageParam.verify;
 			service_password = api.pageParam.service_password;
-
 			api.parseTapmode();
 			init();
-
 		};
-
 		function init() {
 			//			console.log("wash_user_id:" + wash_user_id);
 			//			console.log("uuid:" + uuid);
@@ -99,38 +83,40 @@
 			// 手机号的正则
 			var a = /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/;
 			// 判断手机号
-			if(!tel.match(a)) {
+			if (!tel.match(a)) {
 				// 如果不是正确的手机号
 				api.alert({
-					title: '温馨提示',
-					msg: '请输入正确的手机号！',
+					title : '温馨提示',
+					msg : '请输入正确的手机号！',
 				}, function(ret, err) {
-					if(ret && ret.buttonIndex == 1) {
+					if (ret && ret.buttonIndex == 1) {
 						$("#tel").focus();
 					}
 				});
 			} else {
 				api.showProgress({
-					title: '获取中',
-					text: '请稍等....'
+					title : '获取中',
+					text : '请稍等....'
 				});
 				$xy.ajax(function(ret, err) {
 					api.hideProgress();
-					if(ret) {
+					if (ret) {
 						//$("#nonetwork").hide();
-						if(ret.success) {
+						if (ret.success) {
 							$('#sendVerify').removeAttr('onclick');
 							$('#sendVerify').html('<span id="Verifytime">60</span>s');
 							time = 60;
 							isinerval = setInterval("CountDown()", 1000);
 						} else {
 							api.toast({
-								msg: '很抱歉，短信获取失败，请稍后再试！'
+								location:'middle',
+								msg : '很抱歉，短信获取失败，请稍后再试！'
 							});
 						}
 					} else {
 						api.toast({
-							msg: '连接失败，请检查网络配置'
+							location:'middle',
+							msg : '连接失败，请检查网络配置'
 						});
 						//$("#nonetwork").show();
 					}
@@ -140,7 +126,7 @@
 
 		//时间递减处理
 		function CountDown() {
-			if(time < 1) {
+			if (time < 1) {
 				//              var sendVerify = document.getElementById('sendVerify');
 				clearInterval(isinerval);
 				$('#sendVerify').attr('onclick', 'getVerify()');
@@ -152,71 +138,71 @@
 			$('#Verifytime').html('' + time + '');
 			time--;
 		}
+
 		//验证并绑定新手机号
 		function verify_new_phone() {
 			var verifyy = $("#code").val();
 			var phone_numberr = $("#tel").val();
 			//			console.log("phone_numberr:" + phone_numberr);
 			//			console.log("verifyy:" + verifyy);
-			if(verifyy == "") {
-				if(service_password == "") {
+			if (verifyy == "") {
+				if (service_password == "") {
 					api.toast({
-						msg: "请输入验证码"
+						location : 'middle',
+						msg : "请输入验证码"
 					});
 					return;
 				}
-
 			}
-
 			//			console.log("wash_user_id:" + wash_user_id);
 			//			console.log("uuid:" + uuid);
 			//			console.log("phone_number:" + phone_number);
 			//			console.log("verify:" + verify);
 			//			console.log("service_password:" + service_password);
-
 			$xy.ajax(function(ret, err) {
 				//api.hideProgress();
-				console.log("wash_user_id:" + wash_user_id);
-				console.log("uuid:" + uuid);
-				console.log("phone_number:" + phone_number);
-				console.log("verify:" + verify);
-				console.log("service_password:" + service_password);
-				console.log("phone_numberr:" + phone_numberr);
-				console.log("verifyy:" + verifyy);
-				if(ret) {
+				//				console.log("wash_user_id:" + wash_user_id);
+				//				console.log("uuid:" + uuid);
+				//				console.log("phone_number:" + phone_number);
+				//				console.log("verify:" + verify);
+				//				console.log("service_password:" + service_password);
+				//				console.log("phone_numberr:" + phone_numberr);
+				//				console.log("verifyy:" + verifyy);
+				if (ret) {
 					console.log(JSON.stringify(ret));
 					//$("#nonetwork").hide();
 					api.refreshHeaderLoadDone();
-					if(ret.success) {
+					if (ret.success) {
 						console.log(JSON.stringify(ret));
 						api.toast({
-							msg: '换绑成功',
-							duration: 4000
+							msg : '换绑成功',
+							location : 'middle',
+							duration : 3000
 						});
 						//存储用户数据
 						api.execScript({
-							name: 'main',
-							script: 'initInfo();'
+							name : 'main',
+							script : 'initInfo();'
 						});
-
 						api.closeToWin({
-							name: 'main'
+							name : 'main'
 						});
-
 					} else {
 						//console.log(JSON.stringify(ret));
 						api.toast({
-							msg: ret.message
+							msg : ret.message
 						});
 						api.toast({
-							msg: '换绑失败1',
-							duration: 4000
+							msg : '换绑失败',
+							location : 'middle',
+							duration : 3000
 						});
 					}
 				} else {
 					api.toast({
-						msg: '网络异常，请稍后重试',
-						duration: 4000
+						msg : '网络异常，请稍后重试',
+						location : 'middle',
+						duration : 3000
 					});
 					console.log(JSON.stringify(ret));
 					//					api.refreshHeaderLoadDone();
@@ -225,5 +211,4 @@
 			}, 'UpdetPhone&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&phone_number=' + phone_number + '&service_password=' + service_password + '&phone_numberr=' + phone_numberr + '&verifyy=' + verifyy + '&verify=' + verify);
 		}
 	</script>
-
 </html>

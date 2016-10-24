@@ -192,6 +192,7 @@
 								retInfo = ret.data;
 								//console.log(JSON.stringify(retInfo));
 								$xy.userlogInfo(retInfo);
+								
 								//监听洗衣倒计时事件
 								lasttimemain();
 							} else {
@@ -334,17 +335,17 @@
 							var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的西三宿舍三楼西01机，大约<span id="minttime"></span>后结束</div></div>';
 							$('#index_header').append(timedom);
 						}
-						if (times <= 120) {
-							api.getPrefs({
-								key : 'washtime'
-							}, function(ret, err) {
-								if (ret && ret.value) {
-									return;
-								} else {
-									Send_notifications();
-								}
-							});
-						}
+//						if (times <= 120) {
+//							api.getPrefs({
+//								key : 'washtime'
+//							}, function(ret, err) {
+//								if (ret && ret.value) {
+//									return;
+//								} else {
+//									Send_notifications();
+//								}
+//							});
+//						}
 					} else {
 						//						api.toast({
 						//							msg : ret.message
@@ -410,10 +411,10 @@
 					light : true,
 				}, function(ret, err) {
 					var id = ret.id;
-					api.setPrefs({
-						key : 'washtime',
-						value : 'true'
-					});
+//					api.setPrefs({
+//						key : 'washtime',
+//						value : 'true'
+//					});
 				});
 			}
 
@@ -435,9 +436,9 @@
 					//隐藏提示条
 					$("#progress_toast").hide();
 					//移除偏好值
-					api.removePrefs({
-						key : 'washtime'
-					});
+//					api.removePrefs({
+//						key : 'washtime'
+//					});
 					return;
 				}
 				times--;

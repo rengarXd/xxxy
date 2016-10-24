@@ -236,13 +236,15 @@
 						console.log(JSON.stringify(ret));
 						api.toast({
 							msg : '验证成功，开始绑定新手机号码',
-							duration : 4000
+							location:'middle',
+							duration : 3000
 						});
-						setTimeout(open_change_phone_2(), 5000);
+						setTimeout(open_change_phone_2(), 3000);
 						//open_change_phone_2();
 					} else {
 						//console.log(JSON.stringify(ret));
 						api.toast({
+							location:'middle',
 							msg : ret.message
 						});
 					}
