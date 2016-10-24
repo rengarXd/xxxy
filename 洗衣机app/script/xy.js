@@ -213,10 +213,10 @@
 					var systemType = api.systemType;
 					if (systemType == "ios") {
 						//alert(JSON.stringify(ret)+'===='+JSON.stringify(err))
-						var rets = eval('(' + err + ')');
+						var rets = eval('(' + err.body + ')');
 						//var rets = err.body;
-						alert(JSON.stringify(rets.body));
-						callback(rets.body, err);
+						//alert(JSON.stringify(rets.body));
+						callback(rets, err);
 					} else {
 						callback(ret, err);
 					}
