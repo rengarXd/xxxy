@@ -215,7 +215,7 @@
 						var rets = eval('(' + err.body + ')');
 						callback(rets, err);
 					} else {
-						callback(ret.body, err);
+						callback(ret, err);
 					}
 				});
 			}
