@@ -214,7 +214,9 @@
 					if (systemType == "ios") {
 						//alert(JSON.stringify(ret)+'===='+JSON.stringify(err))
 						//var rets = eval('(' + err.body + ')');
-						callback(err.body, err);
+						var rets = err.body;
+						console.log(JSON.stringify(err.body));
+						callback(rets, err);
 					} else {
 						callback(ret, err);
 					}
