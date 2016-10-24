@@ -102,10 +102,10 @@
 			};
 			Zepto(function($) {
 			});
-			
-			function reload(){
+			function reload() {
 				location.reload();
 			}
+
 			// 初始化页面
 			function initPage() {
 				//初始化页面获取个人信息
@@ -339,7 +339,6 @@
 				});
 			}
 
-
 			//更改信息方法
 			function changeInfo(name, info) {
 				api.openFrame({
@@ -508,9 +507,11 @@
 						api.removePrefs({
 							key : 'userinfo'
 						});
-						api.execScript({
-							name : 'main',
-							script : 'initInfo();'
+//						api.removePrefs({
+//	                        key:'washtime'
+//                      });
+						api.sendEvent({
+							name : 'reload'
 						});
 						//延时关闭窗口
 						setTimeout(function() {

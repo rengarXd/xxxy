@@ -17,13 +17,7 @@
 			}
 			.hu {
 				height: 120px;
-				margin-left: 120px;
-				margin-right: 120px;
-			}
-			.tap-active {
-				height: 110px;
-				margin-left: 100px;
-				margin-right: 100px;
+				
 			}
 			.font-active {
 				font-size: 20px;
@@ -44,7 +38,7 @@
 				<img src="../../image/noavatar.gif" onerror="javascript:this.style.display='none'" id="nopic" class="pic" style="display: none" />
 			</div>
 			<div class="H-padding-vertical-top-10 H-text-align-center H-font-size-16">
-				<span class="H-theme-font-color-white H-font-weight-bold" id="userTel"  >未登录</span>
+				<span class="H-theme-font-color-white H-font-weight-bold" id="userTel">未登录</span>
 			</div>
 			<div class="H-padding-2 H-text-align-center H-font-size-13">
 				<span class="H-theme-font-color-white">共洗衣<span id="nums">0</span>次</span>
@@ -142,6 +136,9 @@
 		};
 		//获取偏好值
 		function initPref() {
+			var marl = (api.frameWidth - 100) / 2;
+			$(".hu").css('margin-left', marl);
+			$(".hu").css('margin-right', marl);
 			api.getPrefs({
 				key : 'userinfo'
 			}, function(ret, err) {
