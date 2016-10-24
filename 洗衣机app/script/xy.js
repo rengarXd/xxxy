@@ -212,9 +212,9 @@
 				api.ajax(opt, function(ret, err) {
 					var systemType = api.systemType;
 					if (systemType == "ios") {
-						alert(JSON.stringify(ret)+'===='+JSON.stringify(err))
-						var rets = eval('(' + err.body + ')');
-						callback(rets, err);
+						//alert(JSON.stringify(ret)+'===='+JSON.stringify(err))
+						//var rets = eval('(' + err.body + ')');
+						callback(err.body, err);
 					} else {
 						callback(ret, err);
 					}
