@@ -51,9 +51,9 @@
 		//关闭并刷新消息标示
 		function closeMsgWin() {
 			api.execScript({
-				name:'main',
-	            script: 'pushListener();'
-            });
+				name : 'main',
+				script : 'pushListener();'
+			});
 			setTimeout(function() {
 				api.closeWin();
 			}, 300);
