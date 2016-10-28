@@ -76,7 +76,7 @@
 							登&nbsp;&nbsp;&nbsp;录
 						</button>
 					</div>
-					<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-12 H-padding-horizontal-left-25 H-text-align-center">
+					<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-10 H-text-align-center">
 						<!--<input type="checkbox" id="checkbox-1" class="H-checkbox H-checkbox-null H-vertical-align-middle H-font-size-18 H-theme-font-color1 H-border-radius-circle H-padding-horizontal-right-5">-->
 						点击登录，即表示您同意<span style="color:#49b1f4;" tapmode="H-touch-active" onclick="openTermsService();">《智能洗衣服务协议》</span>
 					</div>
@@ -505,11 +505,14 @@
 		//		}
 		//打开服务条款
 		function openTermsService() {
+			var delay = 0;
+			if (api.systemType != 'ios')
+				delay = 100;
 			api.openWin({
 				name : 'terms_service_head',
 				url : './terms_service/terms_service_head.html',
 				bounces : false,
-				delay : 0,
+				delay : delay,
 			});
 		}
 
