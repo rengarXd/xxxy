@@ -55,10 +55,10 @@
 		</div>-->
 		<script type="text/html" id="record_list_item">
 			{{# for(var i = 0, len = d.length; i < len; i++) { }}
-			<div class="H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1" tapmode="H-touch-active" onclick="openHelpCenterText('{{ d[i].help_id }}');">
+			<div class="H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1" tapmode="H-touch-active" onclick="openHelpCenterText('{{ d[i].id }}');">
 			<div class="square"></div>
 			<div class=" H-font-size-16 H-padding-vertical-both-12 xy_font_color H-padding-horizontal-right-20 ">
-			{{ d[i].help_tital }}
+			{{ d[i].title }}
 			</div>
 			</div>
 			{{# } }}
@@ -66,50 +66,75 @@
 		<script type="text/javascript" src="../../../script/xy.js"></script>
 		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
 		<script type="text/javascript">
+			var datas = [{
+				title : '1、我怎么注册/登录？',
+				id : 1
+			}, {
+				title : '2、我不注册，可以下单吗？',
+				id : 2,
+			}, {
+				title : '3、微信或支付宝扫码下单说明',
+				id : 3,
+			}, {
+				title : '4、APP在线下单',
+				id : 4
+			}, {
+				title : '5、关于充值',
+				id : 5
+			}];
 			apiready = function() {
-				_ajax();
+				intPage();
 			};
-			function _ajax() {
-				$xy.ajax(function(ret, err) {
-					//api.hideProgress();
-					if (ret && ret.success) {
-						//console.log(JSON.stringify(ret));
-						if (ret.data.length == 0) {
-							//当没有订单时的处理
-							var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无记录</div></div></div>';
-							document.getElementById('order_list').innerHTML = htmls;
-						} else {
-							console.log(JSON.stringify(ret));
-							var tpl = document.getElementById('record_list_item').innerHTML;
-							//读取模版
-							//方式一：异步渲染（推荐）
-							laytpl(tpl).render(ret.data, function(render) {
-								api.hideProgress();
-								document.getElementById('record_list').innerHTML = render;
-							});
-						}
-					} else {
-						//console.log(JSON.stringify(ret));
-						//$("#jiazai").html("暂无订单");
-						api.toast({
-							msg : ret.message
-						});
-					}
-				}, 'appHelpCenter&funid=wash_helpcenter');
+			function intPage() {
+				var tpl = document.getElementById('record_list_item').innerHTML;
+				//读取模版
+				//方式一：异步渲染（推荐）
+				laytpl(tpl).render(datas, function(render) {
+					api.hideProgress();
+					document.getElementById('record_list').innerHTML = render;
+				});
 			}
 
+			//			function _ajax() {
+			//				$xy.ajax(function(ret, err) {
+			//					//api.hideProgress();
+			//					if (ret && ret.success) {
+			//						//console.log(JSON.stringify(ret));
+			//						if (ret.data.length == 0) {
+			//							//当没有订单时的处理
+			//							var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无记录</div></div></div>';
+			//							document.getElementById('order_list').innerHTML = htmls;
+			//						} else {
+			//							console.log(JSON.stringify(ret));
+			//							var tpl = document.getElementById('record_list_item').innerHTML;
+			//							//读取模版
+			//							//方式一：异步渲染（推荐）
+			//							laytpl(tpl).render(ret.data, function(render) {
+			//								api.hideProgress();
+			//								document.getElementById('record_list').innerHTML = render;
+			//							});
+			//						}
+			//					} else {
+			//						//console.log(JSON.stringify(ret));
+			//						//$("#jiazai").html("暂无订单");
+			//						api.toast({
+			//							msg : ret.message
+			//						});
+			//					}
+			//				}, 'appHelpCenter&funid=wash_helpcenter');
+			//			}
 			function openHelpCenterText(help_id) {
 				var delay = 0;
 				if (api.systemType != 'ios')
 					delay = 100;
 				api.openWin({
-					name : 'help_center_text_head',
-					url : './help_center_text/help_center_text_head.html',
+					name : 'guide_show_head',
+					url : 'guide_show_head.html',
 					pageParam : {
-						help_id : help_id
+						id : help_id
 					},
 					bounces : false,
-					delay : 0,
+					delay : delay,
 				});
 			}
 		</script>
