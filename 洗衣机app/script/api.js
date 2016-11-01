@@ -485,7 +485,7 @@
         var strDM = api.systemType;
         if (strDM == 'ios') {
             var strSV = api.systemVersion;
-            var numSV = parseInt(strSV,10);
+            var numSV = parseInt(strSV,11);
             var fullScreen = api.fullScreen;
             var iOS7StatusBarAppearance = api.iOS7StatusBarAppearance;
             if (numSV >= 7 && !fullScreen && iOS7StatusBarAppearance) {

@@ -199,19 +199,9 @@
 									}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
 								} else {
 									xyjdata = ret.data;
-									//									var kong = new Array();
-									//									for (var i = 0, len = xyjdata.length; i < len; i++) {
-									//										if (xyjdata[i].ustatus == "空闲") {
-									//											kong.push(xyjdata[i]);
-									//										}
-									//									}
-									//alert(JSON.stringify(kong));
 									_tpl('xyj_data', xyjdata, 'xyj_html', function() {
 									});
 								}
-							} else if (ret.message = undefined) {
-								api.refreshHeaderLoadDone();
-								$("#xyj_html").html('<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">连接失败请检查网络</div></div></div>');
 							} else {
 								api.refreshHeaderLoadDone();
 								$("#xyj_html").html('<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">连接失败请检查网络</div></div></div>');
