@@ -198,31 +198,6 @@
 				});
 			}
 		},
-		imgAjax : function(callback, method, data, options) {
-			var that = this;
-			var o = {};
-			o.url = window.ImgWebUrl;
-			o.method = method ? method : "get";
-			if (o.method == "post") {
-				o.data = data;
-			}
-			options = options || {};
-			var opt = that.extendObj(that.DEFAULT_CONFIG.ajax_CONFIG, o, options);
-			if ( typeof callback == 'function') {
-				api.ajax(opt, function(ret, err) {
-					var systemType = api.systemType;
-					if (systemType == "ios") {
-						//alert(JSON.stringify(ret)+'===='+JSON.stringify(err))
-						var rets = eval('(' + err.body + ')');
-						//var rets = err.body;
-						//alert(JSON.stringify(rets.body));
-						callback(rets, err);
-					} else {
-						callback(ret, err);
-					}
-				});
-			}
-		},
 		openTimePick : function(callback) {
 			var that = this;
 			var date = new Date();
