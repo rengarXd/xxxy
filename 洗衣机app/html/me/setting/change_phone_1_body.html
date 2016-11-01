@@ -129,8 +129,29 @@
 		//改变为密码验证
 		function ChangesToPwd() {
 			document.getElementById("code").value = "";
-			$("#content1").css("display", "none");
-			$("#content2").css("display", "block");
+			$xy.ajax(function(ret, err) {
+				//alert(JSON.stringify(ret));
+				if (ret.success) {
+					$("#content1").css("display", "none");
+					$("#content2").css("display", "block");
+				} else {
+					api.toast({
+						msg : '请先设置密码'
+					});
+					setTimeout(function() {
+						var delay = 0;
+						if (api.systemType != 'ios')
+							delay = 100;
+						api.openWin({
+							name : 'pwd_set_head',
+							url : 'pwd_set_head.html',
+							bounces : false,
+							delay : delay,
+							vScrollBarEnabled : false
+						});
+					}, 1000);
+				}
+			}, 'judgePdNull&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid);
 			//			console.log(wash_user_id);
 			//			console.log(uuid);
 		}
@@ -236,7 +257,7 @@
 						console.log(JSON.stringify(ret));
 						api.toast({
 							msg : '验证成功，开始绑定新手机号码',
-							location:'middle',
+							location : 'middle',
 							duration : 3000
 						});
 						setTimeout(open_change_phone_2(), 3000);
@@ -244,7 +265,7 @@
 					} else {
 						//console.log(JSON.stringify(ret));
 						api.toast({
-							location:'middle',
+							location : 'middle',
 							msg : ret.message
 						});
 					}

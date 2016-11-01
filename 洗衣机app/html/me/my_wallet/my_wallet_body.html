@@ -41,7 +41,7 @@
 	<body>
 		<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-margin-vertical-bottom-1">
 			<div class="ziti H-text-show-row-1  H-font-size-14 H-padding-10 H-padding-vertical-both-12 ziti">
-				当前账户余额共计<span id="total">0</span>元 ，其中：
+				当前余额：<span id="total" class="H-font-size-18">0</span>
 			</div>
 		</div>
 		<div class=" H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle  H-margin-vertical-bottom-1 ">
@@ -74,7 +74,7 @@
 			{{# var str=d [i].reader_time; }}
 			{{# var month=str.substring(5, 7); }}
 			<div id="monthnumber" style="" class="animated fadeIn H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
-			{{ month }}月订单
+			{{ month }}月明细
 			</div>
 			{{# } }}
 			{{# if(i>0){ }}
@@ -88,7 +88,7 @@
 			{{# } }}
 			{{# if(monthnow != monthprevious) { }}
 			<div id="monthnumber" style="" class="animated fadeIn H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
-			{{ monthnow }}月订单
+			{{ monthnow }}月明细
 			</div>
 			{{# } }}
 			{{# } }}
@@ -238,19 +238,20 @@
 								//console.log(JSON.stringify(ret));
 								//$("#jiazai").html("暂无订单");
 								api.refreshHeaderLoadDone();
-								api.toast({
-									msg : '未查询到定向余额'
-								});
+								//								api.toast({
+								//									msg : '未查询到定向余额'
+								//								});
 							}
 						}, 'appOverage&funid=wash_user_dxye&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
 					} else {
 						//$("#jiazai").html("暂无订单");
 					}
 				});
+				//查找订单明细并渲染
 				get_data();
 			}
 
-			//查找订单并渲染
+			//查找订单明细并渲染
 			function get_data() {
 				loadLock = true;
 				api.getPrefs({
@@ -326,10 +327,6 @@
 				api.openWin({
 					name : 'wallet_recharge_head',
 					url : 'wallet_recharge_head.html',
-					//				pageParam: {
-					//					washloca_id: id,
-					//					distance: distance_id
-					//				},
 					bounces : false,
 					delay : delay,
 					slidBackEnabled : true,
