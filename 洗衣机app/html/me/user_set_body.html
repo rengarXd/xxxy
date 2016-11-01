@@ -284,7 +284,7 @@
 								}, function(ret, err) {
 									if (ret) {
 										var returnUrl = ret.data;
-										console.log(returnUrl);
+										//console.log(returnUrl);
 										//$("#nopic").attr("src", returnUrl);
 										//压缩图片
 										imgCompress(returnUrl, 0.5, 0.5, getExt(returnUrl), function(compressImg) {
@@ -296,9 +296,9 @@
 											Get_HeadPortrait_ID(attach_name);
 										});
 									} else {
-										api.toast({
-											msg : JSON.stringify(err)
-										});
+										//										api.toast({
+										//											msg : JSON.stringify(err)
+										//										});
 									}
 								});
 								break;
@@ -324,17 +324,17 @@
 											Get_HeadPortrait_ID(attach_name);
 										});
 									} else {
-										api.toast({
-											msg : JSON.stringify(err)
-										});
+										//										api.toast({
+										//											msg : JSON.stringify(err)
+										//										});
 									}
 								});
 								break;
 						};
 					} else {
-						api.toast({
-							msg : ''
-						});
+						//						api.toast({
+						//							msg : ''
+						//						});
 					}
 				});
 			}
@@ -507,9 +507,9 @@
 						api.removePrefs({
 							key : 'userinfo'
 						});
-//						api.removePrefs({
-//	                        key:'washtime'
-//                      });
+						//						api.removePrefs({
+						//	                        key:'washtime'
+						//                      });
 						api.sendEvent({
 							name : 'reload'
 						});
@@ -546,51 +546,100 @@
 				api.showProgress({
 					title : '上传中'
 				});
-				$xy.imgAjax(function(ret, err) {
-					if (ret) {
-						//console.log(JSON.stringify(ret));
-						//$("#nonetwork").hide();
-						if (ret.success) {
-							var attachid = ret.data.attachId;
-							$xy.ajax(function(ret, err) {
-								//执行main页面获取用户信息的函数
-								api.execScript({
-									name : 'main',
-									script : 'initInfo();'
-								});
-								api.hideProgress();
-								api.toast({
-									msg : '上传成功！'
-								});
-							}, 'upUserAttach&funid=wash_user' + '&attachId=' + attachid + '&dataid=' + wash_user_id);
-							//console.log(JSON.stringify(ret));
-						} else {
+				api.ajax({
+					url : window.ImgWebUrl,
+					method : 'post',
+					cache : false,
+					timeout : 20,
+					data : {
+						values : {
+							funid : "sys_attach",
+							pagetype : "editgrid",
+							eventcode : "create",
+							nousercheck : "1",
+							dataType : "byte",
+							datafunid : "wash_user",
+							dataid : wash_user_id,
+							attach_name : attach_name
+						},
+						files : {
+							attach_path : attach_name
+						}
+					}
+				}, function(ret, err) {
+					var errs = eval('(' + err.body + ')');
+					if (api.systemType != "ios") {
+						androidresult(ret, err);
+					} else {
+						iosresult(ret, errs);
+					}
+				});
+			}
+
+			function androidresult(ret, err) {
+				if (ret) {
+					console.log("ret====" + JSON.stringify(ret));
+					//$("#nonetwork").hide();
+					if (ret.success) {
+						var attachid = ret.data.attachId;
+						$xy.ajax(function(ret, err) {
+							//执行main页面获取用户信息的函数
+							api.execScript({
+								name : 'main',
+								script : 'initInfo();'
+							});
 							api.hideProgress();
 							api.toast({
-								msg : ret.message
+								msg : '上传成功！'
 							});
-						}
+						}, 'upUserAttach&funid=wash_user' + '&attachId=' + attachid + '&dataid=' + wash_user_id);
+						//console.log(JSON.stringify(ret));
 					} else {
 						api.hideProgress();
 						api.toast({
-							msg : '连接失败，请检查网络配置'
+							msg : ret.message
 						});
 					}
-				}, 'post', {
-					values : {
-						funid : "sys_attach",
-						pagetype : "editgrid",
-						eventcode : "create",
-						nousercheck : "1",
-						dataType : "byte",
-						datafunid : "wash_user",
-						dataid : wash_user_id,
-						attach_name : attach_name
-					},
-					files : {
-						attach_path : attach_name
+				} else {
+					console.log("err====" + JSON.stringify(err));
+					api.hideProgress();
+					api.toast({
+						msg : '连接失败，请检查网络配置'
+					});
+				}
+			}
+
+			function iosresult(ret, err) {
+				if (err) {
+					//console.log("ret====" + JSON.stringify(ret));
+					//$("#nonetwork").hide();
+					if (err.success) {
+						var attachid = err.data.attachId;
+						$xy.ajax(function(ret, err) {
+							//执行main页面获取用户信息的函数
+							api.execScript({
+								name : 'main',
+								script : 'initInfo();'
+							});
+							api.hideProgress();
+							api.toast({
+								msg : '上传成功！'
+							});
+						}, 'upUserAttach&funid=wash_user' + '&attachId=' + attachid + '&dataid=' + wash_user_id);
+						//console.log(JSON.stringify(ret));
+					} else {
+						api.hideProgress();
+						api.toast({
+							msg : err.message
+						});
 					}
-				});
+				} else {
+					console.log("err====" + JSON.stringify(err));
+					api.hideProgress();
+					api.toast({
+						msg : '连接失败，请检查网络配置'
+					});
+				}
 			}
 		</script>
 	</body>

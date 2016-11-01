@@ -28,6 +28,10 @@
 			.border-dx {
 				border-radius: 20px;
 			}
+			.chacha {
+				padding-top: 40px;
+				padding-right: 30px;
+			}
 		</style>
 	</head>
 	<body>
@@ -42,9 +46,9 @@
 				<span class="H-icon H-padding-horizontal-right-5 H-display-block"><i class="iconfont icon-zhankai H-theme-font-color-white H-font-size-12 H-vertical-middle"></i></span>
 			</div>
 		</div>
-		<div style="height: 270px;">
-			<div class="H-text-align-right H-theme-font-color-white H-padding-horizontal-right-25" style="padding-top: 30px;">
-				<i tapmode="H-touch-active" onclick="api.closeWin();" class="iconfont icon-chacha H-font-size-20"></i>
+		<div id="top_position" >
+			<div class="chacha H-text-align-right H-theme-font-color-white">
+				<i tapmode="H-touch-active" onclick="api.closeWin();" class="iconfont H-touch-active icon-chacha H-font-size-20"></i>
 			</div>
 		</div>
 		<div>
@@ -116,6 +120,7 @@
 		function init() {
 			jpush = api.require('ajpush');
 			systemtype = api.systemType;
+			$("#top_position").css('height', api.frameHeight * 2 / 5);
 		}
 
 		Zepto(function($) {
