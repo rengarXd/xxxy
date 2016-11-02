@@ -178,12 +178,14 @@
 							isinerval = setInterval("CountDown()", 1000);
 						} else {
 							api.toast({
-								msg : '很抱歉，短信获取失败，请稍后再试！'
+								msg : '很抱歉，短信获取失败，请稍后再试！',
+							location : 'middle'
 							});
 						}
 					} else {
 						api.toast({
-							msg : '连接失败，请检查网络配置'
+							msg : '连接失败，请检查网络配置',
+							location : 'middle'
 						});
 						//$("#nonetwork").show();
 					}
@@ -301,9 +303,6 @@
 												//console.log("绑定成功！");
 												if (ret) {
 												} else {
-													api.toast({
-														msg : '连接失败，请重新登录'
-													});
 												}
 											}, 'updateRegistration&funid=wash_user&registrationId=' + registrationId + '&wash_user_id=' + retInfo[0].wash_user_id + '&uuid=' + retInfo[0].uuid);
 										});
@@ -381,7 +380,8 @@
 				} else {
 					api.hideProgress();
 					api.toast({
-						msg : '连接失败，请检查网络配置'
+						msg : '连接失败，请检查网络配置',
+							location : 'middle'
 					});
 					//$("#nonetwork").show();
 				}

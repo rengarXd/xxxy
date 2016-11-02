@@ -61,8 +61,8 @@
 		<script type="text/html" id="message_data">
 			{{# for(var i=0,len=d.length;i<len;i++) { }}
 			{{# var strtime = d[i].publish_time }}
-			{{# var start_time = Date.parse(new Date(strtime))/1000; }}
-			<div class="animated fadeIn H-text-align-center H-theme-font-color-999 H-font-size-12 H-margin-horizontal-both-12 H-padding-vertical-top-15 H-padding-vertical-bottom-5">{{ $xy.jsDateDiff(start_time)}}</div>
+			<!--{{# var start_time = Date.parse(new Date(strtime))/1000; }}-->
+			<div class="animated fadeIn H-text-align-center H-theme-font-color-999 H-font-size-12 H-margin-horizontal-both-12 H-padding-vertical-top-15 H-padding-vertical-bottom-5">{{ $xy.jsDateDiff(strtime)}}</div>
 			<div class="animated fadeIn H-theme-background-color-white H-border-both-after H-border-radius-15 H-margin-horizontal-both-12 H-margin-vertical-bottom-8" tapmode="H-touch-active" onclick="openOrder('{{ d[i].news_id }}');">
 			<div class="H-channel-title H-flexbox-horizontal H-theme-background-color-white H-vertical-middle" >
 			{{# if (d[i].is_read == '0'){ }}
