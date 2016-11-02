@@ -50,7 +50,7 @@
 					<input type="text" id="code" class="H-margin-vertical-top-2 H-flexbox-horizontal H-border-vertical-bottom-margin-left-10-after H-textbox H-vertical-align-middle H-vertical-middle H-font-size-14 H-flex-item H-box-sizing-border-box H-border-none H-outline-none H-padding-12" style="color:#49b1f4;" placeholder="请输入验证码">
 				</div>
 				<div class="xy_border"></div>
-				<div id="qita" class=" xy_font_color H-font-size-13 H-padding-vertical-bottom-25 H-padding-vertical-top-5" style="padding-left: 37px;">
+				<div id="qita" class=" xy_font_color H-font-size-14 H-padding-vertical-bottom-25 H-padding-vertical-top-5" style="padding-left: 37px;">
 					<div class="H-float-right">
 						<span onclick="ChangesToPwd();">密码验证</span>
 						<span class="H-margin-horizontal-left-25 H-padding-horizontal-right-15" onclick="openCustomerService();">联系客服</span>
@@ -116,51 +116,10 @@
 					str = user[0].phone_number;
 					tel = str;
 					phone_number = str;
-					console.log(tel);
 					$("#tel_phone").val(tel);
 					$("#pw_phone").val(tel);
 				}
-				console.log("wash_user_id:" + wash_user_id);
-				console.log("uuid:" + uuid);
-				console.log("phone_number:" + phone_number);
 			});
-		}
-
-		//改变为密码验证
-		function ChangesToPwd() {
-			document.getElementById("code").value = "";
-			$xy.ajax(function(ret, err) {
-				//alert(JSON.stringify(ret));
-				if (ret.success) {
-					$("#content1").css("display", "none");
-					$("#content2").css("display", "block");
-				} else {
-					api.toast({
-						msg : '请先设置密码'
-					});
-					setTimeout(function() {
-						var delay = 0;
-						if (api.systemType != 'ios')
-							delay = 100;
-						api.openWin({
-							name : 'pwd_set_head',
-							url : 'pwd_set_head.html',
-							bounces : false,
-							delay : delay,
-							vScrollBarEnabled : false
-						});
-					}, 1000);
-				}
-			}, 'judgePdNull&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid);
-			//			console.log(wash_user_id);
-			//			console.log(uuid);
-		}
-
-		//改变为手机号验证
-		function ChangesToPhone() {
-			document.getElementById("pw_password").value = "";
-			$("#content2").css("display", "none");
-			$("#content1").css("display", "block");
 		}
 
 		//监听网络状态
@@ -168,14 +127,15 @@
 			api.addEventListener({
 				name : 'offline'
 			}, function(ret, err) {
-				$("#nonetwork").show();
+				//$("#nonetwork").show();
 			});
 			api.addEventListener({
 				name : 'online'
 			}, function(ret, err) {
-				$("#nonetwork").hide();
+				//$("#nonetwork").hide();
 				api.toast({
-					msg : '已连接到网络'
+					msg : '已连接到网络',
+					duration : 3000
 				});
 			});
 		}
@@ -199,12 +159,14 @@
 						isinerval = setInterval("CountDown()", 1000);
 					} else {
 						api.toast({
-							msg : '很抱歉，短信获取失败，请稍后再试！'
+							msg : '很抱歉，短信获取失败，请稍后再试！',
+							location : 'middle'
 						});
 					}
 				} else {
 					api.toast({
-						msg : '连接失败，请检查网络配置'
+						msg : '连接失败，请检查网络配置',
+						location : 'middle'
 					});
 					//$("#nonetwork").show();
 				}
@@ -232,7 +194,9 @@
 			if (verify == "") {
 				if (service_password == "") {
 					api.toast({
-						msg : "请输入验证码或者服务密码"
+						msg : "请输入验证码或者服务密码",
+						duration : 2000,
+							location : 'middle'
 					});
 					return;
 				}
@@ -245,12 +209,12 @@
 			$xy.ajax(function(ret, err) {
 				//api.hideProgress();
 				if (ret) {
-					console.log("wash_user_id:" + wash_user_id);
-					console.log("uuid:" + uuid);
-					console.log("phone_number:" + phone_number);
-					console.log("verify:" + verify);
-					console.log("service_password:" + service_password);
-					console.log(JSON.stringify(ret));
+					//					console.log("wash_user_id:" + wash_user_id);
+					//					console.log("uuid:" + uuid);
+					//					console.log("phone_number:" + phone_number);
+					//					console.log("verify:" + verify);
+					//					console.log("service_password:" + service_password);
+					//					console.log(JSON.stringify(ret));
 					//$("#nonetwork").hide();
 					api.refreshHeaderLoadDone();
 					if (ret.success) {
@@ -270,7 +234,7 @@
 						});
 					}
 				} else {
-					console.log(JSON.stringify("false"));
+					//console.log(JSON.stringify("false"));
 					//					api.refreshHeaderLoadDone();
 					//					$("#nonetwork").show();
 				}
@@ -290,6 +254,43 @@
 			//				slidBackEnabled: true,
 			//				vScrollBarEnabled: false
 			//			});
+		}
+
+		//改变为密码验证
+		function ChangesToPwd() {
+			document.getElementById("code").value = "";
+			$xy.ajax(function(ret, err) {
+				//alert(JSON.stringify(ret));
+				if (ret.success) {
+					$("#content1").css("display", "none");
+					$("#content2").css("display", "block");
+				} else {
+					api.toast({
+						msg : '请先设置密码'
+					});
+					setTimeout(function() {
+						var delay = 0;
+						if (api.systemType != 'ios')
+							delay = 100;
+						api.openWin({
+							name : 'pwd_set_head',
+							url : 'pwd_set_head.html',
+							bounces : false,
+							delay : delay,
+							vScrollBarEnabled : false
+						});
+					}, 800);
+				}
+			}, 'judgePdNull&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid);
+			//			console.log(wash_user_id);
+			//			console.log(uuid);
+		}
+
+		//改变为手机号验证
+		function ChangesToPhone() {
+			document.getElementById("pw_password").value = "";
+			$("#content2").css("display", "none");
+			$("#content1").css("display", "block");
 		}
 
 		//打开联系客服页面
