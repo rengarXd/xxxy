@@ -56,11 +56,12 @@
 			<span class="row col1"></span>
 			<span class="row col2"></span>
 		</div>
-		<div class="H-position-center-all H-margin-vertical-top-15 H-font-size-15 H-theme-font-color-white" style="position: absolute;top: 439px;width: 280px;">
+		<div id="textpat" class="H-position-center-all H-margin-vertical-top-15 H-font-size-15 H-theme-font-color-white" style="position: absolute;">
 			<div class="H-text-align-center">
 				将二维码对准方框内即可自动扫描
 			</div>
 		</div>
+		<script type="text/javascript" src="../../script/zepto.min.js"></script>
 		<script type="text/javascript">
 			var h = 0, FNScanner = null;
 			apiready = function() {
@@ -68,6 +69,10 @@
 			};
 			//打开扫码线页面
 			function openscanline() {
+				var tops = api.frameHeight * 2 / 3;
+				var widths = api.frameWidth - 100;
+				$("#textpat").css('top', tops);
+				$("#textpat").css('width', widths);
 				var frameWidth = api.frameWidth;
 				var frameHeight = api.frameHeight;
 				api.openFrame({
