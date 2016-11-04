@@ -53,6 +53,12 @@
 		欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app欢迎使用app
 		</div>
 		</div>-->
+		<div class="H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1" tapmode="H-touch-active" onclick="openChangePhone();">
+			<div class="square"></div>
+			<div class=" H-font-size-16 H-padding-vertical-both-12 xy_font_color H-padding-horizontal-right-20 ">
+				更改已绑定的手机号
+			</div>
+		</div>
 		<script type="text/html" id="record_list_item">
 			{{# for(var i = 0, len = d.length; i < len; i++) { }}
 			<div class="H-text-list  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active H-margin-vertical-bottom-1" tapmode="H-touch-active" onclick="openHelpCenterText('{{ d[i].id }}');">
@@ -95,6 +101,18 @@
 				});
 			}
 
+			//换绑手机
+			function openChangePhone(){
+				var delay = 0;
+				if (api.systemType != 'ios')
+					delay = 100;
+				api.openWin({
+					name : 'change_phone_1_head',
+					url : '../setting/change_phone_1_head.html',
+					bounces : false,
+					delay : delay,
+				});
+			}
 			//			function _ajax() {
 			//				$xy.ajax(function(ret, err) {
 			//					//api.hideProgress();

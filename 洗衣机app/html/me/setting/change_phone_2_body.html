@@ -61,8 +61,8 @@
 	<script type="text/javascript">
 		var jpush = null, tel = null, jpush = null, systemtype = null;
 		apiready = function() {
-			wash_user_id = api.pageParam.wash_user_id;
-			uuid = api.pageParam.uuid;
+			//			wash_user_id = api.pageParam.wash_user_id;
+			//			uuid = api.pageParam.uuid;
 			phone_number = api.pageParam.phone_number;
 			verify = api.pageParam.verify;
 			service_password = api.pageParam.service_password;
@@ -109,13 +109,13 @@
 							isinerval = setInterval("CountDown()", 1000);
 						} else {
 							api.toast({
-								location:'middle',
+								location : 'middle',
 								msg : '很抱歉，短信获取失败，请稍后再试！'
 							});
 						}
 					} else {
 						api.toast({
-							location:'middle',
+							location : 'middle',
 							msg : '连接失败，请检查网络配置'
 						});
 						//$("#nonetwork").show();
@@ -190,10 +190,7 @@
 					} else {
 						//console.log(JSON.stringify(ret));
 						api.toast({
-							msg : ret.message
-						});
-						api.toast({
-							msg : '换绑失败',
+							msg : '换绑失败' + ret.message,
 							location : 'middle',
 							duration : 3000
 						});
@@ -208,7 +205,7 @@
 					//					api.refreshHeaderLoadDone();
 					//					$("#nonetwork").show();
 				}
-			}, 'UpdetPhone&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&phone_number=' + phone_number + '&service_password=' + service_password + '&phone_numberr=' + phone_numberr + '&verifyy=' + verifyy + '&verify=' + verify);
+			}, 'UpdetPhone&funid=wash_user' + '&phone_number=' + phone_number + '&service_password=' + service_password + '&phone_numberr=' + phone_numberr + '&verifyy=' + verifyy + '&verify=' + verify);
 		}
 	</script>
 </html>
