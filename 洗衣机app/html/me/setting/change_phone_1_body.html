@@ -79,7 +79,7 @@
 				</div>
 			</div>
 			<div class="H-margin-horizontal-both-20 H-padding-vertical-both-15">
-				<button tapmode="" onclick="verify_old_phone();" class="xy_login_btn H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent   H-theme-font-color-white">
+				<button tapmode="" onclick="verify_old_password();" class="xy_login_btn H-margin-vertical-top-2 H-font-size-16 H-button H-padding-vertical-both-10 H-border-none H-width-100-percent   H-theme-font-color-white">
 					验&nbsp;&nbsp;&nbsp;证
 				</button>
 			</div>
@@ -142,7 +142,7 @@
 
 		//点击获取验证码
 		function getVerify() {
-			//var tel = $("#tel").val();
+			var tel = $("#tel_phone").val();
 			console.log(tel);
 			api.showProgress({
 				title : '获取中',
@@ -188,33 +188,54 @@
 			time--;
 		}
 
+		//正则检验手机号
+		function checkPh(tels) {
+			tel = $(tels).val();
+			// 手机号的正则
+			var a = /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/;
+			if (!tel.match(a)) {
+				// 如果不是正确的手机号
+				api.alert({
+					title : '温馨提示',
+					msg : '请输入正确的手机号！',
+				}, function(ret, err) {
+					if (ret && ret.buttonIndex == 1) {
+						$("#tel").focus();
+					}
+				});
+				return;
+			}
+		}
+
+		//验证手机号方法
 		function verify_old_phone() {
 			var verify = $("#code").val();
-			var service_password = $("#pw_password").val();
 			if (verify == "") {
-				if (service_password == "") {
-					api.toast({
-						msg : "请输入验证码或者服务密码",
-						duration : 2000,
-							location : 'middle'
-					});
-					return;
-				}
+				api.toast({
+					msg : "请输入验证码",
+					duration : 2000,
+					location : 'middle'
+				});
+				return;
 			}
-			//			console.log("wash_user_id:" + wash_user_id);
-			//			console.log("uuid:" + uuid);
-			//			console.log("phone_number:" + phone_number);
-			//			console.log("verify:" + verify);
-			//			console.log("service_password:" + service_password);
+			tel = $('#tel_phone').val();
+			// 手机号的正则
+			var a = /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/;
+			if (!tel.match(a)) {
+				// 如果不是正确的手机号
+				api.alert({
+					title : '温馨提示',
+					msg : '请输入正确的手机号！',
+				}, function(ret, err) {
+					if (ret && ret.buttonIndex == 1) {
+						$("#tel").focus();
+					}
+				});
+				return;
+			}
 			$xy.ajax(function(ret, err) {
 				//api.hideProgress();
 				if (ret) {
-					//					console.log("wash_user_id:" + wash_user_id);
-					//					console.log("uuid:" + uuid);
-					//					console.log("phone_number:" + phone_number);
-					//					console.log("verify:" + verify);
-					//					console.log("service_password:" + service_password);
-					//					console.log(JSON.stringify(ret));
 					//$("#nonetwork").hide();
 					api.refreshHeaderLoadDone();
 					if (ret.success) {
@@ -230,7 +251,8 @@
 						//console.log(JSON.stringify(ret));
 						api.toast({
 							location : 'middle',
-							msg : ret.message
+							msg : ret.message,
+							duration : 3000
 						});
 					}
 				} else {
@@ -238,55 +260,123 @@
 					//					api.refreshHeaderLoadDone();
 					//					$("#nonetwork").show();
 				}
-			}, 'UpoldPhone&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&verify=' + verify + '&phone_number=' + phone_number + '&service_password=' + service_password);
-			//			api.openWin({
-			//				name: 'change_phone_2_head',
-			//				url: './change_phone_2_head.html',
-			//				pageParam: {
-			//					wash_user_id: wash_user_id,
-			//					uuid: uuid,
-			//					phone_number: tel,
-			//					verify: verify,
-			//					service_password: service_password
-			//				},
-			//				bounces: false,
-			//				delay: 0,
-			//				slidBackEnabled: true,
-			//				vScrollBarEnabled: false
-			//			});
+			}, 'UpoldPhone&funid=wash_user' + '&verify=' + verify + '&phone_number=' + tel);
+		}
+
+		//密码验证方法
+		function verify_old_password() {
+			var service_password = $("#pw_password").val();
+			if (service_password == "") {
+				api.toast({
+					msg : "请输入服务密码",
+					duration : 2000,
+					location : 'middle'
+				});
+			}
+			tel = $('#pw_phone').val();
+			// 手机号的正则
+			var a = /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/;
+			if (!tel.match(a)) {
+				// 如果不是正确的手机号
+				api.alert({
+					title : '温馨提示',
+					msg : '请输入正确的手机号！',
+				}, function(ret, err) {
+					if (ret && ret.buttonIndex == 1) {
+						$("#tel").focus();
+					}
+				});
+				return;
+			}
+			$xy.ajax(function(ret, err) {
+				//alert(JSON.stringify(ret));
+				if (ret.success) {
+					$xy.ajax(function(ret, err) {
+						//api.hideProgress();
+						if (ret) {
+							//					console.log("wash_user_id:" + wash_user_id);
+							//					console.log("uuid:" + uuid);
+							//					console.log("phone_number:" + phone_number);
+							//					console.log("verify:" + verify);
+							//					console.log("service_password:" + service_password);
+							//					console.log(JSON.stringify(ret));
+							//$("#nonetwork").hide();
+							api.refreshHeaderLoadDone();
+							if (ret.success) {
+								console.log(JSON.stringify(ret));
+								api.toast({
+									msg : '验证成功，开始绑定新手机号码',
+									location : 'middle',
+									duration : 3000
+								});
+								setTimeout(open_change_phone_2(), 3000);
+								//open_change_phone_2();
+							} else {
+								//console.log(JSON.stringify(ret));
+								api.toast({
+									location : 'middle',
+									msg : ret.message
+								});
+							}
+						} else {
+							//console.log(JSON.stringify("false"));
+							//					api.refreshHeaderLoadDone();
+							//					$("#nonetwork").show();
+						}
+					}, 'UpoldPhone&funid=wash_user' + '&phone_number=' + tel + '&service_password=' + service_password);
+				} else {
+					api.getPrefs({
+						key : 'userinfo'
+					}, function(ret, err) {
+						if (ret && ret.value) {
+							//							var user = eval('(' + ret.value + ')');
+							api.toast({
+								msg : '您未设置密码'
+							});
+							setTimeout(function() {
+								var delay = 0;
+								if (api.systemType != 'ios')
+									delay = 100;
+								api.openWin({
+									name : 'pwd_set_head',
+									url : 'pwd_set_head.html',
+									bounces : false,
+									delay : delay,
+									vScrollBarEnabled : false
+								});
+							}, 800);
+						} else {
+							api.toast({
+								msg : '请先登录'
+							});
+							setTimeout(function() {
+								var delay = 0;
+								if (api.systemType != 'ios')
+									delay = 100;
+								api.openWin({
+									name : 'login_body',
+									url : '../../login/login_body.html',
+									bounces : false,
+									delay : delay,
+									vScrollBarEnabled : false
+								});
+							}, 800);
+						}
+					});
+				}
+			}, 'judgePdNull&funid=wash_user' + '&phone_number=' + tel);
 		}
 
 		//改变为密码验证
 		function ChangesToPwd() {
 			document.getElementById("code").value = "";
-			$xy.ajax(function(ret, err) {
-				//alert(JSON.stringify(ret));
-				if (ret.success) {
-					$("#content1").css("display", "none");
-					$("#content2").css("display", "block");
-				} else {
-					api.toast({
-						msg : '请先设置密码'
-					});
-					setTimeout(function() {
-						var delay = 0;
-						if (api.systemType != 'ios')
-							delay = 100;
-						api.openWin({
-							name : 'pwd_set_head',
-							url : 'pwd_set_head.html',
-							bounces : false,
-							delay : delay,
-							vScrollBarEnabled : false
-						});
-					}, 800);
-				}
-			}, 'judgePdNull&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid);
+			$("#content1").css("display", "none");
+			$("#content2").css("display", "block");
 			//			console.log(wash_user_id);
 			//			console.log(uuid);
 		}
 
-		//改变为手机号验证
+		//改变为手机号验证按钮
 		function ChangesToPhone() {
 			document.getElementById("pw_password").value = "";
 			$("#content2").css("display", "none");
@@ -305,23 +395,25 @@
 			});
 		}
 
+		//打开更新新手机号页面
 		function open_change_phone_2() {
 			var verify = $("#code").val();
 			var service_password = $("#pw_password").val();
-			console.log("verify:" + verify);
-			console.log("service_password:" + service_password);
+			var delay = 0;
+			if (api.systemType != 'ios')
+				delay = 100;
 			api.openWin({
 				name : 'change_phone_2_head',
 				url : './change_phone_2_head.html',
 				pageParam : {
-					wash_user_id : wash_user_id,
-					uuid : uuid,
+//					wash_user_id : wash_user_id,
+//					uuid : uuid,
 					phone_number : tel,
 					verify : verify,
 					service_password : service_password
 				},
 				bounces : false,
-				delay : 0,
+				delay : delay,
 				slidBackEnabled : true,
 				vScrollBarEnabled : false
 			});
