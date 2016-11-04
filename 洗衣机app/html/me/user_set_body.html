@@ -195,7 +195,7 @@
 						//alert(year - 5 + index + '级');
 						textname = year - 5 + index + '级';
 						document.getElementById('gradename').innerHTML = textname;
-						ajax(id, textname);
+						_ajax(id, textname);
 					}
 				});
 			}
@@ -355,95 +355,94 @@
 			}
 
 			//修改昵称ChangeNickname
-			function Change(id) {
-				var id = id;
-				var dialogBox = api.require('dialogBox');
-				dialogBox.input({
-					keyboardType : 'default',
-					texts : {
-						title : '请输入想要修改的信息',
-						placeholder : '',
-						leftBtnTitle : '取消',
-						rightBtnTitle : '确定'
-					},
-					styles : {
-						bg : '#fff',
-						w : 300,
-						h : 150,
-						title : {
-							h : 20,
-							alignment : 'center',
-							size : 14,
-							color : '#000',
-							marginT : 40
-							//marginT: 10
-						},
-						input : {
-							h : 20,
-							marginUD : 3,
-							textSize : 14,
-							textColor : '#000'
-						},
-						dividingLine : {
-							width : 0.5,
-							color : '#696969'
-						},
-						left : {
-							marginB : 0,
-							marginL : 0,
-							w : 150,
-							h : 'auto',
-							bg : '#fff',
-							color : '#cacaca',
-							size : 15
-						},
-						right : {
-							marginB : 0,
-							marginL : 0,
-							w : 150,
-							h : 'auto',
-							bg : '#119ed1',
-							color : '#fff',
-							size : 15
-						}
-					}
-				}, function(ret) {
-					if (ret.eventType == 'right') {
-						var textname = ret.text
-						//昵称
-						if (id == pet_name) {
-							id = "pet_name";
-							ajax(id, textname);
-							document.getElementById('nicknamename').innerHTML = textname;
-						}
-						//学校
-						if (id == locality_university) {
-							id = "locality_university";
-							ajax(id, textname);
-							document.getElementById('schoolname').innerHTML = textname;
-						}
-						//宿舍楼栋
-						if (id == dormitory_building) {
-							id = "dormitory_building";
-							ajax(id, textname);
-							document.getElementById('dormitory_buildingname').innerHTML = textname;
-						}
-						//关闭弹出框
-						dialogBox.close({
-							dialogName : 'input'
-						});
-					}
-					if (ret.eventType == 'left') {
-						//var dialogBox = api.require('dialogBox');
-						dialogBox.close({
-							dialogName : 'input'
-						});
-					}
-				});
-			}
-
+			//			function Change(id) {
+			//				var id = id;
+			//				var dialogBox = api.require('dialogBox');
+			//				dialogBox.input({
+			//					keyboardType : 'default',
+			//					texts : {
+			//						title : '请输入想要修改的信息',
+			//						placeholder : '',
+			//						leftBtnTitle : '取消',
+			//						rightBtnTitle : '确定'
+			//					},
+			//					styles : {
+			//						bg : '#fff',
+			//						w : 300,
+			//						h : 150,
+			//						title : {
+			//							h : 20,
+			//							alignment : 'center',
+			//							size : 14,
+			//							color : '#000',
+			//							marginT : 40
+			//							//marginT: 10
+			//						},
+			//						input : {
+			//							h : 20,
+			//							marginUD : 3,
+			//							textSize : 14,
+			//							textColor : '#000'
+			//						},
+			//						dividingLine : {
+			//							width : 0.5,
+			//							color : '#696969'
+			//						},
+			//						left : {
+			//							marginB : 0,
+			//							marginL : 0,
+			//							w : 150,
+			//							h : 'auto',
+			//							bg : '#fff',
+			//							color : '#cacaca',
+			//							size : 15
+			//						},
+			//						right : {
+			//							marginB : 0,
+			//							marginL : 0,
+			//							w : 150,
+			//							h : 'auto',
+			//							bg : '#119ed1',
+			//							color : '#fff',
+			//							size : 15
+			//						}
+			//					}
+			//				}, function(ret) {
+			//					if (ret.eventType == 'right') {
+			//						var textname = ret.text
+			//						//昵称
+			//						if (id == pet_name) {
+			//							id = "pet_name";
+			//							ajax(id, textname);
+			//							document.getElementById('nicknamename').innerHTML = textname;
+			//						}
+			//						//学校
+			//						if (id == locality_university) {
+			//							id = "locality_university";
+			//							ajax(id, textname);
+			//							document.getElementById('schoolname').innerHTML = textname;
+			//						}
+			//						//宿舍楼栋
+			//						if (id == dormitory_building) {
+			//							id = "dormitory_building";
+			//							ajax(id, textname);
+			//							document.getElementById('dormitory_buildingname').innerHTML = textname;
+			//						}
+			//						//关闭弹出框
+			//						dialogBox.close({
+			//							dialogName : 'input'
+			//						});
+			//					}
+			//					if (ret.eventType == 'left') {
+			//						//var dialogBox = api.require('dialogBox');
+			//						dialogBox.close({
+			//							dialogName : 'input'
+			//						});
+			//					}
+			//				});
+			//			}
 			//修改昵称提交服务器
-			function ajax(id, textname) {
+			function _ajax(id, textname) {
 				var id = id;
 				var textname = textname;
 				api.getPrefs({
@@ -471,11 +470,16 @@
 									//console.log(JSON.stringify(ret));
 									$("#jiazai").html("获取用户信息失败");
 									api.toast({
-										msg : '很抱歉，获取用户信息失败！'
+										msg : '很抱歉，获取用户信息失败！',
+										location : 'middle'
 									});
 								}
 							} else {
-								console.log(JSON.stringify("false"));
+								//console.log(JSON.stringify("false"));
+								api.toast({
+									msg : '连接失败，请检查网络',
+									location : 'middle'
+								});
 								//					api.refreshHeaderLoadDone();
 								//					$("#nonetwork").show();
 							}
