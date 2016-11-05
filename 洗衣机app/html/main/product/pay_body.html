@@ -124,10 +124,10 @@
 				}, function(ret, err) {
 					if (ret && ret.value) {
 						user = eval('(' + ret.value + ')');
+						//普通余额
+						ptyeAjax();
 						$xy.ajax(function(ret, err) {
 							if (ret.success) {
-								//普通余额
-								ptyeAjax();
 								//定向余额数据
 								dxyeData = ret.data;
 								_tpl('dxye_data', dxyeData, 'dxye_html', function() {
