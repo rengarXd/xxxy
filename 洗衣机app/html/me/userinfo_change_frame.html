@@ -106,10 +106,8 @@
 									msg : '连接服务器失败',
 									location : 'middle'
 								});
-								//					api.refreshHeaderLoadDone();
-								//					$("#nonetwork").show();
 							}
-						}, 'editUserinfo&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&' + info + '=' + encodeURI(textname));
+						}, 'editUserinfo&funid=wash_user&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&' + info + '=' + textname);
 					} else {
 						api.toast({
 							msg : '用户未登录',
