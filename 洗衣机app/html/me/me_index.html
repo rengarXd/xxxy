@@ -14,6 +14,8 @@
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: cover;
+				/*position: relative;
+				top: 0px;*/
 			}
 			.font-active {
 				font-size: 20px;
@@ -24,9 +26,9 @@
 		</style>
 	</head>
 	<body>
-		<div class="back">
+		<div class="back" >
 			<div class="hu H-center-all" tapmode onclick="openUser();">
-				<img src="../../image/noavatar.gif" onerror="javascript:this.style.display='none'" id="nopic" class="pic" style="display: none" />
+				<img src="../../image/noavatar.gif" onerror="javascript:this.style.display='none'" id="nopic" class="pic" />
 			</div>
 			<div class="H-padding-vertical-top-10 H-text-align-center H-font-size-16">
 				<span class="H-theme-font-color-white H-font-weight-bold" id="userTel">未登录</span>
@@ -107,7 +109,7 @@
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript" src="../../scritp/uploading/upImg.js"></script>
 	<script type="text/javascript">
-		var user = null, dxmoney = null;
+		var user = null, dxmoney = null, retInfo = null;
 		apiready = function() {
 			api.parseTapmode();
 			intCSS();
@@ -128,9 +130,9 @@
 		};
 		function intCSS() {
 			$(".back").css('height', api.frameHeight / 2);
-			$("#nopic").css('height', api.frameWidth * 2 / 6 - 10);
-			$("#nopic").css('width', api.frameWidth * 2 / 6 - 10);
-			$(".hu").css('height', api.frameWidth * 2 / 6 + 12);
+			$("#nopic").css('height', api.frameWidth * 2 / 6 - 12);
+			$("#nopic").css('width', api.frameWidth * 2 / 6 - 12);
+			$(".hu").css('height', api.frameWidth * 2 / 6 + 8);
 		}
 
 		//获取偏好值
@@ -151,27 +153,27 @@
 								value : JSON.stringify(retInfo)
 							});
 							//手机号
-							$("#userTel").html(retInfo[0].phone_number);
+							$("#userTel").html(user[0].phone_number);
 							//定向余额
 							if (retInfo[0].orient_overage != "") {
 								//$("#ding").html(user[0].orient_overage);
-								dxmoney = parseFloat(user[0].orient_overage);
+								dxmoney = parseFloat(retInfo[0].orient_overage);
 							} else {
 								dxmoney = 0;
 							};
 							//账户余额
 							if (retInfo[0].account_overage != "") {
-								var total = parseFloat(user[0].account_overage) + dxmoney;
+								var total = parseFloat(retInfo[0].account_overage) + dxmoney;
 								document.getElementById('pu').innerHTML = total.toFixed(2);
 							};
 							//洗衣总次数
 							if (retInfo[0].wash_total) {
-								$("#nums").html(user[0].wash_total);
+								$("#nums").html(retInfo[0].wash_total);
 							}
 							//渲染头像
 							if (retInfo[0].attach_path != "") {
 								$("#nopic").show();
-								$("#nopic").attr('src', window.washUrl + user[0].attach_path);
+								$("#nopic").attr('src', window.washUrl + retInfo[0].attach_path);
 								var marl = (api.frameWidth - $("#nopic").attr('width')) / 2;
 								$(".hu").css('margin-left', marl);
 								$(".hu").css('margin-right', marl);
@@ -279,7 +281,7 @@
 					name : 'my_wallet_head',
 					url : './my_wallet/my_wallet_head.html',
 					pageParam : {
-						data : user[0]
+						data : retInfo[0]
 					},
 					bounces : false,
 					delay : delay,
