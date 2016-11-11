@@ -173,8 +173,12 @@
 				}, function(ret, err) {
 					getlocation();
 				});
-				//监听事件
-				//addlistener();
+				//监听后台返回事件
+				api.addEventListener({
+					name : 'resume'
+				}, function(ret, err) {
+					location.reload();
+				});
 			};
 			//初始化数据方法
 			function initData(longitude, latitude) {

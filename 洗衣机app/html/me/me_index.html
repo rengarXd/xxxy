@@ -14,8 +14,8 @@
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: cover;
-				/*position: relative;
-				top: 0px;*/
+				position: relative;
+				top: 0px;
 			}
 			.font-active {
 				font-size: 20px;
@@ -28,7 +28,7 @@
 	<body>
 		<div class="back" >
 			<div class="hu H-center-all" tapmode onclick="openUser();">
-				<img src="../../image/noavatar.gif" onerror="javascript:this.style.display='none'" id="nopic" class="pic" />
+				<img src="../../image/noavatar.gif" onerror="javascript:this.style.display='none'" id="nopic" class="pic" style="display: none;" />
 			</div>
 			<div class="H-padding-vertical-top-10 H-text-align-center H-font-size-16">
 				<span class="H-theme-font-color-white H-font-weight-bold" id="userTel">未登录</span>
@@ -127,12 +127,18 @@
 				//刷新
 				location.reload();
 			});
+			//监听后台返回事件
+			api.addEventListener({
+				name : 'resume'
+			}, function(ret, err) {
+				location.reload();
+			});
 		};
 		function intCSS() {
 			$(".back").css('height', api.frameHeight / 2);
 			$("#nopic").css('height', api.frameWidth * 2 / 6 - 12);
 			$("#nopic").css('width', api.frameWidth * 2 / 6 - 12);
-			$(".hu").css('height', api.frameWidth * 2 / 6 + 8);
+			$(".hu").css('height', api.frameWidth * 2 / 6 + 9.5);
 		}
 
 		//获取偏好值
