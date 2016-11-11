@@ -110,7 +110,7 @@
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript" src="../../script/xy.js"></script>
 	<script type="text/javascript">
-		var jpush = null, tel = null, jpush = null, systemtype = null;
+		var jpush = null, tel = null, jpush = null, systemtype = null, is_send_smsVerify = false;
 		apiready = function() {
 			api.parseTapmode();
 			init();
@@ -163,33 +163,40 @@
 					}
 				});
 			} else {
-				api.showProgress({
-					title : '获取中',
-					text : '请稍等....'
-				});
-				$xy.ajax(function(ret, err) {
-					api.hideProgress();
-					if (ret) {
-						//$("#nonetwork").hide();
-						if (ret.success) {
-							$('#sendVerify').removeAttr('onclick');
-							$('#sendVerify').html('<span id="Verifytime">60</span>');
-							time = 60;
-							isinerval = setInterval("CountDown()", 1000);
+				if (is_send_smsVerify) {
+					api.toast({
+						msg : '您已经发送过验证码了'
+					});
+				} else {
+					api.showProgress({
+						title : '获取中',
+						text : '请稍等....'
+					});
+					$xy.ajax(function(ret, err) {
+						api.hideProgress();
+						if (ret) {
+							//$("#nonetwork").hide();
+							if (ret.success) {
+								//$("#sendVerify").removeAttr('onclick');
+								is_send_smsVerify = true;
+								$('#sendVerify').html('<span id="Verifytime">60</span>');
+								time = 60;
+								isinerval = setInterval("CountDown()", 1000);
+							} else {
+								api.toast({
+									msg : '很抱歉，短信获取失败，请稍后再试！',
+									location : 'middle'
+								});
+							}
 						} else {
 							api.toast({
-								msg : '很抱歉，短信获取失败，请稍后再试！',
-							location : 'middle'
+								msg : '连接失败，请检查网络配置',
+								location : 'middle'
 							});
+							//$("#nonetwork").show();
 						}
-					} else {
-						api.toast({
-							msg : '连接失败，请检查网络配置',
-							location : 'middle'
-						});
-						//$("#nonetwork").show();
-					}
-				}, 'sendtplValue&funid=wash_user&phone_number=' + tel);
+					}, 'sendtplValue&funid=wash_user&phone_number=' + tel);
+				}
 			}
 		}
 
@@ -198,9 +205,10 @@
 			if (time < 1) {
 				//              var sendVerify = document.getElementById('sendVerify');
 				clearInterval(isinerval);
-				$('#sendVerify').attr('onclick', 'getVerify()');
-				//$('#sendVerify').attr( 'status', '0');
+				//$('#sendVerify').attr('onclick', 'getVerify()');
 				$('#sendVerify').html('重新获取');
+				//还原标识
+				is_send_smsVerify = false;
 				return;
 			}
 			//          var getVerify = document.getElementById('getVerify');
@@ -381,7 +389,7 @@
 					api.hideProgress();
 					api.toast({
 						msg : '连接失败，请检查网络配置',
-							location : 'middle'
+						location : 'middle'
 					});
 					//$("#nonetwork").show();
 				}
