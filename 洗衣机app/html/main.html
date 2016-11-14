@@ -109,6 +109,20 @@
 				msglistener();
 			});
 			function msglistener() {
+				//app恢复到前台
+				api.addEventListener({
+					name : 'resume'
+				}, function(ret, err) {
+					var ajpush = api.require('ajpush');
+					ajpush.onResume();
+				});
+				//app恢复到后台
+				api.addEventListener({
+					name : 'pause'
+				}, function(ret, err) {
+					var ajpush = api.require('ajpush');
+					ajpush.onPause();
+				});
 				//系统消息处理========================
 				api.addEventListener({
 					name : 'noticeclicked'

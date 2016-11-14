@@ -39,8 +39,8 @@
 		<div class="H-theme-background-color-white H-font-size-12 H-padding-horizontal-left-10 H-padding-vertical-both-5 H-margin-vertical-bottom-5">
 			<span class="H-font-size-14 H-theme-font-color-999">消息状态：</span>
 			<div class="H-float-right H-display-inline H-padding-horizontal-right-10">
-				<span style="background-color: #ff7200;" >&nbsp;</span><span class=" H-padding-horizontal-both-8">已读</span>
-				<span style="background-color: #03aafe;" >&nbsp;</span><span class=" H-padding-horizontal-left-8">未读</span>
+				<span style="background-color: #03aafe;" >&nbsp;</span><span class=" H-padding-horizontal-both-8">已读</span>
+				<span style="background-color: #ff7200;" >&nbsp;</span><span class=" H-padding-horizontal-left-8">未读</span>
 			</div>
 		</div>
 		<div id="message_html">
@@ -66,9 +66,9 @@
 			<div class="animated fadeIn H-theme-background-color-white H-border-both-after H-border-radius-15 H-margin-horizontal-both-12 H-margin-vertical-bottom-8" tapmode="H-touch-active" onclick="openOrder('{{ d[i].news_id }}');">
 			<div class="H-channel-title H-flexbox-horizontal H-theme-background-color-white H-vertical-middle" >
 			{{# if (d[i].is_read == '0'){ }}
-			<div style="background-color: #03aafe;" class="H-channel-line H-padding-vertical-top-15 H-padding-horizontal-left-3 H-margin-horizontal-left-10"></div>
-			{{# }else{ }}
 			<div style="background-color: #ff7200;" class="H-channel-line H-padding-vertical-top-15 H-padding-horizontal-left-3 H-margin-horizontal-left-10"></div>
+			{{# }else{ }}
+			<div style="background-color: #03aafe;" class="H-channel-line H-padding-vertical-top-15 H-padding-horizontal-left-3 H-margin-horizontal-left-10"></div>
 			{{# } }}
 			<div class="H-channel-text H-theme-font-color4 H-flex-item H-font-size-16 H-theme-font-color-black H-padding-10 H-text-show-row-1 chense">
 			{{ d[i].news_tital }}

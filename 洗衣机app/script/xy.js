@@ -169,16 +169,22 @@
 					var systemType = api.systemType;
 					if (systemType == "ios") {
 						var rets = eval('(' + err.body + ')');
-						if (rets.message == "登录验证失败!")
+						if (rets.message == "登录验证失败!") {
+							var ajpush = api.require('ajpush');
+							ajpush.removeListener();
 							api.removePrefs({
 								key : 'userinfo'
 							});
+						}
 						callback(rets, err);
 					} else {
-						if (ret.body.message == "登录验证失败!")
+						if (ret.body.message == "登录验证失败!") {
+							var ajpush = api.require('ajpush');
+							ajpush.removeListener();
 							api.removePrefs({
 								key : 'userinfo'
 							});
+						}
 						callback(ret.body, err);
 					}
 				});
@@ -199,16 +205,22 @@
 					var systemType = api.systemType;
 					if (systemType == "ios") {
 						var rets = eval('(' + err.body + ')');
-						if (rets.message == "登录验证失败!")
+						if (rets.message == "登录验证失败!") {
+							var ajpush = api.require('ajpush');
+							ajpush.removeListener();
 							api.removePrefs({
 								key : 'userinfo'
 							});
+						}
 						callback(rets, err);
 					} else {
-						if (ret.message == "登录验证失败!")
+						if (ret.message == "登录验证失败!") {
+							var ajpush = api.require('ajpush');
+							ajpush.removeListener();
 							api.removePrefs({
 								key : 'userinfo'
 							});
+						}
 						callback(ret, err);
 					}
 				});
