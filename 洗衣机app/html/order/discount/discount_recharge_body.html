@@ -42,7 +42,7 @@
 		<div class="H-padding-vertical-bottom-10"></div>
 		<div class="H-padding-12 H-theme-background-color-white">
 			<div class="H-center-all color-888 H-font-size-12 H-padding-horizontal-left-2 H-padding-vertical-top-3">
-				<span>适用范围：</span>郑州大学南校区
+				<span>适用范围：</span><span id="dept_name"></span>
 			</div>
 			<div class="xy_border H-padding-vertical-top-10"></div>
 			<div class="H-flexbox-horizontal H-margin-vertical-top-10 H-text-align-center">
@@ -137,7 +137,8 @@
 			var paymoney = null;
 			apiready = function() {
 				product = api.pageParam.data;
-				console.log(JSON.stringify(product));
+				document.getElementById('dept_name').innerHTML = product.dept_name;
+				//console.log(JSON.stringify(product));
 				initPage();
 			};
 			// 初始化页面

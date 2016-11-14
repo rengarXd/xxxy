@@ -499,15 +499,7 @@
 				}, function(ret, err) {
 					if (ret.buttonIndex == 2) {
 						var ajpush = api.require('ajpush');
-						ajpush.stopPush(function(ret) {
-							if (ret && ret.status) {
-								//success
-							} else {
-								//								api.toast({
-								//									msg : '退出失败'
-								//								});
-							}
-						});
+						ajpush.removeListener();
 						api.removePrefs({
 							key : 'userinfo'
 						});
