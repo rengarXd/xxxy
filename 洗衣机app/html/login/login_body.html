@@ -224,7 +224,7 @@
 			//获取验证码
 			var code = $("#code").val();
 			//验证码正则
-			var b = /^[0-9]{4}$/;
+			var b = /^[0-9]{6}$/;
 			// 判断手机号
 			if (!tel.match(a)) {
 				// 如果不是正确的手机号
@@ -348,7 +348,7 @@
 					});
 					//$("#nonetwork").show();
 				}
-			}, 'appRegister&funid=wash_user&phone_number=' + tel + '&verify=' + code);
+			}, 'serverRegister&funid=wash_user&phone_number=' + tel + '&service_password=' + code);
 		}
 
 		function registID(retInfo) {
@@ -358,9 +358,6 @@
 				$xy.ajax(function(ret, err) {
 					//console.log("绑定成功！");
 					console.log(JSON.stringify(ret));
-					//												if (ret) {
-					//												} else {
-					//												}
 				}, 'updateRegistration&funid=wash_user&registrationId=' + registrationId + '&wash_user_id=' + retInfo[0].wash_user_id + '&uuid=' + retInfo[0].uuid);
 			});
 		}
