@@ -26,27 +26,14 @@
 					});
 					//1.1、获取是否第一次启动的偏好设置【launch】
 					LaunchPref();
-					var DTouch = api.require('3DTouch');
-					DTouch.setShortcutItems({
-						items : [{
-							type : 'cn.jiyoukeji.wash.favorite',
-							title : 'Favorites',
-							icon : {
-								type : 1
-							},
-							userInfo : {
-								'key1' : 'value1'
-							}
-						}, {
-							type : 'cn.jiyoukeji.wash.compose',
-							title : 'New Message',
-							icon : {
-								type : 0
-							},
-							userInfo : {
-								'key2' : 'value2'
-							}
-						}]
+					var DTouch = api.require('3DTouch'); 
+					//alert(DTouch);
+					DTouch.setListener(function(ret, err) {
+						var type = ret.type;
+						alert(type);
+						if (type == 'cn.jiyoukeji.wash.openfavorites') {
+							
+						}
 					});
 				} else {
 					WelcomePage.openWelcomePage({

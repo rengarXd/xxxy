@@ -6,11 +6,11 @@
 		<array>
 			<dict>
 				<key>UIApplicationShortcutItemType</key>
-				<string>com.mycompany.myapp.openfavorites</string>
+				<string>cn.jiyoukeji.wash.openfavorites</string>
 				<key>UIApplicationShortcutItemTitle</key>
 				<string>Favorites</string>
 				<key>UIApplicationShortcutItemSubtitle</key>
-				<string></string>
+				<string>New Message</string>
 				<key>UIApplicationShortcutItemIconFile</key>
 				<string>widget/image/open-favorites</string>
 				<key>UIApplicationShortcutItemUserInfo</key>
@@ -21,7 +21,7 @@
 			</dict>
 			<dict>
 				<key>UIApplicationShortcutItemType</key>
-				<string>com.mycompany.myapp.newmessage</string>
+				<string>cn.jiyoukeji.wash.newmessage</string>
 				<key>UIApplicationShortcutItemTitle</key>
 				<string>New Message</string>
 				<key>UIApplicationShortcutItemIconType</key>
