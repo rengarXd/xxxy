@@ -26,6 +26,28 @@
 					});
 					//1.1、获取是否第一次启动的偏好设置【launch】
 					LaunchPref();
+					var DTouch = api.require('3DTouch');
+					DTouch.setShortcutItems({
+						items : [{
+							type : 'cn.jiyoukeji.wash.favorite',
+							title : 'Favorites',
+							icon : {
+								type : 1
+							},
+							userInfo : {
+								'key1' : 'value1'
+							}
+						}, {
+							type : 'cn.jiyoukeji.wash.compose',
+							title : 'New Message',
+							icon : {
+								type : 0
+							},
+							userInfo : {
+								'key2' : 'value2'
+							}
+						}]
+					});
 				} else {
 					WelcomePage.openWelcomePage({
 						isFullscreen : true, //是否全屏(全屏不显示状态栏)  默认false
@@ -101,9 +123,9 @@
 								duration : 100 //动画过渡时间，默认300毫秒
 							}
 						});
-						setTimeout(function(){
+						setTimeout(function() {
 							api.closeWin();
-						},300);
+						}, 300);
 						//						api.removeLaunchView({
 						//							animation : {
 						//								type : 'none',
@@ -125,9 +147,9 @@
 								duration : 100 //动画过渡时间，默认300毫秒
 							}
 						});
-						setTimeout(function(){
+						setTimeout(function() {
 							api.closeWin();
-						},300);
+						}, 300);
 						//						api.removeLaunchView();
 					}
 				});

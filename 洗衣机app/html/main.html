@@ -85,7 +85,7 @@
 					<strong class="H-font-size-12 H-display-block H-font-weight-normal H-margin-vertical-top-3">订单</strong>
 				</div>
 			</div>
-			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white  switch-item" style="border-width: 0 0 2px  0">
+			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white  switch-item" style="border-width: 0 0 2px 0">
 				<div class="">
 					<span class="H-icon H-display-block H-line-height-normal"  style="margin-left: 1px;"><i class="iconfont icon-gerenxinxi H-font-size-20"></i></span>
 					<strong class="H-font-size-12 H-display-block H-font-weight-normal H-margin-vertical-top-3">我的</strong>
@@ -108,6 +108,14 @@
 				//系统消息监听
 				msglistener();
 			});
+			//我的页面刷新
+			function mereload() {
+				//alert('刷新');
+				api.sendEvent({
+					name : 'reload'
+				});
+			}
+
 			function msglistener() {
 				//app恢复到前台
 				api.addEventListener({
@@ -356,7 +364,7 @@
 						//设置定时任务
 						if (times && times > 0) {
 							//渲染提示条
-							var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的西三宿舍三楼西01机，大约<span id="minttime"></span>后结束</div></div>';
+							var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的' + ret.data[0].washloca_name + ret.data[0].device_name + '，大约<span id="minttime"></span>后结束</div></div>';
 							$('#index_header').append(timedom);
 						}
 						//						if (times <= 120) {
