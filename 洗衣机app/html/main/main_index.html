@@ -76,26 +76,17 @@
 			您曾使用过的洗衣机
 			</div>
 			{{# for(var i = 0, len = d.length; i < len; i++) { }}
-			<div class="animated fadeIn H-theme-background-color-white H-margin-vertical-bottom-5">
+			{{# if(d[i].ustatus == "空闲") { }}
+			<div class="animated fadeIn H-theme-background-color-white H-margin-vertical-bottom-5 H-touch-active"  tapmode="H-touch-active" onclick="openProduct('{{ i }}');">
 			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
 			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
-			{{# if(d[i].ustatus == "空闲") { }}
 			<div class="H-flex-item xy_font_color">
 			<span>{{ d[i].device_name }}</span>
-			<span class="H-float-right xyzt"  tapmode="H-touch-active" onclick="openProduct('{{ i }}');">我要洗衣</span>
+			<span class="H-float-right xyzt" >我要洗衣</span>
 			<div class="H-font-size-13 kongxian H-padding-vertical-both-3">
-			空闲
-			</div>
-			</div>
-			{{# }else{ }}
-			<div class="H-flex-item xy_font_color">
-			<span>{{ d[i].device_name }}</span>
-			<span class="H-float-right xyzt"  tapmode="H-touch-active" onclick="Set_availability('{{ d[i].device_id }}');">空闲提醒</span>
-			<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
 			{{ d[i].ustatus }}
 			</div>
 			</div>
-			{{# } }}
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
 			</div>
 			<div class="xy_border"></div>
@@ -104,6 +95,43 @@
 			<span class="H-padding-horizontal-right-20 H-float-right">{{ d[i].distance }}米</span>
 			</div>
 			</div>
+			{{# }else if(d[i].ustatus == "使用中" || d[i].ustatus == "锁定"){ }}
+			<div class="animated fadeIn H-theme-background-color-white H-margin-vertical-bottom-5 H-touch-active" tapmode="H-touch-active"  onclick="Set_availability('{{ d[i].device_id }}');">
+			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
+			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+			<div class="H-flex-item xy_font_color">
+			<span>{{ d[i].device_name }}</span>
+			<span class="H-float-right xyzt" >空闲提醒</span>
+			<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
+			{{ d[i].ustatus }}
+			</div>
+			</div>
+			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
+			</div>
+			<div class="xy_border"></div>
+			<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
+			{{ d[i].washloca_name }}
+			<span class="H-padding-horizontal-right-20 H-float-right">{{ d[i].distance }}米</span>
+			</div>
+			</div>
+			{{# }else{ }}
+			<div class="animated fadeIn H-theme-background-color-white H-margin-vertical-bottom-5">
+			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
+			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+			<div class="H-flex-item xy_font_color">
+			<span>{{ d[i].device_name }}</span>
+			<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
+			{{ d[i].ustatus }}
+			</div>
+			</div>
+			</div>
+			<div class="xy_border"></div>
+			<div class="H-theme-background-color-white H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-8" style="padding-left: 37px;">
+			{{ d[i].washloca_name }}
+			<span class="H-padding-horizontal-right-20 H-float-right">{{ d[i].distance }}米</span>
+			</div>
+			</div>
+			{{# } }}
 			{{# } }}
 			<div class="H-margin-vertical-top-10 H-text-align-center H-font-size-15 H-theme-font-color-999" tapmode="touch" onclick="openWin('nearby_laundry_head','./nearby_laundry/nearby_laundry_head.html');">
 			查找更多洗衣点
@@ -213,7 +241,7 @@
 								api.refreshHeaderLoadDone();
 								$("#xyj_html").html('<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">连接失败请检查网络</div></div></div>');
 							}
-						}, 'appUDeviceList&funid=wash_device&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&gps_longitude=' +longitude + '&gps_latitude=' + latitude);
+						}, 'appUDeviceList&funid=wash_device&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
 					} else {
 						$xy.ajax(function(ret, err) {
 							api.refreshHeaderLoadDone();
