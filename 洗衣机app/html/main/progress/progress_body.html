@@ -11,7 +11,7 @@
 		<style>
 			.bg_title {
 				background-image: url('../../../image/daojishi.png');
-				background-size: contain;
+				background-size: cover;
 				background-position: center;
 			}
 			.img-icon {
@@ -37,7 +37,7 @@
 			</div>
 		</div>
 		<script type="text/html" id="progress_data">
-			<div class="bg_title" style="height: 226px;">
+			<div class="bg_title">
 			<div class="H-theme-font-color-white H-text-align-center" style="padding-top: 72px;">
 			剩余时间
 			<div class="H-text-align-center" id="lasttime">
@@ -82,7 +82,7 @@
 		</script>
 		<script type="text/javascript" src="../../../script/xy.js"></script>
 		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
-		<!--<script type="text/javascript" src="../../../script/zepto.min.js"></script>-->
+		<script type="text/javascript" src="../../../script/zepto.min.js"></script>
 		<script type="text/javascript">
 			var times = null, timeall = null;
 			var data = null, isinerval = null;
@@ -90,6 +90,7 @@
 			apiready = function() {
 				// 初始化页面
 				data = api.pageParam.data;
+				$('.bg_title').css('height', api.frameHeight / 2.7);
 				initPage();
 				listenEvent();
 			};
@@ -249,9 +250,9 @@
 						id : 1
 					});
 					clearInterval(isinerval);
-//					api.removePrefs({
-//						key : 'washtime'
-//					});
+					//					api.removePrefs({
+					//						key : 'washtime'
+					//					});
 					return;
 				} else {
 					times--;
@@ -302,7 +303,7 @@
 				arcProgress.open({
 					type : 0,
 					centerX : api.frameWidth / 6 * (2 * 1 + 1),
-					centerY : 106,
+					centerY : api.frameWidth / 3.6,
 					radius : api.frameWidth / 6,
 					bgColor : '#ffffff',
 					pgColor : '#0d90c9',

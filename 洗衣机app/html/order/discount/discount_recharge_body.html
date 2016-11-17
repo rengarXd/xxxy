@@ -98,7 +98,7 @@
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i payway="2" class="iconfont payway H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
 		</div>
 		<!--<div class="H-padding-horizontal-left-10 H-text-align-center H-padding-vertical-top-5 H-font-size-12 color-888">
-			目前平台只支持支付宝和微信两种方式充值
+		目前平台只支持支付宝和微信两种方式充值
 		</div>-->
 		<div class="H-padding-20">
 			<button onclick="openCf();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
@@ -138,6 +138,7 @@
 			apiready = function() {
 				product = api.pageParam.data;
 				document.getElementById('dept_name').innerHTML = product.dept_name;
+				//alert(A().length);
 				//console.log(JSON.stringify(product));
 				initPage();
 			};
@@ -420,9 +421,16 @@
 				if (seconds >= 0 && seconds <= 9) {
 					seconds = "0" + seconds;
 				}
-				var currentdate = String(year) + String(month) + String(strDate) + String(hour) + String(minutes) + String(seconds) + String(parseInt((Math.random()) * 10000));
+				var currentdate = String(year) + String(month) + String(strDate) + String(hour) + String(minutes) + String(seconds) + String(MathRand());
 				return currentdate;
-				//alert(currentdate);
+			}
+
+			function MathRand() {
+				var Num = "";
+				for (var i = 0; i < 4; i++) {
+					Num += Math.floor(Math.random() * 10);
+				}
+				return Num;
 			}
 		</script>
 	</body>

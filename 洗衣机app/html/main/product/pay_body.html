@@ -106,8 +106,6 @@
 				//商品信息
 				product = api.pageParam;
 				//console.log(JSON.stringify(product));
-				//生成随机的订单号
-				A();
 				//初始化页面
 				initPage();
 			};
@@ -226,6 +224,7 @@
 					});
 					return;
 				}
+				//生成随机的订单号
 				orderid = "D" + A();
 				api.showProgress();
 				$xy.Pajax(function(ret, err) {
@@ -273,6 +272,7 @@
 					return;
 				};
 				if (pay_way == 1) {
+					//生成随机的订单号
 					orderid = "A" + A();
 					doPay({
 						wash_user_id : user[0].wash_user_id,
@@ -301,6 +301,7 @@
 						}
 					});
 				} else if (pay_way == 2) {
+					//生成随机的订单号
 					orderid = "W" + A();
 					//打开支付成功页;
 					doPay({
@@ -337,6 +338,7 @@
 						});
 						return;
 					}
+					//生成随机的订单号
 					orderid = "P" + A();
 					doPay({
 						wash_user_id : user[0].wash_user_id,
@@ -361,6 +363,7 @@
 						}
 					});
 				} else if (pay_way == 4) {
+					//生成随机的订单号
 					orderid = "D" + A();
 					doPay({
 						wash_user_id : user[0].wash_user_id,
@@ -542,9 +545,17 @@
 				if (seconds >= 0 && seconds <= 9) {
 					seconds = "0" + seconds;
 				}
-				var currentdate = String(year) + String(month) + String(strDate) + String(hour) + String(minutes) + String(seconds) + String(parseInt((Math.random()) * 10000));
+				var currentdate = String(year) + String(month) + String(strDate) + String(hour) + String(minutes) + String(seconds) + String(MathRand());
 				return currentdate;
 				//alert(currentdate);
+			}
+
+			function MathRand() {
+				var Num = "";
+				for (var i = 0; i < 4; i++) {
+					Num += Math.floor(Math.random() * 10);
+				}
+				return Num;
 			}
 		</script>
 	</body>
