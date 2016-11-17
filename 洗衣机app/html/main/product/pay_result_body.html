@@ -55,6 +55,7 @@
 		</div>
 		<script type="text/javascript" src="../../../script/xy.js"></script>
 		<script type="text/javascript" src="../../../script/tools/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../script/tools/layer.js"></script>
 		<script type="text/javascript" src="../../../script/tools/jquery.flipcountdown.js"></script>
 		<script type="text/javascript">
 			var user = null, data = null, isinerval = null;
@@ -151,9 +152,24 @@
 				}, function(ret, err) {
 					if (ret && ret.value) {
 						user = eval('(' + ret.value + ')');
-						api.showProgress();
+						//api.showProgress();
+						//loading带文字
+						//0代表加载的风格，支持0-2
+						layer.open({
+							type : 2,
+							title : false,
+							closeBtn : 0,
+							shadeClose : false,
+							content : '加载中'
+						});
 						$xy.ajax(function(ret, err) {
-							api.hideProgress();
+							//api.hideProgress();
+							setTimeout(function() {
+								layer.closeAll();
+							}, 1000);
+							api.removePrefs({
+								key : 'resulttime'
+							});
 							if (ret.success) {
 								startResult();
 							} else {
@@ -174,9 +190,6 @@
 			function startResult() {
 				api.toast({
 					msg : '开始洗衣'
-				});
-				api.removePrefs({
-					key : 'resulttime'
 				});
 				var delay = 0;
 				if (api.systemType != 'ios')
