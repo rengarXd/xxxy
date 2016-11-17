@@ -203,12 +203,9 @@
 		var user = null;
 		var wash_user_id = null;
 		var uuid = null;
-		var page = 1, pagenum = 10, loadLock = false, datacount = null;
+		var page = 1, pagenum = 10, loadLock = false, datacount = null, retDetail = null;
 		apiready = function() {
-			//获取当前日期
-			//			Date();
 			//初始化页面
-			//			alert(new Date('2016-09-01').getDay());
 			initPage();
 			//下拉刷新
 			api.setRefreshHeaderInfo({
@@ -270,13 +267,14 @@
 									var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">亲，您还没有订单！</div></div></div>';
 									document.getElementById('order_list').innerHTML = htmls;
 									$("#loading").hide();
-//									api.addEventListener({
-//										name : 'tap'
-//									}, function(ret, err) {
-//										location.reload();
-//									});
+									//									api.addEventListener({
+									//										name : 'tap'
+									//									}, function(ret, err) {
+									//										location.reload();
+									//									});
 								} else {
 									//console.log(JSON.stringify(ret));
+									retDetail = ret.data;
 									var tpl = document.getElementById('order_list_item').innerHTML;
 									//读取模版
 									//方式一：异步渲染（推荐）
@@ -353,22 +351,39 @@
 
 		//打开订单详情
 		function open_order_details(order_id) {
-			var delay = 0;
-			if (api.systemType != 'ios')
-				delay = 200;
-			api.openWin({
-				name : 'order_details_head',
-				url : './order_details/order_details_head.html',
-				pageParam : {
-					wash_user_id : wash_user_id,
-					uuid : uuid,
-					order_id : order_id
-				},
-				bounces : false,
-				delay : delay,
-				slidBackEnabled : true,
-				vScrollBarEnabled : false
-			});
+			if (retDetail[0].order_condition == "待开始") {
+				var delay = 0;
+				if (api.systemType != 'ios')
+					delay = 200;
+				api.openWin({
+					name : 'pay_result_head',
+					url : '../main/product/pay_result_head.html',
+					bounces : false,
+					pageParam : {
+						data : retDetail
+					},
+					delay : delay,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
+				});
+			} else {
+				var delay = 0;
+				if (api.systemType != 'ios')
+					delay = 200;
+				api.openWin({
+					name : 'order_details_head',
+					url : './order_details/order_details_head.html',
+					pageParam : {
+						wash_user_id : wash_user_id,
+						uuid : uuid,
+						order_id : order_id
+					},
+					bounces : false,
+					delay : delay,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false
+				});
+			}
 		}
 	</script>
 </html>
