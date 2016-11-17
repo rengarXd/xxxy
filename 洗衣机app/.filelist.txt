@@ -37,6 +37,7 @@
 /A6926955799619/html/me/server/custom_server_body.html
 /A6926955799619/script/swiper/swiper.min.js
 /A6926955799619/css/style.css
+/A6926955799619/script/tools/layer.js
 /A6926955799619/html/main/progress/progress_body.html
 /A6926955799619/html/main/nearby_laundry/nearby_machine_head.html
 /A6926955799619/html/main/nearby_laundry/nearby_product_head.html
@@ -92,8 +93,8 @@
 /A6926955799619/script/tools/laytpl.js
 /A6926955799619/script/api.js
 /A6926955799619/image/commodity_icon/ccr.gif
-/A6926955799619/image/mebackground_1.png
 /A6926955799619/css/Hui.css
+/A6926955799619/image/mebackground_1.png
 /A6926955799619/html/me/my_wallet/my_wallet_body.html
 /A6926955799619/image/saoerweima.png
 /A6926955799619/html/me/setting/change_phone_2_body.html
@@ -148,6 +149,7 @@
 /A6926955799619/html/login/terms_service/terms_service_body.html
 /A6926955799619/html/order/order_index.html
 /A6926955799619/image/yifu.gif
+/A6926955799619/script/tools/need/layer.css
 /A6926955799619/image/commodity_icon/bz.gif
 /A6926955799619/html/main/FNscan_body.html
 /A6926955799619/image/commodity_icon/cc.gif

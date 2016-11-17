@@ -37,7 +37,7 @@
 			</div>
 		</div>
 		<script type="text/html" id="progress_data">
-			<div class="bg_title">
+			<div class="bg_title" id="lastbox">
 			<div class="H-theme-font-color-white H-text-align-center" style="padding-top: 72px;">
 			剩余时间
 			<div class="H-text-align-center" id="lasttime">
@@ -80,9 +80,9 @@
 			</div>
 			</div>
 		</script>
+		<script type="text/javascript" src="../../../script/zepto.min.js"></script>
 		<script type="text/javascript" src="../../../script/xy.js"></script>
 		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
-		<script type="text/javascript" src="../../../script/zepto.min.js"></script>
 		<script type="text/javascript">
 			var times = null, timeall = null;
 			var data = null, isinerval = null;
@@ -90,7 +90,7 @@
 			apiready = function() {
 				// 初始化页面
 				data = api.pageParam.data;
-				$('.bg_title').css('height', api.frameHeight / 2.7);
+				$("#lastbox").css('height', api.frameHeight / 2.7);
 				initPage();
 				listenEvent();
 			};
