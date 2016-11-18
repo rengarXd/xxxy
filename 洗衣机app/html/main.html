@@ -116,11 +116,11 @@
 				});
 			}
 
-			function orderLoad(){
+			function orderLoad() {
 				api.execScript({
-					frameName:'order_index',
-	                script: 'initPage();'
-                });
+					frameName : 'order_index',
+					script : 'initPage();'
+				});
 			}
 
 			function msglistener() {
@@ -130,6 +130,16 @@
 				}, function(ret, err) {
 					var ajpush = api.require('ajpush');
 					ajpush.onResume();
+					api.closeFrame({
+						name : 'main_index'
+					});
+					api.closeFrame({
+						name : 'order_index'
+					});
+					api.closeFrame({
+						name : 'me_index'
+					});
+					location.reload();
 				});
 				//app恢复到后台
 				api.addEventListener({
@@ -473,7 +483,7 @@
 					//结束时间递减
 					clearInterval(isinerval);
 					//隐藏提示条
-					$("#progress_toast").hide();
+					$("#progress_toast").remove();
 					//移除偏好值
 					//					api.removePrefs({
 					//						key : 'washtime'
