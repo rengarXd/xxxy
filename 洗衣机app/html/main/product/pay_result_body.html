@@ -58,7 +58,7 @@
 		<script type="text/javascript" src="../../../script/tools/layer.js"></script>
 		<script type="text/javascript" src="../../../script/tools/jquery.flipcountdown.js"></script>
 		<script type="text/javascript">
-			var user = null, data = null, isinerval = null;
+			var user = null, data = null, isinerval = null, times = null;
 			apiready = function() {
 				data = api.pageParam.data;
 				//console.log(JSON.stringify(data));
@@ -74,7 +74,6 @@
 				document.getElementById('model').innerHTML = data[0].title;
 				if (isinerval) {
 					isinerval = null;
-					return;
 				}
 				// 初始化时间递减
 				api.getPrefs({
@@ -86,7 +85,7 @@
 						//获取当前时间
 						var now = new Date();
 						//计算剩余时间
-						times = 310 - ((now.getTime() - parseInt(time)) / 1000);
+						times = 290 - ((now.getTime() - parseInt(time)) / 1000);
 						//console.log('times111==' + times);
 						//调用倒计时方法
 						isinerval = setInterval("CountDown()", 1000);
@@ -98,7 +97,7 @@
 						//alert('alert(now.getTime());==' + now.getTime());
 						//alert('stringTime==' + stringTime);
 						//计算剩余时间
-						times = 310 - ((now.getTime() - stringTime) / 1000);
+						times = 290 - ((now.getTime() - stringTime) / 1000);
 						//console.log('times2222==' + times);
 						//记录当前时间
 						api.setPrefs({
@@ -109,14 +108,7 @@
 						isinerval = setInterval("CountDown()", 1000);
 					}
 				});
-				//监听安卓手机的返回
-				api.addEventListener({
-					name : 'keyback'
-				}, function(ret, err) {
-					api.closeToWin({
-						name : 'main'
-					});
-				});
+				
 			}
 
 			//时间递减处理
