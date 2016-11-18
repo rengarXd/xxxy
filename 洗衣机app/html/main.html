@@ -124,30 +124,6 @@
 			}
 
 			function msglistener() {
-				//app恢复到前台
-				api.addEventListener({
-					name : 'resume'
-				}, function(ret, err) {
-					var ajpush = api.require('ajpush');
-					ajpush.onResume();
-					api.closeFrame({
-						name : 'main_index'
-					});
-					api.closeFrame({
-						name : 'order_index'
-					});
-					api.closeFrame({
-						name : 'me_index'
-					});
-					location.reload();
-				});
-				//app恢复到后台
-				api.addEventListener({
-					name : 'pause'
-				}, function(ret, err) {
-					var ajpush = api.require('ajpush');
-					ajpush.onPause();
-				});
 				//系统消息处理========================
 				api.addEventListener({
 					name : 'noticeclicked'
