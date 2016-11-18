@@ -15,6 +15,23 @@
 				systemtype = api.systemType;
 				WelcomePage = api.require('welcomePage');
 				init();
+				//app恢复到前台
+				api.addEventListener({
+					name : 'resume'
+				}, function(ret, err) {
+					var ajpush = api.require('ajpush');
+					ajpush.onResume();
+					api.closeFrame({
+						name : 'main_index'
+					});
+					api.closeFrame({
+						name : 'order_index'
+					});
+					api.closeFrame({
+						name : 'me_index'
+					});
+					location.reload();
+				});
 			}
 			//初始化函数
 			function init() {
@@ -26,13 +43,12 @@
 					});
 					//1.1、获取是否第一次启动的偏好设置【launch】
 					LaunchPref();
-					var DTouch = api.require('3DTouch'); 
+					var DTouch = api.require('3DTouch');
 					//alert(DTouch);
 					DTouch.setListener(function(ret, err) {
 						var type = ret.type;
 						//alert(type);
 						if (type == 'cn.jiyoukeji.wash.openfavorites') {
-							
 						}
 					});
 				} else {
