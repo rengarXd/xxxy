@@ -39,7 +39,15 @@
 				},
 				vScrollBarEnabled : false,
 				hScrollBarEnabled : false
-			})
+			});
+			//监听安卓手机的返回
+			api.addEventListener({
+				name : 'keyback'
+			}, function(ret, err) {
+				api.closeToWin({
+					name : 'main'
+				});
+			});
 		};
 		function closeToMain() {
 			api.closeToWin({
