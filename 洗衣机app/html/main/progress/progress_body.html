@@ -90,7 +90,6 @@
 			apiready = function() {
 				// 初始化页面
 				data = api.pageParam.data;
-				$("#lastbox").css('height', api.frameHeight / 2.7);
 				initPage();
 				listenEvent();
 			};
@@ -146,6 +145,7 @@
 				$xy.ajax(function(ret, err) {
 					if (ret.success) {
 						_tpl('progress_data', ret.data, 'progress_html', function() {
+							$("#lastbox").css('height', api.frameHeight / 2.7);
 							if (isinerval) {
 								isinerval = null;
 							};
