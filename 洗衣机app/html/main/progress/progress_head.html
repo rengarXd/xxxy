@@ -38,13 +38,18 @@
 				},
 				vScrollBarEnabled : false,
 				hScrollBarEnabled : false
-			})
+			});
+			api.addEventListener({
+				name : 'keyback'
+			}, function(ret, err) {
+				closeWIN();
+			});
 		};
 		function closeWIN() {
-//			api.execScript({
-//				name : 'main',
-//				script : 'lasttimemain();'
-//			});
+			api.execScript({
+				name : 'main',
+				script : 'initInfo();'
+			});
 			api.closeToWin({
 				name : 'main'
 			});
