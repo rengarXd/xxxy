@@ -103,7 +103,7 @@
 			<span>{{ d[i].device_name }}</span>
 			<span class="H-float-right xyzt" >空闲提醒</span>
 			<div class="H-font-size-13 beizhanyong H-padding-vertical-both-3">
-			{{ d[i].ustatus }}
+			{{# var str = d[i].hold_ending;var strtime = str.substring(11,19); }} {{ d[i].ustatus }} <span class="H-float-right">预计{{ strtime }}结束</span>
 			</div>
 			</div>
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i class="iconfont icon-zhankai H-font-size-18 H-vertical-middle"></i> </span>
