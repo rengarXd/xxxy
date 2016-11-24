@@ -50,9 +50,11 @@
 				name : 'main',
 				script : 'initInfo();'
 			});
-			api.closeToWin({
-				name : 'main'
-			});
+			setTimeout(function() {
+				api.closeToWin({
+					name : 'main'
+				});
+			}, 300);
 		}
 	</script>
 </html>
