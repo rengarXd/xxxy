@@ -105,6 +105,8 @@
 				pageInit();
 				//1.4连按两次退出APP
 				H.dblclickToCloseApp();
+				//初始化消息标示
+				pushListener();
 				//系统消息监听
 				msglistener();
 			});
@@ -215,18 +217,6 @@
 								});
 							}
 						}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
-						//初始化消息标示
-						pushListener();
-						var ajpush = api.require('ajpush');
-						//var systemtype = api.systemType;
-						ajpush.setListener(function(ret) {
-							//alert('接收推送成功');
-							$('.brige').show();
-							//					var id = ret.id;
-							//					var title = ret.title;
-							//					var content = ret.content;
-							//					var extra = ret.extra;
-						});
 					} else {
 						api.toast({
 							msg : '检测到您未登录'
