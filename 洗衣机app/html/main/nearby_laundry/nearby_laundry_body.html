@@ -32,7 +32,7 @@
 			{{# for(var i=0,l=d.length;i<l;i++){ }}
 			<div class="animated fadeIn H-theme-background-color-white H-margin-vertical-bottom-5 animated fadeIn" tapmode="H-touch-active" onclick="open_nearby_machine('{{ d[i].washloca_id }}','{{ d[i].distance }}');">
 			<div class="H-flexbox-horizontal H-padding-vertical-top-10 ">
-			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-shebeidingwei H-font-size-20 xy_font_color"></i></span>
 			<div class="H-flex-item xy_font_color">
 			<span>{{ d[i].washloca_name }}</span>
 			</div>
@@ -49,7 +49,7 @@
 		</script>
 		<!--<div class="H-theme-background-color-white H-margin-vertical-bottom-5" tapmode="H-touch-active" onclick="open_nearby_machine();">
 		<div class="H-flexbox-horizontal  H-padding-vertical-top-10 " >
-		<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+		<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-shebeidingwei H-font-size-20 xy_font_color"></i></span>
 		<div class="H-flex-item xy_font_color">
 		<span>东区2号宿舍楼</span>
 		</div>
@@ -63,7 +63,7 @@
 		</div>
 		<div class="H-theme-background-color-white H-margin-vertical-bottom-5" tapmode="H-touch-active" onclick="open_nearby_machine();">
 		<div class="H-flexbox-horizontal  H-padding-vertical-top-10 " >
-		<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+		<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-shebeidingwei H-font-size-20 xy_font_color"></i></span>
 		<div class="H-flex-item xy_font_color">
 		<span>东区2号宿舍楼</span>
 		</div>
@@ -77,7 +77,7 @@
 		</div>
 		<div class="H-theme-background-color-white H-margin-vertical-bottom-5" tapmode="H-touch-active" onclick="open_nearby_machine();">
 		<div class="H-flexbox-horizontal  H-padding-vertical-top-10 " >
-		<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-xiyiji H-font-size-20 xy_font_color"></i></span>
+		<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-shebeidingwei H-font-size-20 xy_font_color"></i></span>
 		<div class="H-flex-item xy_font_color">
 		<span>东区2号宿舍楼</span>
 		</div>
@@ -190,7 +190,7 @@
 							var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">' + ret.message + '</div></div></div>';
 							document.getElementById('nearby_laundry').innerHTML = htmls;
 							api.toast({
-								msg : '很抱歉，附近没有洗衣点！'
+								msg : '很抱歉，附近没有设备点！'
 							});
 						}
 					} else {

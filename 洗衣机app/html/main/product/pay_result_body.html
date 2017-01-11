@@ -14,18 +14,18 @@
 		<div class="H-padding-vertical-top-20 H-padding-vertical-bottom-15 H-theme-background-color-white H-text-align-center">
 			<span class="H-theme-font-color-333 H-font-size-26">支付成功</span>
 			<div class="H-theme-font-color-999 H-font-size-13">
-				请尽快放洗衣物！
+				请尽快开始使用！
 			</div>
 			<div class="H-padding-vertical-both-8">
 				<div id="retroclockbox"></div>
 			</div>
 			<div class="H-theme-font-color-999 H-font-size-13">
-				后自动开始洗衣
+				后自动开始
 			</div>
 		</div>
 		<div class="H-padding-horizontal-both-25 H-padding-vertical-top-15 H-padding-vertical-bottom-25">
 			<button onclick="start();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
-				开始洗衣
+				开始使用
 			</button>
 		</div>
 		<div class="H-text-list H-flexbox-horizontal  H-border-vertical-bottom-after H-vertical-middle H-touch-active">
@@ -181,7 +181,7 @@
 			//开始洗衣方法
 			function startResult() {
 				api.toast({
-					msg : '开始洗衣'
+					msg : '开始使用'
 				});
 				var delay = 0;
 				if (api.systemType != 'ios')
