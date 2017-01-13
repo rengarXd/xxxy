@@ -174,7 +174,7 @@
 						if (ret.success) {
 							if (ret.data.length == 0) {
 								//当洗衣机数量为空时的处理
-								var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">该设备点下暂无设备</div></div></div>';
+								var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-shebeidingwei H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">该设备点下暂无设备</div></div></div>';
 								document.getElementById('machine_list').innerHTML = htmls;
 							} else {
 								//console.log(JSON.stringify(ret));
@@ -201,7 +201,7 @@
 					} else {
 						api.refreshHeaderLoadDone();
 						//无网络
-						var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">连接服务器失败</div></div></div>';
+						var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-shebeidingwei H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">连接服务器失败</div></div></div>';
 						document.getElementById('machine_list').innerHTML = htmls;
 					}
 				}, 'appDeviceList&funid=wash_location&washloca_id=' + api.pageParam.washloca_id);
