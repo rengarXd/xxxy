@@ -160,40 +160,40 @@
 				});
 			}
 
-			function ajpush() {
-				api.getPrefs({
-					key : 'userinfo'
-				}, function(ret, err) {
-					if (ret && ret.value) {
-						user = eval('(' + ret.value + ')');
-						//初始化推送
-						if (systemtype != "ios") {
-							//初始化android推送
-							jpush.init(function(ret) {
-								if (ret && ret.status) {
-									//注册设备
-									jpush.getRegistrationId(function(ret) {
-										var registrationId = ret.id;
-										$xy.ajax(function(ret, err) {
-											//                                  console.log("绑定成功！");
-										}, '...' + registrationId);
-									});
-								}
-							});
-						} else {
-							//适配ios推送
-							//注册设备
-							jpush.getRegistrationId(function(ret) {
-								var registrationId = ret.id;
-								$xy.ajax(function(ret, err) {
-									//                                  console.log("绑定成功！");
-								}, '...' + registrationId);
-							});
-						}
-					} else {
-					}
-				});
-			}
+			//			function ajpush() {
+			//				api.getPrefs({
+			//					key : 'userinfo'
+			//				}, function(ret, err) {
+			//					if (ret && ret.value) {
+			//						user = eval('(' + ret.value + ')');
+			//						//初始化推送
+			//						if (systemtype != "ios") {
+			//							//初始化android推送
+			//							jpush.init(function(ret) {
+			//								if (ret && ret.status) {
+			//									//注册设备
+			//									jpush.getRegistrationId(function(ret) {
+			//										var registrationId = ret.id;
+			//										$xy.ajax(function(ret, err) {
+			//											//                                  console.log("绑定成功！");
+			//										}, '...' + registrationId);
+			//									});
+			//								}
+			//							});
+			//						} else {
+			//							//适配ios推送
+			//							//注册设备
+			//							jpush.getRegistrationId(function(ret) {
+			//								var registrationId = ret.id;
+			//								$xy.ajax(function(ret, err) {
+			//									//                                  console.log("绑定成功！");
+			//								}, '...' + registrationId);
+			//							});
+			//						}
+			//					} else {
+			//					}
+			//				});
+			//			}
 		</script>
 	</body>
 </html>
