@@ -317,8 +317,8 @@
 			}, function(ret, err) {
 				if (ret.status) {
 					obj.pay({
-						subject : '普通洗衣余额充值',
-						body : '普通洗衣余额充' + paymoney + '元',
+						subject : '普通余额充值',
+						body : '普通余额充' + paymoney + '元',
 						amount : paymoney,
 						tradeNO : orderid
 					}, function(ret, err) {
@@ -346,7 +346,7 @@
 				if (ret.status) {
 					//alert('配置商户支付参数成功');
 					wxPay.pay({
-						description : '普通洗衣余额充值',
+						description : '普通余额充值',
 						totalFee : String(parseFloat(paymoney) * 100),
 						tradeNo : orderid
 					}, function(ret, err) {

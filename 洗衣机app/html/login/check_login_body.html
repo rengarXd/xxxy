@@ -19,7 +19,7 @@
 	</head>
 	<body>
 		<div class="H-padding-vertical-both-5 H-font-size-14 H-theme-font-color-999 H-padding-horizontal-both-12">
-			请选择您之前使用过的洗衣机
+			请选择您之前使用过的设备
 		</div>
 		<div id="check_html">
 			<!--<div class="H-theme-background-color-white H-margin-vertical-bottom-5" tapmode="H-touch-active" onclick="open_nearby_machine();">
@@ -92,7 +92,7 @@
 			function initPage() {
 				api.alert({
 					title : '这是帮您找回原账号的验证，请慎重选择',
-					msg : '请选择您之前使用过的洗衣机，如果您是新用户请随意选择'
+					msg : '请选择您之前使用过的设备，如果您是新用户请随意选择'
 				}, function(ret, err) {
 					var srr = datas;
 					srr.sort(function() {
