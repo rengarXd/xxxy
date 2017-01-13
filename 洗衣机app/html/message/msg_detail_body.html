@@ -125,7 +125,7 @@
 							if (ret.data.length == 0) {
 								//当没有订单时的处理
 								api.refreshHeaderLoadDone();
-								var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无消息记录</div></div></div>';
+								var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-shebeidingwei H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">暂无消息记录</div></div></div>';
 								document.getElementById('message_html').innerHTML = htmls;
 							} else {
 								//console.log(JSON.stringify(ret));
@@ -146,7 +146,7 @@
 						}
 					}, 'appNewsInfo&funid=wash_user_new&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&news_id=' + news_id);
 				} else {
-					var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-webiconxiyiji H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">请先登录</div></div></div>';
+					var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-shebeidingwei H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">请先登录</div></div></div>';
 					document.getElementById('message_html').innerHTML = htmls;
 				}
 			});
