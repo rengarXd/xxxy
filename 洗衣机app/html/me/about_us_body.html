@@ -19,7 +19,7 @@
 	</head>
 	<body>
 		<div class="H-center-all H-margin-vertical-top-25">
-			<img src="../../image/logo.png" width="280" />
+			<img src="../../image/shenghuo.png" width="280" />
 		</div>
 		<div class="H-font-size-13 H-padding-25 H-text-indent H-theme-font-color-666">
 			<div class="H-padding-vertical-bottom-10">
@@ -40,7 +40,7 @@
 		<!--<div style="position: absolute;top: 260px;left: 130px">12321314</div>-->
 		<div style="height: 60px;"></div>
 		<div class="H-margin-vertical-top-25 H-text-align-center H-font-size-14 H-theme-font-color-999">
-			<span>Copyright&nbsp;&nbsp;@2016</span>
+			<h5>Copyright &copy;<span id="year"></span></h5>
 			<br />
 			<span>集优信息科技股份有限公司</span>
 		</div>
@@ -55,6 +55,7 @@
 		function initPage() {
 			var appVersion = api.appVersion;
 			document.getElementById('version').innerHTML = appVersion;
+			document.getElementById('year').innerHTML = new Date().getFullYear();
 		}
 	</script>
 </html>
