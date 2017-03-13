@@ -95,7 +95,7 @@
 			<!--<span class="H-padding-horizontal-right-20 H-float-right">{{ d[i].distance }}米</span>-->
 			</div>
 			</div>
-			{{# }else if(d[i].ustatus == "使用中" || d[i].ustatus == "锁定"){ }}
+			{{# }else if(d[i].ustatus == "使用中"){ }}
 			<div class="animated fadeIn H-theme-background-color-white H-margin-vertical-bottom-5 H-touch-active" tapmode="H-touch-active"  onclick="Set_availability('{{ d[i].device_id }}');">
 			<div class="H-flexbox-horizontal  H-padding-vertical-top-10 ">
 			<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-shebeidingwei H-font-size-20 xy_font_color"></i></span>
