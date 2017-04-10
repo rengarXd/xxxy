@@ -107,8 +107,8 @@
 			</div>
 		</div>
 	</body>
-	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript" src="../../script/xy.js"></script>
+	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript">
 		var jpush = null, tel = null, jpush = null, systemtype = null, is_send_smsVerify = false;
 		apiready = function() {
@@ -260,6 +260,7 @@
 						//存储用户数据
 						retInfo = ret.data;
 						if (ret.data[0].uuid) {
+							api.hideProgress();
 							//存储用户数据
 							$xy.userlogInfo(retInfo);
 							//执行main页面获取用户信息的函数
@@ -267,7 +268,6 @@
 								name : 'main',
 								script : 'initInfo();'
 							});
-							api.hideProgress();
 							//初始化推送
 							if (systemtype != "ios") {
 								//初始化android推送
