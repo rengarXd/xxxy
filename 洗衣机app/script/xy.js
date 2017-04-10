@@ -4,11 +4,11 @@
  * 作者：徐达
  */
 ;! function(window) {
-	window.serverUrl = "http://x.jiyoukeji.cn/wash/fileAction.do?pagetype=grid&nousercheck=1&eventcode=";
-	window.ImgWebUrl = 'http://x.jiyoukeji.cn/wash/fileAction.do?';
-	window.washUrl = 'http://x.jiyoukeji.cn/wash';
-	window.wxPayurl = 'http://x.jiyoukeji.cn/wash/payNotifyUrl.jsp';
-	window.aliPayurl = 'http://x.jiyoukeji.cn/wash/notify_url.jsp';
+	window.serverUrl = "http://117.158.216.74/wash/fileAction.do?pagetype=grid&nousercheck=1&eventcode=";
+	window.ImgWebUrl = 'http://117.158.216.74/wash/fileAction.do?';
+	window.washUrl = 'http://117.158.216.74/wash';
+	window.wxPayurl = 'http://117.158.216.74/wash/payNotifyUrl.jsp';
+	window.aliPayurl = 'http://117.158.216.74/wash/notify_url.jsp';
 	//	var isAndroid = (/android/gi).test(navigator.appVersion);
 	//	var uzStorage = function() {
 	//		var ls = window.localStorage;
