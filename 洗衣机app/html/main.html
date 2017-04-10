@@ -79,7 +79,7 @@
 					<strong class="H-font-size-12 H-display-block H-font-weight-normal H-margin-vertical-top-3">首页</strong>
 				</div>
 			</div>
-			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white  switch-item" style="border-width: 0 0 2px  0" onclick="orderLoad();">
+			<div class="H-flex-item H-center-all H-padding-vertical-both-10 H-theme-border-color-white  switch-item" style="border-width: 0 0 2px 0">
 				<div class="">
 					<span class="H-icon H-display-block H-line-height-normal"  style="margin-left: 1px;"><i class="iconfont icon-dingdan H-font-size-20"></i></span>
 					<strong class="H-font-size-12 H-display-block H-font-weight-normal H-margin-vertical-top-3">订单</strong>
@@ -120,7 +120,7 @@
 
 			function orderLoad() {
 				api.execScript({
-					frameName : 'order_index',
+					frameName : 'order_vue',
 					script : 'initPage();'
 				});
 			}
@@ -147,7 +147,7 @@
 							name : 'main_index'
 						});
 						api.closeFrame({
-							name : 'order_index'
+							name : 'order_vue'
 						});
 						api.closeFrame({
 							name : 'me_index'
@@ -184,8 +184,8 @@
 					header : '#index_header',
 					bounces : true
 				}, {
-					name : 'order_index',
-					url : './order/order_index.html',
+					name : 'order_vue',
+					url : './order/order_vue.html',
 					header : '#massages_header',
 					bounces : true
 				}, {
