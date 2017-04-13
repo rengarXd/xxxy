@@ -1,14 +1,15 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1484102972205'); /* IE9*/
-  src: url('iconfont.eot?t=1484102972205#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1484102972205') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1484102972205') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1484102972205#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1492068740844'); /* IE9*/
+  src: url('iconfont.eot?t=1492068740844#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1492068740844') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1492068740844') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1492068740844#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
   font-family:"iconfont" !important;
+  font-size:16px;
   font-style:normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -24,11 +25,17 @@
 
 .icon-zhifubao:before { content: "\e60d"; }
 
+.icon-shangchuanyunduan:before { content: "\e694"; }
+
 .icon-xiaoxi:before { content: "\e601"; }
 
 .icon-chenggong:before { content: "\e611"; }
 
+.icon-mima:before { content: "\e623"; }
+
 .icon-bangzhuzhongxin:before { content: "\e610"; }
+
+.icon-upload:before { content: "\e6a1"; }
 
 .icon-jindu:before { content: "\e607"; }
 
@@ -36,13 +43,21 @@
 
 .icon-liwu:before { content: "\e608"; }
 
+.icon-dingwei:before { content: "\e650"; }
+
+.icon-gongzuo:before { content: "\e688"; }
+
 .icon-gerenxinxi:before { content: "\e602"; }
 
 .icon-xiyiji:before { content: "\e609"; }
 
+.icon-zhuce-copy-copy:before { content: "\e614"; }
+
 .icon-zhankai:before { content: "\e604"; }
 
 .icon-guanyuwomen:before { content: "\e60f"; }
+
+.icon-gerenxinxi1:before { content: "\e62c"; }
 
 .icon-duihao:before { content: "\e60c"; }
 
@@ -54,5 +69,11 @@
 
 .icon-shouye-copy:before { content: "\e605"; }
 
+.icon-gongwenbaoxian:before { content: "\e615"; }
+
 .icon-shebeidingwei:before { content: "\e706"; }
+
+.icon-xie:before { content: "\e66d"; }
+
+.icon-tuichu:before { content: "\e616"; }
 
