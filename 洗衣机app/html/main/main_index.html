@@ -52,12 +52,11 @@
 				height: 8.5em;
 			}
 			.swiper-pagination {
-				font-size: 10px;
+				font-size: 5px;
 			}
 			.swiper-slide {
 				text-align: center;
 				font-size: 16px;
-				background: #119fd1;
 				color: #fff;
 				/* Center slide text vertically */
 				display: -webkit-box;
@@ -73,48 +72,34 @@
 				-webkit-align-items: center;
 				align-items: center;
 			}
-			/*.swiper-wrapper .swiper-slide:nth-child(1) {
-			 background: url(../../image/chongzhitubiao.gif) no-repeat center center;
-			 background-size: cover;
-			 -webkit-background-size: cover;
-			 }
-			 .swiper-wrapper .swiper-slide:nth-child(2) {
-			 background: url(../../image/222.png) no-repeat center center;
-			 background-size: cover;
-			 -webkit-background-size: cover;
-			 }
-			 .swiper-wrapper .swiper-slide:nth-child(3) {
-			 background: url(../../image/333.png) no-repeat center center;
-			 background-size: cover;
-			 -webkit-background-size: cover;
-			 }
-			 .swiper-wrapper .swiper-slide:nth-child(4) {
-			 background-image: url(../../image/444.png) no-repeat center center;
-			 background-size: cover;
-			 -webkit-background-size: cover;
-			 }*/
+			.swiper-wrapper .swiper-slide:nth-child(1) {
+				background: url(../../image/index/pop_1.png) no-repeat center center;
+				background-size: cover;
+				-webkit-background-size: cover;
+			}
+			.swiper-wrapper .swiper-slide:nth-child(2) {
+				background: url(../../image/index/pop_2.png) no-repeat center center;
+				background-size: cover;
+				-webkit-background-size: cover;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
-				<div class="swiper-slide">
-					Slide 1
+				<div class="swiper-slide"></div>
+				<div class="swiper-slide"></div>
+				<!--<div class="swiper-slide">
+				Slide 3
 				</div>
 				<div class="swiper-slide">
-					Slide 2
-				</div>
-				<div class="swiper-slide">
-					Slide 3
-				</div>
-				<div class="swiper-slide">
-					Slide 4
-				</div>
+				Slide 4
+				</div>-->
 			</div>
 			<!-- Add Pagination -->
 			<div style="text-align: right;" class="swiper-pagination"></div>
 		</div>
-		<div class="H-flexbox-horizontal H-theme-background-color-white H-padding-vertical-both-15">
+		<div class="H-flexbox-horizontal H-theme-background-color-white H-padding-vertical-both-12">
 			<div class="H-text-align-center H-flex-item H-padding-10" tapmode onclick="openMainList(1,'洗衣列表');">
 				<div style="height: 3.5em; width: 3.5em; " class="xy H-icon H-center-all H-margin-horizontal-auto"></div>
 				<!--<span class="xy  H-center-all H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 3.5em; width: 3.5em; line-height:20px;"></span>-->
@@ -285,10 +270,12 @@
 			function swiperMethod() {
 				var mySwiper = new Swiper('.swiper-container', {
 					direction : 'horizontal',
-					loop : true,
 					autoplay : 3000,
 					// 如果需要分页器
 					pagination : '.swiper-pagination',
+					paginationBulletRender : function(swiper, index, className) {
+						return '<span style="background-color:#feec37;" class="' + className + '"></span>';
+					}
 				});
 			}
 
@@ -388,7 +375,7 @@
 			}
 
 			//打开设备点列表
-			function openMainList(device_type,headname) {
+			function openMainList(device_type, headname) {
 				var delay = 0;
 				if (api.systemType != 'ios') {
 					delay = 200;
@@ -398,7 +385,7 @@
 					url : './nearby_laundry/nearby_laundry_head.html',
 					pageParam : {
 						device_type : device_type,
-						headname:headname
+						headname : headname
 					},
 					bounces : true,
 					delay : delay,
