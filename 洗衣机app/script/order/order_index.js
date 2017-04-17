@@ -8,7 +8,7 @@ apiready = function() {
 			orderlist : false, //订单列表树开关
 			product : [], //渲染数据
 			loadLock : false, //懒加载开关
-			page : 1,		//分页数
+			page : 1, //分页数
 			datacount : null, //请求数据页数
 			dowloading : false//懒加载图标
 		},
@@ -47,6 +47,7 @@ apiready = function() {
 		},
 		created : function() {
 			this.carView();
+			this.reloadEventLisenter();
 			this.setRefreshHeaderInfo(function() {
 				location.reload();
 			});
@@ -65,7 +66,7 @@ apiready = function() {
 						$xy.ajax(function(ret, err) {
 							//关闭下拉刷新
 							api.refreshHeaderLoadDone();
-							if (ret && ret.data) {
+							if (ret && ret.data != []) {
 								_this.orderlist = true;
 								_this.loading = false;
 								//1、初始化页面数据
@@ -87,7 +88,8 @@ apiready = function() {
 									_this.page++;
 									_this.loadLock = false;
 								};
-
+							} else if (ret && ret.data == []) {
+								_this.status = '暂无订单';
 							} else {
 								_this.status = '请求失败';
 								api.addEventListener({
@@ -99,6 +101,16 @@ apiready = function() {
 						}, 'appOrderList&funid=wash_order&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&page=' + _this.page);
 					} else {
 						api.refreshHeaderLoadDone();
+						_this.status = '检查到您未登录，轻触屏幕跳转登录页面';
+						api.addEventListener({
+							name : 'tap'
+						}, function(ret, err) {
+							api.openWin({
+								name : 'login_body',
+								url : '../login/login_body.html',
+								bounces : false
+							});
+						});
 					}
 				});
 			},
@@ -207,7 +219,7 @@ apiready = function() {
 						}
 					});
 				}
-				if(vm.datacount == vm.page){
+				if (vm.datacount == vm.page) {
 					// 2.0 底部加载更多
 					api.addEventListener({
 						name : 'scrolltobottom',
@@ -216,11 +228,19 @@ apiready = function() {
 						}
 					}, function(ret, err) {
 						api.toast({
-	                        msg:'已经到底部了！'
-                        });
+							msg : '已经到底部了！'
+						});
 					});
 				}
+			},
+			reloadEventLisenter : function() {
+				api.addEventListener({
+					name : 'locationreload'
+				}, function(ret, err) {
+					location.reload();
+				});
 			}
 		}
 	});
+
 }

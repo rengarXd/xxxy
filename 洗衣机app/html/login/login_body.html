@@ -261,9 +261,13 @@
 						//存储用户数据
 						retInfo = ret.data;
 						if (ret.data[0].uuid) {
+							//订单页刷新
+							api.sendEvent({
+	                            name:'locationreload'
+                            });
 							if (ret.data[0].locality_university == "") {
 								//登录成功对话框
-								alertLog('登录成功', '请选择校区？', '退出', '继续', function(ret) {
+								alertLog('登录成功', '请选择校区', '退出', '继续', function(ret) {
 									if (ret.eventType == 'left') {
 										var dialogBox = api.require('dialogBox');
 										dialogBox.close({
@@ -271,7 +275,7 @@
 										});
 										api.closeWin();
 									} else {
-										//console.log(JSON.stringify(retInfo));
+										//选择校区处理
 										var dialogBox = api.require('dialogBox');
 										dialogBox.close({
 											dialogName : 'alert'
