@@ -42,9 +42,9 @@
 			<div class="H-flexbox-horizontal H-padding-vertical-top-15 H-padding-vertical-bottom-5">
 				<span class="H-padding-horizontal-both-10 "><i class="iconfont icon-shebeidingwei H-font-size-20 xy_font_color"></i></span>
 				<div class="H-flex-item xy_font_color">
-					<span id="device_name">三楼东01机</span>
+					<span id="device_name"></span>
 					<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-5">
-						<span id="address">西三宿舍</span>
+						<span id="address"></span>
 						<span class="H-padding-horizontal-right-20 H-float-right"><span class="distance">200</span>米</span>
 					</div>
 				</div>
@@ -254,6 +254,7 @@
 
 			//打开支付页
 			function openPayWin(i) {
+				datas.origin_type = '4';
 				var result = $xy.extendObj(datas, product[parseInt(i)]);
 				var delay = 0;
 				if (api.systemType != 'ios')
@@ -272,6 +273,7 @@
 			//页面渲染
 			function getWashComList() {
 				var device_id = datas.device_id;
+				api.showProgress();
 				$xy.ajax(function(ret, err) {
 					api.hideProgress();
 					api.refreshHeaderLoadDone();

@@ -46,7 +46,7 @@
 				<span class="H-badge H-display-block H-margin-horizontal-right-5" id="nicknamename">昵称</span>
 				<span class="H-icon H-padding-horizontal-right-5 H-display-block"><i class="H-iconfont H-icon-arrow-right H-theme-font-color-ccc H-font-size-14 H-vertical-middle"></i></span>
 			</div>
-			<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" id="locality_university" tapmode="H-touch-active" onclick="changeInfo('学校','locality_university');">
+			<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" id="locality_university" tapmode="H-touch-active" onclick="openSchool();">
 				<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-16 H-padding-vertical-both-12">
 					学校
 				</div>
@@ -99,6 +99,11 @@
 				// 引入过滤压缩模块
 				imageFilter = api.require("imageFilter");
 				initPage();
+				api.addEventListener({
+					name : 'school'
+				}, function(ret, err) {
+					reload();
+				});
 			};
 			Zepto(function($) {
 			});
@@ -153,6 +158,26 @@
 					} else {
 						//无订单情况处理
 						$("#jiazai").html("暂无用户信息");
+					}
+				});
+			}
+
+			function openSchool() {
+				var sys = api.systemType;
+				//安卓加载延迟设置
+				sys != "ios" ? delay = 100 : delay = 0;
+				api.openWin({
+					name : 'region_header',
+					url : '../login/school/region_header.html',
+					bounces : false,
+					delay : delay,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false,
+					hScrollBarEnabled : false,
+					animation : {
+						type : "reveal", //动画类型（详见动画类型常量）
+						subType : "from_right", //动画子类型（详见动画子类型常量）
+						duration : 0 //动画过渡时间，默认300毫秒
 					}
 				});
 			}

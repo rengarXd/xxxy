@@ -12,7 +12,7 @@
 	<body class="H-flexbox-vertical">
 		<header class="H-header b_header_bg" id="header">
 			<span tapmode="H-theme-font-color-444" tapmode="" onclick="api.closeWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-5 H-z-index-100"><i class="iconfont icon-fanhui"></i>返回</span>
-			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
+			<div id="headname" class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				设备点列表
 			</div>
 		</header>
@@ -20,6 +20,7 @@
 		<script type="text/javascript">
 			apiready = function() {
 				api.parseTapmode();
+				api.pageParam.headname ? document.getElementById('headname').innerHTML = api.pageParam.headname : document.getElementById('headname').innerHTML='设备点列表';
 				var header = $api.byId('header');
 				$api.fixStatusBar(header);
 				var headerPos = $api.offset(header);
@@ -28,6 +29,7 @@
 					name : 'nearby_laundry_body',
 					url : 'nearby_laundry_body.html',
 					bounces : true,
+					pageParam:api.pageParam,
 					rect : {
 						x : 0,
 						y : headerPos.h,

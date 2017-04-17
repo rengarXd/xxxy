@@ -39,22 +39,22 @@
 				vScrollBarEnabled : false,
 				hScrollBarEnabled : false
 			});
-			api.addEventListener({
-				name : 'keyback'
-			}, function(ret, err) {
-				closeWIN();
-			});
+			if (api.systemType == "android") {
+				api.addEventListener({
+					name : 'keyback'
+				}, function(ret, err) {
+					closeWIN();
+				});
+			}
 		};
 		function closeWIN() {
-			api.execScript({
-				name : 'main',
-				script : 'initInfo();'
+			//			api.execScript({
+			//				name : 'main',
+			//				script : 'lasttimemain();'
+			//			});
+			api.closeToWin({
+				name : 'main'
 			});
-			setTimeout(function() {
-				api.closeToWin({
-					name : 'main'
-				});
-			}, 300);
 		}
 	</script>
 </html>

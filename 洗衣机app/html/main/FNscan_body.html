@@ -55,7 +55,6 @@
 					//					}
 					if (ret.eventType == "success") {
 						var contents = ret.content;
-						//alert(contents)
 						api.openWin({
 							name : 'nearby_product_head',
 							url : './nearby_laundry/nearby_product_head.html',
@@ -68,48 +67,6 @@
 							vScrollBarEnabled : false
 						});
 						FNScanner.closeView();
-						//						api.sendEvent({
-						//							name : 'product_option',
-						//							extra : {
-						//								content : contents
-						//							}
-						//						});
-						//						closeScan();
-						//						api.alert({
-						//							title : '是否选择'
-						//						}, function(ret, err) {
-						//							var delay = 0;
-						//							if (api.systemType != 'ios')
-						//								delay = 200;
-						//							api.openWin({
-						//								name : 'nearby_product_head',
-						//								url : './nearby_laundry/nearby_product_head.html',
-						//								pageParam : {
-						//									data : contents
-						//								},
-						//								bounces : false,
-						//								delay : delay,
-						//								slidBackEnabled : true,
-						//								vScrollBarEnabled : false
-						//							});
-						//						});
-						//						setTimeout(function() {
-						//							var delay = 0;
-						//							if (api.systemType != 'ios')
-						//								delay = 200;
-						//							api.openWin({
-						//								name : 'nearby_product_head',
-						//								url : './nearby_laundry/nearby_product_head.html',
-						//								pageParam : {
-						//									data : contents
-						//								},
-						//								bounces : false,
-						//								delay : delay,
-						//								slidBackEnabled : true,
-						//								vScrollBarEnabled : false
-						//							});
-						//						}, 2000);
-						//alert(ret.content);
 					}
 					if (ret.eventType == "fail")
 						api.toast({

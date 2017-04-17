@@ -16,24 +16,14 @@
 				WelcomePage = api.require('welcomePage');
 				init();
 				//app恢复到前台
-				api.addEventListener({
-					name : 'resume'
-				}, function(ret, err) {
-					//					api.closeFrame({
-					//						name : 'main_index'
-					//					});
-					//					api.closeFrame({
-					//						name : 'order_index'
-					//					});
-					//					api.closeFrame({
-					//						name : 'me_index'
-					//					});
-					//					location.reload();
-					api.execScript({
-						name : 'main',
-						script : 'initInfo();'
-					});
-				});
+//				api.addEventListener({
+//					name : 'resume'
+//				}, function(ret, err) {
+//					api.execScript({
+//						name : 'main',
+//						script : 'initInfo();'
+//					});
+//				});
 			}
 			//初始化函数
 			function init() {

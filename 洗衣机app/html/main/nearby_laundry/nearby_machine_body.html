@@ -54,7 +54,16 @@
 		郑州大学桃花源 西三宿舍 <span class="H-padding-horizontal-right-25 H-float-right">200米</span>
 		</div>
 		</div>-->
-		<div id="machine_list"></div>
+		<div id="machine_list">
+			<div class="H-position-absolute H-position-center-all" id="statuss">
+				<div class="H-font-size-14 H-text-align-center">
+					<i class="iconfont icon-shebeidingwei H-font-size-32 H-theme-font-color-999"></i>
+					<div class="H-theme-font-color-999">
+						加载中..
+					</div>
+				</div>
+			</div>
+		</div>
 		<script id="machine_list_item" type="text/html">
 			{{# for(var i=0,l=d.length;i<l;i++){ }}
 			{{# if (d[i].ustatus == "空闲"){ }}
@@ -124,6 +133,8 @@
 			apiready = function() {
 				//从洗衣点传来的距离
 				distance = api.pageParam.distance;
+				//设备类型
+				device_type=api.pageParam.device_type
 				//初始化加载页面
 				initPage();
 				initPref();
@@ -204,7 +215,7 @@
 						var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-shebeidingwei H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">连接服务器失败</div></div></div>';
 						document.getElementById('machine_list').innerHTML = htmls;
 					}
-				}, 'appDeviceList&funid=wash_location&washloca_id=' + api.pageParam.washloca_id);
+				}, 'appDeviceList&funid=wash_location&washloca_id=' + api.pageParam.washloca_id+'&device_type='+device_type);
 			}
 
 			//获取偏好值

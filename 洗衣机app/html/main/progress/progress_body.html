@@ -90,6 +90,7 @@
 			apiready = function() {
 				// 初始化页面
 				data = api.pageParam.data;
+				order_id = data.order_id;
 				initPage();
 				listenEvent();
 			};
@@ -144,23 +145,23 @@
 			function lasttimeFun() {
 				$xy.ajax(function(ret, err) {
 					if (ret.success) {
-						_tpl('progress_data', ret.data, 'progress_html', function() {
-							$("#lastbox").css('height', api.frameHeight / 2.7);
+						_tpl('progress_data', ret.data[0].monlist, 'progress_html', function() {
+							$("#lastbox").css('height', api.frameHeight / 2.5);
 							if (isinerval) {
 								isinerval = null;
 							};
 							//订单信息
 							dataarr = ret.data;
 							//剩余倒计时
-							times = parseInt(dataarr[0].resttime);
+							times = parseInt(dataarr[0].monlist[0].resttime);
 							//总时间
-							totalTime = parseInt(ret.data[0].turn_around_date) * 60;
+							totalTime = parseInt(dataarr[0].monlist[0].turn_around_date) * 60;
 							isinerval = setInterval("CountDown()", 1000);
 							//设置定时任务
-							api.execScript({
-								name : 'main',
-								script : 'lasttimemain();'
-							});
+							//							api.execScript({
+							//								name : 'main',
+							//								script : 'lasttimemain();'
+							//							});
 							//进度条
 							arcProgress(times);
 						});
@@ -170,7 +171,7 @@
 						});
 						document.getElementById('progress_html').innerHTML = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-shebeidingwei H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999" id="jiazai">' + ret.message + '</div></div></div>'
 					}
-				}, 'appOrderList&funid=wash_order' + '&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_condition=' + 1);
+				}, 'appOrderList&funid=wash_order' + '&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_condition=' + 1 + '&order_id=' + order_id);
 			}
 
 			// 初始化页面
@@ -326,6 +327,7 @@
 						setValue(obj)
 					}, time * 10);
 				}
+
 			}
 
 			//月份处理
