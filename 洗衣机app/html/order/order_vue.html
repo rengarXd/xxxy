@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 		<title>订单列表</title>
 		<link rel="stylesheet" type="text/css" href="../../css/Hui.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/fonts/iconfont.css" />
@@ -22,7 +22,7 @@
 		</style>
 	</head>
 	<body>
-		<div id="order_list">
+		<div id="order_list" style="margin: 0;padding:0;">
 			<div v-show="loading" class="H-position-absolute H-position-center-all" id="statuss">
 				<div class="H-font-size-14 H-text-align-center">
 					<i class="iconfont icon-shebeidingwei H-font-size-32 H-theme-font-color-999"></i>
@@ -30,39 +30,46 @@
 				</div>
 			</div>
 			<transition name="fade">
-				<div v-show="orderlist" style="display: none;" v-for="item of product" >
-					<div v-if="ismonth" class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
-						{{item.reader_time | formatMonth}}
-					</div>
-					<div v-else class="H-margin-vertical-bottom-2"></div>
-					<div class="H-padding-3 H-theme-font-color-999 H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active  H-margin-vertical-bottom-3" tapmode="H-touch-active" onclick="open_order_details('{{ d[i].order_id }}');">
-						<div class="H-margin-horizontal-left-10  H-font-size-13 H-center-all">
-							<span class="tip-message">{{item.reader_time | formatDay}}
-								<br />
-								{{ item.reader_time | formatTime }}</span>
+				<div v-show="orderlist" style="display: none;" >
+					<div  v-for="item in product" :key="page" >
+						<!--{{product | monthmethod}}-->
+						<div class="H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
+							{{item.mon | formatMonth}}
 						</div>
-						<div class="H-icon H-display-block H-padding-horizontal-both-10">
-							<i class="H-center-all iconfont icon-shebeidingwei H-font-size-24 H-theme-font-color1"></i>
-						</div>
-						<div class="H-flex-item H-font-size-15 H-padding-horizontal-right-10">
-							<div class="H-flexbox-horizontal H-font-size-14">
-								<span class="H-padding-horizontal-right-10"> {{ item.pay_num }} </span>
-								<span class="H-padding-horizontal-right-15"> {{ item.title }} </span>
-								<span class=""> {{ item.pay_way }} </span>
+						<div v-for="part in item.monlist" v-on:click="openDetail(part)" class="H-padding-2 H-theme-font-color-999 H-text-list H-flexbox-horizontal  H-theme-background-color-white H-vertical-middle H-touch-active  H-margin-vertical-bottom-3" tapmode="H-touch-active">
+							<div class="H-padding-horizontal-left-10  H-font-size-14 H-center-all">
+								<span class="tip-message">{{part.reader_time | formatDay}}
+									<br />
+									{{ part.reader_time | formatTime }}</span>
 							</div>
-							<div class="H-flexbox-horizontal H-text-show-row-1 H-font-size-14 H-margin-vertical-both-3">
-								{{ item.washloca_name }}{{ item.device_name }}
+							<div class="H-icon H-display-block H-padding-horizontal-both-10">
+								<i class="H-center-all iconfont icon-shebeidingwei H-font-size-24 H-theme-font-color1"></i>
 							</div>
-						</div>
-						<div v-if="item.order_condition == '已完成'" class="H-padding-horizontal-right-10 H-font-size-15 ">
-							{{ item.order_condition }}
-						</div>
-						<div v-else class="H-padding-horizontal-right-10 H-font-size-15 xyzt">
-							{{ item.order_condition }}
+							<div class="H-flex-item H-font-size-15 H-padding-horizontal-right-10">
+								<div class="H-flexbox-horizontal H-font-size-14">
+									<span class="H-padding-horizontal-right-10"> {{ part.pay_num }} </span>
+									<span class="H-padding-horizontal-right-15"> {{ part.title }} </span>
+									<span class=""> {{ part.pay_way }} </span>
+								</div>
+								<div class="H-flexbox-horizontal H-text-show-row-1 H-font-size-14 H-margin-vertical-both-3">
+									{{ part.washloca_name }}{{ part.device_name }}
+								</div>
+							</div>
+							<div v-if="part.order_condition == '已完成'" class="H-padding-horizontal-right-10 H-font-size-14 ">
+								{{ part.order_condition }}
+							</div>
+							<div v-else class="H-padding-horizontal-right-10 H-font-size-14 xyzt">
+								{{ part.order_condition }}
+							</div>
 						</div>
 					</div>
 				</div>
 			</transition>
+			<!--loading-->
+			<div v-show="dowloading" class="H-text-align-center" id="loading" style="padding:10px 25px;display: none;color: rgb(167, 167, 167);font-size: 14px;">
+				<img src="../../image/loading01.gif" id="show" style="width: 45px;" />&nbsp;&nbsp;加载中...
+			</div>
+			<!--loading-->
 		</div>
 		<script src="../../script/vue.min.js"></script>
 		<script src="../../script/xy.js"></script>

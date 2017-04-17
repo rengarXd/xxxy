@@ -92,8 +92,9 @@
 		<script type="text/javascript" src="../../../script/xy.js"></script>
 		<script type="text/javascript" src="../../../script/tools/laytpl.js"></script>
 		<script type="text/javascript">
-			var longitude = null, latitude = null;
+			var longitude = null, latitude = null, device_type = null;
 			apiready = function() {
+				device_type = api.pageParam.device_type;
 				api.parseTapmode();
 				//获取位置
 				getlocation();
@@ -119,9 +120,9 @@
 						autoStop : true
 					}, function(ret, err) {
 						if (ret.status) {
-//							api.toast({
-//								msg : '获取位置成功ios'
-//							});
+							//							api.toast({
+							//								msg : '获取位置成功ios'
+							//							});
 							//经度
 							longitude = ret.longitude;
 							//纬度
@@ -198,7 +199,7 @@
 						var htmls = '<div class="H-position-absolute H-position-center-all" id="statuss"><div class="H-font-size-14 H-text-align-center"><i class="iconfont icon-shebeidingwei H-font-size-32 H-theme-font-color-999"></i><div class="H-theme-font-color-999">连接失败，请检查网络配置</div></div></div>';
 						document.getElementById('nearby_laundry').innerHTML = htmls;
 					}
-				}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude);
+				}, 'getWashLoList&funid=wash_location&gps_longitude=' + longitude + '&gps_latitude=' + latitude + '&device_type=' + device_type);
 			}
 
 			//打开该洗衣点下的洗衣机
@@ -212,7 +213,8 @@
 					url : './nearby_machine_head.html',
 					pageParam : {
 						washloca_id : washloca_id,
-						distance : distance
+						distance : distance,
+						device_type : device_type
 					},
 					bounces : false,
 					delay : delay,

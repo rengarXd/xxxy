@@ -142,6 +142,8 @@
 		//打开支付页
 		function openPayWin(i) {
 			var result = product[parseInt(i)];
+			//			alert(JSON.stringify(result));
+			result.origin_type = '3';
 			var delay = 0;
 			if (api.systemType != 'ios')
 				delay = 200;

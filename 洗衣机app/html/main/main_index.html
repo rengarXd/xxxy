@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/fonts/iconfont.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/animate/animate.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/swiper/swiper.min.css"/>
 		<style>
 			.toast_top {
 				background-color: #ffffcc;
@@ -20,14 +21,21 @@
 				border-radius: 70px;
 				-webkit-border-radius: 15px;
 			}
-			.xyjd {
-				background-color: #ff8bc8;
+			.xy {
+				background-image: url(../../image/index/xy.png);
+				background-size: cover;
 			}
-			.smzf {
-				background-color: #a0d468;
+			.xx {
+				background-image: url(../../image/index/xx.png);
+				background-size: cover;
 			}
-			.yhhd {
-				background-color: #59dbdb;
+			.cf {
+				background-image: url(../../image/index/cf.png);
+				background-size: cover;
+			}
+			.hg {
+				background-image: url(../../image/index/hg.png);
+				background-size: cover;
 			}
 			.iconfont {
 				color: #b8b8b8;
@@ -39,25 +47,93 @@
 			.touch {
 				color: #666;
 			}
+			.swiper-container {
+				width: 100%;
+				height: 8.5em;
+			}
+			.swiper-pagination {
+				font-size: 10px;
+			}
+			.swiper-slide {
+				text-align: center;
+				font-size: 16px;
+				background: #119fd1;
+				color: #fff;
+				/* Center slide text vertically */
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+			}
+			/*.swiper-wrapper .swiper-slide:nth-child(1) {
+			 background: url(../../image/chongzhitubiao.gif) no-repeat center center;
+			 background-size: cover;
+			 -webkit-background-size: cover;
+			 }
+			 .swiper-wrapper .swiper-slide:nth-child(2) {
+			 background: url(../../image/222.png) no-repeat center center;
+			 background-size: cover;
+			 -webkit-background-size: cover;
+			 }
+			 .swiper-wrapper .swiper-slide:nth-child(3) {
+			 background: url(../../image/333.png) no-repeat center center;
+			 background-size: cover;
+			 -webkit-background-size: cover;
+			 }
+			 .swiper-wrapper .swiper-slide:nth-child(4) {
+			 background-image: url(../../image/444.png) no-repeat center center;
+			 background-size: cover;
+			 -webkit-background-size: cover;
+			 }*/
 		</style>
 	</head>
 	<body>
-		<div class="H-flexbox-horizontal H-theme-background-color-white H-padding-vertical-both-20">
-			<!--<div class="H-flex-item H-center-all options">
-			<span class="border-radius H-icon H-display-block H-margin-horizontal-left-10 H-theme-font-color-white H-theme-background-color6 H-center-all" style="height: 70px; width: 70px;"><i class="iconfont icon-gerenxinxi H-font-size-20 H-vertical-middle wx_10aeff"></i></span>
-			<strong class="H-font-size-12 H-display-block H-font-weight-normal H-margin-vertical-top-3">扫码支付</strong>
-			</div>-->
-			<div class="H-text-align-center H-flex-item H-padding-10" tapmode onclick="scanner();">
-				<span class="smzf H-icon H-center-all H-border-radius-circle H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 59px; width: 59px; line-height:20px;"><img src="../../image/saoerweima.png" style="width: 30px;height: 30px;"/></span>
-				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 xy_font_color">扫二维码</label>
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					Slide 1
+				</div>
+				<div class="swiper-slide">
+					Slide 2
+				</div>
+				<div class="swiper-slide">
+					Slide 3
+				</div>
+				<div class="swiper-slide">
+					Slide 4
+				</div>
 			</div>
-			<div class="H-text-align-center H-flex-item H-padding-10" tapmode onclick="openWin('progress_head','./progress/progress_head.html');">
-				<span class="xyjd H-icon H-center-all  H-border-radius-circle H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 59px; width: 59px; line-height:20px;"><img src="../../image/xyprogress.png" style="width: 30px;height: 30px;"/></span>
-				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 H-theme-font-color-666">使用进度</label>
+			<!-- Add Pagination -->
+			<div style="text-align: right;" class="swiper-pagination"></div>
+		</div>
+		<div class="H-flexbox-horizontal H-theme-background-color-white H-padding-vertical-both-15">
+			<div class="H-text-align-center H-flex-item H-padding-10" tapmode onclick="openMainList(1,'洗衣列表');">
+				<div style="height: 3.5em; width: 3.5em; " class="xy H-icon H-center-all H-margin-horizontal-auto"></div>
+				<!--<span class="xy  H-center-all H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 3.5em; width: 3.5em; line-height:20px;"></span>-->
+				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 xy_font_color">洗衣</label>
+			</div>
+			<div class="H-text-align-center H-flex-item H-padding-10" tapmode onclick="api.toast({msg:'敬请期待！'});">
+				<div style="height: 3.5em; width: 3.5em; " class="xx H-icon H-center-all H-margin-horizontal-auto"></div>
+				<!--<span class="xx  H-center-all   H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 3.5em; width: 3.5em; line-height:20px;"></span>-->
+				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 H-theme-font-color-666">洗鞋</label>
+			</div>
+			<div class="H-text-align-center H-flex-item H-padding-10" tapmode onclick="openMainList(2,'吹风列表');">
+				<div style="height: 3.5em; width: 3.5em; " class="cf H-icon H-center-all H-margin-horizontal-auto"></div>
+				<!--<span class="cf  H-center-all   H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 3.5em; width: 3.5em; line-height:20px;"></span>-->
+				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 H-theme-font-color-666">吹风</label>
 			</div>
 			<div class="H-text-align-center H-flex-item H-padding-10" tapmode onclick="openWin('discount_show_head','../order/discount/discount_show_head.html');">
-				<span class="yhhd H-icon H-center-all H-border-radius-circle H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 59px; width: 59px; line-height:20px;"><img src="../../image/liwu.png" style="width: 30px;height: 30px;"/></span>
-				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 H-theme-font-color-666">优惠活动</label>
+				<div style="height: 3.5em; width: 3.5em; " class="hg H-icon H-center-all H-margin-horizontal-auto"></div>
+				<!--<span class="hg H-icon H-center-all H-margin-horizontal-auto H-font-size-26 H-font-weight-600 H-theme-font-color-white" style="height: 3.5em; width: 3.5em; line-height:20px;"></span>-->
+				<label class="H-display-block H-font-size-14 H-margin-vertical-top-5 H-theme-font-color-666">优惠</label>
 			</div>
 		</div>
 		<div id="xyj_html">
@@ -133,9 +209,9 @@
 			</div>
 			{{# } }}
 			{{# } }}
-			<div class="H-margin-vertical-top-10 H-text-align-center H-font-size-15 H-theme-font-color-999" tapmode="touch" onclick="openWin('nearby_laundry_head','./nearby_laundry/nearby_laundry_head.html');">
+			<!--			<div class="H-margin-vertical-top-10 H-text-align-center H-font-size-15 H-theme-font-color-999" tapmode="touch" onclick="openMainList('');">
 			查找更多设备点
-			</div>
+			</div>-->
 		</script>
 		<script type="text/html" id="xyd_data">
 			<div class="H-theme-font-color-999 H-font-size-13 H-padding-vertical-both-3" style="padding-left: 30px;">
@@ -176,20 +252,23 @@
 			</div>
 			{{# } }}
 			{{# } }}
-			<div class="H-margin-vertical-top-10 H-text-align-center H-font-size-15 H-theme-font-color-999" tapmode="touch" onclick="openWin('nearby_laundry_head','./nearby_laundry/nearby_laundry_head.html');">
+			<!--<div class="H-margin-vertical-top-10 H-text-align-center H-font-size-15 H-theme-font-color-999" tapmode="touch" onclick="openMainList('');">
 			查找更多设备点
-			</div>
+			</div>-->
 		</script>
 		<script type="text/javascript" src="../../script/xy.js"></script>
 		<!--<script type="text/javascript" src="../../script/api.js"></script>-->
 		<script type="text/javascript" src="../../script/zepto.min.js"></script>
 		<script type="text/javascript" src="../../script/tools/laytpl.js"></script>
+		<script type="text/javascript" src="../../script/swiper/swiper.jquery.min.js"></script>
 		<script type="text/javascript">
 			var longitude = null, latitude = null, isinerval = null, xyjdata = null, user = null;
 			apiready = function() {
 				api.parseTapmode();
 				//获取位置信息
 				getlocation();
+				//滑动模块引入
+				swiperMethod();
 				//下拉刷新
 				api.setRefreshHeaderInfo({
 					visible : true,
@@ -201,13 +280,18 @@
 				}, function(ret, err) {
 					getlocation();
 				});
-				//监听后台返回事件
-				api.addEventListener({
-					name : 'resume'
-				}, function(ret, err) {
-					location.reload();
-				});
 			};
+			//滑动模块
+			function swiperMethod() {
+				var mySwiper = new Swiper('.swiper-container', {
+					direction : 'horizontal',
+					loop : true,
+					autoplay : 3000,
+					// 如果需要分页器
+					pagination : '.swiper-pagination',
+				});
+			}
+
 			//初始化数据方法
 			function initData(longitude, latitude) {
 				api.getPrefs({
@@ -303,6 +387,27 @@
 				});
 			}
 
+			//打开设备点列表
+			function openMainList(device_type,headname) {
+				var delay = 0;
+				if (api.systemType != 'ios') {
+					delay = 200;
+				}
+				api.openWin({
+					name : 'nearby_laundry_head',
+					url : './nearby_laundry/nearby_laundry_head.html',
+					pageParam : {
+						device_type : device_type,
+						headname:headname
+					},
+					bounces : true,
+					delay : delay,
+					slidBackEnabled : true,
+					vScrollBarEnabled : false,
+					hScrollBarEnabled : false
+				});
+			}
+
 			//打开页面方法
 			function openWin(name, url) {
 				var delay = 0;
@@ -390,14 +495,6 @@
 						}
 					});
 				}
-			}
-
-			function scanner() {
-				api.openFrame({
-					name : 'FNscan_body',
-					url : 'FNscan_body.html',
-					bounces : false
-				});
 			}
 
 			//空闲提醒

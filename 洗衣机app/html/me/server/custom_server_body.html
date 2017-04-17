@@ -28,7 +28,7 @@
 				<div class="H-flex-item H-font-size-18 H-padding-vertical-top-25 H-padding-horizontal-left-10" style="color: #333333">
 					拨打客服电话
 					<br />
-					<span class="H-font-size-13 H-theme-font-color-999"> 客服热线：<span style="color: #ff8100;" tapmode="H-touch-active" onclick="callnum();">15993584999</span> </span>
+					<span class="H-font-size-13 H-theme-font-color-999"> 客服热线：<span style="color: #ff8100;" tapmode="H-touch-active" onclick="callnum();" id="phonecall">4008822671</span> </span>
 					<br />
 					<span class="H-font-size-13 H-theme-font-color-999"> 工作时间：<span>09:00-19:00</span> </span>
 				</div>
@@ -58,7 +58,7 @@
 		function callnum() {
 			api.call({
 				type : 'tel_prompt',
-				number : '15993584999'
+				number : document.getElementById('phonecall').innerHTML
 			});
 		}
 

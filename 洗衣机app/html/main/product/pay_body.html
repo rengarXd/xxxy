@@ -61,13 +61,14 @@
 			<div style="padding-right: 45px;" class="H-padding-horizontal-left-15 H-padding-vertical-both-12">
 				<span class="color-22a5f9 H-font-size-18" id="ptye">0.00元</span>
 			</div>
-			<div class="H-padding-horizontal-left-25  H-padding-vertical-both-10">
+			<div class="H-flex-item  H-padding-vertical-both-10">
 				<span class="H-font-size-13 color-888">普通余额</span>
 			</div>
 			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888  H-padding-vertical-both-12"></div>
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block H-vertical-middle"><i payway="3" class="iconfont payway H-theme-font-color-ccc H-font-size-26 "></i></span>
 		</div>
 		<div id="dxye_html"></div>
+		<div id="free_html"></div>
 		<div class="H-padding-20">
 			<button onclick="openCf();" class="xy_confirm_btn H-position-static H-button H-width-100-percent  H-font-size-15 H-border-none H-padding-vertical-both-12 H-padding-horizontal-both-20  H-theme-font-color-white ">
 				确认支付
@@ -84,6 +85,20 @@
 			</div>
 			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888  H-padding-vertical-both-12"></div>
 			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i payway="4" orientact_id="{{ d[i].orientact_id }}" uorientoverage_id="{{ d[i].uorientoverage_id }}" class="iconfont payway  H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
+			</div>
+			{{# } }}
+		</script>
+		<script type="text/html" id="free_data">
+			{{# for(var i = 0, len = d.length;i<len;i++) { }}
+			<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this,{{ i }});">
+			<div  class="H-flex-item color-22a5f9 H-padding-horizontal-both-15 H-font-size-18 H-padding-vertical-both-12">
+			{{ d[i].coupon_name }}
+			</div>
+			<div class="H-flex-item H-font-size-13 color-888 H-padding-vertical-both-12">
+			{{ d[i].coupon_type }}
+			</div>
+			<div class="H-flex-item H-padding-horizontal-both-10 H-font-size-13 color-888  H-padding-vertical-both-12"></div>
+			<span class="H-icon H-padding-horizontal-right-10 H-display-block"><i payway="7" class="iconfont payway  H-theme-font-color-ccc H-font-size-26 H-vertical-middle"></i></span>
 			</div>
 			{{# } }}
 		</script>
@@ -105,7 +120,6 @@
 			apiready = function() {
 				//商品信息
 				product = api.pageParam;
-				//console.log(JSON.stringify(product));
 				//初始化页面
 				initPage();
 			};
@@ -163,6 +177,7 @@
 
 			//普通余额请求
 			function ptyeAjax() {
+				api.showProgress();
 				$xy.ajax(function(ret, err) {
 					if (ret) {
 						//alert(JSON.stringify(ret));
@@ -171,13 +186,31 @@
 						document.getElementById('ptye').innerHTML = ret.data[0].account_overage + '元';
 						if (parseFloat(ret.data[0].account_overage) < parseFloat(product.movement_money)) {
 							$('#ptye').css('color', '#999999');
-						}
+						};
+						free(ret.data[0].dept_id);
 					} else {
 						api.toast({
 							msg : '请检查网络并刷新该页面'
 						});
 					}
 				}, 'appUserInfo&funid=wash_user&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid);
+			}
+
+			//免单卷
+			function free(dept_id) {
+				$xy.ajax(function(ret, err) {
+					api.hideProgress();
+					if (ret) {
+						//alert(JSON.stringify(ret));
+						//普通余额
+						_tpl('free_data', ret.data, 'free_html', function() {
+						});
+					} else {
+						api.toast({
+							msg : '请检查网络并刷新该页面'
+						});
+					}
+				}, 'selfreeCoupon&funid=wash_free_coupon&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&dept_id=' + dept_id);
 			}
 
 			//模板渲染
@@ -212,7 +245,7 @@
 					//$(obj).find(".icon-duihao").attr("orientact_id");
 					uorientoverage_id = dxyeData[num].uorientoverage_id;
 					//$(obj).find(".icon-duihao").attr("uorientoverage_id");
-				}
+				};
 			}
 
 			//定向余额+普通余额支付
@@ -257,7 +290,7 @@
 						pay_num1 : last_money, //剩余支付金额
 						orientact_id : orientact_id, //定向余额活动id（当支付方式为定向余额时必填）（string）
 						uorientoverage_id : uorientoverage_id, //用户定向余额Id
-						origin_type : '4', //来源
+						origin_type : product.origin_type, //来源
 						order_id : orderid//订单号
 					}
 				});
@@ -281,7 +314,7 @@
 						commodity_id : product.commodity_id, //商品id（必填）（string）
 						pay_way : pay_way, //支付方式
 						pay_num : product.movement_money, //支付金额
-						origin_type : '4', //来源
+						origin_type : product.origin_type, //来源
 						order_id : orderid//订单号
 					}, function(ret, err) {
 						order_no = ret.data;
@@ -311,7 +344,7 @@
 						commodity_id : product.commodity_id, //商品id（必填）（string）
 						pay_way : pay_way, //支付方式
 						pay_num : product.movement_money, //支付金额
-						origin_type : '4', //来源
+						origin_type : product.origin_type, //来源
 						order_id : orderid//订单号
 					}, function(ret, err) {
 						order_no = ret.data;
@@ -347,7 +380,7 @@
 						commodity_id : product.commodity_id, //商品id（必填）（string）
 						pay_way : pay_way, //支付方式
 						pay_num : product.movement_money, //支付金额
-						origin_type : '4', //来源
+						origin_type : product.origin_type, //来源
 						order_id : orderid//订单号
 					}, function(ret, err) {
 						//打开支付成功页;
@@ -374,7 +407,29 @@
 						pay_num : product.movement_money, //支付金额
 						orientact_id : orientact_id, //定向余额活动id（当支付方式为定向余额时必填）（string）
 						uorientoverage_id : uorientoverage_id, //用户定向余额Id
-						origin_type : '4', //来源
+						origin_type : product.origin_type, //来源
+						order_id : orderid//订单号
+					}, function(ret, err) {
+						//打开支付成功页;
+						if (ret.success) {
+							openResult(ret.data);
+						} else {
+							deleteOrder(orderid);
+						}
+					});
+				} else if (payway == 7) {
+					//生成随机的订单号
+					orderid = "D" + A();
+					doPay({
+						wash_user_id : user[0].wash_user_id,
+						uuid : user[0].uuid,
+						device_id : product.device_id, //洗衣机id  （必填）（string）
+						commodity_id : product.commodity_id, //商品id（必填）（string）
+						pay_way : pay_way, //支付方式
+						pay_num : product.movement_money, //支付金额
+						orientact_id : orientact_id, //定向余额活动id（当支付方式为定向余额时必填）（string）
+						uorientoverage_id : uorientoverage_id, //用户定向余额Id
+						origin_type : product.origin_type, //来源
 						order_id : orderid//订单号
 					}, function(ret, err) {
 						//打开支付成功页;

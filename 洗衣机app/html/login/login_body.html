@@ -110,7 +110,7 @@
 	<script type="text/javascript" src="../../script/xy.js"></script>
 	<script type="text/javascript" src="../../script/zepto.min.js"></script>
 	<script type="text/javascript">
-		var jpush = null, tel = null, jpush = null, systemtype = null, is_send_smsVerify = false;
+		var jpush = null, tel = null, retInfo = null, systemtype = null, is_send_smsVerify = false;
 		apiready = function() {
 			api.parseTapmode();
 			init();
@@ -257,55 +257,66 @@
 				if (ret) {
 					//$("#nonetwork").hide();
 					if (ret.success) {
+						api.hideProgress();
 						//存储用户数据
 						retInfo = ret.data;
 						if (ret.data[0].uuid) {
-							api.hideProgress();
-							//存储用户数据
-							$xy.userlogInfo(retInfo);
-							//执行main页面获取用户信息的函数
-							api.execScript({
-								name : 'main',
-								script : 'initInfo();'
-							});
-							//初始化推送
-							if (systemtype != "ios") {
-								//初始化android推送
-								jpush.init(function(ret) {
-									if (ret && ret.status) {
-										//注册设备
-										registID(retInfo);
+							if (ret.data[0].locality_university == "") {
+								//登录成功对话框
+								alertLog('登录成功', '请选择校区？', '退出', '继续', function(ret) {
+									if (ret.eventType == 'left') {
+										var dialogBox = api.require('dialogBox');
+										dialogBox.close({
+											dialogName : 'alert'
+										});
+										api.closeWin();
+									} else {
+										//console.log(JSON.stringify(retInfo));
+										var dialogBox = api.require('dialogBox');
+										dialogBox.close({
+											dialogName : 'alert'
+										});
+										api.openWin({
+											name : 'region_header',
+											url : './school/region_header.html',
+											bounces : false,
+											pageParam : {
+												retInfo : retInfo
+											},
+											delay : 0,
+										});
+										setTimeout(function() {
+											api.closeWin();
+										}, 800);
 									}
 								});
 							} else {
-								//适配ios推送
-								//注册设备
-								registID(retInfo);
-							}
-							//登录成功对话框
-							alertLog('登录成功', '想要继续完善您的信息吗？', '不用了', '继续', function(ret) {
-								if (ret.eventType == 'left') {
-									var dialogBox = api.require('dialogBox');
-									dialogBox.close({
-										dialogName : 'alert'
+								jpush = api.require('ajpush');
+								//存储用户数据
+								$xy.userlogInfo(retInfo);
+								//执行main页面获取用户信息的函数
+								api.execScript({
+									name : 'main',
+									script : 'initInfo();'
+								});
+								//初始化推送
+								if (systemtype != "ios") {
+									//初始化android推送
+									jpush.init(function(ret) {
+										if (ret && ret.status) {
+											//注册设备
+											registID(retInfo);
+										}
 									});
-									api.closeWin();
 								} else {
-									var dialogBox = api.require('dialogBox');
-									dialogBox.close({
-										dialogName : 'alert'
-									});
-									api.openWin({
-										name : 'user_set_head',
-										url : '../me/user_set_head.html',
-										bounces : false,
-										delay : 0,
-									});
-									setTimeout(function() {
-										api.closeWin();
-									}, 500);
+									//适配ios推送
+									//注册设备
+									registID(retInfo);
 								}
-							});
+								setTimeout(function() {
+									api.closeWin()
+								}, 500)
+							}
 						} else {
 							api.hideProgress();
 							//登录成功对话框
@@ -543,7 +554,7 @@
 					}
 				}
 			}, function(ret) {
-				callback(ret);
+				callback(ret, retInfo);
 			});
 		}
 	</script>

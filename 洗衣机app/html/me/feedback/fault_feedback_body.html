@@ -73,19 +73,9 @@
 		var user = null, wash_user_id = null, uuid = null, data = null;
 		apiready = function() {
 			data = api.pageParam.data;
-			//console.log(JSON.stringify(data));
 			send_feedback();
 		};
-		//初始化
-		function initPage() {
-			//console.log(JSON.stringify(data));
-			//页面渲染
-			document.getElementById('phone_number').innerHTML = data[0].phone_number;
-			document.getElementById('washloca_name').innerHTML = data[0].washloca_name;
-			document.getElementById('device_name').innerHTML = data[0].device_name;
-		}
-
-		//提交申请
+		//初始化页面渲染
 		function send_feedback() {
 			api.getPrefs({
 				key : 'userinfo'
@@ -96,22 +86,23 @@
 					uuid = user[0].uuid;
 					phone_number = user[0].phone_number;
 					document.getElementById('phone_number').innerHTML = phone_number;
-					document.getElementById('washloca_name').innerHTML = data[0].washloca_name;
-					document.getElementById('device_name').innerHTML = data[0].device_name;
+					document.getElementById('washloca_name').innerHTML = data[0].monlist[0].washloca_name;
+					document.getElementById('device_name').innerHTML = data[0].monlist[0].device_name;
 				}
-				//console.log(v);
-				//console.log(JSON.stringify(user));
 			});
 		}
 
 		//ajax方法
 		function _ajax() {
+			api.showProgress({
+				title : '上传中'
+			});
 			var device_id = data[0].device_id;
 			var order_id = data[0].order_id;
 			var utype = document.getElementById("select").value;
 			var fault_matter = document.getElementById("textarea").value;
 			$xy.ajax(function(ret, err) {
-				//api.hideProgress();
+				api.hideProgress();
 				//api.refreshHeaderLoadDone();
 				if (ret) {
 					//console.log(JSON.stringify(ret));

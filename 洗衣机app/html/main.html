@@ -46,19 +46,20 @@
 	</head>
 	<body class="H-flexbox-vertical">
 		<header class="H-header b_header_bg" id="index_header">
-			<span tapmode="H-theme-font-color-444" onclick="openMsgWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
+			<span tapmode="H-theme-font-color-444" onclick="openMsgWin();" class="H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-15 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
+			<span tapmode="H-theme-font-color-444" tapmode="" onclick="scanner();" class="H-icon H-position-relative H-display-inline-block H-float-left H-vertical-middle H-theme-font-color-white H-padding-horizontal-left-15 H-z-index-100"><i class="iconfont icon-qrcode H-font-size-20"></i></span>
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				咭咭生活
 			</div>
 		</header>
 		<header class="H-header H-header-title b_header_bg H-display-none" id="massages_header">
-			<span tapmode="H-theme-font-color-444" onclick="openMsgWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
+			<span tapmode="H-theme-font-color-444" onclick="openMsgWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-15 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
 			<div class="H-header-title H-center-all H-font-size-18 H-text-show-row-1 H-theme-font-color-white H-position-absolute H-width-100-percent">
 				订单
 			</div>
 		</header>
 		<header class="H-header H-header-title me_header_bg H-display-none" id="setting_header">
-			<span tapmode="H-theme-font-color-444" onclick="openMsgWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-20 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
+			<span tapmode="H-theme-font-color-444" onclick="openMsgWin();" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-15 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
 		</header>
 		<!--	<header class="H-header b_header_bg" id="index_header">
 		<span tapmode="H-theme-font-color-444" onclick="openWin('msg_head','message/msg_head.html');" class="H-font-size-18 H-icon H-position-relative H-display-inline-block H-float-right H-vertical-middle H-theme-font-color-white H-padding-horizontal-right-15 H-z-index-100"><i class="iconfont icon-36 H-font-size-20" ></i><em class="brige"></em></span>
@@ -107,7 +108,7 @@
 				H.dblclickToCloseApp();
 				//初始化消息标示
 				pushListener();
-				//系统消息监听
+				//初始化监听
 				msglistener();
 			});
 			//我的页面刷新
@@ -118,21 +119,30 @@
 				});
 			}
 
-			function orderLoad() {
-				api.execScript({
-					frameName : 'order_vue',
-					script : 'initPage();'
+			//打开二维码扫描
+			function scanner() {
+				api.openFrame({
+					name : 'FNscan_body',
+					url : './main/FNscan_body.html',
+					bounces : false
 				});
 			}
 
+			//初始化监听
 			function msglistener() {
-				//系统消息处理========================
+				//监听后台返回事件
+				api.addEventListener({
+					name : 'resume'
+				}, function(ret, err) {
+					location.reload();
+				});
+				//系统消息处理
 				api.addEventListener({
 					name : 'noticeclicked'
 				}, function(ret, err) {
-					//alert(JSON.stringify(ret));
 					$('.brige').show();
 				});
+				//扫码关闭监听
 				api.addEventListener({
 					name : 'keybackb'
 				}, function(ret, err) {
@@ -153,9 +163,6 @@
 							name : 'me_index'
 						});
 						location.reload();
-						//						setTimeout(function() {
-						//
-						//						}, 200);
 					});
 				});
 			}
@@ -204,7 +211,7 @@
 					if (ret && ret.value) {
 						user = eval('(' + ret.value + ')');
 						//监听洗衣倒计时事件
-						lasttimemain();
+						//lasttimemain();
 						$xy.ajax(function(ret, err) {
 							//api.hideProgress();
 							if (ret.success) {
@@ -274,10 +281,6 @@
 				});
 			}
 
-			//			function selectIndex(index) {
-			//				$("#index_footer .switch-item").eq(index).addClass('active').siblings().removeClass('active');
-			//				$("header").hide().eq(index).show();
-			//			}
 			//打开消息列表
 			function openMsgWin() {
 				var delay = 0;
@@ -333,34 +336,25 @@
 
 			//剩余倒计时方法
 			function lasttimemain() {
-				if (isinerval) {
+				if (isinerval && isinerval != null) {
+					//结束时间递减
+					clearInterval(isinerval);
 					isinerval = null;
 				};
 				$("#progress_toast").remove();
 				$xy.ajax(function(ret, err) {
 					if (ret.success) {
-						//订单信息
-						times = parseInt(ret.data[0].resttime);
-						//总时间
-						//totalTime = parseInt(ret.data[0].turn_around_date) * 60;
-						isinerval = setInterval("CountDown()", 1000);
-						//设置定时任务
-						if (times && times > 0) {
-							//渲染提示条
-							var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的' + ret.data[0].device_name + '，大约<span id="minttime"></span>后结束</div></div>';
-							$('#index_header').append(timedom);
+						if (ret.data.length != 0) {
+							//订单信息
+							times = parseInt(ret.data[0].monlist[0].resttime);
+							//设置定时任务
+							if (times && times > 0) {
+								//渲染提示条
+								var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的' + ret.data[0].monlist[0].device_name + '，大约<span id="minttime"></span>后结束</div></div>';
+								$('#index_header').append(timedom);
+							};
+							isinerval = setInterval("CountDown()", 1000);
 						}
-						//						if (times <= 120) {
-						//							api.getPrefs({
-						//								key : 'washtime'
-						//							}, function(ret, err) {
-						//								if (ret && ret.value) {
-						//									return;
-						//								} else {
-						//									Send_notifications();
-						//								}
-						//							});
-						//						}
 					} else {
 						//						api.toast({
 						//							msg : ret.message
@@ -369,53 +363,6 @@
 				}, 'appOrderList&funid=wash_order' + '&wash_user_id=' + user[0].wash_user_id + '&uuid=' + user[0].uuid + '&order_condition=' + 1);
 			}
 
-			//监听事件
-			//			function listener() {
-			//				//结束时间递减
-			//				if (isinerval) {
-			//					clearInterval(isinerval);
-			//				}
-			//				//倒计时提醒
-			//				api.getPrefs({
-			//					key : 'washtime'
-			//				}, function(ret, err) {
-			//					if (ret && ret.value) {
-			//						//获取之前开始的时间
-			//						var time = eval('(' + ret.value + ')');
-			//						//var stringTime = time.start_time;
-			//						//总时间
-			//						totalTime = parseInt(time.turn_around_date) * 60;
-			//						//时间格式转时间戳
-			//						//var start_time = Date.parse(new Date(stringTime));
-			//						var start_time = parseInt(time.start_time) * 1000;
-			//						//获取当前时间
-			//						var now = new Date();
-			//						//totalTime = 2;
-			//						//计算剩余时间
-			//						times = totalTime - ((now.getTime() - parseInt(start_time)) / 1000);
-			//						//调用倒计时方法
-			//						isinerval = setInterval("CountDown()", 1000);
-			//						//渲染提示条
-			//						var timedom = '<div class="H-text-list H-flexbox-horizontal toast_top H-vertical-middle" id="progress_toast" ><div class="H-flex-item H-font-size-12 H-padding-8 H-text-show-row-1">您正在使用的西三宿舍三楼西01机，大约<span id="minttime"></span>后结束</div></div>';
-			//						$('#index_header').append(timedom);
-			//						if (times < 1) {
-			//							//隐藏提示条
-			//							$("#progress_toast").hide();
-			//						}
-			//						//设置定时任务
-			//						if (times > 60) {
-			//							var last = (totalTime - 60) * 1000;
-			//							setTimeout(function() {
-			//								Send_notifications();
-			//								alert('还有' + (times % 60) + '分钟结束');
-			//							}, last);
-			//						}
-			//					} else {
-			//						//隐藏提示条
-			//						$("#progress_toast").hide();
-			//					}
-			//				});
-			//			}
 			//通知栏提醒
 			function Send_notifications() {
 				api.notification({

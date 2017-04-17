@@ -72,16 +72,16 @@
 			{{# for(var i=0,len=d.length;i<len;i++) { }}
 			{{# if(i==0){ }}
 			{{# var str=d [i].reader_time; }}
-			{{# var month=str.substring(5, 7); }}
+			{{# var month=str.substring(0, 7); }}
 			<div id="monthnumber" style="" class="animated fadeIn H-theme-font-color-999 H-margin-vertical-both-5 H-font-size-14 H-margin-horizontal-both-10">
 			{{ month }}月明细
 			</div>
 			{{# } }}
 			{{# if(i>0){ }}
 			{{# var str1 = d[i].reader_time; }}
-			{{# var monthnow = str1.substring(5,7); }}
+			{{# var monthnow = str1.substring(0,7); }}
 			{{# var str2 = d[i-1].reader_time; }}
-			{{# var monthprevious = str2.substring(5,7); }}
+			{{# var monthprevious = str2.substring(0,7); }}
 			{{# if(monthnow == monthprevious) { }}
 			<div style="" class="H-margin-vertical-bottom-2">
 			</div>
