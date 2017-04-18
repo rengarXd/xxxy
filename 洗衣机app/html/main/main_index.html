@@ -89,12 +89,6 @@
 			<div class="swiper-wrapper">
 				<div class="swiper-slide"></div>
 				<div class="swiper-slide"></div>
-				<!--<div class="swiper-slide">
-				Slide 3
-				</div>
-				<div class="swiper-slide">
-				Slide 4
-				</div>-->
 			</div>
 			<!-- Add Pagination -->
 			<div style="text-align: right;" class="swiper-pagination"></div>
@@ -270,7 +264,9 @@
 			function swiperMethod() {
 				var mySwiper = new Swiper('.swiper-container', {
 					direction : 'horizontal',
-					autoplay : 3000,
+					autoplay : 5000,
+					autoplayDisableOnInteraction:false,
+					touchRatio:0.5,
 					// 如果需要分页器
 					pagination : '.swiper-pagination',
 					paginationBulletRender : function(swiper, index, className) {
