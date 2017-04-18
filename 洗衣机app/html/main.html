@@ -97,7 +97,7 @@
 		<script type="text/javascript" src="../script/xy.js"></script>
 		<script type="text/javascript" src="../script/zepto.min.js"></script>
 		<script type="text/javascript">
-			var FNScanner = null, user = null, isinerval = null;
+			var FNScanner = null, user = null, isinerval = null,jpush=null;
 			H.ready(function() {
 				$('.brige').hide();
 				//初始化
@@ -165,6 +165,17 @@
 						location.reload();
 					});
 				});
+				//消息点击
+				api.addEventListener({
+					name : 'appintent'
+				}, function(ret, err) {
+					api.openWin({
+						name : 'msg_head',
+						url : './message/msg_head.html',
+						bounces : false,
+						vScrollBarEnabled : false
+					});
+				});
 			}
 
 			function photoClose() {
@@ -205,6 +216,9 @@
 
 			//初始化用户信息
 			function initInfo() {
+				jpush = api.require('ajpush');
+				jpush.init(function(ret) {
+				});
 				api.getPrefs({
 					key : 'userinfo'
 				}, function(ret, err) {
