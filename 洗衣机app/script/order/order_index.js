@@ -88,15 +88,10 @@ apiready = function() {
 									_this.page++;
 									_this.loadLock = false;
 								};
-							} else if (ret && ret.data == []) {
+							} else if (ret && ret.data.length == 0) {
 								_this.status = '暂无订单';
 							} else {
-								_this.status = '请求失败';
-								api.addEventListener({
-									name : 'tap'
-								}, function(ret, err) {
-									location.reload();
-								});
+								_this.status = ret.message;
 							}
 						}, 'appOrderList&funid=wash_order&wash_user_id=' + wash_user_id + '&uuid=' + uuid + '&page=' + _this.page);
 					} else {
