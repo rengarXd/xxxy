@@ -74,6 +74,7 @@
 				确认支付
 			</button>
 		</div>
+		<!--定向余额-->
 		<script type="text/html" id="dxye_data">
 			{{# for(var i = 0, len = d.length;i<len;i++) { }}
 			<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this,{{ i }});">
@@ -88,6 +89,7 @@
 			</div>
 			{{# } }}
 		</script>
+		<!--免单卷-->
 		<script type="text/html" id="free_data">
 			{{# for(var i = 0, len = d.length;i<len;i++) { }}
 			<div class="H-text-list H-flexbox-horizontal  H-theme-background-color-white H-border-vertical-bottom-after H-vertical-middle H-touch-active" tapmode="H-touch-active" onclick="check(this,{{ i }});">
@@ -417,9 +419,9 @@
 							deleteOrder(orderid);
 						}
 					});
-				} else if (payway == 7) {
+				} else if (pay_way == 7) {
 					//生成随机的订单号
-					orderid = "D" + A();
+					orderid = "F" + A();
 					doPay({
 						wash_user_id : user[0].wash_user_id,
 						uuid : user[0].uuid,
@@ -427,8 +429,6 @@
 						commodity_id : product.commodity_id, //商品id（必填）（string）
 						pay_way : pay_way, //支付方式
 						pay_num : product.movement_money, //支付金额
-						orientact_id : orientact_id, //定向余额活动id（当支付方式为定向余额时必填）（string）
-						uorientoverage_id : uorientoverage_id, //用户定向余额Id
 						origin_type : product.origin_type, //来源
 						order_id : orderid//订单号
 					}, function(ret, err) {
