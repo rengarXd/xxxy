@@ -13,7 +13,7 @@ apiready = function() {
 			dowloading : false//懒加载图标
 		},
 		filters : {
-			formatMonth : function(value) {
+			formatMonth (value) {
 				var myDate = new Date();
 				var thisMonth = myDate.getMonth() + 1;
 				if (value.substr(5, 2) == thisMonth) {
@@ -22,10 +22,10 @@ apiready = function() {
 					return value + '月的订单';
 				}
 			},
-			formatTime : function(value) {
+			formatTime (value) {
 				return vm.format(value).substring(11, 16);
 			},
-			formatDay : function(value) {
+			formatDay (value) {
 				var myDate = new Date();
 				var thisYear = myDate.getFullYear();
 				var thisMonth = myDate.getMonth() + 1;
@@ -45,7 +45,7 @@ apiready = function() {
 				}
 			}
 		},
-		created : function() {
+		created () {
 			this.carView();
 			this.reloadEventLisenter();
 			this.setRefreshHeaderInfo(function() {
@@ -53,7 +53,7 @@ apiready = function() {
 			});
 		},
 		methods : {
-			carView : function() {
+			carView () {
 				var _this = this;
 				_this.loadLock = true;
 				api.getPrefs({
@@ -115,7 +115,7 @@ apiready = function() {
 				});
 			},
 			//时间戳转换
-			format : function(shijianchuo) {
+			format (shijianchuo) {
 				var time = new Date(parseInt(shijianchuo) * 1000);
 				var y = time.getFullYear();
 				var m = time.getMonth() + 1;
@@ -126,7 +126,7 @@ apiready = function() {
 				return y + '-' + vm.add0(m) + '-' + vm.add0(d) + ' ' + vm.add0(h) + ':' + vm.add0(mm) + ':' + vm.add0(s);
 			},
 			//月份格式处理
-			add0 : function(m) {
+			add0 (m) {
 				return m < 10 ? '0' + m : m;
 			},
 			//获取用户信息
@@ -141,7 +141,7 @@ apiready = function() {
 				});
 			},
 			//打开订单详情
-			openDetail : function(retDetail) {
+			openDetail (retDetail) {
 				//alert(JSON.stringify(retDetail));
 				var datas = new Array();
 				datas.push(retDetail);
@@ -174,7 +174,7 @@ apiready = function() {
 					});
 				}
 			},
-			getRequest : function(url) {
+			getRequest (url) {
 				var url = url;
 				//获取url中"?"符后的字串
 				var theRequest = new Object();
@@ -187,7 +187,7 @@ apiready = function() {
 				}
 				return theRequest;
 			},
-			setRefreshHeaderInfo : function(callback) {
+			setRefreshHeaderInfo (callback) {
 				//下拉刷新
 				api.setRefreshHeaderInfo({
 					visible : true,
@@ -200,7 +200,7 @@ apiready = function() {
 					callback();
 				});
 			},
-			initEventLinster : function() {
+			initEventLinster () {
 				//console.log(vm.datacount + '&&' + vm.page);
 				//数据行数大于初始页数
 				if (vm.datacount > vm.page) {
@@ -233,7 +233,7 @@ apiready = function() {
 					});
 				}
 			},
-			reloadEventLisenter : function() {
+			reloadEventLisenter () {
 				api.addEventListener({
 					name : 'locationreload'
 				}, function(ret, err) {
