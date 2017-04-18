@@ -66,7 +66,7 @@ apiready = function() {
 						$xy.ajax(function(ret, err) {
 							//关闭下拉刷新
 							api.refreshHeaderLoadDone();
-							if (ret && ret.data != []) {
+							if (ret && ret.data.length != 0) {
 								_this.orderlist = true;
 								_this.loading = false;
 								//1、初始化页面数据
